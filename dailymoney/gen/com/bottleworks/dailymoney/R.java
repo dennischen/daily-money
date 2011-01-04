@@ -14,28 +14,32 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int accountmgnt_asset=0x7f050003;
-        public static final int accountmgnt_debt=0x7f050004;
-        public static final int accountmgnt_income=0x7f050001;
-        public static final int accountmgnt_outcome=0x7f050002;
-        public static final int accountmgnt_tabs=0x7f050000;
-        public static final int test_accountMgnt=0x7f050006;
-        public static final int test_addDetail=0x7f050007;
-        public static final int test_listDetail=0x7f050009;
-        public static final int test_updateDetail=0x7f050008;
-        public static final int test_userMgnt=0x7f050005;
+        public static final int accmgnt_asset=0x7f050003;
+        public static final int accmgnt_debt=0x7f050004;
+        public static final int accmgnt_income=0x7f050001;
+        public static final int accmgnt_item_display=0x7f050005;
+        public static final int accmgnt_item_initvalue=0x7f050006;
+        public static final int accmgnt_outcome=0x7f050002;
+        public static final int accmgnt_tabs=0x7f050000;
+        public static final int test_accountMgnt=0x7f050008;
+        public static final int test_addDetail=0x7f050009;
+        public static final int test_listDetail=0x7f05000b;
+        public static final int test_updateDetail=0x7f05000a;
+        public static final int test_userMgnt=0x7f050007;
     }
     public static final class layout {
-        public static final int accountmgnt=0x7f030000;
-        public static final int main=0x7f030001;
-        public static final int test=0x7f030002;
+        public static final int accmgnt=0x7f030000;
+        public static final int accmgnt_item=0x7f030001;
+        public static final int main=0x7f030002;
+        public static final int test=0x7f030003;
     }
     public static final class string {
-        public static final int accountmgnt_title=0x7f040005;
+        public static final int accountmgnt_title=0x7f040006;
         public static final int app_name=0x7f040000;
         public static final int label_asset=0x7f040003;
         public static final int label_debt=0x7f040004;
         public static final int label_income=0x7f040001;
+        public static final int label_initial_value=0x7f040005;
         public static final int label_outcome=0x7f040002;
     }
 }

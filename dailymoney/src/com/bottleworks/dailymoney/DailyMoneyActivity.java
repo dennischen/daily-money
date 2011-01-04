@@ -8,7 +8,7 @@ public class DailyMoneyActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Context.initialContext(this);
+        Context.initialContext(savedInstanceState);
         setContentView(R.layout.main);
     }
 }

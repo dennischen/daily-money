@@ -5,7 +5,10 @@
 <string name="label_outcome">Outcome</string>
 <string name="label_asset">Asset</string>
 <string name="label_debt">Debt</string>
+<string name="label_initial_value">Initial</string>
+
 
 <string name="accountmgnt_title">Account management</string>
+
 
 </resources>

@@ -10,6 +10,7 @@ package com.bottleworks.dailymoney.data;
  */
 public enum AccountType {
 
+    UNKONW("U","unkonw"),
     INCOME("I","income"),
     OUTCOME("O","outcome"),
     ASSET("A","asset"),
@@ -29,7 +30,7 @@ public enum AccountType {
     }
     
     
-    public AccountType find(String type){
+    static public AccountType find(String type){
         if(INCOME.type.equals(type)){
             return INCOME;
         }else if(OUTCOME.type.equals(type)){
@@ -39,7 +40,7 @@ public enum AccountType {
         }else if(DEBT.type.equals(type)){
             return DEBT;
         }
-        throw new IllegalStateException("unkonw type "+type);
+        return UNKONW;
     }
     
     

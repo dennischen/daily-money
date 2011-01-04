@@ -15,7 +15,15 @@ public class Account {
     
     String accountType;
     
-    Double initialMoney;
+    double initialValue;
+    
+    
+    public Account(String accountType, String display, Double initialValue){
+        this.accountType = accountType;
+        this.display = display;
+        this.initialValue = initialValue;
+    }
+    
 
     public String getId() {
         return id;
@@ -41,12 +49,14 @@ public class Account {
         this.accountType = accountType;
     }
 
-    public Double getInitialMoney() {
-        return initialMoney;
+
+
+    public double getInitialValue() {
+        return initialValue;
     }
 
-    public void setInitialMoney(Double initialMoney) {
-        this.initialMoney = initialMoney;
+    public void setInitialValue(double initialValue) {
+        this.initialValue = initialValue;
     }
 
     @Override

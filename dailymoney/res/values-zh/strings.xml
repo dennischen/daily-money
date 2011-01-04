@@ -5,5 +5,7 @@
 <string name="label_outcome">支出</string>
 <string name="label_asset">資產</string>
 <string name="label_debt">負債</string>
+<string name="label_initial_value">初始值</string>
+
 <string name="accountmgnt_title">帳戶維護</string>
 </resources>
