@@ -34,7 +34,7 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Context.initialContext(savedInstanceState);
+        Contexts.initialContext(savedInstanceState);
         setContentView(R.layout.accmgnt);
         initialTab();
         loadDataToView();
@@ -71,7 +71,7 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
     }
     
     private void loadDataToView() {
-        IDataProvider idp = Context.instance().getDataProvider();
+        IDataProvider idp = Contexts.instance().getDataProvider();
         incomeList = idp.listAccount(AccountType.INCOME);
         outcomeList = idp.listAccount(AccountType.OUTCOME);
         assetList = idp.listAccount(AccountType.ASSET);
@@ -95,7 +95,6 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
             row.put(bindingFrom[0],acc.getDisplay());
             row.put(bindingFrom[1],acc.getInitialValue());
         }
-        
         SimpleAdapter adapter = new SimpleAdapter(this, data, R.layout.accmgnt_item, bindingFrom, bindingTo);
         view.setAdapter(adapter);
     }

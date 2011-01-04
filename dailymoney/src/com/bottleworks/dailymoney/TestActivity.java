@@ -13,7 +13,7 @@ public class TestActivity extends Activity implements OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Context.initialContext(savedInstanceState);
+        Contexts.initialContext(savedInstanceState);
         setContentView(R.layout.test);
         
         initialListener();

@@ -7,23 +7,23 @@ import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.data.User;
 
 /**
- * A context helps me to do some quick/cacheable operation in a application life cycle 
+ * Helps me to do some quick/cacheable operation in a application life cycle 
  * @author dennis
  *
  */
-public class Context {
+public class Contexts {
 
-    private static Context instance;
+    private static Contexts instance;
     
     private Bundle bundle;
     private User user;
     private IDataProvider dataProvider;
     
-    private Context(Bundle bundle){
+    private Contexts(Bundle bundle){
         this.bundle = bundle;
     }
     
-    static public Context instance(){
+    static public Contexts instance(){
         if(instance == null){
             throw new IllegalStateException("context isn't initialized yet.");
         }
@@ -37,7 +37,7 @@ public class Context {
         if(instance!=null){
             return;
         }
-        instance = new Context(bundle);
+        instance = new Contexts(bundle);
         instance.initialContext();
     }
     
