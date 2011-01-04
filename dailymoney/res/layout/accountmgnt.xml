@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<TabHost
+		android:id="@+id/accountmgnt_tabs"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:padding="5dp">
+			<TabWidget
+				android:id="@android:id/tabs"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" />
+			<FrameLayout
+				android:id="@android:id/tabcontent"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:padding="5dp">
+				<LinearLayout
+					android:orientation="vertical"
+					android:id="@+id/accountmgnt_income"
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent">
+					<TextView
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:text="tab item 1" />
+				</LinearLayout>
+				<LinearLayout
+					android:orientation="vertical"
+					android:id="@+id/accountmgnt_outcome"
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent">
+					<TextView
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:text="tab item 2" />
+				</LinearLayout>
+				<LinearLayout
+					android:orientation="vertical"
+					android:id="@+id/accountmgnt_asset"
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent">
+					<TextView
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:text="tab item 3" />
+				</LinearLayout>
+				<LinearLayout
+					android:orientation="vertical"
+					android:id="@+id/accountmgnt_debt"
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent">
+					<TextView
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:text="tab item 4" />
+				</LinearLayout>
+
+			</FrameLayout>
+		</LinearLayout>
+	</TabHost>
+</LinearLayout>

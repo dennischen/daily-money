@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="app_name">Daily Money</string>
+<string name="label_income">Income</string>
+<string name="label_outcome">Outcome</string>
+<string name="label_asset">Asset</string>
+<string name="label_debt">Debt</string>
+
+<string name="accountmgnt_title">Account management</string>
+
+</resources>

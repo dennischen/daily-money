@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Daily Money</string>
+<string name="label_income">收入</string>
+<string name="label_outcome">支出</string>
+<string name="label_asset">資產</string>
+<string name="label_debt">負債</string>
+<string name="accountmgnt_title">帳戶維護</string>
+</resources>
