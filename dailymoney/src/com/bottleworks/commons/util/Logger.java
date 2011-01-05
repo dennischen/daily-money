@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney.util;
+package com.bottleworks.commons.util;
 
 import android.util.Log;
 

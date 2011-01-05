@@ -9,13 +9,13 @@ package com.bottleworks.dailymoney.data;
  */
 public class Account {
 
-    String id;
+    private String id;
     
-    String name;
+    private String name;
     
-    String accountType;
+    private String accountType;
     
-    double initialValue;
+    private double initialValue;
     
     
     public Account(String name,String accountType, Double initialValue){

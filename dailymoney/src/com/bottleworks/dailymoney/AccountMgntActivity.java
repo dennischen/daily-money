@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -13,45 +12,44 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
-import android.widget.Toast;
 
+import com.bottleworks.commons.ui.Contexts;
+import com.bottleworks.commons.ui.ContextsActivity;
+import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.commons.util.IDialogFinishListener;
+import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.DuplicateKeyException;
 import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.util.GUIs;
-import com.bottleworks.dailymoney.util.I18N;
-import com.bottleworks.dailymoney.util.IDialogFinishListener;
-import com.bottleworks.dailymoney.util.Logger;
 
 /**
  * this activity manages the account (of detail) with tab widgets of android,
- * there are 4 type of account, income, outcome, asset and debt.
+ * there are 4 type of account, income, expense, asset and debt.
  * 
  * @author dennis
  * @see {@link AccountType}
  */
-public class AccountMgntActivity extends Activity implements OnTabChangeListener, IDialogFinishListener {
+public class AccountMgntActivity extends ContextsActivity implements OnTabChangeListener,OnItemClickListener, IDialogFinishListener {
     /** Called when the activity is first created. */
     private List<Account> listViewData = new ArrayList<Account>();
-    private List<Map<String, Object>> listViewMap = new ArrayList<Map<String, Object>>();
+    private List<Map<String, Object>> listViewMapList = new ArrayList<Map<String, Object>>();
 
     private String lastTab = null;
-    private I18N i18n;
 
     private ListView listView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        i18n = new I18N(this);
-        Contexts.initialContext(savedInstanceState);
         setContentView(R.layout.accmgnt);
         initialTab();
         initialListView();
@@ -64,32 +62,27 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
 
         TabSpec tab = tabs.newTabSpec(AccountType.INCOME.getType());
         tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
-        // tab.setContent(R.id.accmgnt_list_income);
         tab.setContent(R.id.accmgnt_list);
         tabs.addTab(tab);
         lastTab = tab.getTag();
 
-        tab = tabs.newTabSpec(AccountType.OUTCOME.getType());
+        tab = tabs.newTabSpec(AccountType.EXPENSE.getType());
         tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
-        // tab.setContent(R.id.accmgnt_list_outcome);
         tab.setContent(R.id.accmgnt_list);
         tabs.addTab(tab);
 
         tab = tabs.newTabSpec(AccountType.ASSET.getType());
         tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
-        // tab.setContent(R.id.accmgnt_list_asset);
         tab.setContent(R.id.accmgnt_list);
         tabs.addTab(tab);
 
         tab = tabs.newTabSpec(AccountType.DEBT.getType());
         tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
-        // tab.setContent(R.id.accmgnt_list_debt);
         tab.setContent(R.id.accmgnt_list);
         tabs.addTab(tab);
 
         tab = tabs.newTabSpec(AccountType.OTHER.getType());
         tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
-        // tab.setContent(R.id.accmgnt_list_debt);
         tab.setContent(R.id.accmgnt_list);
         tabs.addTab(tab);
 
@@ -107,10 +100,13 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
     private SimpleAdapter listViewAdapter;
 
     private void initialListView() {
-        listViewAdapter = new SimpleAdapter(this, listViewMap, R.layout.accmgnt_item, bindingFrom, bindingTo);
+        listViewAdapter = new SimpleAdapter(this, listViewMapList, R.layout.accmgnt_item, bindingFrom, bindingTo);
         listView = (ListView) findViewById(R.id.accmgnt_list);
         listView.setAdapter(listViewAdapter);
+        listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
+        
+        
     }
 
     private void loadData() {
@@ -122,8 +118,8 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
         case INCOME:
             listViewData = idp.listAccount(AccountType.INCOME);
             break;
-        case OUTCOME:
-            listViewData = idp.listAccount(AccountType.OUTCOME);
+        case EXPENSE:
+            listViewData = idp.listAccount(AccountType.EXPENSE);
             break;
         case ASSET:
             listViewData = idp.listAccount(AccountType.ASSET);
@@ -138,11 +134,11 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
             listViewData = new ArrayList<Account>();
         }
 
-        listViewMap.clear();
+        listViewMapList.clear();
 
         for (Account acc : listViewData) {
             Map<String, Object> row = new HashMap<String, Object>();
-            listViewMap.add(row);
+            listViewMapList.add(row);
             row.put(bindingFrom[0], acc.getName());
             row.put(bindingFrom[1], acc.getInitialValue());
             row.put(bindingFrom[2], acc.getId());
@@ -216,19 +212,19 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
 
     private void doEditAccount(int pos) {
         Account acc = (Account) listViewData.get(pos);
-        AccountEditorDlg dlg = new AccountEditorDlg(this, this, false, acc);
+        AccountEditorDialog dlg = new AccountEditorDialog(this, this, false, acc);
         dlg.show();
     }
     
     private void doCopyAccount(int pos) {
         Account acc = (Account) listViewData.get(pos);
-        AccountEditorDlg dlg = new AccountEditorDlg(this, this, true, acc);
+        AccountEditorDialog dlg = new AccountEditorDialog(this, this, true, acc);
         dlg.show();
     }
 
     private void doNewAccount() {
         Account acc = new Account("", lastTab, 0D);
-        AccountEditorDlg dlg = new AccountEditorDlg(this, this, true, acc);
+        AccountEditorDialog dlg = new AccountEditorDialog(this, this, true, acc);
         dlg.show();
     }
 
@@ -236,11 +232,11 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
     public boolean onDialogFinish(Dialog dlg, View v, Object data) {
         switch (v.getId()) {
         case R.id.acceditor_ok:
-            Account workingacc = ((AccountEditorDlg) dlg).getWorkingAccount();
-            boolean modeCreate = ((AccountEditorDlg) dlg).isModeCreate();
+            Account workingacc = ((AccountEditorDialog) dlg).getWorkingAccount();
+            boolean modeCreate = ((AccountEditorDialog) dlg).isModeCreate();
             String name = workingacc.getName();
             IDataProvider idp = Contexts.instance().getDataProvider();
-            Account namedAcc = idp.findAccountByName(name);
+            Account namedAcc = idp.findAccountByNormalizedName(name);
             if (modeCreate) {
                 if (namedAcc != null) {
                     GUIs.shortToast(
@@ -258,7 +254,7 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
 
                 }
             } else {
-                Account acc = ((AccountEditorDlg)dlg).getAccount();
+                Account acc = ((AccountEditorDialog)dlg).getAccount();
                 if (namedAcc != null && !namedAcc.getId().equals(acc.getId())) {
                     GUIs.shortToast(
                             this,i18n.string(R.string.msg_account_existed, name,
@@ -276,4 +272,12 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
         }
         return true;
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+        if(parent == listView){
+            doEditAccount(pos);
+        }
+    }
+
 }

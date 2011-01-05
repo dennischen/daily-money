@@ -1,10 +1,7 @@
 package com.bottleworks.dailymoney.data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import com.bottleworks.dailymoney.util.Logger;
 /**
  * a fake in memory data provider for development.
  * @author dennis
@@ -20,16 +17,6 @@ public class FakeDataProvider implements IDataProvider {
 
     public void reset() {
         accountList = new ArrayList<Account>();
-
-        try {
-            newAccount(new Account("default-income", AccountType.INCOME.getType(), 0D));
-            newAccount(new Account("default-outcome", AccountType.OUTCOME.getType(), 0D));
-            newAccount(new Account("default-asset", AccountType.ASSET.getType(), 0D));
-            newAccount(new Account("default-debt", AccountType.DEBT.getType(), 0D));
-        } catch (DuplicateKeyException e) {
-            Logger.e(e.getMessage(), e);
-        }
-
     }
 
     @Override
@@ -45,9 +32,9 @@ public class FakeDataProvider implements IDataProvider {
 
     @Override
     public synchronized void newAccount(Account account) throws DuplicateKeyException {
-        account.setId(account.getName());
+        account.setId(normalizeName(account.getName()));
         if (accountList.indexOf(account) != -1) {
-            throw new DuplicateKeyException("account id" + account.getId());
+            throw new DuplicateKeyException("duplicate account id " + account.getId());
         }
         accountList.add(account);
     }
@@ -61,13 +48,9 @@ public class FakeDataProvider implements IDataProvider {
         return null;
     }
 
-    public Account findAccountByName(String name) {
-        for(Account a:accountList){
-            if(a.getName().equals(name)){
-                return a;
-            }
-        }
-        return null;
+    public Account findAccountByNormalizedName(String name) {
+        name = normalizeName(name);
+        return findAccount(name);
     }
 
     @Override
@@ -85,9 +68,15 @@ public class FakeDataProvider implements IDataProvider {
         acc.setInitialValue(account.getInitialValue());
 
         // reset id;
-        account.setId(account.getName());
-        acc.setId(account.getId());
+        id = normalizeName(account.getName());
+        account.setId(id);
+        acc.setId(id);
         return true;
+    }
+    
+    private String normalizeName(String name){
+        name = name.trim().toLowerCase().replace(' ', '-');
+        return name;
     }
 
     @Override

@@ -1,10 +1,10 @@
-package com.bottleworks.dailymoney.util;
+package com.bottleworks.commons.util;
 
 import android.app.Dialog;
 import android.view.View;
 
 /**
- * 
+ * helps for dialog operation
  * @author dennis
  *
  */

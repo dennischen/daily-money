@@ -1,22 +1,27 @@
 package com.bottleworks.dailymoney;
 
-import com.bottleworks.dailymoney.util.Logger;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class TestActivity extends Activity implements OnClickListener{
+import com.bottleworks.commons.ui.Contexts;
+import com.bottleworks.commons.ui.ContextsActivity;
+import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.data.DefaultDataCreator;
+import com.bottleworks.dailymoney.data.IDataProvider;
+
+public class TestActivity extends ContextsActivity implements OnClickListener{
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Contexts.initialContext(savedInstanceState);
         setContentView(R.layout.test);
-        
         initialListener();
+        
+        IDataProvider idp = Contexts.instance().getDataProvider();
+        new DefaultDataCreator(idp,i18n).createDefaultAccounts();
     }
 
     private void initialListener() {
@@ -54,7 +59,10 @@ public class TestActivity extends Activity implements OnClickListener{
     }
 
     private void testResetDataProvider() {
-        Contexts.instance().getDataProvider().reset();
+        IDataProvider idp = Contexts.instance().getDataProvider();
+        idp.reset();
+        new DefaultDataCreator(idp,i18n).createDefaultAccounts();
+        GUIs.shortToast(this,"reset DataProvider");
     }
 
     private void testUpdateDetail() {
@@ -78,6 +86,7 @@ public class TestActivity extends Activity implements OnClickListener{
 
     private void testAccountMgnt() {
         Logger.d("testAccountMgnt");
+        
         startActivity(new Intent(this,AccountMgntActivity.class));
         
     }

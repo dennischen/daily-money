@@ -9,15 +9,15 @@ import java.util.Date;
  */
 public class Detail {
 
-    String id;
-    String fromAccount;
-    String fromDisplay;
-    String toAccount;
-    String toDisplay;
-    Date date;
-    Double money;
-    String note;
-    String description;
+    private String id;
+    private String fromAccount;
+    private String fromDisplay;
+    private String toAccount;
+    private String toDisplay;
+    private Date date;
+    private Double money;
+    private String note;
+    private String description;
 
     public String getId() {
         return id;

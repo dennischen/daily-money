@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney.util;
+package com.bottleworks.commons.util;
 
 import com.bottleworks.dailymoney.R;
 
@@ -7,6 +7,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
+/**
+ * 
+ * @author dennis
+ *
+ */
 public class GUIs {
 
     

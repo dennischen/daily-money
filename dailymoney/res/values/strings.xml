@@ -6,7 +6,7 @@
 	<string name="act_newacc">New Account</string>
 
 	<string name="label_income">Income</string>
-	<string name="label_outcome">Outcome</string>
+	<string name="label_expense">Expense</string>
 	<string name="label_asset">Asset</string>
 	<string name="label_debt">Debt</string>
 	<string name="label_other">Other</string>
@@ -17,6 +17,18 @@
 	<string name="msg_account_created">Account %1$s was created in type %2$s</string>
 	<string name="msg_account_updated">Account %1$s was updated in type %2$s</string>
 
+
+
+<string name="defacc_salary">Salary</string>
+<string name="defacc_interest">Interest</string>
+<string name="defacc_otherincome">Other income</string>
+
+<string name="defacc_food">Food</string>
+<string name="defacc_entertainment">Entertainment</string>
+<string name="defacc_otherexpense">Other expense</string>
+
+<string name="defacc_cash">Cash</string>
+<string name="defacc_bank">Bank</string>
 
 
 

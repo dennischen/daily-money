@@ -3,8 +3,8 @@
  */
 package com.bottleworks.dailymoney.data;
 
+import com.bottleworks.commons.util.I18N;
 import com.bottleworks.dailymoney.R;
-import com.bottleworks.dailymoney.util.I18N;
 
 
 /**
@@ -15,7 +15,7 @@ public enum AccountType {
 
     UNKONW("U"),
     INCOME("I"),
-    OUTCOME("O"),
+    EXPENSE("E"),
     ASSET("A"),
     DEBT("D"),
     OTHER("T");
@@ -29,7 +29,7 @@ public enum AccountType {
         return type;
     }
 
-    static AccountType[] abailable = new  AccountType[]{INCOME,OUTCOME,ASSET,DEBT,OTHER};
+    static AccountType[] abailable = new  AccountType[]{INCOME,EXPENSE,ASSET,DEBT,OTHER};
     
     static public AccountType[] getAvailableType(){
         return abailable;
@@ -38,8 +38,8 @@ public enum AccountType {
     static public AccountType find(String type){
         if(INCOME.type.equals(type)){
             return INCOME;
-        }else if(OUTCOME.type.equals(type)){
-            return OUTCOME;
+        }else if(EXPENSE.type.equals(type)){
+            return EXPENSE;
         }else if(ASSET.type.equals(type)){
             return ASSET;
         }else if(DEBT.type.equals(type)){
@@ -55,8 +55,8 @@ public enum AccountType {
         switch (at) {
         case INCOME:
             return i18n.string(R.string.label_income);
-        case OUTCOME:
-            return i18n.string(R.string.label_outcome);
+        case EXPENSE:
+            return i18n.string(R.string.label_expense);
         case ASSET:
             return i18n.string(R.string.label_asset);
         case DEBT:

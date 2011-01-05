@@ -20,5 +20,5 @@
     <string name="clabel_name">Name</string>
     <string name="clabel_type">Type</string>
     
-    <string name="cmsg_error">System error : %1$s</string>
+    <string name="cmsg_error">Error : %1$s</string>
 </resources>

@@ -7,6 +7,7 @@ import java.util.List;
 
 
 /**
+ * to provide all the data and operation also
  * @author dennis
  *
  */
@@ -17,7 +18,7 @@ public interface IDataProvider {
 
     public Account findAccount(String id);
     
-    public Account findAccountByName(String name);
+    public Account findAccountByNormalizedName(String name);
     
     List<Account> listAccount(AccountType type);
 

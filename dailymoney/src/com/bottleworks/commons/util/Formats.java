@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney.util;
+package com.bottleworks.commons.util;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;

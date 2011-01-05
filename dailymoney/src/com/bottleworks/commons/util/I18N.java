@@ -1,7 +1,12 @@
-package com.bottleworks.dailymoney.util;
+package com.bottleworks.commons.util;
 
 import android.content.Context;
 
+/**
+ * 
+ * @author dennis
+ *
+ */
 public class I18N {
     Context context;
     public I18N(Context context){
