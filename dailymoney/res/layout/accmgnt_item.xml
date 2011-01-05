@@ -21,4 +21,15 @@
 		android:layout_alignTop="@id/accmgnt_item_initvalue"
 		android:text="@string/label_initial_value"
 		android:layout_marginRight="10sp" />
+    
+    <!-- debug -->
+    <TextView
+        android:id="@+id/accmgnt_item_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accmgnt_item_name"
+        android:layout_alignParentLeft="true"
+        android:textStyle="italic"
+        android:textSize="10sp"
+        android:layout_marginRight="20sp" />		
 </RelativeLayout>

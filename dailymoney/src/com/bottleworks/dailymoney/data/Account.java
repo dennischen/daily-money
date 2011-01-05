@@ -18,11 +18,11 @@ public class Account {
     double initialValue;
     
     
-    public Account(String accountType, String name, Double initialValue){
+    public Account(String name,String accountType, Double initialValue){
         this.accountType = accountType;
-        this.name = name;
+        this.name = name==null?"":name.trim();
         this.initialValue = initialValue;
-        id = name;
+        id = this.name;
     }
     
 
@@ -30,7 +30,7 @@ public class Account {
         return id;
     }
 
-    public void setId(String id) {
+    void setId(String id) {
         this.id = id;
     }
 
@@ -41,7 +41,7 @@ public class Account {
 
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name==null?"":name.trim();
     }
 
 

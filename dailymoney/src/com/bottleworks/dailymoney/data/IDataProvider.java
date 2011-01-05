@@ -23,8 +23,8 @@ public interface IDataProvider {
 
     void newAccount(Account account) throws DuplicateKeyException;
     
-    boolean updateAccount(Account account);
+    boolean updateAccount(String id,Account account);
     
-    boolean deleteAccount(Account account);
+    boolean deleteAccount(String id);
 
 }

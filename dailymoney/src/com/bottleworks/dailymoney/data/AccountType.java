@@ -29,7 +29,11 @@ public enum AccountType {
         return type;
     }
 
+    static AccountType[] abailable = new  AccountType[]{INCOME,OUTCOME,ASSET,DEBT,OTHER};
     
+    static public AccountType[] getAvailableType(){
+        return abailable;
+    }
     
     static public AccountType find(String type){
         if(INCOME.type.equals(type)){

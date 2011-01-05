@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -26,6 +27,7 @@ import com.bottleworks.dailymoney.data.DuplicateKeyException;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.util.GUIs;
 import com.bottleworks.dailymoney.util.I18N;
+import com.bottleworks.dailymoney.util.IDialogFinishListener;
 import com.bottleworks.dailymoney.util.Logger;
 
 /**
@@ -35,14 +37,14 @@ import com.bottleworks.dailymoney.util.Logger;
  * @author dennis
  * @see {@link AccountType}
  */
-public class AccountMgntActivity extends Activity implements OnTabChangeListener {
+public class AccountMgntActivity extends Activity implements OnTabChangeListener, IDialogFinishListener {
     /** Called when the activity is first created. */
     private List<Account> listViewData = new ArrayList<Account>();
     private List<Map<String, Object>> listViewMap = new ArrayList<Map<String, Object>>();
 
     private String lastTab = null;
     private I18N i18n;
-    
+
     private ListView listView;
 
     @Override
@@ -84,7 +86,7 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
         // tab.setContent(R.id.accmgnt_list_debt);
         tab.setContent(R.id.accmgnt_list);
         tabs.addTab(tab);
-        
+
         tab = tabs.newTabSpec(AccountType.OTHER.getType());
         tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
         // tab.setContent(R.id.accmgnt_list_debt);
@@ -99,8 +101,8 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
 
     }
 
-    private static String[] bindingFrom = new String[] { "name", "initvalue" };
-    private static int[] bindingTo = new int[] { R.id.accmgnt_item_name, R.id.accmgnt_item_initvalue };
+    private static String[] bindingFrom = new String[] { "name", "initvalue", "id" };
+    private static int[] bindingTo = new int[] { R.id.accmgnt_item_name, R.id.accmgnt_item_initvalue, R.id.accmgnt_item_id };
 
     private SimpleAdapter listViewAdapter;
 
@@ -113,16 +115,6 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
 
     private void loadData() {
         IDataProvider idp = Contexts.instance().getDataProvider();
-        // incomeList = idp.listAccount(AccountType.INCOME);
-        // outcomeList = idp.listAccount(AccountType.OUTCOME);
-        // assetList = idp.listAccount(AccountType.ASSET);
-        // debtList = idp.listAccount(AccountType.DEBT);
-        //
-        // loadData((ListView)findViewById(R.id.accmgnt_list_income),incomeList);
-        // loadData((ListView)findViewById(R.id.accmgnt_list_outcome),outcomeList);
-        // loadData((ListView)findViewById(R.id.accmgnt_list_asset),assetList);
-        // loadData((ListView)findViewById(R.id.accmgnt_list_debt),debtList);
-
         listViewData = null;
 
         AccountType type = AccountType.find(lastTab);
@@ -139,6 +131,9 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
         case DEBT:
             listViewData = idp.listAccount(AccountType.DEBT);
             break;
+        case OTHER:
+            listViewData = idp.listAccount(AccountType.OTHER);
+            break;
         default:
             listViewData = new ArrayList<Account>();
         }
@@ -150,6 +145,7 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
             listViewMap.add(row);
             row.put(bindingFrom[0], acc.getName());
             row.put(bindingFrom[1], acc.getInitialValue());
+            row.put(bindingFrom[2], acc.getId());
         }
 
         listViewAdapter.notifyDataSetChanged();
@@ -192,7 +188,7 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        Logger.d("context menu selected :" + item.getItemId()+", pos "+info.position);
+        Logger.d("context menu selected :" + item.getItemId() + ", pos " + info.position);
         switch (item.getItemId()) {
         case R.id.accmgnt_menu_edit:
             doEditAccount(info.position);
@@ -206,34 +202,69 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
     }
 
     private void doDeleteAccount(int pos) {
-        Account acc = (Account)listViewData.get(pos);
+        Account acc = (Account) listViewData.get(pos);
         String name = acc.getName();
-        
-        Contexts.instance().getDataProvider().deleteAccount(acc);
+
+        Contexts.instance().getDataProvider().deleteAccount(acc.getId());
         loadData();
-        GUIs.shortToast(this,i18n.string(R.string.msg_account_deleted,name));
-        
+        GUIs.shortToast(this, i18n.string(R.string.msg_account_deleted, name));
+
     }
 
     private void doEditAccount(int pos) {
-        Account acc = (Account)listViewData.get(pos);
-        String name = acc.getName();
-        
-        GUIs.shortToast(this,i18n.string(R.string.msg_account_updated,name));
+        Account acc = (Account) listViewData.get(pos);
+        AccountEditorDlg dlg = new AccountEditorDlg(this, this, false, acc);
+        dlg.show();
     }
 
     private void doNewAccount() {
-        IDataProvider idp = Contexts.instance().getDataProvider();
-        Account acc = new Account(AccountType.INCOME.getType(), "new-income", 11D);
-        String name = acc.getName();
-        try {
-            idp.newAccount(acc);
+        Account acc = new Account("", lastTab, 0D);
+        AccountEditorDlg dlg = new AccountEditorDlg(this, this, true, acc);
+        dlg.show();
+    }
+
+    @Override
+    public boolean onDialogFinish(Dialog dlg, View v, Object data) {
+        switch (v.getId()) {
+        case R.id.acceditor_ok:
+            Account acc = ((AccountEditorDlg)dlg).getAccount();
+            Account workingacc = ((AccountEditorDlg) dlg).getWorkingAccount();
+            boolean modeNew = ((AccountEditorDlg) dlg).isModeNew();
+            String name = workingacc.getName();
+            IDataProvider idp = Contexts.instance().getDataProvider();
+            Account namedAcc = idp.findAccountByName(name);
+            if (modeNew) {
+                if (namedAcc != null) {
+                    GUIs.shortToast(
+                            this,i18n.string(R.string.msg_account_existed, name,
+                                    AccountType.getDisplay(i18n, namedAcc.getAccountType())));
+                    return false;
+                } else {
+                    try {
+                        idp.newAccount(workingacc);
+                        GUIs.shortToast(this, i18n.string(R.string.msg_account_created, name,AccountType.getDisplay(i18n, acc.getAccountType())));
+                    } catch (DuplicateKeyException e) {
+                        GUIs.alert(this, i18n.string(R.string.cmsg_error, e.getMessage()));
+                        return false;
+                    }
+
+                }
+            } else {
+                if (namedAcc != null && !namedAcc.getId().equals(acc.getId())) {
+                    GUIs.shortToast(
+                            this,i18n.string(R.string.msg_account_existed, name,
+                                    AccountType.getDisplay(i18n, namedAcc.getAccountType())));
+                    return false;
+                } else {
+                    idp.updateAccount(acc.getId(),workingacc);
+                    GUIs.shortToast(this, i18n.string(R.string.msg_account_updated, name,AccountType.getDisplay(i18n, acc.getAccountType())));
+                }
+            }
             loadData();
-            GUIs.shortToast(this,i18n.string(R.string.msg_account_created,name));
-        } catch (DuplicateKeyException e) {
-            String msg = i18n.string(R.string.msg_duplicate_account,
-                    AccountType.getDisplay(i18n, acc.getAccountType()), acc.getName());
-            GUIs.alert(this, msg);
+            break;
+        case R.id.acceditor_cancel:
+            break;
         }
+        return true;
     }
 }

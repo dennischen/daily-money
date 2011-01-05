@@ -11,7 +11,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="AccountMgntActivity" android:label="@string/accountmgnt_title"></activity>
+        <activity android:name="AccountMgntActivity" android:label="@string/accmgnt_title"></activity>
 
     </application>
     <uses-sdk android:minSdkVersion="7" />

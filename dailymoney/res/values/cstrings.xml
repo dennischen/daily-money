@@ -13,4 +13,9 @@
     <string name="clabel_warn">Warn</string>
     <string name="clabel_error">Error</string>
     <string name="clabel_unknow">Unknow</string>
+    
+    <string name="clabel_name">Name</string>
+    <string name="clabel_type">Type</string>
+    
+    <string name="cmsg_error">System error : %1$s</string>
 </resources>
