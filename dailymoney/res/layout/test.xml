@@ -44,7 +44,8 @@
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"></Button>
 			<Button
-				android:text="padding"
+				android:text="Reset Dataprovider"
+                android:id="@+id/test_resetDataprovider"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"></Button>
 			<Button

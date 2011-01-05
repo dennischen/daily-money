@@ -8,11 +8,11 @@ public class I18N {
         this.context = context;
     }
     
-    public String getString(int id){
+    public String string(int id){
         return context.getString(id);
     }
     
-    public String getString(int id,Object... args){
+    public String string(int id,Object... args){
         return context.getString(id,args);
     }
 }

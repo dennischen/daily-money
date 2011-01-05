@@ -3,6 +3,9 @@
  */
 package com.bottleworks.dailymoney.data;
 
+import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.util.I18N;
+
 
 /**
  * @author dennis
@@ -10,24 +13,22 @@ package com.bottleworks.dailymoney.data;
  */
 public enum AccountType {
 
-    UNKONW("U","unkonw"),
-    INCOME("I","income"),
-    OUTCOME("O","outcome"),
-    ASSET("A","asset"),
-    DEBT("D","debt");
+    UNKONW("U"),
+    INCOME("I"),
+    OUTCOME("O"),
+    ASSET("A"),
+    DEBT("D"),
+    OTHER("T");
     
     String type;
     String display;
-    AccountType(String type,String display){
+    AccountType(String type){
         this.type = type;
-        this.display = display;
     }
     public String getType() {
         return type;
     }
-    public String getDisplay() {
-        return display;
-    }
+
     
     
     static public AccountType find(String type){
@@ -39,8 +40,28 @@ public enum AccountType {
             return ASSET;
         }else if(DEBT.type.equals(type)){
             return DEBT;
+        }else if(OTHER.type.equals(type)){
+            return OTHER;
         }
         return UNKONW;
+    }
+    
+    static public String getDisplay(I18N i18n,String type){
+        AccountType at = find(type);
+        switch (at) {
+        case INCOME:
+            return i18n.string(R.string.label_income);
+        case OUTCOME:
+            return i18n.string(R.string.label_outcome);
+        case ASSET:
+            return i18n.string(R.string.label_asset);
+        case DEBT:
+            return i18n.string(R.string.label_debt);
+        case OTHER:
+            return i18n.string(R.string.label_other);
+        default:
+            return i18n.string(R.string.clabel_unknow);
+        }
     }
     
     

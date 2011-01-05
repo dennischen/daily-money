@@ -23,21 +23,9 @@
 				android:layout_height="fill_parent"
 				android:padding="5dp">
 				<ListView
-					android:id="@+id/accmgnt_income"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content" />
-				<ListView
-					android:id="@+id/accmgnt_outcome"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content" />
-				<ListView
-					android:id="@+id/accmgnt_asset"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content" />
-				<ListView
-					android:id="@+id/accmgnt_debt"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content" />
+                    android:id="@+id/accmgnt_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />	
 			</FrameLayout>
 		</LinearLayout>
 	</TabHost>

@@ -46,11 +46,17 @@ public class TestActivity extends Activity implements OnClickListener{
         case R.id.test_updateDetail:
             testUpdateDetail();
             break;
+        case R.id.test_resetDataprovider:
+            testResetDataProvider();            
+            break;
         }
     }
 
+    private void testResetDataProvider() {
+        Contexts.instance().getDataProvider().reset();
+    }
+
     private void testUpdateDetail() {
-        Logger.d("testUpdateDetail");
         
     }
 

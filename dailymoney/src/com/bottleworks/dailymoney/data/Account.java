@@ -11,17 +11,18 @@ public class Account {
 
     String id;
     
-    String display;
+    String name;
     
     String accountType;
     
     double initialValue;
     
     
-    public Account(String accountType, String display, Double initialValue){
+    public Account(String accountType, String name, Double initialValue){
         this.accountType = accountType;
-        this.display = display;
+        this.name = name;
         this.initialValue = initialValue;
+        id = name;
     }
     
 
@@ -33,13 +34,16 @@ public class Account {
         this.id = id;
     }
 
-    public String getDisplay() {
-        return display;
+
+    public String getName() {
+        return name;
     }
 
-    public void setDisplay(String display) {
-        this.display = display;
+
+    public void setName(String name) {
+        this.name = name;
     }
+
 
     public String getAccountType() {
         return accountType;
