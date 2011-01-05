@@ -7,6 +7,9 @@
     <string name="cact_stop">Stop</string>
     <string name="cact_edit">Edit</string>
     <string name="cact_delete">Delete</string>
+    <string name="cact_copy">Copy</string>
+    <string name="cact_create">Create</string>
+    <string name="cact_update">Update</string>
     
     <string name="clabel_alert">Alert</string>
     <string name="clabel_info">Information</string>

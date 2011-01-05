@@ -196,6 +196,9 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
         case R.id.accmgnt_menu_delete:
             doDeleteAccount(info.position);
             return true;
+        case R.id.accmgnt_menu_copy:
+            doCopyAccount(info.position);
+            return true;
         default:
             return super.onContextItemSelected(item);
         }
@@ -216,6 +219,12 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
         AccountEditorDlg dlg = new AccountEditorDlg(this, this, false, acc);
         dlg.show();
     }
+    
+    private void doCopyAccount(int pos) {
+        Account acc = (Account) listViewData.get(pos);
+        AccountEditorDlg dlg = new AccountEditorDlg(this, this, true, acc);
+        dlg.show();
+    }
 
     private void doNewAccount() {
         Account acc = new Account("", lastTab, 0D);
@@ -227,13 +236,12 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
     public boolean onDialogFinish(Dialog dlg, View v, Object data) {
         switch (v.getId()) {
         case R.id.acceditor_ok:
-            Account acc = ((AccountEditorDlg)dlg).getAccount();
             Account workingacc = ((AccountEditorDlg) dlg).getWorkingAccount();
-            boolean modeNew = ((AccountEditorDlg) dlg).isModeNew();
+            boolean modeCreate = ((AccountEditorDlg) dlg).isModeCreate();
             String name = workingacc.getName();
             IDataProvider idp = Contexts.instance().getDataProvider();
             Account namedAcc = idp.findAccountByName(name);
-            if (modeNew) {
+            if (modeCreate) {
                 if (namedAcc != null) {
                     GUIs.shortToast(
                             this,i18n.string(R.string.msg_account_existed, name,
@@ -242,7 +250,7 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
                 } else {
                     try {
                         idp.newAccount(workingacc);
-                        GUIs.shortToast(this, i18n.string(R.string.msg_account_created, name,AccountType.getDisplay(i18n, acc.getAccountType())));
+                        GUIs.shortToast(this, i18n.string(R.string.msg_account_created, name,AccountType.getDisplay(i18n, workingacc.getAccountType())));
                     } catch (DuplicateKeyException e) {
                         GUIs.alert(this, i18n.string(R.string.cmsg_error, e.getMessage()));
                         return false;
@@ -250,6 +258,7 @@ public class AccountMgntActivity extends Activity implements OnTabChangeListener
 
                 }
             } else {
+                Account acc = ((AccountEditorDlg)dlg).getAccount();
                 if (namedAcc != null && !namedAcc.getId().equals(acc.getId())) {
                     GUIs.shortToast(
                             this,i18n.string(R.string.msg_account_existed, name,

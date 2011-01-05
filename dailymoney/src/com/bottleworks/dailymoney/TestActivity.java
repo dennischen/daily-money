@@ -25,6 +25,7 @@ public class TestActivity extends Activity implements OnClickListener{
         findViewById(R.id.test_addDetail).setOnClickListener(this);
         findViewById(R.id.test_listDetail).setOnClickListener(this);
         findViewById(R.id.test_updateDetail).setOnClickListener(this);
+        findViewById(R.id.test_resetDataprovider).setOnClickListener(this);
     }
 
     @Override

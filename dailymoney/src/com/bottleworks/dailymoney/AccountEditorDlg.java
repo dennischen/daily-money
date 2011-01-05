@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -24,16 +25,16 @@ import com.bottleworks.dailymoney.util.Logger;
 public class AccountEditorDlg extends Dialog implements android.view.View.OnClickListener{
 
     
-    private boolean modeNew;
+    private boolean modeCreate;
     private Account account;
     private Account workingAccount;
     private IDialogFinishListener listener;
     
     private I18N i18n;
     
-    public AccountEditorDlg(Context context,IDialogFinishListener listener,boolean modeNew,Account account) {
+    public AccountEditorDlg(Context context,IDialogFinishListener listener,boolean modeCreate,Account account) {
         super(context);
-        this.modeNew = modeNew;
+        this.modeCreate = modeCreate;
         this.account = account;
         this.listener = listener;
         workingAccount = new Account(account.getName(),account.getAccountType(),account.getInitialValue());
@@ -57,8 +58,8 @@ public class AccountEditorDlg extends Dialog implements android.view.View.OnClic
         return workingAccount;
     }
     
-    public boolean isModeNew(){
-        return modeNew;
+    public boolean isModeCreate(){
+        return modeCreate;
     }
     
     
@@ -98,7 +99,14 @@ public class AccountEditorDlg extends Dialog implements android.view.View.OnClic
         typeEditor.setAdapter(adapter);
         typeEditor.setSelection(selpos);
         
-        findViewById(R.id.acceditor_ok).setOnClickListener(this);
+        Button ok = (Button)findViewById(R.id.acceditor_ok); 
+        if(modeCreate){
+            ok.setText(R.string.cact_create);
+        }else{
+            ok.setText(R.string.cact_update);
+        }
+        
+        ok.setOnClickListener(this);
         findViewById(R.id.acceditor_cancel).setOnClickListener(this);
     }
     

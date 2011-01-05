@@ -31,5 +31,5 @@
         android:layout_alignParentLeft="true"
         android:textStyle="italic"
         android:textSize="10sp"
-        android:layout_marginRight="20sp" />		
+        android:layout_marginLeft="10sp" />		
 </RelativeLayout>
