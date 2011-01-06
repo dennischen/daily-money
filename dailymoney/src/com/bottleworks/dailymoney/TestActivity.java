@@ -25,23 +25,26 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
     }
 
     private void initialListener() {
+        findViewById(R.id.test_resetDataprovider).setOnClickListener(this);
+        findViewById(R.id.test_createDefaultdata).setOnClickListener(this);
         findViewById(R.id.test_accountMgnt).setOnClickListener(this);
-        findViewById(R.id.test_userMgnt).setOnClickListener(this);
         findViewById(R.id.test_addDetail).setOnClickListener(this);
         findViewById(R.id.test_listDetail).setOnClickListener(this);
         findViewById(R.id.test_updateDetail).setOnClickListener(this);
-        findViewById(R.id.test_resetDataprovider).setOnClickListener(this);
+        
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-        
+        case R.id.test_resetDataprovider:
+            testResetDataprovider();            
+            break;
+        case R.id.test_createDefaultdata:
+            testCreateDefaultdata();            
+            break;
         case R.id.test_accountMgnt:
             testAccountMgnt();
-            break;
-        case R.id.test_userMgnt:
-            testUserMgnt();
             break;
         case R.id.test_addDetail:
             testAddDetail();
@@ -52,17 +55,20 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
         case R.id.test_updateDetail:
             testUpdateDetail();
             break;
-        case R.id.test_resetDataprovider:
-            testResetDataProvider();            
-            break;
+            
         }
     }
 
-    private void testResetDataProvider() {
+    private void testResetDataprovider() {
         IDataProvider idp = Contexts.instance().getDataProvider();
         idp.reset();
+        GUIs.shortToast(this,"reset data provider");
+    }
+    
+    private void testCreateDefaultdata() {
+        IDataProvider idp = Contexts.instance().getDataProvider();
         new DefaultDataCreator(idp,i18n).createDefaultAccounts();
-        GUIs.shortToast(this,"reset DataProvider");
+        GUIs.shortToast(this,"create default data");
     }
 
     private void testUpdateDetail() {
@@ -79,16 +85,10 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
         
     }
 
-    private void testUserMgnt() {
-        Logger.d("testUserMgnt");
-        
-    }
-
     private void testAccountMgnt() {
         Logger.d("testAccountMgnt");
         
         startActivity(new Intent(this,AccountMgntActivity.class));
-        
     }
 
 

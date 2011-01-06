@@ -35,7 +35,9 @@ public class DefaultDataCreator {
     private void createAccountNoThrow(String name,AccountType type,double initval){
         try {
             Logger.d("createDefaultAccount : "+name);
-            idp.newAccount(new Account(name, type.getType(), initval));
+            if(idp.findAccountByNormalizedName(name)==null){
+                idp.newAccount(new Account(name, type.getType(), initval));
+            }
         } catch (DuplicateKeyException e) {
             Logger.d(e.getMessage(),e);
         }

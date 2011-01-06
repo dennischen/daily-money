@@ -13,13 +13,14 @@ public class Account {
     
     private String name;
     
-    private String accountType;
+    private String type;
     
     private double initialValue;
     
+    Account(){}
     
-    public Account(String name,String accountType, Double initialValue){
-        this.accountType = accountType;
+    public Account(String name,String type, Double initialValue){
+        this.type = type;
         this.name = name==null?"":name.trim();
         this.initialValue = initialValue;
         id = this.name;
@@ -45,12 +46,12 @@ public class Account {
     }
 
 
-    public String getAccountType() {
-        return accountType;
+    public String getType() {
+        return type;
     }
 
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
+    public void setType(String type) {
+        this.type = type;
     }
 
 

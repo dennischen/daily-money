@@ -5,9 +5,11 @@ import android.os.Bundle;
 
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
-import com.bottleworks.dailymoney.data.FakeDataProvider;
+import com.bottleworks.dailymoney.Preferences;
+import com.bottleworks.dailymoney.data.InMemoryDataProvider;
 import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.data.User;
+import com.bottleworks.dailymoney.data.SQLiteDataProvider;
+import com.bottleworks.dailymoney.data.SQLiteHelper;
 
 /**
  * Helps me to do some quick/cacheable operation in a application's life cycle 
@@ -21,9 +23,10 @@ public class Contexts {
     private Bundle bundle;
     private Context context;
     
-    private User user;
     private IDataProvider dataProvider;
     private I18N i18n;
+    
+    boolean inmemory = false;//true;
     
     private boolean bundleInit = false; 
     
@@ -42,12 +45,14 @@ public class Contexts {
     }
     
     Contexts initialBundle(Context context,Bundle bundle){
-        initContext(context);
         if(!bundleInit){
             this.bundle = bundle;
-            reloadDataProvider();
+//            inmemory = bundle.getBoolean(Preferences.IN_MENORY_PROVIDER, true);
+            
+            
             bundleInit = true;
         }
+        initContext(context);
         return this;
     }
     
@@ -56,6 +61,7 @@ public class Contexts {
         if(this.context != context){
             this.context = context;
             this.i18n = new I18N(context);
+            initDataProvider(context);
         }
         return this;
     }
@@ -64,6 +70,7 @@ public class Contexts {
         if(this.context == context){
             this.context = null;
             this.i18n = null;
+            cleanDataProvider(context);
         }
         return this;
     }
@@ -73,23 +80,25 @@ public class Contexts {
         return i18n;
     }
 
-    private void reloadDataProvider() {
-        dataProvider = new FakeDataProvider();
-        Logger.d("reloadDataProvider :"+dataProvider);
+    private void initDataProvider(Context context) {
+        if(inmemory){
+            dataProvider = new InMemoryDataProvider();
+        }else{
+            dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"));
+        }
+        
+        dataProvider.init();
+        Logger.d("initDataProvider :"+dataProvider);
     }
-
-    public User getUser(){
-        return user;
+    public void cleanDataProvider(Context context){
+        if(dataProvider!=null){
+            Logger.d("cleanDataProvider :"+dataProvider);
+            dataProvider.destroyed();
+            dataProvider = null;
+        }
     }
     
     public IDataProvider getDataProvider(){
         return dataProvider;
-    }
-    
-    public void switchUser(User user){
-        if(this.user!=null && this.user.equals(user)){
-            return;
-        }
-        reloadDataProvider();
     }
 }

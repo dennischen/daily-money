@@ -56,6 +56,11 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
         setContentView(R.layout.accmgnt);
         initialTab();
         initialListView();
+    }
+    
+    @Override
+    public void onResume(){
+        super.onResume();
         loadData();
     }
 
@@ -70,7 +75,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
             tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
             tab.setContent(R.id.accmgnt_list);
             tabs.addTab(tab);
-            if(lastTab!=null){
+            if(lastTab==null){
                 lastTab = tab.getTag();
             }
         }
@@ -108,7 +113,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
                 tv.setVisibility(View.VISIBLE);
                 
                 
-                AccountType at = AccountType.find(acc.getAccountType());
+                AccountType at = AccountType.find(acc.getType());
                 if(at==AccountType.INCOME || at==AccountType.EXPENSE){
                     tv.setVisibility(View.INVISIBLE);
                     return true;
@@ -239,12 +244,12 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
                 if (namedAcc != null) {
                     GUIs.shortToast(
                             this,i18n.string(R.string.msg_account_existed, name,
-                                    AccountType.getDisplay(i18n, namedAcc.getAccountType())));
+                                    AccountType.getDisplay(i18n, namedAcc.getType())));
                     return false;
                 } else {
                     try {
                         idp.newAccount(workingacc);
-                        GUIs.shortToast(this, i18n.string(R.string.msg_account_created, name,AccountType.getDisplay(i18n, workingacc.getAccountType())));
+                        GUIs.shortToast(this, i18n.string(R.string.msg_account_created, name,AccountType.getDisplay(i18n, workingacc.getType())));
                     } catch (DuplicateKeyException e) {
                         GUIs.alert(this, i18n.string(R.string.cmsg_error, e.getMessage()));
                         return false;
@@ -256,11 +261,11 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
                 if (namedAcc != null && !namedAcc.getId().equals(acc.getId())) {
                     GUIs.shortToast(
                             this,i18n.string(R.string.msg_account_existed, name,
-                                    AccountType.getDisplay(i18n, namedAcc.getAccountType())));
+                                    AccountType.getDisplay(i18n, namedAcc.getType())));
                     return false;
                 } else {
                     idp.updateAccount(acc.getId(),workingacc);
-                    GUIs.shortToast(this, i18n.string(R.string.msg_account_updated, name,AccountType.getDisplay(i18n, acc.getAccountType())));
+                    GUIs.shortToast(this, i18n.string(R.string.msg_account_updated, name,AccountType.getDisplay(i18n, acc.getType())));
                 }
             }
             loadData();

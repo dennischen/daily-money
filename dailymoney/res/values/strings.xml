@@ -3,7 +3,6 @@
 	<string name="app_name">Daily Money</string>
 	<string name="accmgnt_title">Account management</string>
 	<string name="acceditor_title">Account editor</string>
-	<string name="act_newacc">New Account</string>
 
 	<string name="label_income">Income</string>
 	<string name="label_expense">Expense</string>

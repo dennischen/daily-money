@@ -40,7 +40,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         this.modeCreate = modeCreate;
         this.account = account;
         this.listener = listener;
-        workingAccount = new Account(account.getName(),account.getAccountType(),account.getInitialValue());
+        workingAccount = new Account(account.getName(),account.getType(),account.getInitialValue());
     }
     
     @Override
@@ -81,7 +81,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         //initial spinner
         typeEditor = (Spinner) findViewById(R.id.acceditor_type);
         List<Map<String, Object>> data = new  ArrayList<Map<String, Object>>();
-        String type = workingAccount.getAccountType();
+        String type = workingAccount.getType();
         int selpos,i;
         selpos = i = 0;
         for (AccountType at : AccountType.getSupportedType()) {
@@ -139,7 +139,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     private void doOk(){
         Logger.d("acceditor doOK");   
         
-        workingAccount.setAccountType(AccountType.getSupportedType()[typeEditor.getSelectedItemPosition()].getType());
+        workingAccount.setType(AccountType.getSupportedType()[typeEditor.getSelectedItemPosition()].getType());
         workingAccount.setName(nameEditor.getText().toString());
         workingAccount.setInitialValue(Formats.string2Double(initvalEditor.getText().toString()));
         

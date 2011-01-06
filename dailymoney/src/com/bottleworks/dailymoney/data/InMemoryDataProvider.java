@@ -7,23 +7,22 @@ import java.util.List;
  * @author dennis
  *
  */
-public class FakeDataProvider implements IDataProvider {
+public class InMemoryDataProvider implements IDataProvider {
 
-    List<Account> accountList;
+    static List<Account> accountList = new ArrayList<Account>();
 
-    public FakeDataProvider() {
-        reset();
+    public InMemoryDataProvider() {
     }
 
     public void reset() {
-        accountList = new ArrayList<Account>();
+        accountList.clear();
     }
 
     @Override
     public List<Account> listAccount(AccountType type) {
         List<Account> list = new ArrayList<Account>();
         for(Account a:accountList){
-            if(type.getType().equals(a.getAccountType())){
+            if(type.getType().equals(a.getType())){
                 list.add(a);
             }
         }
@@ -32,10 +31,11 @@ public class FakeDataProvider implements IDataProvider {
 
     @Override
     public synchronized void newAccount(Account account) throws DuplicateKeyException {
-        account.setId(normalizeName(account.getName()));
-        if (accountList.indexOf(account) != -1) {
-            throw new DuplicateKeyException("duplicate account id " + account.getId());
+        String id = normalizeName(account.getName());
+        if (findAccount(id) != null) {
+            throw new DuplicateKeyException("duplicate account id " + id);
         }
+        account.setId(normalizeName(id));
         accountList.add(account);
     }
 
@@ -64,7 +64,7 @@ public class FakeDataProvider implements IDataProvider {
         }
         //reset id, id is following the name;
         acc.setName(account.getName());
-        acc.setAccountType(account.getAccountType());
+        acc.setType(account.getType());
         acc.setInitialValue(account.getInitialValue());
 
         // reset id;
@@ -88,6 +88,14 @@ public class FakeDataProvider implements IDataProvider {
             }
         }
         return false;
+    }
+
+    @Override
+    public void init() {
+    }
+
+    @Override
+    public void destroyed() {
     }
 
 }

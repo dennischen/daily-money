@@ -28,4 +28,8 @@ public interface IDataProvider {
     
     boolean deleteAccount(String id);
 
+    public void init();
+
+    public void destroyed();
+
 }
