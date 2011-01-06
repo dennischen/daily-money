@@ -84,7 +84,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         String type = workingAccount.getAccountType();
         int selpos,i;
         selpos = i = 0;
-        for (AccountType at : AccountType.getAvailableType()) {
+        for (AccountType at : AccountType.getSupportedType()) {
             Map<String, Object> row = new HashMap<String, Object>();
             data.add(row);
             row.put(bindingFrom[0], AccountType.getDisplay(Contexts.instance().getI18n(),at.getType()));
@@ -102,7 +102,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         typeEditor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                AccountType type = AccountType.getAvailableType()[typeEditor.getSelectedItemPosition()];
+                AccountType type = AccountType.getSupportedType()[typeEditor.getSelectedItemPosition()];
                 checkType(type);
             }
 
@@ -112,7 +112,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         });
         
         
-        checkType(AccountType.getAvailableType()[selpos]);
+        checkType(AccountType.getSupportedType()[selpos]);
         
         Button ok = (Button)findViewById(R.id.acceditor_ok); 
         if(modeCreate){
@@ -139,7 +139,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     private void doOk(){
         Logger.d("acceditor doOK");   
         
-        workingAccount.setAccountType(AccountType.getAvailableType()[typeEditor.getSelectedItemPosition()].getType());
+        workingAccount.setAccountType(AccountType.getSupportedType()[typeEditor.getSelectedItemPosition()].getType());
         workingAccount.setName(nameEditor.getText().toString());
         workingAccount.setInitialValue(Formats.string2Double(initvalEditor.getText().toString()));
         

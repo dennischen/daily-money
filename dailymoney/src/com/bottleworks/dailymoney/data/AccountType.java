@@ -29,10 +29,10 @@ public enum AccountType {
         return type;
     }
 
-    static AccountType[] abailable = new  AccountType[]{INCOME,EXPENSE,ASSET,DEBT,OTHER};
+    static AccountType[] supported = new  AccountType[]{INCOME,EXPENSE,ASSET/*,DEBT,OTHER*/};
     
-    static public AccountType[] getAvailableType(){
-        return abailable;
+    static public AccountType[] getSupportedType(){
+        return supported;
     }
     
     static public AccountType find(String type){

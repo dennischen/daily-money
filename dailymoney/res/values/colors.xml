@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<color name="spinner_text">#000000</color>
+	<color name="simple_spitem">#000000</color>
+	<color name="simple_spdd">#000000</color>
+	
+	<color name="accmgnt_item_initval">#FF00FF</color>
 </resources>

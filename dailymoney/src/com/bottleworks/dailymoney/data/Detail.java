@@ -18,6 +18,8 @@ public class Detail {
     private Double money;
     private String note;
     private String description;
+    private boolean archived;
+    
 
     public String getId() {
         return id;

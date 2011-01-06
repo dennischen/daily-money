@@ -20,9 +20,12 @@ import android.widget.SimpleAdapter;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
 
 import com.bottleworks.commons.ui.Contexts;
 import com.bottleworks.commons.ui.ContextsActivity;
+import com.bottleworks.commons.ui.NamedItem;
+import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.IDialogFinishListener;
 import com.bottleworks.commons.util.Logger;
@@ -60,35 +63,22 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
         TabHost tabs = (TabHost) findViewById(R.id.accmgnt_tabs);
         tabs.setup();
 
-        TabSpec tab = tabs.newTabSpec(AccountType.INCOME.getType());
-        tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
-        tab.setContent(R.id.accmgnt_list);
-        tabs.addTab(tab);
-        lastTab = tab.getTag();
-
-        tab = tabs.newTabSpec(AccountType.EXPENSE.getType());
-        tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
-        tab.setContent(R.id.accmgnt_list);
-        tabs.addTab(tab);
-
-        tab = tabs.newTabSpec(AccountType.ASSET.getType());
-        tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
-        tab.setContent(R.id.accmgnt_list);
-        tabs.addTab(tab);
-
-        tab = tabs.newTabSpec(AccountType.DEBT.getType());
-        tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
-        tab.setContent(R.id.accmgnt_list);
-        tabs.addTab(tab);
-
-        tab = tabs.newTabSpec(AccountType.OTHER.getType());
-        tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
-        tab.setContent(R.id.accmgnt_list);
-        tabs.addTab(tab);
-
+        
+        AccountType[] ata = AccountType.getSupportedType();
+        for(AccountType at:ata){
+            TabSpec tab = tabs.newTabSpec(at.getType());
+            tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
+            tab.setContent(R.id.accmgnt_list);
+            tabs.addTab(tab);
+            if(lastTab!=null){
+                lastTab = tab.getTag();
+            }
+        }
         // workaround, force refresh
-        tabs.setCurrentTab(1);
-        tabs.setCurrentTab(0);
+        if(ata.length>1){
+            tabs.setCurrentTab(1);
+            tabs.setCurrentTab(0);
+        }
 
         tabs.setOnTabChangedListener(this);
 
@@ -101,6 +91,33 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
 
     private void initialListView() {
         listViewAdapter = new SimpleAdapter(this, listViewMapList, R.layout.accmgnt_item, bindingFrom, bindingTo);
+        listViewAdapter.setViewBinder(new SimpleAdapter.ViewBinder(){
+
+            @Override
+            public boolean setViewValue(View view, Object data, String text) {
+                NamedItem item = (NamedItem)data;
+                String name = item.getName();
+                Account acc = (Account)item.getValue();
+                //not textview, not initval
+                if(!(view instanceof TextView) || !name.equals(bindingFrom[1])){
+                    return false;
+                }
+                    
+                TextView tv = (TextView)view;
+                //reset
+                tv.setVisibility(View.VISIBLE);
+                
+                
+                AccountType at = AccountType.find(acc.getAccountType());
+                if(at==AccountType.INCOME || at==AccountType.EXPENSE){
+                    tv.setVisibility(View.INVISIBLE);
+                    return true;
+                }
+                text = i18n.string(R.string.label_initial_value)+" : "+data.toString();
+                tv.setText(text);
+                return true;
+            }});
+        
         listView = (ListView) findViewById(R.id.accmgnt_list);
         listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(this);
@@ -114,34 +131,15 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
         listViewData = null;
 
         AccountType type = AccountType.find(lastTab);
-        switch (type) {
-        case INCOME:
-            listViewData = idp.listAccount(AccountType.INCOME);
-            break;
-        case EXPENSE:
-            listViewData = idp.listAccount(AccountType.EXPENSE);
-            break;
-        case ASSET:
-            listViewData = idp.listAccount(AccountType.ASSET);
-            break;
-        case DEBT:
-            listViewData = idp.listAccount(AccountType.DEBT);
-            break;
-        case OTHER:
-            listViewData = idp.listAccount(AccountType.OTHER);
-            break;
-        default:
-            listViewData = new ArrayList<Account>();
-        }
-
+        listViewData = idp.listAccount(type);
         listViewMapList.clear();
 
         for (Account acc : listViewData) {
             Map<String, Object> row = new HashMap<String, Object>();
             listViewMapList.add(row);
-            row.put(bindingFrom[0], acc.getName());
-            row.put(bindingFrom[1], acc.getInitialValue());
-            row.put(bindingFrom[2], acc.getId());
+            row.put(bindingFrom[0], new NamedItem(bindingFrom[0],acc,acc.getName()));
+            row.put(bindingFrom[1], new NamedItem(bindingFrom[1],acc,Formats.double2String(acc.getInitialValue())));
+            row.put(bindingFrom[2], new NamedItem(bindingFrom[2],acc,acc.getId()));
         }
 
         listViewAdapter.notifyDataSetChanged();

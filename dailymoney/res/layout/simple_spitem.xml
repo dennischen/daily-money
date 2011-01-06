@@ -7,6 +7,6 @@
 		android:id="@+id/simple_spitem_display"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:textColor="@color/spinner_text"
+		android:textColor="@color/simple_spdd"
 		/>
 </RelativeLayout>
