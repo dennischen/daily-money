@@ -2,7 +2,7 @@ package com.bottleworks.dailymoney;
 
 import android.os.Bundle;
 
-import com.bottleworks.commons.ui.ContextsActivity;
+import com.bottleworks.dailymoney.ui.ContextsActivity;
 
 public class DailyMoneyActivity extends ContextsActivity {
     /** Called when the activity is first created. */

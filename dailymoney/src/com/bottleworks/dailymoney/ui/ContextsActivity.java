@@ -1,4 +1,4 @@
-package com.bottleworks.commons.ui;
+package com.bottleworks.dailymoney.ui;
 
 
 import com.bottleworks.commons.util.I18N;

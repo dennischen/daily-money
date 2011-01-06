@@ -15,12 +15,12 @@ import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
-import com.bottleworks.commons.ui.Contexts;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.IDialogFinishListener;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
+import com.bottleworks.dailymoney.ui.Contexts;
 
 /**
  * Edit or create a account

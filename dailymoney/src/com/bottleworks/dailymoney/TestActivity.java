@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.bottleworks.commons.ui.Contexts;
-import com.bottleworks.commons.ui.ContextsActivity;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.DefaultDataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
+import com.bottleworks.dailymoney.ui.Contexts;
+import com.bottleworks.dailymoney.ui.ContextsActivity;
 
 public class TestActivity extends ContextsActivity implements OnClickListener{
     /** Called when the activity is first created. */

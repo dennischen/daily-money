@@ -1,4 +1,4 @@
-package com.bottleworks.commons.ui;
+package com.bottleworks.dailymoney.ui;
 
 /**
  * 

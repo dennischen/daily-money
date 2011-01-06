@@ -1,13 +1,12 @@
-package com.bottleworks.commons.ui;
+package com.bottleworks.dailymoney.ui;
 
 import android.content.Context;
 import android.os.Bundle;
 
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
-import com.bottleworks.dailymoney.Preferences;
-import com.bottleworks.dailymoney.data.InMemoryDataProvider;
 import com.bottleworks.dailymoney.data.IDataProvider;
+import com.bottleworks.dailymoney.data.InMemoryDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteHelper;
 
