@@ -77,7 +77,12 @@ public class SQLiteDataProvider implements IDataProvider {
     @Override
     public List<Account> listAccount(AccountType type) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor c = db.query(TB_ACC,COL_ACC_ALL, COL_ACC_TYPE+" = ?", new String[]{type.getType()}, null, null, COL_ACC_ID);
+        Cursor c = null;
+        if(type==null){
+            c = db.query(TB_ACC,COL_ACC_ALL,null,null, null, null, COL_ACC_ID);
+        }else{
+            c = db.query(TB_ACC,COL_ACC_ALL, COL_ACC_TYPE+" = ?", new String[]{type.getType()}, null, null, COL_ACC_ID);
+        }
         List<Account> result = new ArrayList<Account>();
         Account acc;
         while(c.moveToNext()){

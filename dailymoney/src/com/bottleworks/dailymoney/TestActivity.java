@@ -1,16 +1,22 @@
 package com.bottleworks.dailymoney;
 
+import java.io.StringWriter;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
+import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.DefaultDataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.ContextsActivity;
+import com.csvreader.CsvWriter;
 
 public class TestActivity extends ContextsActivity implements OnClickListener{
     /** Called when the activity is first created. */
@@ -29,7 +35,7 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
         findViewById(R.id.test_createDefaultdata).setOnClickListener(this);
         findViewById(R.id.test_accountMgnt).setOnClickListener(this);
         findViewById(R.id.test_prefs).setOnClickListener(this);
-        findViewById(R.id.test_addDetail).setOnClickListener(this);
+        findViewById(R.id.test_csv).setOnClickListener(this);
         findViewById(R.id.test_listDetail).setOnClickListener(this);
         findViewById(R.id.test_updateDetail).setOnClickListener(this);
         
@@ -50,8 +56,8 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
         case R.id.test_accountMgnt:
             testAccountMgnt();
             break;
-        case R.id.test_addDetail:
-            testAddDetail();
+        case R.id.test_csv:
+            testCSV();
             break;
         case R.id.test_listDetail:
             testListDatail();
@@ -84,11 +90,6 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
         
     }
 
-    private void testAddDetail() {
-        Logger.d("testAddDetail");
-        
-    }
-
     private void testAccountMgnt() {
         Logger.d("testAccountMgnt");
         
@@ -97,8 +98,22 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
 
     private void testPrefs() {
         Logger.d("testPrefs");
-        
         startActivity(new Intent(this,PrefsActivity.class));
+    }
+    
+    private void testCSV(){
+        try{
+            StringWriter sw = new StringWriter();
+            CsvWriter csvw = new CsvWriter(sw,',');
+            
+            for(Account a:Contexts.instance().getDataProvider().listAccount(null)){
+                csvw.writeRecord(new String[]{a.getId(),a.getName(),a.getType(),Formats.double2String(a.getInitialValue())});
+            }
+            csvw.close();
+            GUIs.longToast(this, sw.toString());
+        }catch(Exception x){
+            x.printStackTrace();
+        }
     }
 
 }

@@ -22,7 +22,7 @@ public class InMemoryDataProvider implements IDataProvider {
     public List<Account> listAccount(AccountType type) {
         List<Account> list = new ArrayList<Account>();
         for(Account a:accountList){
-            if(type.getType().equals(a.getType())){
+            if(type==null || type.getType().equals(a.getType())){
                 list.add(a);
             }
         }

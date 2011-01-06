@@ -39,8 +39,8 @@
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"></Button>
 			<Button
-				android:text="Test Add Detail"
-				android:id="@+id/test_addDetail"
+				android:text="Test CSV"
+				android:id="@+id/test_csv"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"></Button>
 			<Button
