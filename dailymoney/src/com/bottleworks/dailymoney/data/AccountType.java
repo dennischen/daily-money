@@ -13,12 +13,12 @@ import com.bottleworks.dailymoney.R;
  */
 public enum AccountType {
 
-    UNKONW("U"),
-    INCOME("I"),
-    EXPENSE("E"),
-    ASSET("A"),
+    UNKONW("Z"),
+    INCOME("A"),
+    EXPENSE("B"),
+    ASSET("C"),
     DEBT("D"),
-    OTHER("T");
+    OTHER("E");
     
     String type;
     String display;

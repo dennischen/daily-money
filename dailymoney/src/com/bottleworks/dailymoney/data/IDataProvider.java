@@ -13,14 +13,16 @@ import java.util.List;
  */
 public interface IDataProvider {
 
-    
-    public void reset();
+    void init();
 
-    public Account findAccount(String id);
+    void destroyed();
     
-    public Account findAccountByNormalizedName(String name);
+    void reset();
+
+    Account findAccount(String id);
     
-    List<Account> listAccount(AccountType type);
+    Account findAccount(String type,String name);
+    
 
     void newAccount(Account account) throws DuplicateKeyException;
     
@@ -28,8 +30,9 @@ public interface IDataProvider {
     
     boolean deleteAccount(String id);
 
-    public void init();
-
-    public void destroyed();
+    /**
+     * list account by account type, if type null then return all account
+     */
+    List<Account> listAccount(AccountType type);
 
 }

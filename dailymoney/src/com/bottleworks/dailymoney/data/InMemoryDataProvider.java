@@ -31,11 +31,11 @@ public class InMemoryDataProvider implements IDataProvider {
 
     @Override
     public synchronized void newAccount(Account account) throws DuplicateKeyException {
-        String id = normalizeName(account.getName());
+        String id = normalizeAccountId(account.getType(),account.getName());
         if (findAccount(id) != null) {
             throw new DuplicateKeyException("duplicate account id " + id);
         }
-        account.setId(normalizeName(id));
+        account.setId(id);
         accountList.add(account);
     }
 
@@ -48,9 +48,9 @@ public class InMemoryDataProvider implements IDataProvider {
         return null;
     }
 
-    public Account findAccountByNormalizedName(String name) {
-        name = normalizeName(name);
-        return findAccount(name);
+    public Account findAccount(String type,String name) {
+        String id = normalizeAccountId(type,name);
+        return findAccount(id);
     }
 
     @Override
@@ -68,15 +68,15 @@ public class InMemoryDataProvider implements IDataProvider {
         acc.setInitialValue(account.getInitialValue());
 
         // reset id;
-        id = normalizeName(account.getName());
+        id = normalizeAccountId(account.getType(),account.getName());
         account.setId(id);
         acc.setId(id);
         return true;
     }
     
-    private String normalizeName(String name){
+    private String normalizeAccountId(String type,String name){
         name = name.trim().toLowerCase().replace(' ', '-');
-        return name;
+        return type+"-"+name;
     }
 
     @Override

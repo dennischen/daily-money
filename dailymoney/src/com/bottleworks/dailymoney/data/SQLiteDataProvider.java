@@ -22,9 +22,9 @@ public class SQLiteDataProvider implements IDataProvider {
     }
 
     
-    private String normalizeName(String name){
+    private String normalizeAccountId(String type,String name){
         name = name.trim().toLowerCase().replace(' ', '-');
-        return name;
+        return type+"-"+name;
     }
     
     @Override
@@ -69,9 +69,9 @@ public class SQLiteDataProvider implements IDataProvider {
     }
 
     @Override
-    public Account findAccountByNormalizedName(String name) {
-        name = normalizeName(name);
-        return findAccount(name);
+    public Account findAccount(String type,String name) {
+        String id = normalizeAccountId(type,name);
+        return findAccount(id);
     }
 
     @Override
@@ -95,11 +95,11 @@ public class SQLiteDataProvider implements IDataProvider {
 
     @Override
     public void newAccount(Account account) throws DuplicateKeyException {
-        String id = normalizeName(account.getName());
+        String id = normalizeAccountId(account.getType(),account.getName());
         if (findAccount(id) != null) {
             throw new DuplicateKeyException("duplicate account id " + id);
         }
-        account.setId(normalizeName(id));
+        account.setId(id);
         
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -115,7 +115,9 @@ public class SQLiteDataProvider implements IDataProvider {
         }
         
         //reset id, id is following the name;
-        account.setId(normalizeName(account.getName()));
+        String newid = normalizeAccountId(account.getType(),account.getName());
+        account.setId(newid);
+        //TODO update all detail that has id to new id
 
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();

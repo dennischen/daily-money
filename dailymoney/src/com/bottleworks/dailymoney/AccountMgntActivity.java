@@ -238,8 +238,9 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
             Account workingacc = ((AccountEditorDialog) dlg).getWorkingAccount();
             boolean modeCreate = ((AccountEditorDialog) dlg).isModeCreate();
             String name = workingacc.getName();
+            String type = workingacc.getType();
             IDataProvider idp = Contexts.instance().getDataProvider();
-            Account namedAcc = idp.findAccountByNormalizedName(name);
+            Account namedAcc = idp.findAccount(type,name);
             if (modeCreate) {
                 if (namedAcc != null) {
                     GUIs.shortToast(
