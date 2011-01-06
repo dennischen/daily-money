@@ -19,7 +19,7 @@ public class ContextsActivity extends Activity {
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        i18n = Contexts.instance().initialBundle(this,bundle).getI18n();
+        i18n = Contexts.instance().initContext(this).getI18n();
     }
     
     @Override

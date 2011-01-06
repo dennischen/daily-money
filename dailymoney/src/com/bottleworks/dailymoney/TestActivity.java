@@ -28,6 +28,7 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
         findViewById(R.id.test_resetDataprovider).setOnClickListener(this);
         findViewById(R.id.test_createDefaultdata).setOnClickListener(this);
         findViewById(R.id.test_accountMgnt).setOnClickListener(this);
+        findViewById(R.id.test_prefs).setOnClickListener(this);
         findViewById(R.id.test_addDetail).setOnClickListener(this);
         findViewById(R.id.test_listDetail).setOnClickListener(this);
         findViewById(R.id.test_updateDetail).setOnClickListener(this);
@@ -42,6 +43,9 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
             break;
         case R.id.test_createDefaultdata:
             testCreateDefaultdata();            
+            break;
+        case R.id.test_prefs:
+            testPrefs();
             break;
         case R.id.test_accountMgnt:
             testAccountMgnt();
@@ -91,5 +95,10 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
         startActivity(new Intent(this,AccountMgntActivity.class));
     }
 
+    private void testPrefs() {
+        Logger.d("testPrefs");
+        
+        startActivity(new Intent(this,PrefsActivity.class));
+    }
 
 }

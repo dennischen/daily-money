@@ -27,7 +27,12 @@
                 android:text="Create Default Data"
                 android:id="@+id/test_createDefaultdata"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"></Button>                
+                android:layout_height="wrap_content"></Button>   
+            <Button
+                android:text="Test Preferences"
+                android:id="@+id/test_prefs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"></Button>             
 			<Button
 				android:text="Test Account Mgnt"
 				android:id="@+id/test_accountMgnt"

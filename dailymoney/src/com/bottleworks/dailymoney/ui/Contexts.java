@@ -1,10 +1,12 @@
 package com.bottleworks.dailymoney.ui;
 
 import android.content.Context;
-import android.os.Bundle;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.Constants;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.data.InMemoryDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteDataProvider;
@@ -19,15 +21,14 @@ public class Contexts {
 
     private static Contexts instance;
     
-    private Bundle bundle;
     private Context context;
     
     private IDataProvider dataProvider;
     private I18N i18n;
     
-    boolean inmemory = false;//true;
+    boolean useimprovider;
     
-    private boolean bundleInit = false; 
+    private boolean prefsDirty = true;
     
     private Contexts(){
     }
@@ -42,29 +43,27 @@ public class Contexts {
         }
         return instance;
     }
-    
-    Contexts initialBundle(Context context,Bundle bundle){
-        if(!bundleInit){
-            this.bundle = bundle;
-//            inmemory = bundle.getBoolean(Preferences.IN_MENORY_PROVIDER, true);
-            
-            
-            bundleInit = true;
-        }
-        initContext(context);
-        return this;
-    }
-    
+
+
     
     Contexts initContext(Context context){
         if(this.context != context){
             this.context = context;
             this.i18n = new I18N(context);
+            if(prefsDirty){
+                reloadPreference();
+                prefsDirty = false;
+            }
             initDataProvider(context);
         }
         return this;
     }
     
+    private void reloadPreference() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        useimprovider = prefs.getBoolean(Constants.PREFS_USE_INMENORY_PROVIDER, false);
+    }
+
     Contexts cleanContext(Context context){
         if(this.context == context){
             this.context = null;
@@ -80,7 +79,7 @@ public class Contexts {
     }
 
     private void initDataProvider(Context context) {
-        if(inmemory){
+        if(useimprovider){
             dataProvider = new InMemoryDataProvider();
         }else{
             dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"));
@@ -99,5 +98,9 @@ public class Contexts {
     
     public IDataProvider getDataProvider(){
         return dataProvider;
+    }
+
+    public void setPreferenceDirty() {
+        prefsDirty = true;
     }
 }

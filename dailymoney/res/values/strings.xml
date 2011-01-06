@@ -3,6 +3,7 @@
 	<string name="app_name">Daily Money</string>
 	<string name="accmgnt_title">Account management</string>
 	<string name="acceditor_title">Account editor</string>
+	<string name="prefs_title">Preferences</string>
 
 	<string name="label_income">Income</string>
 	<string name="label_expense">Expense</string>
@@ -10,6 +11,10 @@
 	<string name="label_debt">Debt</string>
 	<string name="label_other">Other</string>
 	<string name="label_initial_value">Initial</string>
+	
+	<string name="label_prefs_improvider">Use in-memory-provider</string>
+	<string name="label_prefs_improvider_sum">Use in-memory-provider for trying this application, data in this mode will not be persisted</string>
+	
 
 	<string name="msg_account_existed">%1$s is existed in type %2$s</string>
 	<string name="msg_account_deleted">Account %1$s was deleted</string>
