@@ -1,27 +1,24 @@
 package com.bottleworks.dailymoney;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SimpleAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import com.bottleworks.commons.util.Calendars;
 import com.bottleworks.commons.util.Formats;
-import com.bottleworks.commons.util.IDialogFinishListener;
+import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.commons.util.OnDialogFinishListener;
 import com.bottleworks.commons.util.Logger;
-import com.bottleworks.dailymoney.data.Account;
-import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.ui.Contexts;
 
@@ -36,11 +33,11 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     private boolean modeCreate;
     private Detail detail;
     private Detail workingDetail;
-    private IDialogFinishListener listener;
+    private OnDialogFinishListener listener;
     
     private DateFormat format;
     
-    public DetailEditorDialog(Context context,IDialogFinishListener listener,boolean modeCreate,Detail detail) {
+    public DetailEditorDialog(Context context,OnDialogFinishListener listener,boolean modeCreate,Detail detail) {
         super(context,R.style.theme_acceidtor);
         this.modeCreate = modeCreate;
         this.detail = detail;
@@ -133,6 +130,10 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         noteEditor.setText(workingDetail.getNote());
         
         
+        findViewById(R.id.deteditor_prev).setOnClickListener(this);
+        findViewById(R.id.deteditor_next).setOnClickListener(this);
+        findViewById(R.id.deteditor_today).setOnClickListener(this);
+        findViewById(R.id.deteditor_datepicker).setOnClickListener(this);
         
         
         Button ok = (Button)findViewById(R.id.deteditor_ok); 
@@ -147,6 +148,10 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         findViewById(R.id.deteditor_cancel).setOnClickListener(this);
     }
     
+    private void updateDateEditor(Date d){
+        dateEditor.setText(format.format(d));
+    }
+    
     @Override
     public void onClick(View v) {
         switch(v.getId()){
@@ -155,6 +160,39 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
             break;
         case R.id.deteditor_cancel:
             doCancel();
+            break;
+        case R.id.deteditor_prev:
+            try {
+                Date d = format.parse(dateEditor.getText().toString());
+                updateDateEditor(Calendars.yesterday(d));
+            } catch (ParseException e) {
+                Logger.e(e.getMessage(),e);
+            }
+            break;
+        case R.id.deteditor_next:
+            try {
+                Date d = format.parse(dateEditor.getText().toString());
+                updateDateEditor(Calendars.tomorrow(d));
+            } catch (ParseException e) {
+                Logger.e(e.getMessage(),e);
+            }
+            break;
+        case R.id.deteditor_today:
+            updateDateEditor(Calendars.today());
+            break;
+        case R.id.deteditor_datepicker:
+            try {
+            Date d = format.parse(dateEditor.getText().toString());
+                GUIs.openDatePicker(getContext(),d,new OnDialogFinishListener() {
+                    @Override
+                    public boolean onDialogFinish(Dialog dlg, View v, Object data) {
+                        updateDateEditor((Date)data);
+                        return true;
+                    }
+                });
+            } catch (ParseException e) {
+                Logger.e(e.getMessage(),e);
+            }
             break;
         }
     }

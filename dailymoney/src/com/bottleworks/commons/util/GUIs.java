@@ -1,5 +1,7 @@
 package com.bottleworks.commons.util;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -7,6 +9,7 @@ import com.bottleworks.dailymoney.R;
 import com.bottleworks.dailymoney.ui.Contexts;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +17,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 /**
@@ -141,5 +145,22 @@ public class GUIs {
         @Override
         public void onBusyError(Throwable t) {
         }
+    }
+
+    public static void openDatePicker(Context context, Date d,final OnDialogFinishListener listener) {
+        final Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        //for event
+        final DatePickerDialog[] s = new DatePickerDialog[1];
+        DatePickerDialog picker = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener(){
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                c.set(Calendar.YEAR,year);
+                c.set(Calendar.MONTH,monthOfYear);
+                c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                listener.onDialogFinish(s[0] , view, c.getTime());
+            }}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        s[0] = picker;
+        picker.show();
     }
 }

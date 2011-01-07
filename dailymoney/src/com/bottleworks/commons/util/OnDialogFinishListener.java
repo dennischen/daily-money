@@ -8,7 +8,7 @@ import android.view.View;
  * @author dennis
  *
  */
-public interface IDialogFinishListener {
+public interface OnDialogFinishListener {
 
     
     public boolean onDialogFinish(Dialog dlg,View v,Object data);

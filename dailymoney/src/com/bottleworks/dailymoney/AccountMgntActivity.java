@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.commons.util.IDialogFinishListener;
+import com.bottleworks.commons.util.OnDialogFinishListener;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
@@ -42,7 +42,7 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  * @author dennis
  * @see {@link AccountType}
  */
-public class AccountMgntActivity extends ContextsActivity implements OnTabChangeListener,OnItemClickListener, IDialogFinishListener {
+public class AccountMgntActivity extends ContextsActivity implements OnTabChangeListener,OnItemClickListener, OnDialogFinishListener {
     
     private static String[] bindingFrom = new String[] { "name", "initvalue", "id" };
     

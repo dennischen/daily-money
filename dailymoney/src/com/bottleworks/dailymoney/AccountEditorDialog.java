@@ -17,7 +17,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.bottleworks.commons.util.Formats;
-import com.bottleworks.commons.util.IDialogFinishListener;
+import com.bottleworks.commons.util.OnDialogFinishListener;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
@@ -34,9 +34,9 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     private boolean modeCreate;
     private Account account;
     private Account workingAccount;
-    private IDialogFinishListener listener;
+    private OnDialogFinishListener listener;
     
-    public AccountEditorDialog(Context context,IDialogFinishListener listener,boolean modeCreate,Account account) {
+    public AccountEditorDialog(Context context,OnDialogFinishListener listener,boolean modeCreate,Account account) {
         super(context,R.style.theme_acceidtor);
         this.modeCreate = modeCreate;
         this.account = account;
