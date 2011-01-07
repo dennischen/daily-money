@@ -17,6 +17,8 @@
 	<string name="clabel_unknow">末知</string>
 	<string name="clabel_warn">警告</string>
 	<string name="cmsg_error">錯誤 : %1$s</string>
-	<!-- above are sorted -->
+    <string name="clabel_busy">忙碌</string>
+    <string name="cmsg_busy">應用程式忙碌中，請稍候...</string>
+    <!-- above are verified -->
 	
 </resources>

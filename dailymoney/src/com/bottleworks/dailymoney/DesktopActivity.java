@@ -81,8 +81,11 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         dataItems.add(detaildt);
         dataItems.add(accdt);
         dataItems.add(prefdt);
-        dataItems.add(testdt);
         
+        
+        
+        /** test */
+        dataItems.add(testdt);
         dataItems.add(new DesktopItem(new Runnable(){
             @Override
             public void run() {
@@ -98,7 +101,11 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
             public void run() {
                 testCSV();
             }}, "test csv",R.drawable.dt_item_test));
-        
+        dataItems.add(new DesktopItem(new Runnable(){
+            @Override
+            public void run() {
+                testBusy();
+            }}, "test busy",R.drawable.dt_item_test));
         
         reportsItems.add(testdt);
         reportsItems.add(accdt);
@@ -295,15 +302,49 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
      */
     
     private void testResetDataprovider() {
-        IDataProvider idp = Contexts.instance().getDataProvider();
-        idp.reset();
-        GUIs.shortToast(this,"reset data provider");
+        GUIs.doBusy(this,new GUIs.BusyAdapter(){
+            @Override
+            public void onBusyFinish() {
+                GUIs.shortToast(DesktopActivity.this,"reset data provider");
+            }
+            @Override
+            public void run() {
+                IDataProvider idp = Contexts.instance().getDataProvider();
+                idp.reset();
+            }});
+
     }
     
     private void testCreateDefaultdata() {
-        IDataProvider idp = Contexts.instance().getDataProvider();
-        new DefaultDataCreator(idp,i18n).createDefaultAccounts();
-        GUIs.shortToast(this,"create default data");
+        GUIs.doBusy(this,new GUIs.BusyAdapter(){
+            @Override
+            public void onBusyFinish() {
+                GUIs.shortToast(DesktopActivity.this,"create default data");
+            }
+            @Override
+            public void run() {
+                IDataProvider idp = Contexts.instance().getDataProvider();
+                new DefaultDataCreator(idp,i18n).createDefaultAccounts();
+            }});
+        
+    }
+    
+    private void testBusy() {
+        GUIs.shortToast(DesktopActivity.this,"I am busy");
+        GUIs.doBusy(this,new GUIs.BusyAdapter() {
+            @Override
+            public void onBusyFinish() {
+                GUIs.shortToast(DesktopActivity.this,"I am not busy now");
+            }
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }});
+        
     }
     
     private void testCSV(){

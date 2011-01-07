@@ -17,6 +17,9 @@
 	<string name="clabel_unknow">Unknow</string>
 	<string name="clabel_warn">Warn</string>
 	<string name="cmsg_error">Error : %1$s</string>
-	<!-- above are sorted -->
+    <string name="clabel_busy">Busy</string>
+    <string name="cmsg_busy">Application is busy, please wait for seconds...</string>
+	<!-- above are verified -->
 	
+
 </resources>

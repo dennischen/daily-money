@@ -1,10 +1,16 @@
 package com.bottleworks.commons.util;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.ui.Contexts;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,5 +75,71 @@ public class GUIs {
     static public View inflateView(Context context,ViewGroup parent, int resourceid){
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return inflater.inflate(resourceid, parent);
+    }
+    
+    
+    private static ExecutorService busyExecutor = Executors.newSingleThreadExecutor();
+    private static Handler busyGuiHandler = new Handler();
+    
+    static public void doBusy(Context context,Runnable r){
+        doBusy(context,Contexts.instance().getI18n().string(R.string.cmsg_busy),r); 
+    }
+    
+    static public void doBusy(Context context,String msg,Runnable r){
+        final ProgressDialog dlg = ProgressDialog.show(context,Contexts.instance().getI18n().string(R.string.clabel_busy),msg,true,false);
+        dlg.show();
+        busyExecutor.submit(new BusyRunnable(dlg,r));
+    }
+    
+    static class BusyRunnable implements Runnable{
+        ProgressDialog dlg;
+        Runnable run;
+        public BusyRunnable(ProgressDialog dlg,Runnable run){
+            this.dlg = dlg;
+            this.run = run;
+        }
+        
+        @Override
+        public void run() {
+            try{
+                run.run();
+                dlg.dismiss();
+                if(run instanceof IBusyListener){
+                    busyGuiHandler.post(new Runnable(){
+                        @Override
+                        public void run() {
+                            ((IBusyListener)run).onBusyFinish();                        
+                        }});
+                }
+            }catch(final Throwable x){
+                Logger.e(x.getMessage(),x);
+                if(run instanceof IBusyListener){
+                    busyGuiHandler.post(new Runnable(){
+                        @Override
+                        public void run() {
+                            ((IBusyListener)run).onBusyError(x);                        
+                        }});
+                }
+            }
+            //dlg is safe to be dismissed in other thread.
+            
+        }
+    }
+
+    /**
+     * on busy event will be invoke in gui thread.
+     */
+    public static interface IBusyListener extends Runnable{
+        void onBusyFinish();
+        void onBusyError(Throwable t);
+    }
+    
+    public static abstract class BusyAdapter implements IBusyListener{
+        @Override
+        public void onBusyFinish() {
+        }
+        @Override
+        public void onBusyError(Throwable t) {
+        }
     }
 }
