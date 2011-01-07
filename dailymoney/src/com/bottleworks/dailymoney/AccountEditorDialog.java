@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -64,8 +65,8 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     }
     
     
-    private static String[] bindingFrom = new String[] { "display"};
-    private static int[] bindingTo = new int[] { R.id.simple_spitem_display};
+    private static String[] spfrom = new String[] { "display"};
+    private static int[] spto = new int[] { R.id.simple_spitem_display};
     
     EditText nameEditor;
     EditText initvalEditor;
@@ -87,14 +88,14 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         for (AccountType at : AccountType.getSupportedType()) {
             Map<String, Object> row = new HashMap<String, Object>();
             data.add(row);
-            row.put(bindingFrom[0], AccountType.getDisplay(Contexts.instance().getI18n(),at.getType()));
+            row.put(spfrom[0], AccountType.getDisplay(Contexts.instance().getI18n(),at.getType()));
             
             if(at.getType().equals(type)){
                 selpos = i;
             }
             i++;
         }
-        SimpleAdapter adapter = new SimpleAdapter(getContext(), data, R.layout.simple_spitem, bindingFrom, bindingTo);
+        SimpleAdapter adapter = new SimpleAdapter(getContext(), data, R.layout.simple_spitem, spfrom, spto);
         adapter.setDropDownViewResource(R.layout.simple_spdd);
         
         typeEditor.setAdapter(adapter);
@@ -116,8 +117,10 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         
         Button ok = (Button)findViewById(R.id.acceditor_ok); 
         if(modeCreate){
+            ok.setCompoundDrawablesWithIntrinsicBounds(R.drawable.btn_add,0,0,0);
             ok.setText(R.string.cact_create);
         }else{
+            ok.setCompoundDrawablesWithIntrinsicBounds(R.drawable.btn_update,0,0,0);
             ok.setText(R.string.cact_update);
         }
         ok.setOnClickListener(this);
@@ -143,14 +146,14 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         workingAccount.setName(nameEditor.getText().toString());
         workingAccount.setInitialValue(Formats.string2Double(initvalEditor.getText().toString()));
         
-        if(listener.onDialogFinish(this,findViewById(R.id.acceditor_ok), null)){
+        if(listener==null || listener.onDialogFinish(this,findViewById(R.id.acceditor_ok), null)){
             dismiss();
         }
     }
     
     private void doCancel(){
         Logger.d("acceditor doCancel");
-        if(listener.onDialogFinish(this,findViewById(R.id.acceditor_cancel), null)){
+        if(listener==null || listener.onDialogFinish(this,findViewById(R.id.acceditor_cancel), null)){
             dismiss();
         }
     }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -31,7 +32,9 @@ import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.Account;
+import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.DefaultDataCreator;
+import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.ContextsActivity;
@@ -72,9 +75,13 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         
         DesktopItem detaildt = new DesktopItem(new Runnable(){
             public void run(){
-                GUIs.shortToast(DesktopActivity.this,"not implement yet");
+                GUIs.shortToast(DesktopActivity.this,"test detail editor");
+                Detail d = new Detail("a","A","b","B",new Date(),10D,"test note");
+                DetailEditorDialog dlg = new DetailEditorDialog(DesktopActivity.this,null, true, d);
+                dlg.show();
+                
             }
-        },i18n.string(R.string.title_detailmgnt),R.drawable.dt_item_detail);
+        },i18n.string(R.string.title_detmgnt),R.drawable.dt_item_detail);
         
         DesktopItem accdt = new DesktopItem(AccountMgntActivity.class,i18n.string(R.string.title_accmgnt),R.drawable.dt_item_account);
         DesktopItem prefdt = new DesktopItem(PrefsActivity.class,i18n.string(R.string.title_prefs),R.drawable.dt_item_prefs);

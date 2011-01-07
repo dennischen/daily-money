@@ -1,7 +1,10 @@
 package com.bottleworks.dailymoney.ui;
 
+import java.text.DateFormat;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 
 import com.bottleworks.commons.util.I18N;
@@ -13,7 +16,7 @@ import com.bottleworks.dailymoney.data.SQLiteDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteHelper;
 
 /**
- * Helps me to do some quick/cacheable operation in a application's life cycle 
+ * Helps me to do some quick access in context/ui thread
  * @author dennis
  *
  */
@@ -102,5 +105,13 @@ public class Contexts {
 
     public void setPreferenceDirty() {
         prefsDirty = true;
+    }
+    
+    public DateFormat getDateFormat(){
+        return android.text.format.DateFormat.getDateFormat(context);
+    }
+    
+    public Drawable getDrawable(int id){
+        return context.getResources().getDrawable(id);
     }
 }

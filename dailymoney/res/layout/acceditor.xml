@@ -22,8 +22,8 @@
 	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"  android:layout_weight="1"
 		android:layout_marginTop="10dp">
 		<Button android:id="@+id/acceditor_ok" android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:layout_weight="1" android:text="@string/cact_ok" />
+			android:layout_weight="1" android:text="@string/cact_ok"/>
 		<Button android:id="@+id/acceditor_cancel" android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:layout_weight="1" android:text="@string/cact_cancel" />
+			android:layout_weight="1" android:text="@string/cact_cancel"  android:drawableLeft="@drawable/btn_cancel" />
 	</LinearLayout>
 </LinearLayout>

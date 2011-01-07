@@ -68,6 +68,10 @@ public enum AccountType {
             return i18n.string(R.string.clabel_unknow);
         }
     }
+    
+    public String getDisplay(I18N i18n){
+        return getDisplay(i18n,type);
+    }
     public int getDrawable() {
         return drawable;
     }

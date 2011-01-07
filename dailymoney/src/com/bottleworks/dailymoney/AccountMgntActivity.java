@@ -7,7 +7,6 @@ import java.util.Map;
 
 import android.app.Dialog;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;

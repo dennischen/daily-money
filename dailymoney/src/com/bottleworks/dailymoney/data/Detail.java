@@ -17,9 +17,20 @@ public class Detail {
     private Date date;
     private Double money;
     private String note;
-    private String description;
+    
     private boolean archived;
     
+
+    public Detail(String fromAccount, String fromDisplay, String toAccount, String toDisplay, Date date, Double money,
+            String note) {
+        this.fromAccount = fromAccount;
+        this.fromDisplay = fromDisplay;
+        this.toAccount = toAccount;
+        this.toDisplay = toDisplay;
+        this.date = date;
+        this.money = money;
+        this.note = note;
+    }
 
     public String getId() {
         return id;
@@ -84,15 +95,6 @@ public class Detail {
     public void setNote(String note) {
         this.note = note;
     }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
