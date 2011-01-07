@@ -1,5 +1,6 @@
 package com.bottleworks.dailymoney;
 
+import java.io.File;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +10,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +26,7 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
+import com.bottleworks.commons.util.Files;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
@@ -357,8 +360,28 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
             }
             csvw.close();
             String msg = sw.toString();
-            GUIs.longToast(this, msg.length()==0?"no account":msg);
+            if(msg.length()==0){
+                GUIs.longToast(this, "no account");
+            }else{
+                File sd = Environment.getExternalStorageDirectory();
+                File folder = new File(sd,"bwDailyMoney");
+                if(!folder.exists()){
+                    folder.mkdir();
+                }
+                File file = new File(folder,"account-export.csv");
+                if(!file.exists()){
+                    file.createNewFile();
+                }
+                Files.saveString(msg, file, "utf8");
+                GUIs.longToast(this, "csv save to "+file.getAbsolutePath()+", content, \n "+msg);
+            }
+            
+            
+            
+            
+            
         }catch(Exception x){
+            GUIs.longToast(this, "error "+x.getMessage());
             x.printStackTrace();
         }
     }
