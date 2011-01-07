@@ -356,7 +356,8 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
                 csvw.writeRecord(new String[]{a.getId(),a.getName(),a.getType(),Formats.double2String(a.getInitialValue())});
             }
             csvw.close();
-            GUIs.longToast(this, sw.toString());
+            String msg = sw.toString();
+            GUIs.longToast(this, msg.length()==0?"no account":msg);
         }catch(Exception x){
             x.printStackTrace();
         }
