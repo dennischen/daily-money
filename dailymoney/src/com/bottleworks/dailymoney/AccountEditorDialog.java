@@ -36,7 +36,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     private IDialogFinishListener listener;
     
     public AccountEditorDialog(Context context,IDialogFinishListener listener,boolean modeCreate,Account account) {
-        super(context);
+        super(context,R.style.theme_acceidtor);
         this.modeCreate = modeCreate;
         this.account = account;
         this.listener = listener;
@@ -46,7 +46,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.acceditor_title);
+        setTitle(R.string.title_acceditor);
         setContentView(R.layout.acceditor);
         initialEditor();
     }

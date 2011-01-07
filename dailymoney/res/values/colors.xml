@@ -3,5 +3,8 @@
 	<color name="simple_spitem">#000000</color>
 	<color name="simple_spdd">#000000</color>
 	
-	<color name="accmgnt_item_initval">#FF00FF</color>
+	
+	<color name="dt_background">#000000</color>
+	<color name="dt_item">#EEEEEE</color>
+	
 </resources>

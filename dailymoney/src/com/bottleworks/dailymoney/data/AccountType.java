@@ -13,17 +13,18 @@ import com.bottleworks.dailymoney.R;
  */
 public enum AccountType {
 
-    UNKONW("Z"),
-    INCOME("A"),
-    EXPENSE("B"),
-    ASSET("C"),
-    DEBT("D"),
-    OTHER("E");
+    UNKONW("Z",R.drawable.na),
+    INCOME("A",R.drawable.acc_tab_income),
+    EXPENSE("B",R.drawable.acc_tab_expense),
+    ASSET("C",R.drawable.acc_tab_asset),
+    DEBT("D",R.drawable.na),
+    OTHER("E",R.drawable.na);
     
     String type;
-    String display;
-    AccountType(String type){
+    int drawable;
+    AccountType(String type,int drawable){
         this.type = type;
+        this.drawable = drawable;
     }
     public String getType() {
         return type;
@@ -66,6 +67,9 @@ public enum AccountType {
         default:
             return i18n.string(R.string.clabel_unknow);
         }
+    }
+    public int getDrawable() {
+        return drawable;
     }
     
     

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Dialog;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -42,20 +44,32 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  * @see {@link AccountType}
  */
 public class AccountMgntActivity extends ContextsActivity implements OnTabChangeListener,OnItemClickListener, IDialogFinishListener {
-    /** Called when the activity is first created. */
+    
+    private static String[] bindingFrom = new String[] { "name", "initvalue", "id" };
+    
+    private static int[] bindingTo = new int[] { R.id.accmgnt_item_name, R.id.accmgnt_item_initvalue, R.id.accmgnt_item_id };
+    
+    
     private List<Account> listViewData = new ArrayList<Account>();
+    
     private List<Map<String, Object>> listViewMapList = new ArrayList<Map<String, Object>>();
 
-    private String lastTab = null;
+    private String currTab = null;
 
     private ListView listView;
+    
+    private SimpleAdapter listViewAdapter;
+    
+
+
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.accmgnt);
         initialTab();
-        initialListView();
+        initialContent();
     }
     
     @Override
@@ -70,13 +84,14 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
 
         
         AccountType[] ata = AccountType.getSupportedType();
+        Resources r = getResources();
         for(AccountType at:ata){
             TabSpec tab = tabs.newTabSpec(at.getType());
-            tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()));
+            tab.setIndicator(AccountType.getDisplay(i18n, tab.getTag()),r.getDrawable(at.getDrawable()));
             tab.setContent(R.id.accmgnt_list);
             tabs.addTab(tab);
-            if(lastTab==null){
-                lastTab = tab.getTag();
+            if(currTab==null){
+                currTab = tab.getTag();
             }
         }
         // workaround, force refresh
@@ -89,12 +104,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
 
     }
 
-    private static String[] bindingFrom = new String[] { "name", "initvalue", "id" };
-    private static int[] bindingTo = new int[] { R.id.accmgnt_item_name, R.id.accmgnt_item_initvalue, R.id.accmgnt_item_id };
-
-    private SimpleAdapter listViewAdapter;
-
-    private void initialListView() {
+    private void initialContent() {
         listViewAdapter = new SimpleAdapter(this, listViewMapList, R.layout.accmgnt_item, bindingFrom, bindingTo);
         listViewAdapter.setViewBinder(new SimpleAdapter.ViewBinder(){
 
@@ -135,7 +145,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
         IDataProvider idp = Contexts.instance().getDataProvider();
         listViewData = null;
 
-        AccountType type = AccountType.find(lastTab);
+        AccountType type = AccountType.find(currTab);
         listViewData = idp.listAccount(type);
         listViewMapList.clear();
 
@@ -153,7 +163,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     @Override
     public void onTabChanged(String tabId) {
         Logger.d("switch to tab : " + tabId);
-        lastTab = tabId;
+        currTab = tabId;
         loadData();
     }
 
@@ -226,7 +236,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     }
 
     private void doNewAccount() {
-        Account acc = new Account("", lastTab, 0D);
+        Account acc = new Account("", currTab, 0D);
         AccountEditorDialog dlg = new AccountEditorDialog(this, this, true, acc);
         dlg.show();
     }

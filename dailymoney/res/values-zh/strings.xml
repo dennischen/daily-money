@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Daily Money</string>
-<string name="label_income">收入</string>
-<string name="label_expense">支出</string>
-<string name="label_asset">資產</string>
-<string name="label_debt">負債</string>
-<string name="label_initial_value">初始值</string>
+	<string name="app_name">Daily Money</string>
+	<string name="defacc_bank">銀行</string>
+	<string name="defacc_cash">現金</string>
+	<string name="defacc_entertainment">娛樂</string>
+	<string name="defacc_food">食物</string>
+	<string name="defacc_interest">利息</string>
+	<string name="defacc_otherexpense">其他花費</string>
+	<string name="defacc_otherincome">其他收人</string>
+	<string name="defacc_salary">薪水</string>
+	<string name="label_asset">資產</string>
+	<string name="label_functions">功能</string>
+	<string name="label_debt">負債</string>
+	<string name="label_expense">花費</string>
+	<string name="label_income">收入</string>
+	<string name="label_initial_value">初始值</string>
+	<string name="label_other">其他</string>
+	<string name="label_prefs_improvider_sum">設定這個屬性，方便您試用這個軟體。任何資料將在軟體結束後消失</string>
+	<string name="label_prefs_improvider">使用暫態的資料提供方式</string>
+    <string name="label_reports">報表</string>
+	<string name="msg_account_created">帳戶 %1$s 成功的被建立在帳戶型態 %2$s 中</string>
+	<string name="msg_account_deleted">帳戶 %1$s 成功的刪除</string>
+	<string name="msg_account_existed">帳戶 %1$s 已經存在於帳戶型態 %2$s 中</string>
+	<string name="msg_account_updated">帳戶 %1$s 成功的被更新在帳戶型態 %2$s 中</string>
+	<string name="title_acceditor">帳戶編輯</string>
+    <string name="title_accmgnt">帳戶管理</string>
+    <string name="title_detailmgnt">明細管理</string>
+    <string name="title_desktop">主控台</string>
+    <string name="title_prefs">系統設定</string>
+    <!-- above are sorted -->
 
-<string name="accountmgnt_title">帳戶維護</string>
 </resources>
+

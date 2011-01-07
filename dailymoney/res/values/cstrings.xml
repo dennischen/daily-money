@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- common string resource -->
-    
-    <string name="cact_ok">Ok</string>
-    <string name="cact_cancel">Cancel</string>
-    <string name="cact_stop">Stop</string>
-    <string name="cact_edit">Edit</string>
-    <string name="cact_delete">Delete</string>
-    <string name="cact_copy">Copy</string>
-    <string name="cact_create">Create</string>
-    <string name="cact_update">Update</string>
-    <string name="cact_new">New</string>
-    
-    <string name="clabel_alert">Alert</string>
-    <string name="clabel_info">Information</string>
-    <string name="clabel_warn">Warn</string>
-    <string name="clabel_error">Error</string>
-    <string name="clabel_unknow">Unknow</string>
-    
-    <string name="clabel_name">Name</string>
-    <string name="clabel_type">Type</string>
-    
-    <string name="cmsg_error">Error : %1$s</string>
+	<string name="cact_cancel">Cancel</string>
+	<string name="cact_copy">Copy</string>
+	<string name="cact_create">Create</string>
+	<string name="cact_delete">Delete</string>
+	<string name="cact_edit">Edit</string>
+	<string name="cact_new">New</string>
+	<string name="cact_ok">Ok</string>
+	<string name="cact_stop">Stop</string>
+	<string name="cact_update">Update</string>
+	<string name="clabel_alert">Alert</string>
+	<string name="clabel_error">Error</string>
+	<string name="clabel_info">Information</string>
+	<string name="clabel_name">Name</string>
+	<string name="clabel_type">Type</string>
+	<string name="clabel_unknow">Unknow</string>
+	<string name="clabel_warn">Warn</string>
+	<string name="cmsg_error">Error : %1$s</string>
+	<!-- above are sorted -->
+	
 </resources>

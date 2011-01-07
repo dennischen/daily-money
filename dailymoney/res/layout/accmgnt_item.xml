@@ -15,7 +15,6 @@
 		android:layout_below="@id/accmgnt_item_name"
         android:layout_alignParentLeft="true"
 		android:textSize="11sp"
-		android:textStyle="italic"
 		android:layout_marginLeft="10sp" />
     <TextView
         android:id="@+id/accmgnt_item_id"

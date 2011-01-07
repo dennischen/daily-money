@@ -5,6 +5,9 @@ import com.bottleworks.dailymoney.R;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 /**
@@ -61,5 +64,10 @@ public class GUIs {
     
     static public void toast(Context context,int res,int length){
         Toast.makeText(context,res,length).show();
+    }
+    
+    static public View inflateView(Context context,ViewGroup parent, int resourceid){
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        return inflater.inflate(resourceid, parent);
     }
 }

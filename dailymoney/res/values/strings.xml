@@ -1,40 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Daily Money</string>
-	<string name="accmgnt_title">Account management</string>
-	<string name="acceditor_title">Account editor</string>
-	<string name="prefs_title">Preferences</string>
-
-	<string name="label_income">Income</string>
-	<string name="label_expense">Expense</string>
+	<string name="defacc_bank">Bank</string>
+	<string name="defacc_cash">Cash</string>
+	<string name="defacc_entertainment">Entertainment</string>
+	<string name="defacc_food">Food</string>
+	<string name="defacc_interest">Interest</string>
+	<string name="defacc_otherexpense">Other expense</string>
+	<string name="defacc_otherincome">Other income</string>
+	<string name="defacc_salary">Salary</string>
 	<string name="label_asset">Asset</string>
+	<string name="label_functions">Functions</string>
 	<string name="label_debt">Debt</string>
-	<string name="label_other">Other</string>
+	<string name="label_expense">Expense</string>
+	<string name="label_income">Income</string>
 	<string name="label_initial_value">Initial</string>
-	
-	<string name="label_prefs_improvider">Use in-memory-provider</string>
+	<string name="label_other">Other</string>
 	<string name="label_prefs_improvider_sum">Use in-memory-provider for trying this application, data in this mode will not be persisted</string>
-	
-
-	<string name="msg_account_existed">%1$s is existed in type %2$s</string>
-	<string name="msg_account_deleted">Account %1$s was deleted</string>
+	<string name="label_prefs_improvider">Use in-memory-provider</string>
+	<string name="label_reports">Reports</string>
 	<string name="msg_account_created">Account %1$s was created in type %2$s</string>
+	<string name="msg_account_deleted">Account %1$s was deleted</string>
+	<string name="msg_account_existed">%1$s is existed in type %2$s</string>
 	<string name="msg_account_updated">Account %1$s was updated in type %2$s</string>
-
-
-
-<string name="defacc_salary">Salary</string>
-<string name="defacc_interest">Interest</string>
-<string name="defacc_otherincome">Other income</string>
-
-<string name="defacc_food">Food</string>
-<string name="defacc_entertainment">Entertainment</string>
-<string name="defacc_otherexpense">Other expense</string>
-
-<string name="defacc_cash">Cash</string>
-<string name="defacc_bank">Bank</string>
-
-
+    <string name="title_acceditor">Account Editor</string>
+    <string name="title_accmgnt">Account Manager</string>
+    <string name="title_detailmgnt">Detail Manager</string>
+    <string name="title_desktop">Desktop</string>
+    <string name="title_prefs">Preferences</string>	
+    <!-- above are sorted -->
 
 </resources>
 

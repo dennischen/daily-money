@@ -45,10 +45,10 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
     public void onClick(View v) {
         switch(v.getId()){
         case R.id.test_resetDataprovider:
-            testResetDataprovider();            
+//            testResetDataprovider();            
             break;
         case R.id.test_createDefaultdata:
-            testCreateDefaultdata();            
+//            testCreateDefaultdata();            
             break;
         case R.id.test_prefs:
             testPrefs();
@@ -57,7 +57,7 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
             testAccountMgnt();
             break;
         case R.id.test_csv:
-            testCSV();
+//            testCSV();
             break;
         case R.id.test_listDetail:
             testListDatail();
@@ -69,17 +69,6 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
         }
     }
 
-    private void testResetDataprovider() {
-        IDataProvider idp = Contexts.instance().getDataProvider();
-        idp.reset();
-        GUIs.shortToast(this,"reset data provider");
-    }
-    
-    private void testCreateDefaultdata() {
-        IDataProvider idp = Contexts.instance().getDataProvider();
-        new DefaultDataCreator(idp,i18n).createDefaultAccounts();
-        GUIs.shortToast(this,"create default data");
-    }
 
     private void testUpdateDetail() {
         
@@ -101,19 +90,8 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
         startActivity(new Intent(this,PrefsActivity.class));
     }
     
-    private void testCSV(){
-        try{
-            StringWriter sw = new StringWriter();
-            CsvWriter csvw = new CsvWriter(sw,',');
-            
-            for(Account a:Contexts.instance().getDataProvider().listAccount(null)){
-                csvw.writeRecord(new String[]{a.getId(),a.getName(),a.getType(),Formats.double2String(a.getInitialValue())});
-            }
-            csvw.close();
-            GUIs.longToast(this, sw.toString());
-        }catch(Exception x){
-            x.printStackTrace();
-        }
-    }
+    
+
+    
 
 }
