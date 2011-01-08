@@ -53,7 +53,11 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.title_acceditor);
+        if(modeCreate){
+            setTitle(R.string.title_acceditor_create);
+        }else{
+            setTitle(R.string.title_acceditor_update);
+        }
         setContentView(R.layout.acceditor);
         initialEditor();
     }
@@ -158,6 +162,11 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
             doClose();
             break;
         }
+    }
+    
+    
+    public int getCounter(){
+        return counterCreate;
     }
     
     private void doOk(){

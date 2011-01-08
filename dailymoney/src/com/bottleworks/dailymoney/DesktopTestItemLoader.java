@@ -36,31 +36,41 @@ public class DesktopTestItemLoader {
         this.i18n = i18n;
     }
     
-    public List<DesktopItem> loadTestFunctions(){
+    public List<DesktopItem> loadFunctions(){
         List<DesktopItem> fnsItems = new ArrayList<DesktopItem>();
         
-        DesktopItem detaildt = new DesktopItem(new Runnable(){
+        DesktopItem detlistdt = new DesktopItem(context,DetailListActivity.class,i18n.string(R.string.dt_detlist),R.drawable.dt_item_detail);
+        DesktopItem adddetdt =  new DesktopItem(new Runnable(){
             public void run(){
-                testCreateDetail();
+              Detail d = new Detail("","",new Date(),0D,"");
+              DetailEditorDialog dlg = new DetailEditorDialog(context,new DetailEditorDialog.OnFinishListener() {
+                  @Override
+                  public boolean onFinish(DetailEditorDialog dlg, View v, Object data) {
+                      if(v.getId()==R.id.deteditor_ok){
+                          Detail dt = (Detail)data;
+                          Contexts.instance().getDataProvider().newDetail(dt);
+                      }else if(v.getId()==R.id.deteditor_close){
+                          GUIs.shortToast(context,i18n.string(R.string.msg_created_detail,dlg.getCounter()));
+                      }
+                      return true;
+                  }
+              }, true, d);
+              dlg.show();
             }
-        },i18n.string(R.string.title_detmgnt),R.drawable.dt_item_detail);
+        },i18n.string(R.string.dt_adddetail),R.drawable.dt_item_adddetail);
         
-        DesktopItem accdt = new DesktopItem(context,AccountMgntActivity.class,i18n.string(R.string.title_accmgnt),R.drawable.dt_item_account);
-        DesktopItem prefdt = new DesktopItem(context,PrefsActivity.class,i18n.string(R.string.title_prefs),R.drawable.dt_item_prefs);
+        DesktopItem accmgntdt = new DesktopItem(context,AccountMgntActivity.class,i18n.string(R.string.dt_accmgnt),R.drawable.dt_item_account);
+        DesktopItem prefdt = new DesktopItem(context,PrefsActivity.class,i18n.string(R.string.dt_prefs),R.drawable.dt_item_prefs);
 
-        fnsItems.add(detaildt);
-        fnsItems.add(accdt);
+        
+        fnsItems.add(adddetdt);
+        fnsItems.add(detlistdt);
+        fnsItems.add(accmgntdt);
         fnsItems.add(prefdt);
-        
-        
-        
+
         /** test */
 
-        fnsItems.add(new DesktopItem(new Runnable(){
-            public void run(){
-                testCreateDetail();
-            }
-        },"Detail editor",R.drawable.dt_item_test));
+       
         
         fnsItems.add(new DesktopItem(new Runnable(){
             @Override
@@ -94,7 +104,7 @@ public class DesktopTestItemLoader {
     }
  
 
-    public List<DesktopItem> loadTestReports(){
+    public List<DesktopItem> loadReports(){
         List<DesktopItem> reportsItems = new ArrayList<DesktopItem>();
         
         DesktopItem accdt = new DesktopItem(context,AccountMgntActivity.class,i18n.string(R.string.title_accmgnt),R.drawable.dt_item_account);
@@ -127,24 +137,6 @@ public class DesktopTestItemLoader {
      * test
      */
     
-    
-    private void testCreateDetail(){
-        Detail d = new Detail("a","A","b","B",new Date(),10D,"test note");
-//      d.setArchived(true);
-      DetailEditorDialog dlg = new DetailEditorDialog(context,new DetailEditorDialog.OnFinishListener() {
-          @Override
-          public boolean onFinish(DetailEditorDialog dlg, View v, Object data) {
-              
-              if(v.getId()==R.id.deteditor_ok){
-                  Detail dt = (Detail)data;
-                  Contexts.instance().getDataProvider().newDetail(dt);
-              }
-              return true;
-          }
-      }, true, d);
-      dlg.show();
-      
-    }
    
     
     private void testExportDetail(){
@@ -153,8 +145,8 @@ public class DesktopTestItemLoader {
             CsvWriter csvw = new CsvWriter(sw,',');
             
             for(Detail d:Contexts.instance().getDataProvider().listAllDetail()){
-                csvw.writeRecord(new String[]{Integer.toString(d.getId()),d.getFrom(),d.getFromDisplay(),
-                        d.getTo(),d.getToDisplay(),Formats.normalizeDate2String(d.getDate()),Formats.normalizeDouble2String(d.getMoney()),d.getNote()});
+                csvw.writeRecord(new String[]{Integer.toString(d.getId()),d.getFrom(),
+                        d.getTo(),Formats.normalizeDate2String(d.getDate()),Formats.normalizeDouble2String(d.getMoney()),d.getNote()});
             }
             csvw.close();
             String msg = sw.toString();

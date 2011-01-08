@@ -11,9 +11,7 @@ public class Detail {
 
     private int id;
     private String from;
-    private String fromDisplay;
     private String to;
-    private String toDisplay;
     private Date date;
     private Double money;
     private String note;
@@ -22,12 +20,10 @@ public class Detail {
 
     Detail(){}
 
-    public Detail(String fromAccount, String fromDisplay, String toAccount, String toDisplay, Date date, Double money,
+    public Detail(String fromAccount,String toAccount,Date date, Double money,
             String note) {
         this.from = fromAccount;
-        this.fromDisplay = fromDisplay;
         this.to = toAccount;
-        this.toDisplay = toDisplay;
         this.date = date;
         this.money = money;
         this.note = note;
@@ -40,16 +36,6 @@ public class Detail {
     void setId(int id) {
         this.id = id;
     }
-
-
-    public String getFromDisplay() {
-        return fromDisplay;
-    }
-
-    public void setFromDisplay(String fromDisplay) {
-        this.fromDisplay = fromDisplay;
-    }
-
 
     public String getFrom() {
         return from;
@@ -73,14 +59,6 @@ public class Detail {
 
     public void setArchived(boolean archived) {
         this.archived = archived;
-    }
-
-    public String getToDisplay() {
-        return toDisplay;
-    }
-
-    public void setToDisplay(String toDisplay) {
-        this.toDisplay = toDisplay;
     }
 
     public Date getDate() {

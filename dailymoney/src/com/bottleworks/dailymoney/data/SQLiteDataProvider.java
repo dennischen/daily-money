@@ -161,12 +161,8 @@ public class SQLiteDataProvider implements IDataProvider {
                 det.setId(c.getInt(i));
             } else if (n.equals(COL_DET_FROM)) {
                 det.setFrom(c.getString(i));
-            } else if (n.equals(COL_DET_FROM_DISPLAY)) {
-                det.setFromDisplay((c.getString(i)));
             } else if (n.equals(COL_DET_TO)) {
                 det.setTo(c.getString(i));
-            } else if (n.equals(COL_DET_TO_DISPLAY)) {
-                det.setToDisplay((c.getString(i)));
             } else if (n.equals(COL_DET_DATE)) {
                 det.setDate(new Date(c.getLong(i)));
             } else if (n.equals(COL_DET_MONEY)) {
@@ -183,9 +179,7 @@ public class SQLiteDataProvider implements IDataProvider {
     private void applyContextValue(Detail det, ContentValues values) {
         values.put(COL_DET_ID, det.getId());
         values.put(COL_DET_FROM, det.getFrom());
-        values.put(COL_DET_FROM_DISPLAY, det.getFromDisplay());
         values.put(COL_DET_TO, det.getTo());
-        values.put(COL_DET_TO_DISPLAY, det.getToDisplay());
         values.put(COL_DET_DATE, det.getDate().getTime());
         values.put(COL_DET_MONEY, det.getMoney());
         values.put(COL_DET_ARCHIVED, det.isArchived() ? 1 : 0);

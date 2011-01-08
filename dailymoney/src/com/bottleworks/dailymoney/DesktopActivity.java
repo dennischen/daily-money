@@ -57,13 +57,8 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     private void initialDesktopItem() {
         DesktopTestItemLoader loader = new DesktopTestItemLoader(this,i18n);
-        dataItems = loader.loadTestFunctions();
-        reportsItems = loader.loadTestReports();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        dataItems = loader.loadFunctions();
+        reportsItems = loader.loadReports();
     }
 
     private void initialTab() {

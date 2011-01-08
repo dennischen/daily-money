@@ -137,9 +137,7 @@ public class InMemoryDataProvider implements IDataProvider {
         }
         //reset id, id is following the name;
         det.setFrom(detail.getFrom());
-        det.setFromDisplay(detail.getFromDisplay());
         det.setTo(detail.getTo());
-        det.setToDisplay(detail.getToDisplay());
         det.setDate(detail.getDate());
         det.setMoney(detail.getMoney());
         det.setNote(detail.getNote());

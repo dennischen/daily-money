@@ -68,7 +68,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     @Override
     public void onResume(){
         super.onResume();
-        loadData();
+        reloadData();
     }
 
     private void initialTab() {
@@ -134,7 +134,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
         
     }
 
-    private void loadData() {
+    private void reloadData() {
         IDataProvider idp = Contexts.instance().getDataProvider();
         listViewData = null;
 
@@ -157,7 +157,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     public void onTabChanged(String tabId) {
         Logger.d("switch to tab : " + tabId);
         currTab = tabId;
-        loadData();
+        reloadData();
     }
 
     @Override
@@ -211,7 +211,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
         String name = acc.getName();
 
         Contexts.instance().getDataProvider().deleteAccount(acc.getId());
-        loadData();
+        reloadData();
         GUIs.shortToast(this, i18n.string(R.string.msg_account_deleted, name));
 
     }
@@ -271,13 +271,14 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
                     idp.updateAccount(oacc.getId(),workingacc);
                     GUIs.shortToast(this, i18n.string(R.string.msg_account_updated, name,AccountType.getDisplay(i18n, oacc.getType())));
                 }
-                loadData();
+                reloadData();
             }
             break;
         case R.id.acceditor_cancel:
             break;
         case R.id.acceditor_close:
-            loadData();
+            GUIs.shortToast(this,i18n.string(R.string.msg_created_account,dlg.getCounter()));
+            reloadData();
             break;
         }
         return true;

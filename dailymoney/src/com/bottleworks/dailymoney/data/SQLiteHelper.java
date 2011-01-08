@@ -14,7 +14,7 @@ import static com.bottleworks.dailymoney.data.SQLiteMeta.*;
  */
 public class SQLiteHelper extends SQLiteOpenHelper{
     
-    private static final int VERSION = 2;
+    private static final int VERSION = 3;
     private static final String ACC_CREATE_SQL = "CREATE TABLE " + TB_ACC + " (" 
             + COL_ACC_ID + " TEXT PRIMARY KEY, "
             + COL_ACC_NAME +" TEXT NOT NULL, "
@@ -26,9 +26,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
     private static final String DET_CREATE_SQL = "CREATE TABLE " + TB_DET + " (" 
     + COL_DET_ID + " INTEGER PRIMARY KEY, "
     + COL_DET_FROM +" TEXT NOT NULL, "
-    + COL_DET_FROM_DISPLAY +" TEXT NOT NULL, "
     + COL_DET_TO +" TEXT NOT NULL, "
-    + COL_DET_TO_DISPLAY +" TEXT NOT NULL, "
     + COL_DET_DATE+" INTEGER NOT NULL, "
     + COL_DET_MONEY+" REAL NOT NULL, "
     + COL_DET_ARCHIVED+" INTEGER NOT NULL, "

@@ -67,8 +67,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
     /** clone a detail without id **/
     private Detail clone(Detail detail) {
-        Detail d = new Detail(detail.getFrom(), detail.getFromDisplay(), detail.getTo(), detail.getToDisplay(),
-                detail.getDate(), detail.getMoney(), detail.getNote());
+        Detail d = new Detail(detail.getFrom(), detail.getTo(), detail.getDate(), detail.getMoney(), detail.getNote());
         d.setArchived(detail.isArchived());
         return d;
     }
@@ -76,7 +75,11 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(R.string.title_deteditor);
+        if(modeCreate){
+            setTitle(R.string.title_deteditor_create);
+        }else{
+            setTitle(R.string.title_deteditor_update);
+        }
         setContentView(R.layout.deteditor);
         format = Contexts.instance().getDateFormat();
         initialEditor();
@@ -121,7 +124,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         dateEditor.setEnabled(!archived);
 
         moneyEditor = (EditText) findViewById(R.id.deteditor_money);
-        moneyEditor.setText(Formats.double2String(workingDetail.getMoney()));
+        moneyEditor.setText(workingDetail.getMoney()<=0?"":Formats.double2String(workingDetail.getMoney()));
         moneyEditor.setEnabled(!archived);
 
         noteEditor = (EditText) findViewById(R.id.deteditor_note);
@@ -149,6 +152,10 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
         cancelBtn.setOnClickListener(this);
         closeBtn.setOnClickListener(this);
+    }
+    
+    public int getCounter(){
+        return counterCreate;
     }
 
     private void initialSpinner() {
@@ -381,18 +388,18 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         
         String note = noteEditor.getText().toString();
 
-        String fromid = fromAccountList.get(fromPos).getId();
-        String toid = toAccountList.get(toPos).getId();
+        Account fromAcc = fromAccountList.get(fromPos);
+        Account toAcc =  toAccountList.get(toPos);
 
-        if (fromid.equals(toid)) {
+        if (fromAcc.getId().equals(toAcc.getId())) {
             GUIs.alert(getContext(), i18n.string(R.string.msg_same_from_to));
             return;
         }
 
-        workingDetail.setFrom(fromid);
-        workingDetail.setFromDisplay(fromAccountList.get(fromPos).getName());
-        workingDetail.setTo(toid);
-        workingDetail.setToDisplay(toAccountList.get(toPos).getName());
+        
+        
+        workingDetail.setFrom(fromAcc.getId());
+        workingDetail.setTo(toAcc.getId());
 
         workingDetail.setDate(date);
         workingDetail.setMoney(money);

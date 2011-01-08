@@ -43,7 +43,7 @@ public enum AccountType {
     static final AccountType[] from = new  AccountType[]{INCOME,ASSET};
     
     static final AccountType[] fromIncome = new  AccountType[]{EXPENSE,ASSET/*,DEBT,OTHER*/};
-    static final AccountType[] fromAsset = new  AccountType[]{ASSET/*,DEBT,OTHER*/};
+    static final AccountType[] fromAsset = new  AccountType[]{EXPENSE,ASSET/*,DEBT,OTHER*/};
     static final AccountType[] fromUnknow = new  AccountType[]{};
     static final AccountType[] fromExpense = new  AccountType[]{};
     static final AccountType[] fromDebt = new  AccountType[]{};
