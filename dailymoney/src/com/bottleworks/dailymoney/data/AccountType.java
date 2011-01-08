@@ -29,8 +29,25 @@ public enum AccountType {
     public String getType() {
         return type;
     }
+    
+    
+    public String getDisplay(I18N i18n){
+        return getDisplay(i18n,type);
+    }
+    public int getDrawable() {
+        return drawable;
+    }
 
-    static AccountType[] supported = new  AccountType[]{INCOME,EXPENSE,ASSET/*,DEBT,OTHER*/};
+    static final AccountType[] supported = new  AccountType[]{INCOME,EXPENSE,ASSET/*,DEBT,OTHER*/};
+    
+    static final AccountType[] from = new  AccountType[]{INCOME,ASSET};
+    
+    static final AccountType[] fromIncome = new  AccountType[]{EXPENSE,ASSET/*,DEBT,OTHER*/};
+    static final AccountType[] fromAsset = new  AccountType[]{ASSET/*,DEBT,OTHER*/};
+    static final AccountType[] fromUnknow = new  AccountType[]{};
+    static final AccountType[] fromExpense = new  AccountType[]{};
+    static final AccountType[] fromDebt = new  AccountType[]{};
+    static final AccountType[] fromOther = new  AccountType[]{};
     
     static public AccountType[] getSupportedType(){
         return supported;
@@ -68,12 +85,26 @@ public enum AccountType {
             return i18n.string(R.string.clabel_unknow);
         }
     }
-    
-    public String getDisplay(I18N i18n){
-        return getDisplay(i18n,type);
+
+    public static AccountType[] getFromType() {
+        return from;
     }
-    public int getDrawable() {
-        return drawable;
+    public static AccountType[] getToType(String fromType) {
+        AccountType at = find(fromType);
+        switch (at) {
+        case INCOME:
+            return fromIncome;
+        case EXPENSE:
+            return fromExpense;
+        case ASSET:
+            return fromAsset;
+        case DEBT:
+            return fromDebt;
+        case OTHER:
+            return fromOther;
+        default:
+            return fromUnknow;
+        }
     }
     
     

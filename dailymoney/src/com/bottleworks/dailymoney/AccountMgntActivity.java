@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -58,10 +57,6 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     
     private SimpleAdapter listViewAdapter;
     
-
-
-    
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -234,7 +229,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     }
 
     private void doNewAccount() {
-        Account acc = new Account("", currTab, 0D);
+        Account acc = new Account(currTab, "", 0D);
         AccountEditorDialog dlg = new AccountEditorDialog(this, this, true, acc);
         dlg.show();
     }
@@ -243,7 +238,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     public boolean onFinish(AccountEditorDialog dlg, View v, Object data) {
         switch (v.getId()) {
         case R.id.acceditor_ok:
-            Account workingacc = dlg.getWorkingAccount();
+            Account workingacc = (Account)data;
             boolean modeCreate = dlg.isModeCreate();
             String name = workingacc.getName();
             String type = workingacc.getType();
@@ -251,7 +246,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
             Account namedAcc = idp.findAccount(type,name);
             if (modeCreate) {
                 if (namedAcc != null) {
-                    GUIs.shortToast(
+                    GUIs.alert(
                             this,i18n.string(R.string.msg_account_existed, name,
                                     AccountType.getDisplay(i18n, namedAcc.getType())));
                     return false;
@@ -266,20 +261,23 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
 
                 }
             } else {
-                Account acc = ((AccountEditorDialog)dlg).getAccount();
-                if (namedAcc != null && !namedAcc.getId().equals(acc.getId())) {
-                    GUIs.shortToast(
+                Account oacc = ((AccountEditorDialog)dlg).getAccount();
+                if (namedAcc != null && !namedAcc.getId().equals(oacc.getId())) {
+                    GUIs.alert(
                             this,i18n.string(R.string.msg_account_existed, name,
                                     AccountType.getDisplay(i18n, namedAcc.getType())));
                     return false;
                 } else {
-                    idp.updateAccount(acc.getId(),workingacc);
-                    GUIs.shortToast(this, i18n.string(R.string.msg_account_updated, name,AccountType.getDisplay(i18n, acc.getType())));
+                    idp.updateAccount(oacc.getId(),workingacc);
+                    GUIs.shortToast(this, i18n.string(R.string.msg_account_updated, name,AccountType.getDisplay(i18n, oacc.getType())));
                 }
+                loadData();
             }
-            loadData();
             break;
         case R.id.acceditor_cancel:
+            break;
+        case R.id.acceditor_close:
+            loadData();
             break;
         }
         return true;

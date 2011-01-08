@@ -25,5 +25,7 @@
 			android:layout_weight="1" android:text="@string/cact_ok"/>
 		<Button android:id="@+id/acceditor_cancel" android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:layout_weight="1" android:text="@string/cact_cancel"  android:drawableLeft="@drawable/btn_cancel" />
+	    <Button android:id="@+id/acceditor_close" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_weight="1" android:text="@string/cact_close"  android:drawableLeft="@drawable/btn_cancel" android:visibility="gone" />
 	</LinearLayout>
 </LinearLayout>

@@ -10,8 +10,10 @@
 	           <LinearLayout android:id="@+id/tmp2" android:layout_width="fill_parent" android:layout_height="wrap_content" 
 	               android:orientation="horizontal" android:gravity="center" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
 	               android:layout_below="@id/tmp1">
-                   <Spinner android:id="@+id/deteditor_from" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1" />
-                   <Spinner android:id="@+id/deteditor_to" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1" />   
+                   <Spinner android:id="@+id/deteditor_from" android:layout_width="fill_parent" android:layout_height="wrap_content" 
+                   android:layout_weight="1" />
+                   <Spinner android:id="@+id/deteditor_to" android:layout_width="fill_parent" android:layout_height="wrap_content" 
+                   android:layout_weight="1" />   
                </LinearLayout>
                <TextView android:text="@string/label_to_account" android:layout_width="wrap_content" android:layout_height="wrap_content"
                android:layout_above="@id/tmp2" android:layout_alignParentRight="true" android:gravity="right"/>
@@ -41,9 +43,9 @@
                    android:orientation="horizontal" android:gravity="center" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
                    android:layout_below="@id/tmp3">
                    <EditText android:id="@+id/deteditor_money" android:layout_width="fill_parent" android:layout_height="wrap_content"
-                        android:layout_weight="2" android:inputType="numberDecimal"/>
+                        android:layout_weight="6" android:inputType="numberDecimal" android:layout_gravity="top" android:singleLine="true"/>
                    <EditText android:id="@+id/deteditor_note" android:layout_width="fill_parent" android:layout_height="wrap_content"
-                        android:layout_weight="1"/>    
+                        android:layout_weight="3" android:maxLines="3"/>    
                </LinearLayout>
                <TextView android:text="@string/label_note" android:layout_width="wrap_content" android:layout_height="wrap_content"
                android:layout_above="@id/tmp4" android:layout_alignParentRight="true" android:gravity="right"/>
@@ -58,5 +60,7 @@
 			android:layout_weight="1" android:text="@string/cact_ok"/>
 		<Button android:id="@+id/deteditor_cancel" android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:layout_weight="1" android:text="@string/cact_cancel" android:drawableLeft="@drawable/btn_cancel" />
+	    <Button android:id="@+id/deteditor_close" android:layout_width="wrap_content" android:layout_height="wrap_content"
+	        android:layout_weight="1" android:text="@string/cact_close" android:drawableLeft="@drawable/btn_cancel" android:visibility="gone" />
 	</LinearLayout>
 </LinearLayout>

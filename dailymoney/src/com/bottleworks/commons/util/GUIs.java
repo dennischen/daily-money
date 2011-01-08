@@ -77,6 +77,10 @@ public class GUIs {
         Toast.makeText(context,res,length).show();
     }
     
+    static public void errorToast(Context context,Throwable e){
+        shortToast(context,Contexts.instance().getI18n().string(R.string.cmsg_error,e.getMessage()));
+    }
+    
     static public View inflateView(Context context,ViewGroup parent, int resourceid){
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return inflater.inflate(resourceid, parent);

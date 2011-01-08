@@ -7,7 +7,6 @@ import java.util.Map;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,6 +32,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
 
     
     private boolean modeCreate;
+    private int counterCreate;
     private Account account;
     private Account workingAccount;
     private OnFinishListener listener;
@@ -42,7 +42,12 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         this.modeCreate = modeCreate;
         this.account = account;
         this.listener = listener;
-        workingAccount = new Account(account.getName(),account.getType(),account.getInitialValue());
+        workingAccount = clone(account);
+    }
+    
+    /** clone account without id **/
+    private Account clone(Account account){
+        return new Account(account.getType(),account.getName(),account.getInitialValue());
     }
     
     @Override
@@ -57,9 +62,9 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         return account;
     }
     
-    public Account getWorkingAccount(){
-        return workingAccount;
-    }
+//    public Account getWorkingAccount(){
+//        return workingAccount;
+//    }
     
     public boolean isModeCreate(){
         return modeCreate;
@@ -73,6 +78,10 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     EditText initvalEditor;
     Spinner typeEditor; 
     
+    Button okBtn;
+    Button cancelBtn;
+    Button closeBtn;
+    
     private void initialEditor() {
         nameEditor = (EditText)findViewById(R.id.acceditor_name);
         nameEditor.setText(workingAccount.getName());
@@ -85,8 +94,9 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         List<Map<String, Object>> data = new  ArrayList<Map<String, Object>>();
         String type = workingAccount.getType();
         int selpos,i;
-        selpos = i = 0;
+        selpos = i = -1;
         for (AccountType at : AccountType.getSupportedType()) {
+            i++;
             Map<String, Object> row = new HashMap<String, Object>();
             data.add(row);
             row.put(spfrom[0], AccountType.getDisplay(Contexts.instance().getI18n(),at.getType()));
@@ -94,18 +104,19 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
             if(at.getType().equals(type)){
                 selpos = i;
             }
-            i++;
         }
         SimpleAdapter adapter = new SimpleAdapter(getContext(), data, R.layout.simple_spitem, spfrom, spto);
         adapter.setDropDownViewResource(R.layout.simple_spdd);
         
         typeEditor.setAdapter(adapter);
-        typeEditor.setSelection(selpos);
+        if(selpos>-1){
+            typeEditor.setSelection(selpos);
+        }
         typeEditor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 AccountType type = AccountType.getSupportedType()[typeEditor.getSelectedItemPosition()];
-                checkType(type);
+                onTypeChanged(type);
             }
 
             @Override
@@ -114,18 +125,24 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         });
         
         
-        checkType(AccountType.getSupportedType()[selpos]);
+        onTypeChanged(AccountType.getSupportedType()[selpos]);
         
-        Button ok = (Button)findViewById(R.id.acceditor_ok); 
+        okBtn = (Button)findViewById(R.id.acceditor_ok); 
         if(modeCreate){
-            ok.setCompoundDrawablesWithIntrinsicBounds(R.drawable.btn_add,0,0,0);
-            ok.setText(R.string.cact_create);
+            okBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.btn_add,0,0,0);
+            okBtn.setText(R.string.cact_create);
         }else{
-            ok.setCompoundDrawablesWithIntrinsicBounds(R.drawable.btn_update,0,0,0);
-            ok.setText(R.string.cact_update);
+            okBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.btn_update,0,0,0);
+            okBtn.setText(R.string.cact_update);
         }
-        ok.setOnClickListener(this);
-        findViewById(R.id.acceditor_cancel).setOnClickListener(this);
+        okBtn.setOnClickListener(this);
+        
+        
+        cancelBtn = (Button)findViewById(R.id.acceditor_cancel); 
+        closeBtn =  (Button)findViewById(R.id.acceditor_close);
+        
+        cancelBtn.setOnClickListener(this);
+        closeBtn.setOnClickListener(this);
     }
     
     @Override
@@ -136,6 +153,9 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
             break;
         case R.id.acceditor_cancel:
             doCancel();
+            break;
+        case R.id.acceditor_close:
+            doClose();
             break;
         }
     }
@@ -150,21 +170,31 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         }
         String name = nameEditor.getText().toString().trim();
         if("".equals(name)){
-            GUIs.shortToast(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_name)));
+            GUIs.alert(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_name)));
             return;
         }
         String initval = initvalEditor.getText().toString();
         if("".equals(initval)){
-            GUIs.shortToast(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.label_initial_value)));
+            GUIs.alert(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.label_initial_value)));
             return;
         }
-        
+        //assign
         workingAccount.setType(AccountType.getSupportedType()[typeEditor.getSelectedItemPosition()].getType());
         workingAccount.setName(name);
         workingAccount.setInitialValue(Formats.string2Double(initval));
-        
-        if(listener==null || listener.onFinish(this,findViewById(R.id.acceditor_ok), workingAccount)){
+        if (listener == null) {
             dismiss();
+        } else if (listener.onFinish(this, findViewById(R.id.acceditor_ok), workingAccount)) {
+            // continue to editor next record if is new mode
+            if (modeCreate) {
+                workingAccount = clone(workingAccount);
+                counterCreate++;
+                okBtn.setText(Contexts.instance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
+                cancelBtn.setVisibility(Button.GONE);
+                closeBtn.setVisibility(Button.VISIBLE);
+            } else {
+                dismiss();
+            }
         }
     }
     
@@ -175,7 +205,14 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         }
     }
     
-    private void checkType(AccountType type){
+    private void doClose(){
+        Logger.d("acceditor doClose");
+        if(listener==null || listener.onFinish(this,findViewById(R.id.acceditor_close), null)){
+            dismiss();
+        }
+    }
+    
+    private void onTypeChanged(AccountType type){
         boolean enableInitval = !(type==AccountType.INCOME || type==AccountType.EXPENSE);
         initvalEditor.setEnabled(enableInitval);
         if(!enableInitval){

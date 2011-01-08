@@ -19,7 +19,7 @@ public class Account {
     
     Account(){}
     
-    public Account(String name,String type, Double initialValue){
+    public Account(String type, String name, Double initialValue){
         this.type = type;
         this.name = name==null?"":name.trim();
         this.initialValue = initialValue;
