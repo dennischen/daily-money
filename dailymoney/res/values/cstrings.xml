@@ -20,6 +20,7 @@
     <string name="clabel_busy">Busy</string>
     <string name="cmsg_busy">Application is busy, please wait for seconds...</string>
 	<!-- above are verified -->
-	
+
+    <string name="cact_close">Close</string>	
 
 </resources>

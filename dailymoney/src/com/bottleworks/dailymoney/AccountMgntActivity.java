@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.commons.util.OnDialogFinishListener;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
@@ -42,7 +41,7 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  * @author dennis
  * @see {@link AccountType}
  */
-public class AccountMgntActivity extends ContextsActivity implements OnTabChangeListener,OnItemClickListener, OnDialogFinishListener {
+public class AccountMgntActivity extends ContextsActivity implements OnTabChangeListener,OnItemClickListener, AccountEditorDialog.OnFinishListener {
     
     private static String[] bindingFrom = new String[] { "name", "initvalue", "id" };
     
@@ -241,11 +240,11 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     }
 
     @Override
-    public boolean onDialogFinish(Dialog dlg, View v, Object data) {
+    public boolean onFinish(AccountEditorDialog dlg, View v, Object data) {
         switch (v.getId()) {
         case R.id.acceditor_ok:
-            Account workingacc = ((AccountEditorDialog) dlg).getWorkingAccount();
-            boolean modeCreate = ((AccountEditorDialog) dlg).isModeCreate();
+            Account workingacc = dlg.getWorkingAccount();
+            boolean modeCreate = dlg.isModeCreate();
             String name = workingacc.getName();
             String type = workingacc.getType();
             IDataProvider idp = Contexts.instance().getDataProvider();

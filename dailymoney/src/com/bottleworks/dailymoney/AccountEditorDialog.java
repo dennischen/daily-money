@@ -17,7 +17,6 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.bottleworks.commons.util.Formats;
-import com.bottleworks.commons.util.OnDialogFinishListener;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
@@ -34,9 +33,9 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     private boolean modeCreate;
     private Account account;
     private Account workingAccount;
-    private OnDialogFinishListener listener;
+    private OnFinishListener listener;
     
-    public AccountEditorDialog(Context context,OnDialogFinishListener listener,boolean modeCreate,Account account) {
+    public AccountEditorDialog(Context context,OnFinishListener listener,boolean modeCreate,Account account) {
         super(context,R.style.theme_acceidtor);
         this.modeCreate = modeCreate;
         this.account = account;
@@ -146,14 +145,14 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         workingAccount.setName(nameEditor.getText().toString());
         workingAccount.setInitialValue(Formats.string2Double(initvalEditor.getText().toString()));
         
-        if(listener==null || listener.onDialogFinish(this,findViewById(R.id.acceditor_ok), null)){
+        if(listener==null || listener.onFinish(this,findViewById(R.id.acceditor_ok), workingAccount)){
             dismiss();
         }
     }
     
     private void doCancel(){
         Logger.d("acceditor doCancel");
-        if(listener==null || listener.onDialogFinish(this,findViewById(R.id.acceditor_cancel), null)){
+        if(listener==null || listener.onFinish(this,findViewById(R.id.acceditor_cancel), null)){
             dismiss();
         }
     }
@@ -167,5 +166,8 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     }
 
 
+    public static interface OnFinishListener {   
+        public boolean onFinish(AccountEditorDialog dlg,View v,Object data);
+    }
 
 }

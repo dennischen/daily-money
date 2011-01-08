@@ -2,7 +2,6 @@ package com.bottleworks.dailymoney;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Dialog;
@@ -11,13 +10,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.bottleworks.commons.util.Calendars;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.commons.util.OnDialogFinishListener;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.ui.Contexts;
@@ -31,13 +28,14 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
     
     private boolean modeCreate;
+    private int counterCreate;
     private Detail detail;
     private Detail workingDetail;
-    private OnDialogFinishListener listener;
+    private OnFinishListener listener;
     
     private DateFormat format;
     
-    public DetailEditorDialog(Context context,OnDialogFinishListener listener,boolean modeCreate,Detail detail) {
+    public DetailEditorDialog(Context context,OnFinishListener listener,boolean modeCreate,Detail detail) {
         super(context,R.style.theme_acceidtor);
         this.modeCreate = modeCreate;
         this.detail = detail;
@@ -78,6 +76,9 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     EditText dateEditor;
     EditText noteEditor;
     EditText moneyEditor;
+    
+    Button okBtn;
+    Button cancelBtn;
     
     
     private void initialEditor() {
@@ -136,15 +137,18 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         findViewById(R.id.deteditor_datepicker).setOnClickListener(this);
         
         
-        Button ok = (Button)findViewById(R.id.deteditor_ok); 
+        okBtn = (Button)findViewById(R.id.deteditor_ok); 
         if(modeCreate){
-            ok.setCompoundDrawablesWithIntrinsicBounds(R.drawable.btn_add,0,0,0);
-            ok.setText(R.string.cact_create);
+            okBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.btn_add,0,0,0);
+            okBtn.setText(R.string.cact_create);
         }else{
-            ok.setCompoundDrawablesWithIntrinsicBounds(R.drawable.btn_update,0,0,0);
-            ok.setText(R.string.cact_update);
+            okBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.btn_update,0,0,0);
+            okBtn.setText(R.string.cact_update);
         }
-        ok.setOnClickListener(this);
+        okBtn.setOnClickListener(this);
+        
+        cancelBtn = (Button)findViewById(R.id.deteditor_cancel); 
+        
         findViewById(R.id.deteditor_cancel).setOnClickListener(this);
     }
     
@@ -183,9 +187,9 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         case R.id.deteditor_datepicker:
             try {
             Date d = format.parse(dateEditor.getText().toString());
-                GUIs.openDatePicker(getContext(),d,new OnDialogFinishListener() {
+                GUIs.openDatePicker(getContext(),d,new GUIs.OnFinishListener() {
                     @Override
-                    public boolean onDialogFinish(Dialog dlg, View v, Object data) {
+                    public boolean onFinish(Object data) {
                         updateDateEditor((Date)data);
                         return true;
                     }
@@ -204,14 +208,24 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 //        workingDetail.setName(nameEditor.getText().toString());
 //        workingDetail.setInitialValue(Formats.string2Double(initvalEditor.getText().toString()));
         
-        if(listener==null || listener.onDialogFinish(this,findViewById(R.id.deteditor_ok), null)){
+        if(listener==null){
             dismiss();
+        }else if(listener.onFinish(this,findViewById(R.id.deteditor_ok), workingDetail)){
+            //continue to editor next record if is new mode
+            if(modeCreate){
+                //TODO
+                counterCreate++;
+                okBtn.setText(Contexts.instance().getI18n().string(R.string.cact_create)+"("+counterCreate+")");
+                cancelBtn.setText(R.string.cact_close);
+            }else{
+                dismiss();
+            }
         }
     }
     
     private void doCancel(){
         Logger.d("doCancel");
-        if(listener==null || listener.onDialogFinish(this,findViewById(R.id.deteditor_cancel), null)){
+        if(listener==null || listener.onFinish(this,findViewById(R.id.deteditor_cancel), null)){
             dismiss();
         }
     }
@@ -224,6 +238,8 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 //        }
 //    }
 
-
+    public static interface OnFinishListener {   
+        public boolean onFinish(DetailEditorDialog dlg,View v,Object data);
+    }
 
 }

@@ -1,17 +1,12 @@
 package com.bottleworks.dailymoney;
 
-import java.io.File;
-import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,18 +22,9 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-import com.bottleworks.commons.util.Files;
-import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
-import com.bottleworks.dailymoney.data.Account;
-import com.bottleworks.dailymoney.data.AccountType;
-import com.bottleworks.dailymoney.data.DefaultDataCreator;
-import com.bottleworks.dailymoney.data.Detail;
-import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.ContextsActivity;
-import com.csvreader.CsvWriter;
 /**
  * 
  * @author dennis
@@ -70,71 +56,9 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     }
 
     private void initialDesktopData() {
-        dataItems = new ArrayList<DesktopItem>();
-        reportsItems = new ArrayList<DesktopItem>();
-        
-        DesktopItem detaildt = new DesktopItem(new Runnable(){
-            public void run(){
-                GUIs.shortToast(DesktopActivity.this,"test detail editor");
-                Detail d = new Detail("a","A","b","B",new Date(),10D,"test note");
-                DetailEditorDialog dlg = new DetailEditorDialog(DesktopActivity.this,null, true, d);
-                dlg.show();
-                
-            }
-        },i18n.string(R.string.title_detmgnt),R.drawable.dt_item_detail);
-        
-        DesktopItem accdt = new DesktopItem(AccountMgntActivity.class,i18n.string(R.string.title_accmgnt),R.drawable.dt_item_account);
-        DesktopItem prefdt = new DesktopItem(PrefsActivity.class,i18n.string(R.string.title_prefs),R.drawable.dt_item_prefs);
-        
-        DesktopItem testdt = new DesktopItem(TestActivity.class,"Test Activity",R.drawable.dt_item_test);
-        
-        dataItems.add(detaildt);
-        dataItems.add(accdt);
-        dataItems.add(prefdt);
-        
-        
-        
-        /** test */
-        dataItems.add(testdt);
-        dataItems.add(new DesktopItem(new Runnable(){
-            @Override
-            public void run() {
-                testResetDataprovider();
-            }}, "Reset dataprovider",R.drawable.dt_item_test));
-        dataItems.add(new DesktopItem(new Runnable(){
-            @Override
-            public void run() {
-                testCreateDefaultdata();
-            }}, "Create default data",R.drawable.dt_item_test));
-        dataItems.add(new DesktopItem(new Runnable(){
-            @Override
-            public void run() {
-                testCSV();
-            }}, "test csv",R.drawable.dt_item_test));
-        dataItems.add(new DesktopItem(new Runnable(){
-            @Override
-            public void run() {
-                testBusy();
-            }}, "test busy",R.drawable.dt_item_test));
-        
-        reportsItems.add(testdt);
-        reportsItems.add(accdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-
-        
+        DesktopItemLoader loader = new DesktopItemLoader(this,i18n);
+        dataItems = loader.loadTestFunctions();
+        reportsItems = loader.loadTestReports();
     }
 
     @Override
@@ -210,14 +134,24 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
              getCurrentDesktopItems().get(pos).run();
          }
     }
+    
+    
+    List<DesktopItem> getCurrentDesktopItems(){
+        if(TAB_FUNCTIONS.equals(currTab)){
+            return dataItems;
+        }else if(TAB_REPORTS.equals(currTab)){
+            return reportsItems;
+        }
+        return Collections.EMPTY_LIST;
+    }
 
-    class DesktopItem {
+    static class DesktopItem {
         int icon;
         String label;
         Runnable run;
 
-        public DesktopItem(Class<? extends Activity> activity, String label, int icon) {
-            this(new ActivityRun(activity), label, icon);
+        public DesktopItem(Context context,Class<? extends Activity> activity, String label, int icon) {
+            this(new ActivityRun(context,activity), label, icon);
         }
 
         public DesktopItem(Runnable run, String label, int icon) {
@@ -226,8 +160,8 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
             this.icon = icon;
         }
 
-        public DesktopItem(Class<? extends Activity> activity, String label) {
-            this(new ActivityRun(activity), label);
+        public DesktopItem(Context context,Class<? extends Activity> activity, String label) {
+            this(new ActivityRun(context,activity), label);
         }
 
         public DesktopItem(Runnable run, String label) {
@@ -241,25 +175,17 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         }
     }
 
-    class ActivityRun implements Runnable {
+    static class ActivityRun implements Runnable {
         Class<? extends Activity> activity;
+        Context context;
 
-        ActivityRun(Class<? extends Activity> activity) {
+        ActivityRun(Context context,Class<? extends Activity> activity) {
             this.activity = activity;
         }
 
         public void run() {
-            startActivity(new Intent(DesktopActivity.this, activity));
+            context.startActivity(new Intent(context, activity));
         }
-    }
-    
-    List<DesktopItem> getCurrentDesktopItems(){
-        if(TAB_FUNCTIONS.equals(currTab)){
-            return dataItems;
-        }else if(TAB_REPORTS.equals(currTab)){
-            return reportsItems;
-        }
-        return Collections.EMPTY_LIST;
     }
     
     public class DesktopItemAdapter extends BaseAdapter {
@@ -307,90 +233,6 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     }
     
     
-    /*
-     * test
-     */
     
-    private void testResetDataprovider() {
-        GUIs.doBusy(this,new GUIs.BusyAdapter(){
-            @Override
-            public void onBusyFinish() {
-                GUIs.shortToast(DesktopActivity.this,"reset data provider");
-            }
-            @Override
-            public void run() {
-                IDataProvider idp = Contexts.instance().getDataProvider();
-                idp.reset();
-            }});
-
-    }
-    
-    private void testCreateDefaultdata() {
-        GUIs.doBusy(this,new GUIs.BusyAdapter(){
-            @Override
-            public void onBusyFinish() {
-                GUIs.shortToast(DesktopActivity.this,"create default data");
-            }
-            @Override
-            public void run() {
-                IDataProvider idp = Contexts.instance().getDataProvider();
-                new DefaultDataCreator(idp,i18n).createDefaultAccounts();
-            }});
-        
-    }
-    
-    private void testBusy() {
-        GUIs.shortToast(DesktopActivity.this,"I am busy");
-        GUIs.doBusy(this,new GUIs.BusyAdapter() {
-            @Override
-            public void onBusyFinish() {
-                GUIs.shortToast(DesktopActivity.this,"I am not busy now");
-            }
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }});
-        
-    }
-    
-    private void testCSV(){
-        try{
-            StringWriter sw = new StringWriter();
-            CsvWriter csvw = new CsvWriter(sw,',');
-            
-            for(Account a:Contexts.instance().getDataProvider().listAccount(null)){
-                csvw.writeRecord(new String[]{a.getId(),a.getName(),a.getType(),Formats.double2String(a.getInitialValue())});
-            }
-            csvw.close();
-            String msg = sw.toString();
-            if(msg.length()==0){
-                GUIs.longToast(this, "no account");
-            }else{
-                File sd = Environment.getExternalStorageDirectory();
-                File folder = new File(sd,"bwDailyMoney");
-                if(!folder.exists()){
-                    folder.mkdir();
-                }
-                File file = new File(folder,"account-export.csv");
-                if(!file.exists()){
-                    file.createNewFile();
-                }
-                Files.saveString(msg, file, "utf8");
-                GUIs.longToast(this, "csv save to "+file.getAbsolutePath()+", content, \n "+msg);
-            }
-            
-            
-            
-            
-            
-        }catch(Exception x){
-            GUIs.longToast(this, "error "+x.getMessage());
-            x.printStackTrace();
-        }
-    }
 
 }

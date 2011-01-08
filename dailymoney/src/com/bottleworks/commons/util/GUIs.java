@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.bottleworks.dailymoney.DetailEditorDialog;
 import com.bottleworks.dailymoney.R;
 import com.bottleworks.dailymoney.ui.Contexts;
 
@@ -147,7 +148,7 @@ public class GUIs {
         }
     }
 
-    public static void openDatePicker(Context context, Date d,final OnDialogFinishListener listener) {
+    public static void openDatePicker(Context context, Date d,final OnFinishListener listener) {
         final Calendar c = Calendar.getInstance();
         c.setTime(d);
         //for event
@@ -158,9 +159,13 @@ public class GUIs {
                 c.set(Calendar.YEAR,year);
                 c.set(Calendar.MONTH,monthOfYear);
                 c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-                listener.onDialogFinish(s[0] , view, c.getTime());
+                listener.onFinish(c.getTime());
             }}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
         s[0] = picker;
         picker.show();
+    }
+    
+    public static interface OnFinishListener {   
+        public boolean onFinish(Object data);
     }
 }
