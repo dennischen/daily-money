@@ -85,7 +85,8 @@ public class Contexts {
         if(useimprovider){
             dataProvider = new InMemoryDataProvider();
         }else{
-            dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"));
+            dataProvider = new InMemoryDataProvider();
+//            dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"));
         }
         
         dataProvider.init();

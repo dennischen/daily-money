@@ -17,6 +17,8 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.bottleworks.commons.util.Formats;
+import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
@@ -140,10 +142,26 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     
     private void doOk(){
         Logger.d("acceditor doOK");   
+        I18N i18n = Contexts.instance().getI18n();
+        //verify
+        if(Spinner.INVALID_POSITION==typeEditor.getSelectedItemPosition()){
+            GUIs.shortToast(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_type)));
+            return;
+        }
+        String name = nameEditor.getText().toString().trim();
+        if("".equals(name)){
+            GUIs.shortToast(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_name)));
+            return;
+        }
+        String initval = initvalEditor.getText().toString();
+        if("".equals(initval)){
+            GUIs.shortToast(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.label_initial_value)));
+            return;
+        }
         
         workingAccount.setType(AccountType.getSupportedType()[typeEditor.getSelectedItemPosition()].getType());
-        workingAccount.setName(nameEditor.getText().toString());
-        workingAccount.setInitialValue(Formats.string2Double(initvalEditor.getText().toString()));
+        workingAccount.setName(name);
+        workingAccount.setInitialValue(Formats.string2Double(initval));
         
         if(listener==null || listener.onFinish(this,findViewById(R.id.acceditor_ok), workingAccount)){
             dismiss();

@@ -35,12 +35,15 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     
     private DateFormat format;
     
+    boolean archived = false;
+    
     public DetailEditorDialog(Context context,OnFinishListener listener,boolean modeCreate,Detail detail) {
         super(context,R.style.theme_acceidtor);
         this.modeCreate = modeCreate;
         this.detail = detail;
         this.listener = listener;
-        workingDetail = new Detail(detail.getFromAccount(),detail.getFromDisplay(),detail.getToAccount(),detail.getToDisplay(),detail.getDate(),detail.getMoney(),detail.getNote());
+        workingDetail = new Detail(detail.getFrom(),detail.getFromDisplay(),detail.getTo(),detail.getToDisplay(),detail.getDate(),detail.getMoney(),detail.getNote());
+        workingDetail.setArchived(detail.isArchived());
     }
     
     @Override
@@ -83,7 +86,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     
     private void initialEditor() {
         
-        
+        boolean archived = workingDetail.isArchived();
         
         //initial spinner
 //        fromEditor = (Spinner) findViewById(R.id.deteditor_from);
@@ -123,19 +126,21 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         
         dateEditor = (EditText)findViewById(R.id.deteditor_date);
         dateEditor.setText(format.format(workingDetail.getDate()));
-         
+        dateEditor.setEnabled(!archived);
+        
         moneyEditor = (EditText)findViewById(R.id.deteditor_money);
         moneyEditor.setText(Formats.double2String(workingDetail.getMoney()));
+        moneyEditor.setEnabled(!archived);
         
         noteEditor = (EditText)findViewById(R.id.deteditor_note);
         noteEditor.setText(workingDetail.getNote());
         
-        
-        findViewById(R.id.deteditor_prev).setOnClickListener(this);
-        findViewById(R.id.deteditor_next).setOnClickListener(this);
-        findViewById(R.id.deteditor_today).setOnClickListener(this);
-        findViewById(R.id.deteditor_datepicker).setOnClickListener(this);
-        
+        if(!archived){
+            findViewById(R.id.deteditor_prev).setOnClickListener(this);
+            findViewById(R.id.deteditor_next).setOnClickListener(this);
+            findViewById(R.id.deteditor_today).setOnClickListener(this);
+            findViewById(R.id.deteditor_datepicker).setOnClickListener(this);
+        }
         
         okBtn = (Button)findViewById(R.id.deteditor_ok); 
         if(modeCreate){
@@ -203,7 +208,21 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     
     private void doOk(){
         Logger.d("doOK");   
-        
+      //verify
+//        if(Spinner.INVALID_POSITION==typeEditor.getSelectedItemPosition()){
+//            GUIs.shortToast(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_type)));
+//            return;
+//        }
+//        String name = nameEditor.getText().toString().trim();
+//        if("".equals(name)){
+//            GUIs.shortToast(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_name)));
+//            return;
+//        }
+//        String initval = initvalEditor.getText().toString();
+//        if("".equals(initval)){
+//            GUIs.shortToast(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.label_initial_value)));
+//            return;
+//        }        
 //        workingDetail.setType(AccountType.getSupportedType()[typeEditor.getSelectedItemPosition()].getType());
 //        workingDetail.setName(nameEditor.getText().toString());
 //        workingDetail.setInitialValue(Formats.string2Double(initvalEditor.getText().toString()));

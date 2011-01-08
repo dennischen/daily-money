@@ -9,10 +9,10 @@ import java.util.Date;
  */
 public class Detail {
 
-    private String id;
-    private String fromAccount;
+    private int id;
+    private String from;
     private String fromDisplay;
-    private String toAccount;
+    private String to;
     private String toDisplay;
     private Date date;
     private Double money;
@@ -23,30 +23,23 @@ public class Detail {
 
     public Detail(String fromAccount, String fromDisplay, String toAccount, String toDisplay, Date date, Double money,
             String note) {
-        this.fromAccount = fromAccount;
+        this.from = fromAccount;
         this.fromDisplay = fromDisplay;
-        this.toAccount = toAccount;
+        this.to = toAccount;
         this.toDisplay = toDisplay;
         this.date = date;
         this.money = money;
         this.note = note;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    void setId(int id) {
         this.id = id;
     }
 
-    public String getFromAccount() {
-        return fromAccount;
-    }
-
-    public void setFromAccount(String fromAccount) {
-        this.fromAccount = fromAccount;
-    }
 
     public String getFromDisplay() {
         return fromDisplay;
@@ -56,12 +49,29 @@ public class Detail {
         this.fromDisplay = fromDisplay;
     }
 
-    public String getToAccount() {
-        return toAccount;
+
+    public String getFrom() {
+        return from;
     }
 
-    public void setToAccount(String toAccount) {
-        this.toAccount = toAccount;
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 
     public String getToDisplay() {
@@ -95,11 +105,12 @@ public class Detail {
     public void setNote(String note) {
         this.note = note;
     }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + id;
         return result;
     }
 
@@ -112,12 +123,10 @@ public class Detail {
         if (getClass() != obj.getClass())
             return false;
         Detail other = (Detail) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
+        if (id != other.id)
             return false;
         return true;
     }
+
 
 }

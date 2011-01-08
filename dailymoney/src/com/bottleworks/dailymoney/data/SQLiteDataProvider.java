@@ -13,7 +13,7 @@ import static com.bottleworks.dailymoney.data.SQLiteMeta.*;
  * @author dennis
  * 
  */
-public class SQLiteDataProvider implements IDataProvider {
+public abstract class SQLiteDataProvider implements IDataProvider {
 
     SQLiteHelper helper;
 

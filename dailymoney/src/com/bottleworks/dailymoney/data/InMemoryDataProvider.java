@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 /**
  * a fake in memory data provider for development.
@@ -10,6 +11,7 @@ import java.util.List;
 public class InMemoryDataProvider implements IDataProvider {
 
     static List<Account> accountList = new ArrayList<Account>();
+    static List<Detail> detailList = new ArrayList<Detail>();
 
     public InMemoryDataProvider() {
     }
@@ -97,5 +99,67 @@ public class InMemoryDataProvider implements IDataProvider {
     @Override
     public void destroyed() {
     }
+    
+    
+    static int detailId = 0;
+    
+    public synchronized int nextDetailId(){
+        return ++detailId;
+    }
 
+    @Override
+    public Detail findDetail(int id) {
+        for(Detail d:detailList){
+            if(d.getId() == id){
+                return d;
+            }
+        }
+        return null;
+    }
+    
+    
+
+    @Override
+    public void newDetail(Detail detail){
+        int id = nextDetailId();
+        detail.setId(id);
+        detailList.add(detail);
+    }
+
+    @Override
+    public boolean updateDetail(int id, Detail detail) {
+        Detail det = findDetail(id);
+        if (det == null) {
+            return false;
+        }
+        if (det == detail){
+            return true;
+        }
+        //reset id, id is following the name;
+        det.setFrom(detail.getFrom());
+        det.setFromDisplay(detail.getFromDisplay());
+        det.setTo(detail.getTo());
+        det.setToDisplay(detail.getToDisplay());
+        det.setDate(detail.getDate());
+        det.setMoney(detail.getMoney());
+        det.setNote(detail.getNote());
+        det.setArchived(detail.isArchived());
+        return true;
+    }
+
+    @Override
+    public boolean deleteDetail(int id) {
+        for(Detail d:detailList){
+            if(d.getId()==id){
+                detailList.remove(d);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<Detail> listAllDetail() {
+        return Collections.unmodifiableList(detailList);
+    }
 }

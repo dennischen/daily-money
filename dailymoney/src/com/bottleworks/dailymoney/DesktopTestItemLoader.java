@@ -27,11 +27,11 @@ import com.csvreader.CsvWriter;
  * @author dennis
  *
  */
-public class DesktopItemLoader {
+public class DesktopTestItemLoader {
 
     Context context;
     I18N i18n;
-    public DesktopItemLoader(Context context,I18N i18n){
+    public DesktopTestItemLoader(Context context,I18N i18n){
         this.context = context;
         this.i18n = i18n;
     }
@@ -41,25 +41,13 @@ public class DesktopItemLoader {
         
         DesktopItem detaildt = new DesktopItem(new Runnable(){
             public void run(){
-                GUIs.shortToast(context,"test detail editor");
-                Detail d = new Detail("a","A","b","B",new Date(),10D,"test note");
-                DetailEditorDialog dlg = new DetailEditorDialog(context,new DetailEditorDialog.OnFinishListener() {
-                    @Override
-                    public boolean onFinish(DetailEditorDialog dlg, View v, Object data) {
-                        GUIs.shortToast(context,"detail created "+data);
-                        return true;
-                    }
-                }, true, d);
-                dlg.show();
-                
+                testCreateDetail();
             }
         },i18n.string(R.string.title_detmgnt),R.drawable.dt_item_detail);
         
         DesktopItem accdt = new DesktopItem(context,AccountMgntActivity.class,i18n.string(R.string.title_accmgnt),R.drawable.dt_item_account);
         DesktopItem prefdt = new DesktopItem(context,PrefsActivity.class,i18n.string(R.string.title_prefs),R.drawable.dt_item_prefs);
-        
-        DesktopItem testdt = new DesktopItem(context,TestActivity.class,"Test Activity",R.drawable.dt_item_test);
-        
+
         fnsItems.add(detaildt);
         fnsItems.add(accdt);
         fnsItems.add(prefdt);
@@ -67,7 +55,18 @@ public class DesktopItemLoader {
         
         
         /** test */
-        fnsItems.add(testdt);
+
+        fnsItems.add(new DesktopItem(new Runnable(){
+            @Override
+            public void run() {
+                testExportAccount();
+            }}, "export account",R.drawable.dt_item_test));
+        
+        fnsItems.add(new DesktopItem(new Runnable(){
+            @Override
+            public void run() {
+                testExportDetail();
+            }}, "export detail",R.drawable.dt_item_test));
         fnsItems.add(new DesktopItem(new Runnable(){
             @Override
             public void run() {
@@ -78,11 +77,7 @@ public class DesktopItemLoader {
             public void run() {
                 testCreateDefaultdata();
             }}, "Create default data",R.drawable.dt_item_test));
-        fnsItems.add(new DesktopItem(new Runnable(){
-            @Override
-            public void run() {
-                testCSV();
-            }}, "test csv",R.drawable.dt_item_test));
+        
         fnsItems.add(new DesktopItem(new Runnable(){
             @Override
             public void run() {
@@ -91,8 +86,8 @@ public class DesktopItemLoader {
         
         return fnsItems;
     }
-    
-    
+ 
+
     public List<DesktopItem> loadTestReports(){
         List<DesktopItem> reportsItems = new ArrayList<DesktopItem>();
         
@@ -125,6 +120,58 @@ public class DesktopItemLoader {
     /*
      * test
      */
+    
+    
+    private void testCreateDetail(){
+        Detail d = new Detail("a","A","b","B",new Date(),10D,"test note");
+//      d.setArchived(true);
+      DetailEditorDialog dlg = new DetailEditorDialog(context,new DetailEditorDialog.OnFinishListener() {
+          @Override
+          public boolean onFinish(DetailEditorDialog dlg, View v, Object data) {
+              
+              if(v.getId()==R.id.deteditor_ok){
+                  Detail dt = (Detail)data;
+                  Contexts.instance().getDataProvider().newDetail(dt);
+              }
+              return true;
+          }
+      }, true, d);
+      dlg.show();
+      
+    }
+   
+    
+    private void testExportDetail(){
+        try{
+            StringWriter sw = new StringWriter();
+            CsvWriter csvw = new CsvWriter(sw,',');
+            
+            for(Detail d:Contexts.instance().getDataProvider().listAllDetail()){
+                csvw.writeRecord(new String[]{Integer.toString(d.getId()),d.getFrom(),d.getFromDisplay(),
+                        d.getTo(),d.getToDisplay(),Formats.normalizeDate2String(d.getDate()),Formats.normalizeDouble2String(d.getMoney()),d.getNote()});
+            }
+            csvw.close();
+            String msg = sw.toString();
+            if(msg.length()==0){
+                GUIs.longToast(context, "no account");
+            }else{
+                File sd = Environment.getExternalStorageDirectory();
+                File folder = new File(sd,"bwDailyMoney");
+                if(!folder.exists()){
+                    folder.mkdir();
+                }
+                File file = new File(folder,"detail-export.csv");
+                if(!file.exists()){
+                    file.createNewFile();
+                }
+                Files.saveString(msg, file, "utf8");
+                GUIs.longToast(context, "csv save to "+file.getAbsolutePath()+", content, \n "+msg);
+            }
+        }catch(Exception x){
+            GUIs.longToast(context, "error "+x.getMessage());
+            x.printStackTrace();
+        }
+    }
     
     private void testResetDataprovider() {
         GUIs.doBusy(context,new GUIs.BusyAdapter(){
@@ -172,13 +219,13 @@ public class DesktopItemLoader {
         
     }
     
-    private void testCSV(){
+    private void testExportAccount(){
         try{
             StringWriter sw = new StringWriter();
             CsvWriter csvw = new CsvWriter(sw,',');
             
             for(Account a:Contexts.instance().getDataProvider().listAccount(null)){
-                csvw.writeRecord(new String[]{a.getId(),a.getName(),a.getType(),Formats.double2String(a.getInitialValue())});
+                csvw.writeRecord(new String[]{a.getId(),a.getName(),a.getType(),Formats.normalizeDouble2String(a.getInitialValue())});
             }
             csvw.close();
             String msg = sw.toString();

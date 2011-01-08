@@ -49,14 +49,14 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.desktop);
-        initialDesktopData();
+        initialDesktopItem();
         initialTab();
         initialContent();
         loadData();
     }
 
-    private void initialDesktopData() {
-        DesktopItemLoader loader = new DesktopItemLoader(this,i18n);
+    private void initialDesktopItem() {
+        DesktopTestItemLoader loader = new DesktopTestItemLoader(this,i18n);
         dataItems = loader.loadTestFunctions();
         reportsItems = loader.loadTestReports();
     }
@@ -91,7 +91,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     private void initialContent() {
 
-        gridViewAdapter = new DesktopItemAdapter(this);
+        gridViewAdapter = new DesktopItemAdapter();
         gridView = (GridView) findViewById(R.id.dt_grid);
         gridView.setAdapter(gridViewAdapter);
         gridView.setOnItemClickListener(this);
@@ -150,6 +150,14 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         String label;
         Runnable run;
 
+        public DesktopItem(Context context,Class<? extends Activity> activity, String label) {
+            this(new ActivityRun(context,activity), label);
+        }
+
+        public DesktopItem(Runnable run, String label) {
+            this(run,label,R.drawable.dt_item);
+        }
+        
         public DesktopItem(Context context,Class<? extends Activity> activity, String label, int icon) {
             this(new ActivityRun(context,activity), label, icon);
         }
@@ -158,16 +166,6 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
             this.run = run;
             this.label = label;
             this.icon = icon;
-        }
-
-        public DesktopItem(Context context,Class<? extends Activity> activity, String label) {
-            this(new ActivityRun(context,activity), label);
-        }
-
-        public DesktopItem(Runnable run, String label) {
-            this.run = run;
-            this.label = label;
-            this.icon = R.drawable.dt_item;
         }
 
         public void run() {
@@ -180,6 +178,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         Context context;
 
         ActivityRun(Context context,Class<? extends Activity> activity) {
+            this.context = context;
             this.activity = activity;
         }
 
@@ -189,11 +188,6 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     }
     
     public class DesktopItemAdapter extends BaseAdapter {
-        private Context mContext;
-
-        public DesktopItemAdapter(Context c) {
-            mContext = c;
-        }
 
         public int getCount() {
             return getCurrentDesktopItems().size();
