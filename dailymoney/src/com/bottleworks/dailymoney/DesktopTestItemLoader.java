@@ -16,7 +16,7 @@ import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.dailymoney.DesktopActivity.DesktopItem;
 import com.bottleworks.dailymoney.data.Account;
-import com.bottleworks.dailymoney.data.DefaultDataCreator;
+import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.Contexts;
@@ -57,16 +57,22 @@ public class DesktopTestItemLoader {
         /** test */
 
         fnsItems.add(new DesktopItem(new Runnable(){
+            public void run(){
+                testCreateDetail();
+            }
+        },"Detail editor",R.drawable.dt_item_test));
+        
+        fnsItems.add(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testExportAccount();
-            }}, "export account",R.drawable.dt_item_test));
+            }}, "Export account",R.drawable.dt_item_test));
         
         fnsItems.add(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testExportDetail();
-            }}, "export detail",R.drawable.dt_item_test));
+            }}, "Export detail",R.drawable.dt_item_test));
         fnsItems.add(new DesktopItem(new Runnable(){
             @Override
             public void run() {
@@ -75,8 +81,8 @@ public class DesktopTestItemLoader {
         fnsItems.add(new DesktopItem(new Runnable(){
             @Override
             public void run() {
-                testCreateDefaultdata();
-            }}, "Create default data",R.drawable.dt_item_test));
+                testCreateTestdata();
+            }}, "Create test data",R.drawable.dt_item_test));
         
         fnsItems.add(new DesktopItem(new Runnable(){
             @Override
@@ -153,7 +159,7 @@ public class DesktopTestItemLoader {
             csvw.close();
             String msg = sw.toString();
             if(msg.length()==0){
-                GUIs.longToast(context, "no account");
+                GUIs.longToast(context, "no detail");
             }else{
                 File sd = Environment.getExternalStorageDirectory();
                 File folder = new File(sd,"bwDailyMoney");
@@ -187,16 +193,16 @@ public class DesktopTestItemLoader {
 
     }
     
-    private void testCreateDefaultdata() {
+    private void testCreateTestdata() {
         GUIs.doBusy(context,new GUIs.BusyAdapter(){
             @Override
             public void onBusyFinish() {
-                GUIs.shortToast(context,"create default data");
+                GUIs.shortToast(context,"create test data");
             }
             @Override
             public void run() {
                 IDataProvider idp = Contexts.instance().getDataProvider();
-                new DefaultDataCreator(idp,i18n).createDefaultAccounts();
+                new DataCreator(idp,i18n).createTestData();
             }});
         
     }

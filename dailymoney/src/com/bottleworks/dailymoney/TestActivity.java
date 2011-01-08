@@ -12,7 +12,7 @@ import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.Account;
-import com.bottleworks.dailymoney.data.DefaultDataCreator;
+import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.ContextsActivity;
@@ -27,7 +27,7 @@ public class TestActivity extends ContextsActivity implements OnClickListener{
         initialListener();
         
         IDataProvider idp = Contexts.instance().getDataProvider();
-        new DefaultDataCreator(idp,i18n).createDefaultAccounts();
+        new DataCreator(idp,i18n).createTestData();
     }
 
     private void initialListener() {

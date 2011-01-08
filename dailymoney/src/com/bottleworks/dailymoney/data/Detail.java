@@ -19,7 +19,8 @@ public class Detail {
     private String note;
     
     private boolean archived;
-    
+
+    Detail(){}
 
     public Detail(String fromAccount, String fromDisplay, String toAccount, String toDisplay, Date date, Double money,
             String note) {

@@ -15,7 +15,8 @@ public class Formats {
     static DecimalFormat doubleFormat = new DecimalFormat("#0.###");
     
     /** format should not be changed if i start a export/import function **/
-    static DateFormat norDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    static DateFormat norDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    static DateFormat norDatetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     static DecimalFormat norDoubleFormat = new DecimalFormat("#0.###");
     
     
@@ -54,6 +55,14 @@ public class Formats {
     }
     
     public static Date normalizeString2Date(String date) throws ParseException {
+        return norDateFormat.parse(date);
+    }
+    
+    public static String normalizeDatetime2String(Date date) {
+        return norDateFormat.format(date);
+    }
+    
+    public static Date normalizeString2Datetime(String date) throws ParseException {
         return norDateFormat.parse(date);
     }
 }
