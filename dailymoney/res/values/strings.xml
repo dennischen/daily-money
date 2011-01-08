@@ -55,6 +55,10 @@
     <string name="dt_adddetail">Add Detail</string>
     <string name="dt_accmgnt">Accounts</string>
     <string name="dt_prefs">Preferences</string>
+    
+    <string name="msg_detail_updated">Detail was updated</string>
+    <string name="msg_detail_deleted">Detail was deleted</string>
+    <string name="msg_detail_created">Detail was created</string>
 
 </resources>
 

@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import com.bottleworks.dailymoney.DetailEditorDialog;
 import com.bottleworks.dailymoney.R;
@@ -88,21 +89,53 @@ public class GUIs {
     
     
     private static ExecutorService busyExecutor = Executors.newSingleThreadExecutor();
-    private static Handler busyGuiHandler = new Handler();
+    private static Handler guiHandler = new Handler();
     
+    
+    static public void postResume(final Runnable r){
+        busyExecutor.submit(new Runnable(){
+            @Override
+            public void run() {
+                post(r);
+            }});
+    }
+    
+    static public void post(Runnable r){
+        guiHandler.post(r);
+    }
+    
+    static public void doBusy(Context context,IBusyListener r){
+        doBusy(context,(Runnable)r);
+    }
+    
+    static public void doBusy(Context context,String msg,IBusyListener r){
+        doBusy(context,(Runnable)r);
+    }
     static public void doBusy(Context context,Runnable r){
         doBusy(context,Contexts.instance().getI18n().string(R.string.cmsg_busy),r); 
     }
     
     static public void doBusy(Context context,String msg,Runnable r){
         final ProgressDialog dlg = ProgressDialog.show(context,Contexts.instance().getI18n().string(R.string.clabel_busy),msg,true,false);
-        dlg.show();
-        busyExecutor.submit(new BusyRunnable(dlg,r));
+        BusyRunnable br = new BusyRunnable(dlg,r);
+        Future f = busyExecutor.submit(br);
+        try {
+            //release thread for a second.
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+        }
+        synchronized(br){
+            if(!f.isDone() || !br.finish){
+                dlg.show();
+            }
+        }
+        
     }
     
     static class BusyRunnable implements Runnable{
         ProgressDialog dlg;
         Runnable run;
+        boolean finish = false;
         public BusyRunnable(ProgressDialog dlg,Runnable run){
             this.dlg = dlg;
             this.run = run;
@@ -112,9 +145,14 @@ public class GUIs {
         public void run() {
             try{
                 run.run();
-                dlg.dismiss();
+                synchronized(this){
+                    if(dlg.isShowing()){
+                        dlg.dismiss();
+                    }
+                    finish = true;
+                }
                 if(run instanceof IBusyListener){
-                    busyGuiHandler.post(new Runnable(){
+                    guiHandler.post(new Runnable(){
                         @Override
                         public void run() {
                             ((IBusyListener)run).onBusyFinish();                        
@@ -123,7 +161,7 @@ public class GUIs {
             }catch(final Throwable x){
                 Logger.e(x.getMessage(),x);
                 if(run instanceof IBusyListener){
-                    busyGuiHandler.post(new Runnable(){
+                    guiHandler.post(new Runnable(){
                         @Override
                         public void run() {
                             ((IBusyListener)run).onBusyError(x);                        

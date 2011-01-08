@@ -232,8 +232,8 @@ public class SQLiteDataProvider implements IDataProvider {
             return false;
         }
         
-        //reset id, id is following the name;
-
+        //set id, detail might have a dirty id from copy or zero
+        detail.setId(id);
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         applyContextValue(detail,cv);
@@ -254,7 +254,7 @@ public class SQLiteDataProvider implements IDataProvider {
     public List<Detail> listAllDetail() {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = null;
-        c = db.query(TB_DET,COL_DET_ALL,null,null, null, null, COL_DET_DATE +" DESC");
+        c = db.query(TB_DET,COL_DET_ALL,null,null, null, null, COL_DET_DATE +" DESC,"+COL_DET_ID+" DESC");
         List<Detail> result = new ArrayList<Detail>();
         Detail det;
         while(c.moveToNext()){

@@ -12,18 +12,18 @@
 	<color name="detlist_info_fg">#F5B800</color>
 	
 	<color name="expense_bg_s">#FFFF9AB5</color>
-	<color name="expense_bg_e">#AAFF9AB5</color>
+	<color name="expense_bg_e">#CCFF9AB5</color>
 	<color name="expense_fg">#000000</color>
 	
 	<color name="income_bg_s">#FF7AFFA2</color>
-	<color name="income_bg_e">#AA7AFFA2</color>
+	<color name="income_bg_e">#CC7AFFA2</color>
 	<color name="income_fg">#000000</color>
 	
 	<color name="asset_bg_s">#FF7A95FF</color>
-	<color name="asset_bg_e">#AA7A95FF</color>
+	<color name="asset_bg_e">#CC7A95FF</color>
     <color name="asset_fg">#000000</color>
     
     <color name="unknow_bg_s">#FF555555</color>
-    <color name="unknow_bg_e">#AA555555</color>
+    <color name="unknow_bg_e">#CC555555</color>
     <color name="unknow_fg">#000000</color>
 </resources>

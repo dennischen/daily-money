@@ -18,7 +18,7 @@ public class SQLiteMeta {
 
     public static final String TB_DET = "dm_det";
 
-    public static final String COL_DET_ID = "id";
+    public static final String COL_DET_ID = "id_";
     public static final String COL_DET_FROM = "fr_";
     public static final String COL_DET_TO = "to_";
     public static final String COL_DET_DATE = "dt_";
