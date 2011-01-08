@@ -19,6 +19,8 @@
 	<string name="cmsg_error">錯誤 : %1$s</string>
     <string name="clabel_busy">忙碌</string>
     <string name="cmsg_busy">應用程式忙碌中，請稍候...</string>
-    <!-- above are verified -->
-	
+	<string name="cact_close">關閉</string>
+    <string name="cmsg_field_empty">%1$s 是空的</string>  
+    <string name="cmsg_field_zero">%1$s 是零</string>  
+	 <!-- above are verified -->
 </resources>

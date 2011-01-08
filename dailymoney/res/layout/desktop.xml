@@ -9,7 +9,7 @@
 				android:layout_height="fill_parent" android:padding="5dp">
 				<GridView android:id="@+id/dt_grid" android:layout_width="fill_parent" android:layout_height="fill_parent"
 					android:numColumns="auto_fit" android:verticalSpacing="5dp" android:horizontalSpacing="5dp" android:columnWidth="80dp"
-					android:stretchMode="columnWidth" android:gravity="center" android:drawSelectorOnTop="true"  />
+					android:stretchMode="columnWidth" android:gravity="center" android:listSelector="@drawable/selector_dtitem"/>
 			</FrameLayout>
 		</LinearLayout>
 	</TabHost>

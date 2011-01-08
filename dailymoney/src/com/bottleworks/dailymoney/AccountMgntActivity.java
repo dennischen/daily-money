@@ -128,7 +128,10 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
         
         listView = (ListView) findViewById(R.id.accmgnt_list);
         listView.setAdapter(listViewAdapter);
-        listView.setOnItemClickListener(this);
+        
+        
+//        listView.setOnItemClickListener(this);
+        
         registerForContextMenu(listView);
         
         

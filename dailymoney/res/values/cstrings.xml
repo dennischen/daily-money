@@ -19,10 +19,12 @@
 	<string name="cmsg_error">Error : %1$s</string>
     <string name="clabel_busy">Busy</string>
     <string name="cmsg_busy">Application is busy, please wait for seconds...</string>
-	<!-- above are verified -->
+	
 
     <string name="cact_close">Close</string>
     <string name="cmsg_field_empty">%1$s is empty</string>	
-    <string name="cmsg_field_zero">%1$s is zero</string>  
+    <string name="cmsg_field_zero">%1$s is zero</string> 
+    
+    <!-- above are verified --> 
 
 </resources>

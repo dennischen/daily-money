@@ -28,7 +28,7 @@
     <string name="title_detmgnt">Detail Manager</string>
     <string name="title_desktop">Desktop</string>
     <string name="title_prefs">Preferences</string>	
-    <!-- above are sorted -->
+    
 
 
 	<string name="label_from_account">From</string>
@@ -40,12 +40,12 @@
     <string name="msg_same_from_to">From and To are the same one</string>
     <string name="title_detlist">Detail List</string>
 
-<string name="title_acceditor_create">Create Account</string>
-<string name="title_acceditor_update">Update Account</string>
-<string name="title_deteditor_create">Create Detail</string>
-<string name="title_deteditor_update">Update Detail</string>
-<string name="msg_created_detail">Created %1$s details</string>
-<string name="msg_created_account">Created %1$s accounts</string>
+	<string name="title_acceditor_create">Create Account</string>
+	<string name="title_acceditor_update">Update Account</string>
+	<string name="title_deteditor_create">Create Detail</string>
+	<string name="title_deteditor_update">Update Detail</string>
+	<string name="msg_created_detail">Created %1$s details</string>
+	<string name="msg_created_account">Created %1$s accounts</string>
 
     <string name="label_detlist_from">&lt;%1$s&gt;</string>
     <string name="label_detlist_to">%1$s</string>
@@ -59,6 +59,6 @@
     <string name="msg_detail_updated">Detail was updated</string>
     <string name="msg_detail_deleted">Detail was deleted</string>
     <string name="msg_detail_created">Detail was created</string>
-
+<!-- above are sorted -->
 </resources>
 

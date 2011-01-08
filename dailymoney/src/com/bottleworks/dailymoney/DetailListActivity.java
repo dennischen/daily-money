@@ -1,35 +1,22 @@
 package com.bottleworks.dailymoney;
 
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
-import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
-import com.bottleworks.dailymoney.data.Account;
-import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.ContextsActivity;
-import com.bottleworks.dailymoney.ui.NamedItem;
 
 /**
  * 
@@ -37,22 +24,6 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  * 
  */
 public class DetailListActivity extends ContextsActivity {
-
-    
-//    private static String[] bindingFrom = new String[] { "layout","from", "to", "money" , "note", "date" };
-//    
-//    private static int[] bindingTo = new int[] { R.id.detlist_item_layout,R.id.detlist_item_from, R.id.detlist_item_to, R.id.detlist_item_money,R.id.detlist_item_note,R.id.detlist_item_date };
-//    
-//    
-//    private List<Detail> listViewData = new ArrayList<Detail>();
-//    
-//    private List<Map<String, Object>> listViewMapList = new ArrayList<Map<String, Object>>();
-//
-//    private ListView listView;
-//    
-//    private SimpleAdapter listViewAdapter;
-//    
-//    private Map<String,Account> accountCache = new HashMap<String,Account>();
     
     DetailListHelper detailListHelper;
     
@@ -77,7 +48,7 @@ public class DetailListActivity extends ContextsActivity {
 
 
     private void initialContent() {
-        detailListHelper = new DetailListHelper(this, i18n,true, new DetailListHelper.OnDetailChangedListener() {
+        detailListHelper = new DetailListHelper(this, i18n,false, new DetailListHelper.OnDetailChangedListener() {
             @Override
             public void onDetailChanged(Detail detail) {
                 GUIs.shortToast(DetailListActivity.this, i18n.string(R.string.msg_detail_updated));
@@ -149,13 +120,13 @@ public class DetailListActivity extends ContextsActivity {
         Logger.d("context menu selected :" + item.getItemId() + ", pos " + info.position);
         switch (item.getItemId()) {
         case R.id.detlist_menu_edit:
-            detailListHelper.doEditAccount(info.position);
+            detailListHelper.doEditDetail(info.position);
             return true;
         case R.id.detlist_menu_delete:
-            detailListHelper.doDeleteAccount(info.position);
+            detailListHelper.doDeleteDetail(info.position);
             return true;
         case R.id.detlist_menu_copy:
-            detailListHelper.doCopyAccount(info.position);
+            detailListHelper.doCopyDetail(info.position);
             return true;
         }
         return super.onContextItemSelected(item);

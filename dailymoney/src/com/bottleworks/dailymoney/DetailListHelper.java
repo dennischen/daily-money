@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -23,7 +22,6 @@ import com.bottleworks.commons.util.I18N;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
-import com.bottleworks.dailymoney.data.DuplicateKeyException;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.NamedItem;
@@ -158,13 +156,6 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
             doEditDetail(pos);
         }
     }
-    
-    public void doEditDetail(int pos) {
-        Detail det = (Detail) listViewData.get(pos);
-        DetailEditorDialog dlg = new DetailEditorDialog(activity, this, false, det);
-        dlg.show();
-    }
-    
 //    public doCreateDetail(){
 //        
 //    }
@@ -234,7 +225,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
 
 
 
-    public void doEditAccount(int pos) {
+    public void doEditDetail(int pos) {
         Detail d = (Detail) listViewData.get(pos);
         DetailEditorDialog dlg = new DetailEditorDialog(activity,this, false, d);
         dlg.show();
@@ -242,7 +233,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
 
 
 
-    public void doDeleteAccount(int pos) {
+    public void doDeleteDetail(int pos) {
         Detail d = (Detail) listViewData.get(pos);
         Contexts.instance().getDataProvider().deleteDetail(d.getId());
         if(listener!=null){
@@ -252,7 +243,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
 
 
 
-    public void doCopyAccount(int pos) {
+    public void doCopyDetail(int pos) {
         Detail d = (Detail) listViewData.get(pos);
         DetailEditorDialog dlg = new DetailEditorDialog(activity,this, true, d);
         dlg.show();
