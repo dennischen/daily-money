@@ -11,8 +11,8 @@
             android:layout_width="wrap_content" android:gravity="right" android:layout_height="fill_parent"/>
     </LinearLayout>    
     
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-        android:layout_below="@id/tmp1" android:layout_alignParentLeft="true" android:layout_marginLeft="10dp"
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" 
+        android:layout_below="@id/tmp1" android:layout_alignParentLeft="true" android:layout_marginLeft="5dp"
         android:orientation="horizontal">
         <TextView android:id="@+id/detlist_item_date" android:text="Date" android:layout_width="wrap_content"
             android:layout_height="fill_parent" android:textSize="11sp" android:gravity="left" android:layout_marginRight="3dp"
@@ -21,6 +21,7 @@
             android:layout_width="wrap_content" android:layout_height="fill_parent" android:textSize="11sp" android:gravity="left" 
             android:singleLine="true"/>
         <TextView android:id="@+id/detlist_item_from" android:text="From" android:layout_width="wrap_content"
+            android:paddingLeft="5dp" android:paddingRight="5dp"
             android:layout_height="fill_parent" android:textSize="11sp" android:gravity="right"
             android:singleLine="true"/>
     </LinearLayout>

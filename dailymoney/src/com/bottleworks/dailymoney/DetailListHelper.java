@@ -78,6 +78,8 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
         listViewAdapter.setViewBinder(new SimpleAdapter.ViewBinder(){
             
             AccountType last = null;
+            AccountType lastFrom = null;
+            AccountType lastTo = null;
             @Override
             public boolean setViewValue(View view, Object data, String text) {
                 NamedItem item = (NamedItem)data;
@@ -97,11 +99,17 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
                         }else if(AccountType.ASSET.getType().equals(toAcc.getType())){
                             flag |= 4;
                         }
+                        lastTo = AccountType.find(toAcc.getType());
+                    }else{
+                        lastTo = AccountType.UNKONW;
                     }
                     if(fromAcc!=null){
                         if(AccountType.INCOME.getType().equals(fromAcc.getType())){
                             flag |= 2;
                         }
+                        lastFrom = AccountType.find(fromAcc.getType());
+                    }else{
+                        lastFrom = AccountType.UNKONW;
                     }
                     if( (flag & 1) == 1){
                         layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_expense));
@@ -141,6 +149,20 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
                 }else{
                     ((TextView)view).setTextColor(activity.getResources().getColor(R.color.unknow_fg));
                 }
+                
+                
+                
+                if("from".equals(name)){
+                    if(AccountType.ASSET==lastFrom && AccountType.ASSET!=last){
+                        view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_asset));
+                    }else if(AccountType.INCOME==lastFrom && AccountType.INCOME!=last){
+                        view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_income));
+                    }else{
+                        //reset
+                        view.setBackgroundDrawable(null);
+                    }
+                }
+                
                 
                 return false;
             }});

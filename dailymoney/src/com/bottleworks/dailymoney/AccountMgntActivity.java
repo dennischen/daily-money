@@ -107,20 +107,33 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
                 String name = item.getName();
                 Account acc = (Account)item.getValue();
                 //not textview, not initval
-                if(!(view instanceof TextView) || !name.equals(bindingFrom[1])){
+                if(!(view instanceof TextView)){
                     return false;
                 }
-                    
+                AccountType at = AccountType.find(acc.getType());
                 TextView tv = (TextView)view;
+                
+                if(at==AccountType.INCOME){
+                    tv.setTextColor(getResources().getColor(R.color.income_fge)); 
+                }else if(at==AccountType.EXPENSE){
+                    tv.setTextColor(getResources().getColor(R.color.expense_fge));
+                }else if(at==AccountType.ASSET){
+                    tv.setTextColor(getResources().getColor(R.color.asset_fge));
+                }else{
+                    tv.setTextColor(getResources().getColor(R.color.unknow_fge));
+                }
+                
                 //reset
                 tv.setVisibility(View.VISIBLE);
                 
-                
-                AccountType at = AccountType.find(acc.getType());
+                if(!name.equals(bindingFrom[1])){
+                    return false;
+                }
                 if(at==AccountType.INCOME || at==AccountType.EXPENSE){
                     tv.setVisibility(View.INVISIBLE);
                     return true;
                 }
+                
                 text = i18n.string(R.string.label_initial_value)+" : "+data.toString();
                 tv.setText(text);
                 return true;
