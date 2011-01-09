@@ -9,6 +9,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 public class PrefsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+    boolean dirty = false;
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -22,11 +23,15 @@ public class PrefsActivity extends PreferenceActivity implements OnSharedPrefere
     
     protected void onPause(){
         super.onPause();
+        if(dirty){
+            Contexts.instance().setPreferenceDirty();
+        }
+        dirty = false;
         PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        Contexts.instance().setPreferenceDirty();
+        dirty = true;
     }
 }

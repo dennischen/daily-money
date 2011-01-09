@@ -50,21 +50,31 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
     
     private boolean editable;
     
-    private OnDetailChangedListener listener;
+    private OnDetailListener listener;
     
     Activity activity;
     I18N i18n;
-    public DetailListHelper(Activity context,I18N i18n,boolean editable,OnDetailChangedListener listener){
+    public DetailListHelper(Activity context,I18N i18n,boolean editable,OnDetailListener listener){
         this.activity = context;
         this.i18n = i18n;
         this.editable = editable;
-        this.listener = listener;
+        this.listener = listener==null?new OnDetailAdapter():listener;
     }
     
     
     
     public void setup(ListView listview){
-        listViewAdapter = new SimpleAdapter(activity, listViewMapList, R.layout.detlist_item, bindingFrom, bindingTo);
+        
+        int layout = 0;
+        switch(Contexts.instance().getPrefDetailListLayout()){
+        case 2:
+            layout = R.layout.detlist_item2;
+            break;
+        default:
+            layout = R.layout.detlist_item1;
+        }
+        
+        listViewAdapter = new SimpleAdapter(activity, listViewMapList, layout, bindingFrom, bindingTo);
         listViewAdapter.setViewBinder(new SimpleAdapter.ViewBinder(){
             
             AccountType last = null;
@@ -170,26 +180,31 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
         listViewMapList.clear();
         DateFormat format = Contexts.instance().getDateFormat();
         for (Detail det : listViewData) {
-            Map<String, Object> row = new HashMap<String, Object>();
+            Map<String, Object> row = toDetailMap(det,format);
             listViewMapList.add(row);
-            Account fromAcc = accountCache.get(det.getFrom());
-            Account toAcc = accountCache.get(det.getTo());
-            
-            String from = fromAcc==null?det.getFrom():(i18n.string(R.string.label_detlist_from,fromAcc.getName(),AccountType.getDisplay(i18n, fromAcc.getType())));
-            String to = toAcc==null?det.getTo():(i18n.string(R.string.label_detlist_to,toAcc.getName(),AccountType.getDisplay(i18n, toAcc.getType())));
-            String money = i18n.string(R.string.label_detlist_money,Formats.double2String(det.getMoney()));
-            row.put(bindingFrom[0], new NamedItem(bindingFrom[0],det,bindingFrom[0]));
-            row.put(bindingFrom[1], new NamedItem(bindingFrom[1],det,from));
-            row.put(bindingFrom[2], new NamedItem(bindingFrom[2],det,to));
-            row.put(bindingFrom[3], new NamedItem(bindingFrom[3],det,money));
-            row.put(bindingFrom[4], new NamedItem(bindingFrom[4],det,det.getNote()));
-            row.put(bindingFrom[5], new NamedItem(bindingFrom[5],det,format.format(det.getDate())));
         }
 
         listViewAdapter.notifyDataSetChanged();
     }
 
 
+    private Map<String, Object> toDetailMap(Detail det,DateFormat format){
+        Map<String, Object> row = new HashMap<String, Object>();
+        Account fromAcc = accountCache.get(det.getFrom());
+        Account toAcc = accountCache.get(det.getTo());
+        
+        String from = fromAcc==null?det.getFrom():(i18n.string(R.string.label_detlist_from,fromAcc.getName(),AccountType.getDisplay(i18n, fromAcc.getType())));
+        String to = toAcc==null?det.getTo():(i18n.string(R.string.label_detlist_to,toAcc.getName(),AccountType.getDisplay(i18n, toAcc.getType())));
+        String money = i18n.string(R.string.label_detlist_money,Formats.double2String(det.getMoney()));
+        row.put(bindingFrom[0], new NamedItem(bindingFrom[0],det,bindingFrom[0]));
+        row.put(bindingFrom[1], new NamedItem(bindingFrom[1],det,from));
+        row.put(bindingFrom[2], new NamedItem(bindingFrom[2],det,to));
+        row.put(bindingFrom[3], new NamedItem(bindingFrom[3],det,money));
+        row.put(bindingFrom[4], new NamedItem(bindingFrom[4],det,det.getNote()));
+        row.put(bindingFrom[5], new NamedItem(bindingFrom[5],det,format.format(det.getDate())));
+        
+        return row;
+    }
 
     @Override
     public boolean onFinish(DetailEditorDialog dlg, View v, Object data) {
@@ -199,25 +214,34 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
             boolean modeCreate = dlg.isModeCreate();
             IDataProvider idp = Contexts.instance().getDataProvider();
             if (modeCreate) {
-                if(v.getId()==R.id.deteditor_ok){
-                    Detail dt = (Detail)data;
-                    Contexts.instance().getDataProvider().newDetail(dt);
-                }else if(v.getId()==R.id.deteditor_close){
-                    GUIs.shortToast(activity,i18n.string(R.string.msg_created_detail,dlg.getCounter()));
+                Contexts.instance().getDataProvider().newDetail(workingdet);
+                if(!listener.onDetailCreated(workingdet)){
+                    listViewData.add(0,workingdet);
+                    listViewMapList.add(0,toDetailMap(workingdet,Contexts.instance().getDateFormat()));
+                    listViewAdapter.notifyDataSetChanged();
                 }
             } else {
                 Detail odet = dlg.getDetail();
                 idp.updateDetail(odet.getId(),workingdet);
+                if(!listener.onDetailUpdated(workingdet)){
+                    int pos = listViewData.indexOf(odet);
+                    listViewData.set(pos,workingdet);
+                    listViewMapList.set(pos,toDetailMap(workingdet,Contexts.instance().getDateFormat()));
+                    listViewAdapter.notifyDataSetChanged();
+                }
             }
-            if(listener!=null){
-                listener.onDetailChanged(workingdet);
-            }
+            break;
+        case R.id.deteditor_cancel:
+        case R.id.deteditor_close:
+            listener.onEditorClosed(dlg.getCounter());
+            break;
+            
         }
         return true;
     }
-   
 
-    public void doNewAccount() {
+
+    public void doNewDetail() {
         Detail d = new Detail("","",new Date(),0D,"");
         DetailEditorDialog dlg = new DetailEditorDialog(activity,this, true, d);
         dlg.show();
@@ -236,8 +260,10 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
     public void doDeleteDetail(int pos) {
         Detail d = (Detail) listViewData.get(pos);
         Contexts.instance().getDataProvider().deleteDetail(d.getId());
-        if(listener!=null){
-            listener.onDetailDeleted(d);
+        if(!listener.onDetailDeleted(d)){
+            listViewData.remove(pos);
+            listViewMapList.remove(pos);
+            listViewAdapter.notifyDataSetChanged();
         }
     }
 
@@ -249,19 +275,37 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
         dlg.show();
     }
     
-    public static interface OnDetailChangedListener {
-        public void onDetailChanged(Detail detail);
-        public void onDetailDeleted(Detail detail);
+    
+    public static interface OnDetailListener {
+        /** return ture if listener has reload the data*/
+        public boolean onDetailUpdated(Detail detail);
+        public boolean onDetailDeleted(Detail detail);
+        public boolean onDetailCreated(Detail detail);
+        public boolean onEditorClosed(int counter);
     }
     
-    public static class OnDetailChangedAdapter implements OnDetailChangedListener{
+    public static class OnDetailAdapter implements OnDetailListener{
 
         @Override
-        public void onDetailChanged(Detail detail) {
+        public boolean onDetailUpdated(Detail detail) {
+            return false;
         }
+
         @Override
-        public void onDetailDeleted(Detail detail) {
+        public boolean onDetailDeleted(Detail detail) {
+            return false;
         }
+
+        @Override
+        public boolean onDetailCreated(Detail detail) {
+            return false;
+        }
+
+        @Override
+        public boolean onEditorClosed(int counter) {
+            return false;
+        }
+
     }
     
 }

@@ -45,7 +45,7 @@
 	<string name="msg_created_detail">一共建立了 %1$s 筆明細</string>
 	<string name="msg_created_account">一共建立了 %1$s 個帳戶</string>
 
-    <string name="label_detlist_from">&lt;%1$s&gt;</string>
+    <string name="label_detlist_from">&lt; %1$s</string>
     <string name="label_detlist_to">%1$s</string>
     <string name="label_detlist_money">$%1$s</string>
     

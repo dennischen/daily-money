@@ -29,7 +29,8 @@ public class Contexts {
     private IDataProvider dataProvider;
     private I18N i18n;
     
-    boolean useimprovider;
+    boolean pref_useImpPovider;
+    int pref_detailListLayout;
     
     private boolean prefsDirty = true;
     
@@ -64,7 +65,12 @@ public class Contexts {
     
     private void reloadPreference() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        useimprovider = prefs.getBoolean(Constants.PREFS_USE_INMENORY_PROVIDER, false);
+        pref_useImpPovider = prefs.getBoolean(Constants.PREFS_USE_INMENORY_PROVIDER, false);
+        pref_detailListLayout = Integer.parseInt(prefs.getString(Constants.PREFS_DETAIL_LIST_LAYOUT, "2"));
+    }
+    
+    public int getPrefDetailListLayout(){
+        return pref_detailListLayout;
     }
 
     Contexts cleanContext(Context context){
@@ -82,7 +88,7 @@ public class Contexts {
     }
 
     private void initDataProvider(Context context) {
-        if(useimprovider){
+        if(pref_useImpPovider){
             dataProvider = new InMemoryDataProvider();
         }else{
 //            dataProvider = new InMemoryDataProvider();

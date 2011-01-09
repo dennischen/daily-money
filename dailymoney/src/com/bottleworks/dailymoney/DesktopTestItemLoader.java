@@ -46,10 +46,12 @@ public class DesktopTestItemLoader {
               DetailEditorDialog dlg = new DetailEditorDialog(context,new DetailEditorDialog.OnFinishListener() {
                   @Override
                   public boolean onFinish(DetailEditorDialog dlg, View v, Object data) {
-                      if(v.getId()==R.id.deteditor_ok){
+                      switch(v.getId()){
+                      case R.id.deteditor_ok:
                           Detail dt = (Detail)data;
                           Contexts.instance().getDataProvider().newDetail(dt);
-                      }else if(v.getId()==R.id.deteditor_close){
+                          break;
+                      case R.id.deteditor_close:
                           GUIs.shortToast(context,i18n.string(R.string.msg_created_detail,dlg.getCounter()));
                       }
                       return true;

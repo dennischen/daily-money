@@ -47,7 +47,7 @@
 	<string name="msg_created_detail">Created %1$s details</string>
 	<string name="msg_created_account">Created %1$s accounts</string>
 
-    <string name="label_detlist_from">&lt;%1$s&gt;</string>
+    <string name="label_detlist_from">&lt; %1$s</string>
     <string name="label_detlist_to">%1$s</string>
     <string name="label_detlist_money">$%1$s</string>
     
@@ -60,5 +60,13 @@
     <string name="msg_detail_deleted">Detail was deleted</string>
     <string name="msg_detail_created">Detail was created</string>
 <!-- above are sorted -->
+
+    <string name="label_prefs_detlayout_sum">Choose different type for detail list layout</string>
+    <string name="label_prefs_detlayout">Set detail list layout type</string>
+    
+    <string name="label_detlayout_type1">Type 1</string>
+    <string name="label_detlayout_type2">Type 2</string>
+    
+    
 </resources>
 

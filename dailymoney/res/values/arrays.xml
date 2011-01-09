@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="prefs_detlayout_val">
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="prefs_detlayout_label">
+		<item>@string/label_detlayout_type1</item>
+		<item>@string/label_detlayout_type2</item>
+	</string-array>
+</resources>

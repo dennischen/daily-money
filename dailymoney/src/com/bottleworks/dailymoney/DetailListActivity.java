@@ -48,17 +48,33 @@ public class DetailListActivity extends ContextsActivity {
 
 
     private void initialContent() {
-        detailListHelper = new DetailListHelper(this, i18n,false, new DetailListHelper.OnDetailChangedListener() {
+        detailListHelper = new DetailListHelper(this, i18n,false, new DetailListHelper.OnDetailListener() {
             @Override
-            public void onDetailChanged(Detail detail) {
+            public boolean onDetailUpdated(Detail detail) {
                 GUIs.shortToast(DetailListActivity.this, i18n.string(R.string.msg_detail_updated));
                 reloadData();
+                return true;
             }
 
             @Override
-            public void onDetailDeleted(Detail detail) {
+            public boolean onDetailDeleted(Detail detail) {
                 GUIs.shortToast(DetailListActivity.this, i18n.string(R.string.msg_detail_deleted));
-                reloadData();
+                return false;
+            }
+
+            @Override
+            public boolean onDetailCreated(Detail detail) {
+                return false;
+            }
+
+            @Override
+            public boolean onEditorClosed(int counter) {
+                if(counter>0){
+                    GUIs.shortToast(DetailListActivity.this,i18n.string(R.string.msg_created_detail,counter));
+                    reloadData();
+                    return true;
+                }
+                return false;
             }
         });
         ListView listView = (ListView)findViewById(R.id.detlist_list);
@@ -98,7 +114,7 @@ public class DetailListActivity extends ContextsActivity {
         Logger.d("option menu selected :" + item.getItemId());
         switch (item.getItemId()) {
         case R.id.detlist_menu_new:
-            detailListHelper.doNewAccount();
+            detailListHelper.doNewDetail();
             return true;
         }
         return super.onOptionsItemSelected(item);

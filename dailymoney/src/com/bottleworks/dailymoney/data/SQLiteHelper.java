@@ -42,7 +42,10 @@ public class SQLiteHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         Logger.d("create schema " +ACC_CREATE_SQL);
-        db.execSQL(ACC_DROP_SQL);
+        db.execSQL(ACC_CREATE_SQL);
+        
+        Logger.d("create schema " +DET_CREATE_SQL);
+        db.execSQL(DET_CREATE_SQL);
     }
 
     @Override
@@ -54,10 +57,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         Logger.d("drop schema "+DET_DROP_SQL);
         db.execSQL(DET_DROP_SQL);
         
-        Logger.d("create schema " +ACC_CREATE_SQL);
-        db.execSQL(ACC_CREATE_SQL);
-        Logger.d("create schema " +DET_CREATE_SQL);
-        db.execSQL(DET_CREATE_SQL);
+        onCreate(db);
     }
 
 }
