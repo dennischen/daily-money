@@ -51,23 +51,23 @@ public class DataCreator {
         Account asset2 = createAccountNoThrow(i18n.string(R.string.defacc_bank), AccountType.ASSET, 100000D);
 
         Date today = new Date();
-
-        createDetail(income1, asset1, cal.dateBefore(today, 10), 5000D, "Salary");
-        createDetail(income2, asset2, cal.dateBefore(today, 5), 10D, "Interset");
-
-        createDetail(asset1, expense1, cal.dateBefore(today, 2), 100D, "date with Cica");
-        createDetail(asset1, expense1, cal.yesterday(today), 30D, "taiwan food is great");
-        createDetail(asset1, expense2, cal.yesterday(today), 11D, "buy DVD");
-        createDetail(asset1, expense3, today, 300D, "it is a secrt ");
-
-        createDetail(asset1, asset2, cal.dateBefore(today, 9), 4000D, "deposit 1");
-        createDetail(asset2, asset1, cal.dateBefore(today, 15), 1000D, "drawing 1");
         
-        createDetail(asset1, asset2, cal.dateBefore(today, 39), 4111D, "deposit 2");
-        createDetail(asset2, asset1, cal.dateBefore(today, 45), 1111D, "drawing 2");
-        
-        createDetail(asset1, asset2, cal.dateBefore(today, 69), 4222D, "deposit 3");
-        createDetail(asset2, asset1, cal.dateBefore(today, 75), 1222D, "drawing 3");
+        int base = 0;
+
+        for(int i=0;i<100;i++){
+            createDetail(income1, asset1, cal.dateBefore(today, base + 3), 5000D, "salary "+i);
+            createDetail(income2, asset2, cal.dateBefore(today, base + 3), 10D, "interset "+i);
+    
+            createDetail(asset1, expense1, cal.dateBefore(today, base + 2), 100D, "date with Cica "+i);
+            createDetail(asset1, expense1, cal.dateBefore(today,base + 2), 30D, "taiwan food is great "+i);
+            createDetail(asset1, expense2, cal.dateBefore(today,base + 1), 11D, "buy DVD "+i);
+            createDetail(asset1, expense3, cal.dateBefore(today,base + 1), 300D, "it is a secrt  "+i);
+    
+            createDetail(asset1, asset2, cal.dateBefore(today, base+0), 4000D, "deposit  "+i);
+            createDetail(asset2, asset1, cal.dateBefore(today, base+0), 1000D, "drawing  "+i);
+            
+            base = base+4;
+        }
 
     }
 

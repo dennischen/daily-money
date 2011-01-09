@@ -32,7 +32,7 @@ public class Contexts {
     
     boolean pref_useImpPovider = false;
     int pref_detailListLayout = 2;
-    int pref_maxRecords = -1;
+    int pref_maxRecords = 100;//-1 is no limit
     int pref_firstdayWeek = 1;//sunday
     
     private CalendarHelper calendarHelper = new CalendarHelper();
@@ -70,7 +70,9 @@ public class Contexts {
     
     private void reloadPreference() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        pref_useImpPovider = prefs.getBoolean(Constants.PREFS_USE_INMENORY_PROVIDER, false);
+        try{
+            pref_useImpPovider = prefs.getBoolean(Constants.PREFS_USE_INMENORY_PROVIDER, false);
+        }catch(Exception x){}
         try{
             pref_detailListLayout = Integer.parseInt(prefs.getString(Constants.PREFS_DETAIL_LIST_LAYOUT, "2"));
         }catch(Exception x){}
@@ -78,7 +80,7 @@ public class Contexts {
             pref_firstdayWeek = Integer.parseInt(prefs.getString(Constants.PREFS_FIRSTDAY_WEEK, "1"));
         }catch(Exception x){}
         try{
-            pref_maxRecords = Integer.parseInt(prefs.getString(Constants.PREFS_MAX_RECORDS, "-1"));
+            pref_maxRecords = Integer.parseInt(prefs.getString(Constants.PREFS_MAX_RECORDS, "100"));
         }catch(Exception x){}
         
         Logger.d("preference : use inmemory "+pref_useImpPovider);

@@ -200,6 +200,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
             modeBtn.setImageResource(R.drawable.btn_month);
             break;
         }
+        summaryView.setText("......");
         final IDataProvider idp = Contexts.instance().getDataProvider();
 //        detailListHelper.reloadData(idp.listAllDetail());
         GUIs.doBusy(this,new GUIs.BusyAdapter() {
