@@ -5,4 +5,7 @@
 	<ListPreference android:key="detail_list_layout" android:title="@string/label_prefs_detlayout"
 		android:summary="@string/label_prefs_detlayout_sum" android:defaultValue="1" android:entries="@array/prefs_detlayout_label"
 		android:entryValues="@array/prefs_detlayout_val" />
+	<EditTextPreference android:key="max_records" android:title="@string/label_prefs_maxrecords" 
+	    android:numeric="signed"
+        android:summary="@string/label_prefs_maxrecords_sum" android:defaultValue="-1"  />
 </PreferenceScreen>

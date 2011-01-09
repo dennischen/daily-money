@@ -3,6 +3,7 @@
  */
 package com.bottleworks.dailymoney.data;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -46,5 +47,13 @@ public interface IDataProvider {
     boolean deleteDetail(int id);
 
     List<Detail> listAllDetail();
+
+    int countDetail(Date start, Date end);
+    
+    List<Detail> listDetail(Date start, Date end, int max);
+
+    double sumIncome(Date start, Date end);
+
+    double sumExpense(Date start, Date end);
     
 }

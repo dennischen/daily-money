@@ -29,8 +29,9 @@ public class Contexts {
     private IDataProvider dataProvider;
     private I18N i18n;
     
-    boolean pref_useImpPovider;
-    int pref_detailListLayout;
+    boolean pref_useImpPovider = false;
+    int pref_detailListLayout = 2;
+    int pref_maxRecords = -1;
     
     private boolean prefsDirty = true;
     
@@ -67,10 +68,19 @@ public class Contexts {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         pref_useImpPovider = prefs.getBoolean(Constants.PREFS_USE_INMENORY_PROVIDER, false);
         pref_detailListLayout = Integer.parseInt(prefs.getString(Constants.PREFS_DETAIL_LIST_LAYOUT, "2"));
+        pref_maxRecords = Integer.parseInt(prefs.getString(Constants.PREFS_MAX_RECORDS, "-1"));
+        
+        Logger.d("preference : use inmemory "+pref_useImpPovider);
+        Logger.d("preference : detail layout "+pref_detailListLayout);
+        Logger.d("preference : max records "+pref_maxRecords);
     }
     
     public int getPrefDetailListLayout(){
         return pref_detailListLayout;
+    }
+    
+    public int getPrefMaxRecords(){
+        return pref_maxRecords;
     }
 
     Contexts cleanContext(Context context){

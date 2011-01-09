@@ -16,8 +16,8 @@
 	<string name="label_income">Income</string>
 	<string name="label_initial_value">Initial</string>
 	<string name="label_other">Other</string>
-	<string name="label_prefs_improvider_sum">Use in-memory-provider for trying this application, data in this mode will not be persisted</string>
-	<string name="label_prefs_improvider">Use in-memory-provider</string>
+	<string name="label_prefs_improvider_sum">For trying this application, data in this mode will not be persisted</string>
+	<string name="label_prefs_improvider">In-memory-provider</string>
 	<string name="label_reports">Reports</string>
 	<string name="msg_account_created">Account %1$s was created in type %2$s</string>
 	<string name="msg_account_deleted">Account %1$s was deleted</string>
@@ -59,14 +59,26 @@
     <string name="msg_detail_updated">Detail was updated</string>
     <string name="msg_detail_deleted">Detail was deleted</string>
     <string name="msg_detail_created">Detail was created</string>
-<!-- above are sorted -->
+
 
     <string name="label_prefs_detlayout_sum">Choose different type for detail list layout</string>
-    <string name="label_prefs_detlayout">Set detail list layout type</string>
+    <string name="label_prefs_detlayout">Detail list type</string>
     
     <string name="label_detlayout_type1">Type 1</string>
     <string name="label_detlayout_type2">Type 2</string>
     
+    <string name="label_prefs_maxrecords">Maximum records</string>
+    <string name="label_prefs_maxrecords_sum">Set number of max records in detail list, -1 means no limit</string>
     
+    <string name="label_all_details">All details</string>
+    <string name="label_week_details">%5$s %1$s to %2$s - Week %3$s/%4$s</string>
+    <string name="label_month_details">%1$s</string>
+    <string name="label_year_details">%1$s</string>
+    <string name="label_detlist_summary">Income +$%2$s , Expense -$%3$s (%1$s records)</string>
+    
+    <string name="dt_detlist_week">Weekly list</string>
+    <string name="dt_detlist_month">Monthly list</string>
+    <string name="dt_detlist_year">Yearly list</string>
+<!-- above are sorted -->    
 </resources>
 

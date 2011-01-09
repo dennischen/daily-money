@@ -132,7 +132,6 @@ public class SQLiteDataProvider implements IDataProvider {
         // reset id, id is following the name;
         String newid = normalizeAccountId(account.getType(), account.getName());
         account.setId(newid);
-        // TODO update all detail that has id to new id
 
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -140,6 +139,23 @@ public class SQLiteDataProvider implements IDataProvider {
 
         // use old id to update
         int r = db.update(TB_ACC, cv, COL_ACC_ID + " = ?", new String[] { id });
+        
+        
+        if(r > 0){
+            //update the refereted detail id
+            cv = new ContentValues();
+            cv.put(COL_DET_FROM, newid);
+            cv.put(COL_DET_FROM_TYPE,account.getType());
+            db.update(TB_DET, cv, COL_DET_FROM + " = ?" ,new String[]{id});
+            
+            cv = new ContentValues();
+            cv.put(COL_DET_TO, newid);
+            cv.put(COL_DET_TO_TYPE,account.getType());
+            db.update(TB_DET, cv, COL_DET_TO + " = ?" ,new String[]{id});
+        }
+        
+        
+        
         return r > 0;
     }
 
@@ -179,7 +195,9 @@ public class SQLiteDataProvider implements IDataProvider {
     private void applyContextValue(Detail det, ContentValues values) {
         values.put(COL_DET_ID, det.getId());
         values.put(COL_DET_FROM, det.getFrom());
+        values.put(COL_DET_FROM_TYPE, det.getFromType());
         values.put(COL_DET_TO, det.getTo());
+        values.put(COL_DET_TO_TYPE, det.getToType());
         values.put(COL_DET_DATE, det.getDate().getTime());
         values.put(COL_DET_MONEY, det.getMoney());
         values.put(COL_DET_ARCHIVED, det.isArchived() ? 1 : 0);
@@ -264,6 +282,130 @@ public class SQLiteDataProvider implements IDataProvider {
         }
         c.close();
         return result;
+    }
+    
+    
+    static final String DET_ORDERBY = COL_DET_DATE +" DESC,"+COL_DET_ID+" DESC";
+
+    @Override
+    public List<Detail> listDetail(Date start, Date end, int max) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = null;
+        StringBuilder where = new StringBuilder();
+        if(start!=null){
+            where.append(COL_DET_DATE + ">=" + start.getTime());
+        }
+        if(end!=null){
+            where.append(start==null?"":" AND ");
+            where.append(COL_DET_DATE + "<=" +end.getTime());
+        }
+        
+        c = db.query(TB_DET,COL_DET_ALL,where.length()==0?null:where.toString(),null, null, null, DET_ORDERBY,max>0?Integer.toString(max):null);
+        List<Detail> result = new ArrayList<Detail>();
+        Detail det;
+        while(c.moveToNext()){
+            det = new Detail();
+            applyCursor(det,c);
+            result.add(det);
+        }
+        c.close();
+        return result;
+    }
+    
+    public int countDetail(Date start, Date end){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        StringBuilder query =  new StringBuilder();
+
+        StringBuilder where = new StringBuilder();
+        if(start!=null){
+            where.append(COL_DET_DATE + ">=" + start.getTime());
+        }
+        if(end!=null){
+            where.append(start==null?"":" AND ");
+            where.append(COL_DET_DATE + "<=" +end.getTime());
+        }
+        
+        query.append("SELECT COUNT(").append(COL_DET_ID).append(") FROM ").append(TB_DET);
+        
+        if(where.length()>0){
+            query.append(" WHERE ").append(where);
+        }
+        
+        
+        Cursor c = db.rawQuery(query.toString(),null);
+        
+        int i = 0;
+        if(c.moveToNext()){
+            i = c.getInt(0);
+        }
+        
+        c.close();
+        return i;
+    }
+
+    @Override
+    public double sumIncome(Date start, Date end) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        StringBuilder query =  new StringBuilder();
+
+        StringBuilder where = new StringBuilder();
+        where.append(" WHERE ").append(COL_DET_FROM_TYPE).append(" = '").append(AccountType.INCOME.type).append("'");
+        if(start!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + ">=" + start.getTime());
+        }
+        if(end!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + "<=" +end.getTime());
+        }
+        
+        query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
+        query.append(" ORDER BY ").append(DET_ORDERBY);
+        
+        
+        Cursor c = db.rawQuery(query.toString(),null);
+        
+        double r = 0D;
+        if(c.moveToNext()){
+            r = c.getDouble(0);
+        }
+        
+        c.close();
+        return r;
+    }
+
+    @Override
+    public double sumExpense(Date start, Date end) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        StringBuilder query =  new StringBuilder();
+
+        StringBuilder where = new StringBuilder();
+        where.append(" WHERE ").append(COL_DET_TO_TYPE).append(" = '").append(AccountType.EXPENSE.type).append("'");
+        if(start!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + ">=" + start.getTime());
+        }
+        if(end!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + "<=" +end.getTime());
+        }
+        
+        query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
+        query.append(" ORDER BY ").append(DET_ORDERBY);
+        
+        
+        Cursor c = db.rawQuery(query.toString(),null);
+        
+        double r = 0D;
+        if(c.moveToNext()){
+            r = c.getDouble(0);
+        }
+        
+        c.close();
+        return r;
     }
 
 }

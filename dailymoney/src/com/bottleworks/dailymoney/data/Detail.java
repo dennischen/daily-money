@@ -12,6 +12,10 @@ public class Detail {
     private int id;
     private String from;
     private String to;
+    
+    private String fromType;
+    private String toType;
+    
     private Date date;
     private Double money;
     private String note;
@@ -20,13 +24,13 @@ public class Detail {
 
     Detail(){}
 
-    public Detail(String fromAccount,String toAccount,Date date, Double money,
+    public Detail(String from,String to,Date date, Double money,
             String note) {
-        this.from = fromAccount;
-        this.to = toAccount;
         this.date = date;
         this.money = money;
         this.note = note;
+        setFrom(from);
+        setTo(to);
     }
 
     public int getId() {
@@ -43,6 +47,9 @@ public class Detail {
 
     public void setFrom(String from) {
         this.from = from;
+        if(from!=null && from.length()>0){
+            fromType = from.substring(0,1);
+        }
     }
 
     public String getTo() {
@@ -51,6 +58,19 @@ public class Detail {
 
     public void setTo(String to) {
         this.to = to;
+        if(to!=null && to.length()>0){
+            toType = to.substring(0,1);
+        }
+    }
+    
+    
+
+    public String getFromType() {
+        return fromType;
+    }
+
+    public String getToType() {
+        return toType;
     }
 
     public boolean isArchived() {

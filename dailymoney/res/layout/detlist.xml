@@ -2,18 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
 	android:layout_width="fill_parent" android:layout_height="fill_parent">
 	<LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:id="@+id/detlist_toolbar" android:background="@color/detlist_info_bg"
 	android:gravity="center" android:paddingTop="5dp">
 		<ImageButton android:id="@+id/detlist_prev" android:layout_width="fill_parent" android:layout_height="wrap_content" 
 		android:layout_weight="1" android:src="@drawable/btn_back"/>
-		<ImageButton android:id="@+id/detlist_this" android:layout_width="fill_parent" android:layout_height="wrap_content"
+		<ImageButton android:id="@+id/detlist_today" android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:layout_weight="1"  android:src="@drawable/btn_today"/>
 		<ImageButton android:id="@+id/detlist_next" android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:layout_weight="1"  android:src="@drawable/btn_forward"/>
 		<ImageButton android:id="@+id/detlist_mode" android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:layout_weight="1"  android:src="@drawable/btn_week"/>
 	</LinearLayout>
-	<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
-	android:textSize="20sp" android:text="Information here" android:singleLine="true" android:background="@color/detlist_info_bg"
+	<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/detlist_infobar"
+	android:textSize="18sp" android:text="Information here" android:singleLine="true" android:background="@color/detlist_info_bg"
 	android:textColor="@color/detlist_info_fg" android:gravity="center"/>
+	<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/detlist_summarybar"
+    android:textSize="14sp" android:text="......" android:singleLine="true" android:background="@color/detlist_summary_bg"
+    android:textColor="@color/detlist_summary_fg" android:gravity="center"/>
     <ListView android:id="@+id/detlist_list" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
 </LinearLayout>

@@ -57,6 +57,26 @@
     <string name="msg_detail_updated">明細已被更新</string>
     <string name="msg_detail_deleted">明細已被刪除</string>
     <string name="msg_detail_created">明細已被建立</string>
+    
+    
+    <string name="label_prefs_detlayout_sum">選擇不同的明細排版</string>
+    <string name="label_prefs_detlayout">明細排版</string>
+    
+    <string name="label_detlayout_type1">帳戶-金錢</string>
+    <string name="label_detlayout_type2">備註-金錢</string>
+    
+    <string name="label_prefs_maxrecords">最大筆數</string>
+    <string name="label_prefs_maxrecords_sum">設定明細列表的最大呈現筆數, -1 表示不限制</string>
+    
+    <string name="label_all_details">全部明細</string>
+    <string name="label_week_details">%5$s %1$s 到 %2$s - 周數 %3$s/%4$s</string>
+    <string name="label_month_details">%1$s</string>
+    <string name="label_year_details">%1$s</string>
+    <string name="label_detlist_summary">收入 +$%2$s , 支出 -$%3$s (共%1$s筆)</string>
+    
+    <string name="dt_detlist_week">周明細列表</string>
+    <string name="dt_detlist_month">月明細列表</string>
+    <string name="dt_detlist_year">年明細列表</string>
     <!-- above are sorted -->
 
 </resources>

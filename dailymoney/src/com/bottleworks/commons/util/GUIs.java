@@ -117,18 +117,23 @@ public class GUIs {
     
     static public void doBusy(Context context,String msg,Runnable r){
         final ProgressDialog dlg = ProgressDialog.show(context,Contexts.instance().getI18n().string(R.string.clabel_busy),msg,true,false);
-        BusyRunnable br = new BusyRunnable(dlg,r);
-        Future f = busyExecutor.submit(br);
-        try {
-            //release thread for a second.
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-        }
-        synchronized(br){
-            if(!f.isDone() || !br.finish){
-                dlg.show();
+        final BusyRunnable br = new BusyRunnable(dlg,r);
+        busyExecutor.submit(br);
+        
+        guiHandler.post(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {}
+                synchronized(br){
+                    if(!br.finish){
+                        dlg.show();
+                    }
+                }
             }
-        }
+        });
+
         
     }
     

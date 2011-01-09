@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -35,6 +36,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     
     private static final String TAB_FUNCTIONS = "functions";
     private static final String TAB_REPORTS = "reports";
+
     
     private String currTab = null;
 
@@ -54,6 +56,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         initialContent();
         loadData();
     }
+
 
     private void initialDesktopItem() {
         DesktopTestItemLoader loader = new DesktopTestItemLoader(this,i18n);
@@ -145,16 +148,8 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         String label;
         Runnable run;
 
-        public DesktopItem(Context context,Class<? extends Activity> activity, String label) {
-            this(new ActivityRun(context,activity), label);
-        }
-
         public DesktopItem(Runnable run, String label) {
             this(run,label,R.drawable.dt_item);
-        }
-        
-        public DesktopItem(Context context,Class<? extends Activity> activity, String label, int icon) {
-            this(new ActivityRun(context,activity), label, icon);
         }
 
         public DesktopItem(Runnable run, String label, int icon) {
@@ -168,17 +163,31 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         }
     }
 
-    static class ActivityRun implements Runnable {
-        Class<? extends Activity> activity;
+    public  static class IntentRun implements Runnable {
+        Intent intent;
         Context context;
 
-        ActivityRun(Context context,Class<? extends Activity> activity) {
+        IntentRun(Context context,Intent intent) {
+            this.context = context;
+            this.intent = intent;
+        }
+
+        public void run() {
+            context.startActivity(intent);
+        }
+    }
+    
+    public  static class ActivityRun implements Runnable {
+        Class activity;
+        Context context;
+
+        ActivityRun(Context context,Class activity) {
             this.context = context;
             this.activity = activity;
         }
 
         public void run() {
-            context.startActivity(new Intent(context, activity));
+            context.startActivity(new Intent(context,activity));
         }
     }
     

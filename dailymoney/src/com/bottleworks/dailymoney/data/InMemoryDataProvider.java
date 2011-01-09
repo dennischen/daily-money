@@ -2,6 +2,8 @@ package com.bottleworks.dailymoney.data;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 /**
  * a fake in memory data provider for development.
@@ -124,6 +126,7 @@ public class InMemoryDataProvider implements IDataProvider {
         int id = nextDetailId();
         detail.setId(id);
         detailList.add(detail);
+        Collections.sort(detailList,new DetailComparator());
     }
 
     @Override
@@ -142,6 +145,7 @@ public class InMemoryDataProvider implements IDataProvider {
         det.setMoney(detail.getMoney());
         det.setNote(detail.getNote());
         det.setArchived(detail.isArchived());
+        Collections.sort(detailList,new DetailComparator());
         return true;
     }
 
@@ -155,9 +159,57 @@ public class InMemoryDataProvider implements IDataProvider {
         }
         return false;
     }
+    
+    static class DetailComparator implements Comparator<Detail>{
+        @Override
+        public int compare(Detail d1, Detail d2) {
+            return d2.getDate().compareTo(d1.getDate());
+        }
+    }
 
     @Override
     public List<Detail> listAllDetail() {
         return Collections.unmodifiableList(detailList);
+    }
+
+    @Override
+    public List<Detail> listDetail(Date start, Date end, int max) {
+        List<Detail> r = new ArrayList<Detail>();
+        for(Detail d:detailList){
+            long l = d.getDate().getTime();
+            if( (start==null || l >= start.getTime()) &&  (end==null || l <= end.getTime())){
+                r.add(d);
+                if(max>0 && r.size()>=max){
+                    break;
+                }
+            }
+        }
+        return Collections.unmodifiableList(r);
+    }
+    
+    public int countDetail(Date start, Date end){
+        return listDetail(start,end,-1).size();
+    }
+
+    @Override
+    public double sumIncome(Date start, Date end) {
+        double sum = 0D;
+        for(Detail d:listDetail(start,end,-1)){
+            if(d.getFrom().startsWith(AccountType.INCOME.type)){
+                sum += d.getMoney();
+            }
+        }
+        return sum;
+    }
+
+    @Override
+    public double sumExpense(Date start, Date end) {
+        double sum = 0D;
+        for(Detail d:listDetail(start,end,-1)){
+            if(d.getTo().startsWith(AccountType.EXPENSE.type)){
+                sum += d.getMoney();
+            }
+        }
+        return sum;
     }
 }

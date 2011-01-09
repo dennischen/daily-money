@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
 import android.view.View;
 
@@ -39,7 +40,6 @@ public class DesktopTestItemLoader {
     public List<DesktopItem> loadFunctions(){
         List<DesktopItem> fnsItems = new ArrayList<DesktopItem>();
         
-        DesktopItem detlistdt = new DesktopItem(context,DetailListActivity.class,i18n.string(R.string.dt_detlist),R.drawable.dt_item_detail);
         DesktopItem adddetdt =  new DesktopItem(new Runnable(){
             public void run(){
               Detail d = new Detail("","",new Date(),0D,"");
@@ -61,12 +61,26 @@ public class DesktopTestItemLoader {
             }
         },i18n.string(R.string.dt_adddetail),R.drawable.dt_item_adddetail);
         
-        DesktopItem accmgntdt = new DesktopItem(context,AccountMgntActivity.class,i18n.string(R.string.dt_accmgnt),R.drawable.dt_item_account);
-        DesktopItem prefdt = new DesktopItem(context,PrefsActivity.class,i18n.string(R.string.dt_prefs),R.drawable.dt_item_prefs);
+        Intent intent = new Intent(context,DetailListActivity.class);
+        intent.putExtra(DetailListActivity.INTENT_MODE,DetailListActivity.MODE_WEEK);
+        DesktopItem weeklist = new DesktopItem(new DesktopActivity.IntentRun(context,intent),i18n.string(R.string.dt_detlist_week),R.drawable.dt_item_detail_week);
+        
+        intent = new Intent(context,DetailListActivity.class);
+        intent.putExtra(DetailListActivity.INTENT_MODE,DetailListActivity.MODE_MONTH);
+        DesktopItem monthlist = new DesktopItem(new DesktopActivity.IntentRun(context,intent),i18n.string(R.string.dt_detlist_month),R.drawable.dt_item_detail_month);
+        
+        intent = new Intent(context,DetailListActivity.class);
+        intent.putExtra(DetailListActivity.INTENT_MODE,DetailListActivity.MODE_YEAR);
+        DesktopItem yearlist = new DesktopItem(new DesktopActivity.IntentRun(context,intent),i18n.string(R.string.dt_detlist_year),R.drawable.dt_item_detail_year);
+        
+        DesktopItem accmgntdt = new DesktopItem(new DesktopActivity.ActivityRun(context,AccountMgntActivity.class),i18n.string(R.string.dt_accmgnt),R.drawable.dt_item_account);
+        DesktopItem prefdt = new DesktopItem(new DesktopActivity.ActivityRun(context,PrefsActivity.class),i18n.string(R.string.dt_prefs),R.drawable.dt_item_prefs);
 
         
         fnsItems.add(adddetdt);
-        fnsItems.add(detlistdt);
+        fnsItems.add(weeklist);
+        fnsItems.add(monthlist);
+        fnsItems.add(yearlist);
         fnsItems.add(accmgntdt);
         fnsItems.add(prefdt);
 
@@ -109,10 +123,10 @@ public class DesktopTestItemLoader {
     public List<DesktopItem> loadReports(){
         List<DesktopItem> reportsItems = new ArrayList<DesktopItem>();
         
-        DesktopItem accdt = new DesktopItem(context,AccountMgntActivity.class,i18n.string(R.string.title_accmgnt),R.drawable.dt_item_account);
-        DesktopItem prefdt = new DesktopItem(context,PrefsActivity.class,i18n.string(R.string.title_prefs),R.drawable.dt_item_prefs);
+        DesktopItem accdt = new DesktopItem(new DesktopActivity.ActivityRun(context,AccountMgntActivity.class),i18n.string(R.string.title_accmgnt),R.drawable.dt_item_account);
+        DesktopItem prefdt = new DesktopItem(new DesktopActivity.ActivityRun(context,PrefsActivity.class),i18n.string(R.string.title_prefs),R.drawable.dt_item_prefs);
         
-        DesktopItem testdt = new DesktopItem(context,TestActivity.class,"Test Activity",R.drawable.dt_item_test);
+        DesktopItem testdt = new DesktopItem(new DesktopActivity.ActivityRun(context,TestActivity.class),"Test Activity",R.drawable.dt_item_test);
         
         reportsItems.add(testdt);
         reportsItems.add(accdt);

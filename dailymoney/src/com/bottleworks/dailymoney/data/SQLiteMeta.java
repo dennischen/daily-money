@@ -21,11 +21,13 @@ public class SQLiteMeta {
     public static final String COL_DET_ID = "id_";
     public static final String COL_DET_FROM = "fr_";
     public static final String COL_DET_TO = "to_";
+    public static final String COL_DET_FROM_TYPE= "frt_";
+    public static final String COL_DET_TO_TYPE = "tot_";
     public static final String COL_DET_DATE = "dt_";
     public static final String COL_DET_MONEY = "mn_";
     public static final String COL_DET_NOTE = "nt_";
     public static final String COL_DET_ARCHIVED = "ar_";
 
-    public static final String[] COL_DET_ALL = new String[] { COL_DET_ID, COL_DET_FROM, 
-            COL_DET_TO, COL_DET_DATE, COL_DET_MONEY, COL_DET_NOTE, COL_DET_ARCHIVED };
+    public static final String[] COL_DET_ALL = new String[] { COL_DET_ID, COL_DET_FROM, COL_DET_FROM_TYPE,
+            COL_DET_TO, COL_DET_TO_TYPE, COL_DET_DATE, COL_DET_MONEY, COL_DET_NOTE, COL_DET_ARCHIVED };
 }

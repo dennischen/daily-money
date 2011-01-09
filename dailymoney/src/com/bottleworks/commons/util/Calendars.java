@@ -15,38 +15,52 @@ public class Calendars {
     static public final TimeZone UTC0 = TimeZone.getTimeZone("UTC0");
     static public final TimeZone GMT0 = TimeZone.getTimeZone("GMT+0:00");
     
-    public static Date tomorrow(Date d){
+    
+    public static Calendar calendar(Date d){
         Calendar cal = Calendar.getInstance();
         cal.setTime(d);
+        return cal;
+    }
+    
+    public static Date tomorrow(Date d){
+        Calendar cal = calendar(d);
         cal.add(Calendar.DATE,1);
         return cal.getTime();
     }
     
     public static Date dateAfter(Date d, int i){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(d);
+        Calendar cal = calendar(d);;
         cal.add(Calendar.DATE,i);
         return cal.getTime();
     }
     
     public static Date dateBefore(Date d, int i){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(d);
-        cal.add(Calendar.DATE,~i);
+        Calendar cal = calendar(d);
+        cal.add(Calendar.DATE,-i);
         return cal.getTime();
     }
     
     public static Date yearAfter(Date d,int i){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(d);
+        Calendar cal = calendar(d);
         cal.add(Calendar.YEAR,i);
         return cal.getTime();
     }
     
     public static Date yearBefore(Date d,int i){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(d);
-        cal.add(Calendar.YEAR,~i);
+        Calendar cal = calendar(d);
+        cal.add(Calendar.YEAR,-i);
+        return cal.getTime();
+    }
+    
+    public static Date monthAfter(Date d,int i){
+        Calendar cal = calendar(d);
+        cal.add(Calendar.MONTH,i);
+        return cal.getTime();
+    }
+    
+    public static Date monthBefore(Date d,int i){
+        Calendar cal = calendar(d);
+        cal.add(Calendar.MONTH,-i);
         return cal.getTime();
     }
     
@@ -55,19 +69,17 @@ public class Calendars {
     }
     
     public static Date yesterday(Date d){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(d);
+        Calendar cal = calendar(d);
         cal.add(Calendar.DATE,-1);
         return cal.getTime();
     }
     
-    public static Date toDayStart(Date date,TimeZone tz){
+    public static Date toDayStart(Date d,TimeZone tz){
         if(tz==null){
             tz = TimeZone.getDefault();
         }
         
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
+        Calendar cal = calendar(d);
         cal.setTimeZone(tz);
         cal.set(Calendar.HOUR_OF_DAY,0);
         cal.set(Calendar.MINUTE,0);
@@ -76,14 +88,13 @@ public class Calendars {
         return cal.getTime();
     }
     
-    public static Date toDayEnd(Date date,TimeZone tz){
+    public static Date toDayEnd(Date d,TimeZone tz){
         if(tz==null){
             tz = TimeZone.getDefault();
         }
         
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = calendar(d);
         cal.setTimeZone(tz);
-        cal.setTime(date);
         cal.set(Calendar.HOUR_OF_DAY,23);
         cal.set(Calendar.MINUTE,59);
         cal.set(Calendar.SECOND,59);
@@ -98,6 +109,52 @@ public class Calendars {
     public static Date parseRFC1123(String str) throws Exception{
         return RFC1123.parse(str);
     }
+    
+    public static int weekOfMonth(Date d){
+        Calendar cal = calendar(d);
+        return cal.get(Calendar.WEEK_OF_MONTH); 
+    }
+    public static int weekOfYear(Date d){
+        Calendar cal = calendar(d);
+        return cal.get(Calendar.WEEK_OF_YEAR); 
+    }
 
+    public static Date monthStartDate(Date d) {
+        Calendar cal = calendar(d);
+        cal.set(Calendar.DAY_OF_MONTH, 1); 
+        return toDayStart(cal.getTime(),null);
+    }
 
+    public static Date monthEndDate(Date d) {
+        Calendar cal = calendar(d);
+        int last = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        cal.set(Calendar.DAY_OF_MONTH, last); 
+        return toDayEnd(cal.getTime(),null);
+    }
+
+    public static Date yearStartDate(Date d) {
+        Calendar cal = calendar(d);
+        cal.set(Calendar.DAY_OF_YEAR, 1); 
+        return toDayStart(cal.getTime(),null);
+    }
+    
+    public static Date yearEndDate(Date d) {
+        Calendar cal = calendar(d);
+        int last = cal.getActualMaximum(Calendar.DAY_OF_YEAR);
+        cal.set(Calendar.DAY_OF_YEAR, last); 
+        return toDayEnd(cal.getTime(),null);
+    }
+
+    public static Date weekStartDate(Date d) {
+        Calendar cal = calendar(d);
+        cal.set(Calendar.DAY_OF_WEEK, 1); 
+        return toDayStart(cal.getTime(),null);
+    }
+
+    public static Date weekEndDate(Date d) {
+        Calendar cal = calendar(d);
+        int last = cal.getActualMaximum(Calendar.DAY_OF_WEEK);
+        cal.set(Calendar.DAY_OF_WEEK, last); 
+        return toDayEnd(cal.getTime(),null);
+    }
 }

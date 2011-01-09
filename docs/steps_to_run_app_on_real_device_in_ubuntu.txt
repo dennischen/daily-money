@@ -16,9 +16,9 @@ Following is the steps to run application in real device in ubuntu.
 4.set you phone to debug mode and plug it to pc.
 
 5.use folloiwng command to restart the service
- sudo ./adb kill-server
- sudo ./adb start-server
- sudo ./adb devices
+sudo ./adb kill-server
+sudo ./adb start-server
+sudo ./adb devices
 
 6.run application
 
