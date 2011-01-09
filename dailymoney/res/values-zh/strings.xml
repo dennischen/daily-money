@@ -77,6 +77,12 @@
     <string name="dt_detlist_week">周明細列表</string>
     <string name="dt_detlist_month">月明細列表</string>
     <string name="dt_detlist_year">年明細列表</string>
+    
+    <string name="label_prefs_firstday_week_sum">設定每個星期的第一天為星期一還是星期日</string>
+    <string name="label_prefs_firstday_week">星期的第一天</string>
+
+    <string name="label_firstday_sun">星期日</string>
+    <string name="label_firstday_mon">星期一</string>
     <!-- above are sorted -->
 
 </resources>

@@ -3,6 +3,7 @@ package com.bottleworks.dailymoney;
 import java.io.File;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -116,9 +117,14 @@ public class DesktopTestItemLoader {
                 testBusy();
             }}, "test busy",R.drawable.dt_item_test));
         
+        fnsItems.add(new DesktopItem(new Runnable(){
+            @Override
+            public void run() {
+                testJust();
+            }}, "just test",R.drawable.dt_item_test));
         return fnsItems;
     }
- 
+
 
     public List<DesktopItem> loadReports(){
         List<DesktopItem> reportsItems = new ArrayList<DesktopItem>();
@@ -262,5 +268,13 @@ public class DesktopTestItemLoader {
             GUIs.longToast(context, "error "+x.getMessage());
             x.printStackTrace();
         }
+    }
+    
+    
+
+    protected void testJust() {
+        Calendar.getInstance().setFirstDayOfWeek(Calendar.SUNDAY);
+        System.out.println(">>>>>>>>>>>>."+Calendar.getInstance().getFirstDayOfWeek());
+//        System.out.println(">>>>>>>>>>>>."+);
     }
 }

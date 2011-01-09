@@ -79,6 +79,13 @@
     <string name="dt_detlist_week">Weekly list</string>
     <string name="dt_detlist_month">Monthly list</string>
     <string name="dt_detlist_year">Yearly list</string>
+    
+    <string name="label_prefs_firstday_week_sum">Set the first day of week</string>
+    <string name="label_prefs_firstday_week">First day of week</string>
+
+    <string name="label_firstday_sun">Sunday</string>
+    <string name="label_firstday_mon">Monday</string>
 <!-- above are sorted -->    
+
 </resources>
 

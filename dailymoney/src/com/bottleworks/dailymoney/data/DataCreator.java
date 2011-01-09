@@ -2,10 +2,11 @@ package com.bottleworks.dailymoney.data;
 
 import java.util.Date;
 
-import com.bottleworks.commons.util.Calendars;
+import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.ui.Contexts;
 
 /**
  * 
@@ -36,6 +37,8 @@ public class DataCreator {
     }
 
     public void createTestData() {
+        CalendarHelper cal = Contexts.instance().getCalendarHelper();
+        
         Account income1 = createAccountNoThrow(i18n.string(R.string.defacc_salary), AccountType.INCOME, 0D);
         Account income2 = createAccountNoThrow(i18n.string(R.string.defacc_interest), AccountType.INCOME, 0D);
         Account income3 = createAccountNoThrow(i18n.string(R.string.defacc_otherincome), AccountType.INCOME, 0D);
@@ -49,22 +52,22 @@ public class DataCreator {
 
         Date today = new Date();
 
-        createDetail(income1, asset1, Calendars.dateBefore(today, 10), 5000D, "Salary");
-        createDetail(income2, asset2, Calendars.dateBefore(today, 5), 10D, "Interset");
+        createDetail(income1, asset1, cal.dateBefore(today, 10), 5000D, "Salary");
+        createDetail(income2, asset2, cal.dateBefore(today, 5), 10D, "Interset");
 
-        createDetail(asset1, expense1, Calendars.dateBefore(today, 2), 100D, "date with Cica");
-        createDetail(asset1, expense1, Calendars.yesterday(today), 30D, "taiwan food is great");
-        createDetail(asset1, expense2, Calendars.yesterday(today), 11D, "buy DVD");
-        createDetail(asset1, expense3, today, 300D, "secrt");
+        createDetail(asset1, expense1, cal.dateBefore(today, 2), 100D, "date with Cica");
+        createDetail(asset1, expense1, cal.yesterday(today), 30D, "taiwan food is great");
+        createDetail(asset1, expense2, cal.yesterday(today), 11D, "buy DVD");
+        createDetail(asset1, expense3, today, 300D, "it is a secrt ");
 
-        createDetail(asset1, asset2, Calendars.dateBefore(today, 9), 4000D, "deposit 1");
-        createDetail(asset2, asset1, Calendars.dateBefore(today, 15), 1000D, "drawing 1");
+        createDetail(asset1, asset2, cal.dateBefore(today, 9), 4000D, "deposit 1");
+        createDetail(asset2, asset1, cal.dateBefore(today, 15), 1000D, "drawing 1");
         
-        createDetail(asset1, asset2, Calendars.dateBefore(today, 39), 4111D, "deposit 2");
-        createDetail(asset2, asset1, Calendars.dateBefore(today, 45), 1111D, "drawing 2");
+        createDetail(asset1, asset2, cal.dateBefore(today, 39), 4111D, "deposit 2");
+        createDetail(asset2, asset1, cal.dateBefore(today, 45), 1111D, "drawing 2");
         
-        createDetail(asset1, asset2, Calendars.dateBefore(today, 69), 4222D, "deposit 3");
-        createDetail(asset2, asset1, Calendars.dateBefore(today, 75), 1222D, "drawing 3");
+        createDetail(asset1, asset2, cal.dateBefore(today, 69), 4222D, "deposit 3");
+        createDetail(asset2, asset1, cal.dateBefore(today, 75), 1222D, "drawing 3");
 
     }
 

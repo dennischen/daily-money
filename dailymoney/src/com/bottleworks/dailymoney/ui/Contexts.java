@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 
+import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.Constants;
@@ -32,6 +33,9 @@ public class Contexts {
     boolean pref_useImpPovider = false;
     int pref_detailListLayout = 2;
     int pref_maxRecords = -1;
+    int pref_firstdayWeek = 1;//sunday
+    
+    private CalendarHelper calendarHelper = new CalendarHelper();
     
     private boolean prefsDirty = true;
     
@@ -67,12 +71,22 @@ public class Contexts {
     private void reloadPreference() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         pref_useImpPovider = prefs.getBoolean(Constants.PREFS_USE_INMENORY_PROVIDER, false);
-        pref_detailListLayout = Integer.parseInt(prefs.getString(Constants.PREFS_DETAIL_LIST_LAYOUT, "2"));
-        pref_maxRecords = Integer.parseInt(prefs.getString(Constants.PREFS_MAX_RECORDS, "-1"));
+        try{
+            pref_detailListLayout = Integer.parseInt(prefs.getString(Constants.PREFS_DETAIL_LIST_LAYOUT, "2"));
+        }catch(Exception x){}
+        try{
+            pref_firstdayWeek = Integer.parseInt(prefs.getString(Constants.PREFS_FIRSTDAY_WEEK, "1"));
+        }catch(Exception x){}
+        try{
+            pref_maxRecords = Integer.parseInt(prefs.getString(Constants.PREFS_MAX_RECORDS, "-1"));
+        }catch(Exception x){}
         
         Logger.d("preference : use inmemory "+pref_useImpPovider);
         Logger.d("preference : detail layout "+pref_detailListLayout);
+        Logger.d("preference : firstday of week "+pref_firstdayWeek);
         Logger.d("preference : max records "+pref_maxRecords);
+        
+        calendarHelper.setFirstDayOfWeek(pref_firstdayWeek);
     }
     
     public int getPrefDetailListLayout(){
@@ -81,6 +95,14 @@ public class Contexts {
     
     public int getPrefMaxRecords(){
         return pref_maxRecords;
+    }
+    
+    public int getFirstdayWeek(){
+        return pref_firstdayWeek;
+    }
+    
+    public CalendarHelper getCalendarHelper(){
+        return calendarHelper;
     }
 
     Contexts cleanContext(Context context){

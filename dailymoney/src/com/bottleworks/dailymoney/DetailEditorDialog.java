@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
-import com.bottleworks.commons.util.Calendars;
+import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.I18N;
@@ -298,6 +298,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
     @Override
     public void onClick(View v) {
+        CalendarHelper cal = Contexts.instance().getCalendarHelper();
         switch (v.getId()) {
         case R.id.deteditor_ok:
             doOk();
@@ -311,7 +312,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         case R.id.deteditor_prev:
             try {
                 Date d = format.parse(dateEditor.getText().toString());
-                updateDateEditor(Calendars.yesterday(d));
+                updateDateEditor(cal.yesterday(d));
             } catch (ParseException e) {
                 Logger.e(e.getMessage(), e);
             }
@@ -319,13 +320,13 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         case R.id.deteditor_next:
             try {
                 Date d = format.parse(dateEditor.getText().toString());
-                updateDateEditor(Calendars.tomorrow(d));
+                updateDateEditor(cal.tomorrow(d));
             } catch (ParseException e) {
                 Logger.e(e.getMessage(), e);
             }
             break;
         case R.id.deteditor_today:
-            updateDateEditor(Calendars.today());
+            updateDateEditor(cal.today());
             break;
         case R.id.deteditor_datepicker:
             try {
