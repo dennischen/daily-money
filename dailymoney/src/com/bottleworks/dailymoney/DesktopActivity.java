@@ -130,7 +130,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     private void loadAppInfo(){
         Date now = new Date();
         String date = Contexts.instance().getDateFormat().format(now)+" "+dayOfWeekFormat.format(now)+" ";
-        ((TextView)findViewById(R.id.dt_info)).setText(date + appinfo);
+        ((TextView)findViewById(R.id.dt_info)).setText(date + "-"+ appinfo);
     }
     
     private void loadData() {
