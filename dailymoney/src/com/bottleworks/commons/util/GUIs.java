@@ -10,11 +10,14 @@ import com.bottleworks.dailymoney.DetailEditorDialog;
 import com.bottleworks.dailymoney.R;
 import com.bottleworks.dailymoney.ui.Contexts;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -158,9 +161,28 @@ public class GUIs {
         doBusy(context,Contexts.instance().getI18n().string(R.string.cmsg_busy),r); 
     }
     
+    //lock & release rotation!! not work in sdk(2.1,2.2) but work fine in my i9000
+    static public void lockOrientation(Activity activity){
+        switch (activity.getResources().getConfiguration().orientation) {
+        case Configuration.ORIENTATION_PORTRAIT:
+            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            break;
+        case Configuration.ORIENTATION_LANDSCAPE:
+            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            break;
+        }
+    }
+    static public void releaseOrientation(Activity activity){
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
+    
     static public void doBusy(Context context,String msg,Runnable r){
-        final ProgressDialog dlg = ProgressDialog.show(context,Contexts.instance().getI18n().string(R.string.clabel_busy),msg,true,false);
-        final BusyRunnable br = new BusyRunnable(dlg,r);
+        final ProgressDialog dlg = ProgressDialog.show(context,null,msg,true,false);
+        if (context instanceof Activity) {
+            lockOrientation((Activity)context);  
+        }
+        
+        final BusyRunnable br = new BusyRunnable(context,dlg,r);
         singleExecutor.submit(br);
         
         guiHandler.post(new Runnable(){
@@ -195,9 +217,11 @@ public class GUIs {
     
     static class BusyRunnable implements Runnable{
         ProgressDialog dlg;
+        Context context;
         Runnable run;
         boolean finish = false;
-        public BusyRunnable(ProgressDialog dlg,Runnable run){
+        public BusyRunnable(Context context,ProgressDialog dlg,Runnable run){
+            this.context = context;
             this.dlg = dlg;
             this.run = run;
         }
@@ -236,6 +260,13 @@ public class GUIs {
                         }});
                 }
             }
+            post(new Runnable(){
+                @Override
+                public void run() {
+                    if (context instanceof Activity) {
+                        releaseOrientation((Activity) context);
+                    }
+                }});
         }
     }
 

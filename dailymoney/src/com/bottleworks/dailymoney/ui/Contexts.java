@@ -4,6 +4,7 @@ import java.text.DateFormat;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 
@@ -166,6 +167,13 @@ public class Contexts {
             dataProvider.destroyed();
             dataProvider = null;
         }
+    }
+    
+    public int getOrientation(){
+        if(context==null){
+            return Configuration.ORIENTATION_UNDEFINED;
+        }
+        return context.getResources().getConfiguration().orientation;
     }
     
     public IDataProvider getDataProvider(){
