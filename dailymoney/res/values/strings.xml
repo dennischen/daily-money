@@ -1,90 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Daily Money</string>
-	<string name="defacc_bank">Bank</string>
-	<string name="defacc_cash">Cash</string>
-	<string name="defacc_entertainment">Entertainment</string>
-	<string name="defacc_food">Food</string>
-	<string name="defacc_interest">Interest</string>
-	<string name="defacc_otherexpense">Other expense</string>
-	<string name="defacc_otherincome">Other income</string>
-	<string name="defacc_salary">Salary</string>
-	<string name="label_asset">Asset</string>
-	<string name="label_functions">Functions</string>
-	<string name="label_debt">Debt</string>
-	<string name="label_expense">Expense</string>
-	<string name="label_income">Income</string>
-	<string name="label_initial_value">Initial</string>
-	<string name="label_other">Other</string>
-	<string name="label_prefs_improvider_sum">For trying this application, data in this mode will not be persisted</string>
-	<string name="label_prefs_improvider">In-memory-provider</string>
-	<string name="label_reports">Reports</string>
-	<string name="msg_account_created">Account %1$s was created in type %2$s</string>
-	<string name="msg_account_deleted">Account %1$s was deleted</string>
-	<string name="msg_account_existed">%1$s is existed in type %2$s</string>
-	<string name="msg_account_updated">Account %1$s was updated in type %2$s</string>
-    <string name="title_acceditor">Account Editor</string>
-    <string name="title_accmgnt">Account Manager</string>
-    <string name="title_detmgnt">Detail Manager</string>
-    <string name="title_desktop">Desktop</string>
-    <string name="title_prefs">Preferences</string>	
-    
-
-
-	<string name="label_from_account">From</string>
-	<string name="label_to_account">To</string>
-	<string name="label_date">Date</string>
-	<string name="label_money">Money</string>
-	<string name="label_note">Note</string>
-    <string name="title_deteditor">Detail Editor</string>
-    <string name="msg_same_from_to">From and To are the same one</string>
-    <string name="title_detlist">Detail List</string>
-
-	<string name="title_acceditor_create">Create Account</string>
-	<string name="title_acceditor_update">Update Account</string>
-	<string name="title_deteditor_create">Create Detail</string>
-	<string name="title_deteditor_update">Update Detail</string>
-	<string name="msg_created_detail">Created %1$s details</string>
-	<string name="msg_created_account">Created %1$s accounts</string>
-
-    <string name="label_detlist_from">&lt; %1$s</string>
-    <string name="label_detlist_to">%1$s</string>
-    <string name="label_detlist_money">$%1$s</string>
-    
-    <string name="dt_detlist">Details</string>
-    <string name="dt_adddetail">Add Detail</string>
+    <string name="defacc_bank">Bank</string>
+    <string name="defacc_cash">Cash</string>
+    <string name="defacc_entertainment">Entertainment</string>
+    <string name="defacc_food">Food</string>
+    <string name="defacc_interest">Interest</string>
+    <string name="defacc_otherexpense">Other expense</string>
+    <string name="defacc_otherincome">Other income</string>
+    <string name="defacc_salary">Salary</string>
     <string name="dt_accmgnt">Accounts</string>
+    <string name="dt_adddetail">Add Detail</string>
+    <string name="dt_detlist">Details</string>
+    <string name="dt_detlist_month">Monthly list</string>
+    <string name="dt_detlist_week">Weekly list</string>
+    <string name="dt_detlist_year">Yearly list</string>
     <string name="dt_prefs">Preferences</string>
-    
-    <string name="msg_detail_updated">Detail was updated</string>
-    <string name="msg_detail_deleted">Detail was deleted</string>
-    <string name="msg_detail_created">Detail was created</string>
-
-
-    <string name="label_prefs_detlayout_sum">Choose different type for detail list layout</string>
-    <string name="label_prefs_detlayout">Detail list type</string>
-    
+    <string name="label_all_details">All details</string>
+    <string name="label_asset">Asset</string>
+    <string name="label_date">Date</string>
+    <string name="label_debt">Debt</string>
     <string name="label_detlayout_type1">Type 1</string>
     <string name="label_detlayout_type2">Type 2</string>
-    
+    <string name="label_detlist_from">&lt; %1$s</string>
+    <string name="label_detlist_money">$%1$s</string>
+    <string name="label_detlist_summary">Income +$%2$s , Expense -$%3$s (%1$s records)</string>
+    <string name="label_detlist_to">%1$s</string>
+    <string name="label_expense">Expense</string>
+    <string name="label_firstday_mon">Monday</string>
+    <string name="label_firstday_sun">Sunday</string>
+    <string name="label_from_account">From</string>
+    <string name="label_functions">Functions</string>
+    <string name="label_income">Income</string>
+    <string name="label_initial_value">Initial</string>
+    <string name="label_money">Money</string>
+    <string name="label_month_details">%1$s</string>
+    <string name="label_note">Note</string>
+    <string name="label_other">Other</string>
+    <string name="label_prefs_detlayout">Detail list type</string>
+    <string name="label_prefs_detlayout_sum">Choose different type for detail list layout</string>
+    <string name="label_prefs_firstday_week">First day of week</string>
+    <string name="label_prefs_firstday_week_sum">Set the first day of week</string>
+    <string name="label_prefs_improvider">In-memory-provider</string>
+    <string name="label_prefs_improvider_sum">For trying this application, data in this mode will not be persisted</string>
     <string name="label_prefs_maxrecords">Maximum records</string>
     <string name="label_prefs_maxrecords_sum">Set number of max records in detail list, -1 means no limit</string>
-    
-    <string name="label_all_details">All details</string>
+    <string name="label_reports">Reports</string>
+    <string name="label_to_account">To</string>
     <string name="label_week_details">%5$s %1$s to %2$s - Week %3$s/%4$s</string>
-    <string name="label_month_details">%1$s</string>
     <string name="label_year_details">%1$s</string>
-    <string name="label_detlist_summary">Income +$%2$s , Expense -$%3$s (%1$s records)</string>
-    
-    <string name="dt_detlist_week">Weekly list</string>
-    <string name="dt_detlist_month">Monthly list</string>
-    <string name="dt_detlist_year">Yearly list</string>
-    
-    <string name="label_prefs_firstday_week_sum">Set the first day of week</string>
-    <string name="label_prefs_firstday_week">First day of week</string>
-
-    <string name="label_firstday_sun">Sunday</string>
-    <string name="label_firstday_mon">Monday</string>
+    <string name="msg_account_created">Account %1$s was created in type %2$s</string>
+    <string name="msg_account_deleted">Account %1$s was deleted</string>
+    <string name="msg_account_existed">%1$s is existed in type %2$s</string>
+    <string name="msg_account_updated">Account %1$s was updated in type %2$s</string>
+    <string name="msg_created_account">Created %1$s accounts</string>
+    <string name="msg_created_detail">Created %1$s details</string>
+    <string name="msg_detail_created">Detail was created</string>
+    <string name="msg_detail_deleted">Detail was deleted</string>
+    <string name="msg_detail_updated">Detail was updated</string>
+    <string name="msg_same_from_to">From and To are the same one</string>
+    <string name="title_acceditor">Account Editor</string>
+    <string name="title_acceditor_create">Create Account</string>
+    <string name="title_acceditor_update">Update Account</string>
+    <string name="title_accmgnt">Account Manager</string>
+    <string name="title_desktop">Desktop</string>
+    <string name="title_deteditor_create">Create Detail</string>
+    <string name="title_deteditor">Detail Editor</string>
+    <string name="title_deteditor_update">Update Detail</string>
+    <string name="title_detlist">Detail List</string>
+    <string name="title_detmgnt">Detail Manager</string>
+    <string name="title_prefs">Preferences</string> 
 <!-- above are sorted -->    
 
 </resources>

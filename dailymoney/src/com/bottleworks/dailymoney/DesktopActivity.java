@@ -1,12 +1,17 @@
 package com.bottleworks.dailymoney;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +30,7 @@ import android.widget.TextView;
 
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.ContextsActivity;
 /**
  * 
@@ -46,15 +52,35 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     List<DesktopItem> dataItems;
     List<DesktopItem> reportsItems;
+    
+    String appinfo;
 
+    private static DateFormat dayOfWeekFormat = new SimpleDateFormat("EEEE"); 
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.desktop);
+        initialApplicationInfo();
         initialDesktopItem();
         initialTab();
         initialContent();
         loadData();
+        
+    }
+
+
+    private void initialApplicationInfo() {
+        Application app = getApplication();
+        appinfo = i18n.string(R.string.app_name);
+        String name = app.getPackageName();
+        try {
+            PackageInfo pi = app.getPackageManager().getPackageInfo(name,0);
+            String ver = pi.versionName;
+            appinfo += " ver : "+ver;
+        } catch (NameNotFoundException e) {
+            appinfo += " ver : unknow";
+        }
     }
 
 
@@ -97,7 +123,14 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     }
 
+    private void loadAppInfo(){
+        Date now = new Date();
+        String date = Contexts.instance().getDateFormat().format(now)+" "+dayOfWeekFormat.format(now)+" ";
+        ((TextView)findViewById(R.id.dt_info)).setText(date + appinfo);
+    }
+    
     private void loadData() {
+        loadAppInfo();
         gridViewAdapter.notifyDataSetChanged();
     }
 

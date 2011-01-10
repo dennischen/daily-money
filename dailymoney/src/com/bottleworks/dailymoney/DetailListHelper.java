@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -196,13 +197,13 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
 //        
 //    }
     
-    
+    private static DateFormat dayOfWeekFormat = new SimpleDateFormat("E"); 
     public void reloadData(List<Detail> data) {
         listViewData = data;;
         listViewMapList.clear();
-        DateFormat format = Contexts.instance().getDateFormat();
+        DateFormat dateFormat = Contexts.instance().getDateFormat();//for 2010/01/01
         for (Detail det : listViewData) {
-            Map<String, Object> row = toDetailMap(det,format);
+            Map<String, Object> row = toDetailMap(det,dateFormat);
             listViewMapList.add(row);
         }
 
@@ -223,7 +224,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
         row.put(bindingFrom[2], new NamedItem(bindingFrom[2],det,to));
         row.put(bindingFrom[3], new NamedItem(bindingFrom[3],det,money));
         row.put(bindingFrom[4], new NamedItem(bindingFrom[4],det,det.getNote()));
-        row.put(bindingFrom[5], new NamedItem(bindingFrom[5],det,format.format(det.getDate())));
+        row.put(bindingFrom[5], new NamedItem(bindingFrom[5],det,format.format(det.getDate())+" "+dayOfWeekFormat.format(det.getDate())));
         
         return row;
     }

@@ -1,88 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Daily Money</string>
-	<string name="defacc_bank">銀行</string>
-	<string name="defacc_cash">現金</string>
-	<string name="defacc_entertainment">娛樂</string>
-	<string name="defacc_food">食物</string>
-	<string name="defacc_interest">利息</string>
-	<string name="defacc_otherexpense">其他花費</string>
-	<string name="defacc_otherincome">其他收入</string>
-	<string name="defacc_salary">薪水</string>
-	<string name="label_asset">資產</string>
-	<string name="label_functions">功能</string>
-	<string name="label_debt">負債</string>
-	<string name="label_expense">花費</string>
-	<string name="label_income">收入</string>
-	<string name="label_initial_value">初始值</string>
-	<string name="label_other">其他</string>
-	<string name="label_prefs_improvider_sum">設定這個屬性，方便您試用這個軟體。任何資料將在軟體結束後消失</string>
-	<string name="label_prefs_improvider">使用暫態的資料提供方式</string>
-    <string name="label_reports">報表</string>
-	<string name="msg_account_created">帳戶 %1$s 成功的被建立在帳戶型態 %2$s 中</string>
-	<string name="msg_account_deleted">帳戶 %1$s 成功的刪除</string>
-	<string name="msg_account_existed">帳戶 %1$s 已經存在於帳戶型態 %2$s 中</string>
-	<string name="msg_account_updated">帳戶 %1$s 成功的被更新在帳戶型態 %2$s 中</string>
-	<string name="title_acceditor">帳戶編輯器</string>
-    <string name="title_accmgnt">帳戶管理器</string>
-    <string name="title_detmgnt">明細管理器</string>
-    <string name="title_desktop">主控台</string>
-    <string name="title_prefs">系統設定</string>
-    
-    <string name="label_from_account">從帳戶</string>
-    <string name="label_to_account">到帳戶</string>
-    <string name="label_date">日期</string>
-    <string name="label_money">金錢</string>
-    <string name="label_note">備註</string>
-    <string name="title_deteditor">明細編輯器</string>
-    <string name="msg_same_from_to">相同的帳戶</string>
-    <string name="title_detlist">明細列表</string>
-
-	<string name="title_acceditor_create">建立帳戶</string>
-	<string name="title_acceditor_update">更新帳戶</string>
-	<string name="title_deteditor_create">建立明細</string>
-	<string name="title_deteditor_update">更新明細</string>
-	<string name="msg_created_detail">一共建立了 %1$s 筆明細</string>
-	<string name="msg_created_account">一共建立了 %1$s 個帳戶</string>
-
-    <string name="label_detlist_from">&lt; %1$s</string>
-    <string name="label_detlist_to">%1$s</string>
-    <string name="label_detlist_money">$%1$s</string>
-    
-    <string name="dt_detlist">明細列表</string>
-    <string name="dt_adddetail">新增明細</string>
+    <string name="defacc_bank">銀行</string>
+    <string name="defacc_cash">現金</string>
+    <string name="defacc_entertainment">娛樂</string>
+    <string name="defacc_food">食物</string>
+    <string name="defacc_interest">利息</string>
+    <string name="defacc_otherexpense">其他花費</string>
+    <string name="defacc_otherincome">其他收入</string>
+    <string name="defacc_salary">薪水</string>
     <string name="dt_accmgnt">帳戶管理</string>
-    <string name="dt_prefs">系統設定</string>
-    
-    <string name="msg_detail_updated">明細已被更新</string>
-    <string name="msg_detail_deleted">明細已被刪除</string>
-    <string name="msg_detail_created">明細已被建立</string>
-    
-    
-    <string name="label_prefs_detlayout_sum">選擇不同的明細排版</string>
-    <string name="label_prefs_detlayout">明細排版</string>
-    
+    <string name="dt_adddetail">新增明細</string>
+    <string name="dt_detlist_month">月明細列表</string>
+    <string name="dt_detlist_week">周明細列表</string>
+    <string name="dt_detlist_year">年明細列表</string>
+    <string name="dt_detlist">明細列表</string>
+    <string name="dt_prefs">喜好設定</string>
+    <string name="label_all_details">全部明細</string>
+    <string name="label_asset">資產</string>
+    <string name="label_date">日期</string>
+    <string name="label_debt">負債</string>
     <string name="label_detlayout_type1">帳戶-金錢</string>
     <string name="label_detlayout_type2">備註-金錢</string>
-    
-    <string name="label_prefs_maxrecords">最大筆數</string>
-    <string name="label_prefs_maxrecords_sum">設定明細列表的最大呈現筆數, -1 表示不限制</string>
-    
-    <string name="label_all_details">全部明細</string>
-    <string name="label_week_details">%5$s %1$s 到 %2$s - 周數 %3$s/%4$s</string>
-    <string name="label_month_details">%1$s</string>
-    <string name="label_year_details">%1$s</string>
+    <string name="label_detlist_from">&lt; %1$s</string>
+    <string name="label_detlist_money">$%1$s</string>
     <string name="label_detlist_summary">收入 +$%2$s , 支出 -$%3$s (共%1$s筆)</string>
-    
-    <string name="dt_detlist_week">周明細列表</string>
-    <string name="dt_detlist_month">月明細列表</string>
-    <string name="dt_detlist_year">年明細列表</string>
-    
+    <string name="label_detlist_to">%1$s</string>
+    <string name="label_expense">花費</string>
+    <string name="label_firstday_mon">星期一</string>
+    <string name="label_firstday_sun">星期日</string>
+    <string name="label_from_account">從帳戶</string>
+    <string name="label_functions">功能</string>
+    <string name="label_income">收入</string>
+    <string name="label_initial_value">初始值</string>
+    <string name="label_money">金錢</string>
+    <string name="label_month_details">%1$s</string>
+    <string name="label_note">備註</string>
+    <string name="label_other">其他</string>
+    <string name="label_prefs_detlayout_sum">選擇不同的明細排版</string>
+    <string name="label_prefs_detlayout">明細排版</string>
     <string name="label_prefs_firstday_week_sum">設定每個星期的第一天為星期一還是星期日</string>
     <string name="label_prefs_firstday_week">星期的第一天</string>
-
-    <string name="label_firstday_sun">星期日</string>
-    <string name="label_firstday_mon">星期一</string>
+    <string name="label_prefs_improvider_sum">設定這個屬性，方便您試用這個軟體。任何資料將在軟體結束後消失</string>
+    <string name="label_prefs_improvider">使用暫態的資料提供方式</string>
+    <string name="label_prefs_maxrecords_sum">設定明細列表的最大呈現筆數, -1 表示不限制</string>
+    <string name="label_prefs_maxrecords">最大筆數</string>
+    <string name="label_reports">報表</string>
+    <string name="label_to_account">到帳戶</string>
+    <string name="label_week_details">%5$s %1$s 到 %2$s - 周數 %3$s/%4$s</string>
+    <string name="label_year_details">%1$s</string>
+    <string name="msg_account_created">帳戶 %1$s 成功的被建立在帳戶型態 %2$s 中</string>
+    <string name="msg_account_deleted">帳戶 %1$s 成功的刪除</string>
+    <string name="msg_account_existed">帳戶 %1$s 已經存在於帳戶型態 %2$s 中</string>
+    <string name="msg_account_updated">帳戶 %1$s 成功的被更新在帳戶型態 %2$s 中</string>
+    <string name="msg_created_account">一共建立了 %1$s 個帳戶</string>
+    <string name="msg_created_detail">一共建立了 %1$s 筆明細</string>
+    <string name="msg_detail_created">明細已被建立</string>
+    <string name="msg_detail_deleted">明細已被刪除</string>
+    <string name="msg_detail_updated">明細已被更新</string>
+    <string name="msg_same_from_to">相同的帳戶</string>
+    <string name="title_acceditor_create">建立帳戶</string>
+    <string name="title_acceditor_update">更新帳戶</string>
+    <string name="title_acceditor">帳戶編輯器</string>
+    <string name="title_accmgnt">帳戶管理器</string>
+    <string name="title_desktop">主控台</string>
+    <string name="title_deteditor_create">建立明細</string>
+    <string name="title_deteditor_update">更新明細</string>
+    <string name="title_deteditor">明細編輯器</string>
+    <string name="title_detlist">明細列表</string>
+    <string name="title_detmgnt">明細管理器</string>
+    <string name="title_prefs">喜好設定</string>
     <!-- above are sorted -->
 
 </resources>

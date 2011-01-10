@@ -152,6 +152,17 @@ public class Contexts {
         return android.text.format.DateFormat.getDateFormat(context);
     }
     
+    public DateFormat getLongDateFormat(){
+        return android.text.format.DateFormat.getLongDateFormat(context);
+    }
+    
+    public DateFormat getMediumDateFormat(){
+        return android.text.format.DateFormat.getMediumDateFormat(context);
+    }
+    
+    public DateFormat getTimeFormat(){
+        return android.text.format.DateFormat.getTimeFormat(context);
+    }
     public Drawable getDrawable(int id){
         return context.getResources().getDrawable(id);
     }

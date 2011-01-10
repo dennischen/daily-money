@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="cact_cancel">取消</string>
-	<string name="cact_copy">複製</string>
-	<string name="cact_create">建立</string>
-	<string name="cact_delete">刪除</string>
-	<string name="cact_edit">編輯</string>
-	<string name="cact_new">新增</string>
-	<string name="cact_ok">確定</string>
-	<string name="cact_stop">停止</string>
-	<string name="cact_update">更新</string>
-	<string name="clabel_alert">警告</string>
-	<string name="clabel_error">錯誤</string>
-	<string name="clabel_info">資訊</string>
-	<string name="clabel_name">名稱</string>
-	<string name="clabel_type">型態</string>
-	<string name="clabel_unknow">末知</string>
-	<string name="clabel_warn">警告</string>
-	<string name="cmsg_error">錯誤 : %1$s</string>
+    <string name="cact_cancel">取消</string>
+    <string name="cact_close">關閉</string>
+    <string name="cact_copy">複製</string>
+    <string name="cact_create">建立</string>
+    <string name="cact_delete">刪除</string>
+    <string name="cact_edit">編輯</string>
+    <string name="cact_new">新增</string>
+    <string name="cact_ok">確定</string>
+    <string name="cact_stop">停止</string>
+    <string name="cact_update">更新</string>
+    <string name="clabel_alert">警告</string>
     <string name="clabel_busy">忙碌</string>
+    <string name="clabel_error">錯誤</string>
+    <string name="clabel_info">資訊</string>
+    <string name="clabel_name">名稱</string>
+    <string name="clabel_type">型態</string>
+    <string name="clabel_unknow">末知</string>
+    <string name="clabel_warn">警告</string>
     <string name="cmsg_busy">應用程式忙碌中，請稍候...</string>
-	<string name="cact_close">關閉</string>
+    <string name="cmsg_error">錯誤 : %1$s</string>
     <string name="cmsg_field_empty">%1$s 是空的</string>  
     <string name="cmsg_field_zero">%1$s 是零</string>  
 	 <!-- above are verified -->

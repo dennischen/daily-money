@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
 	android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="@color/dt_bg">
-	<TabHost android:id="@+id/dt_tabs" android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<TabHost android:id="@+id/dt_tabs" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1">
 		<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
 			android:padding="5dp">
 			<TabWidget android:id="@android:id/tabs" android:layout_width="fill_parent" android:layout_height="wrap_content" />
@@ -13,4 +13,6 @@
 			</FrameLayout>
 		</LinearLayout>
 	</TabHost>
+	<TextView android:id="@+id/dt_info"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="12px" 
+	android:gravity="center" android:background="@color/dt_info_bg" android:textColor="@color/dt_info_fg"/>
 </LinearLayout>

@@ -35,4 +35,7 @@
     <color name="unknow_bg_e">#CC555555</color>
     <color name="unknow_fge">#CC555555</color>
     <color name="unknow_fg">#000000</color>
+    
+    <color name="dt_info_bg">#FF7A95FF</color>
+    <color name="dt_info_fg">#000000</color>
 </resources>
