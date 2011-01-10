@@ -131,12 +131,12 @@ public class GUIs {
     }
     
     
-    private static ExecutorService busyExecutor = Executors.newSingleThreadExecutor();
+    private static ExecutorService singleExecutor = Executors.newSingleThreadExecutor();
     private static Handler guiHandler = new Handler();
     
     
     static public void postResume(final Runnable r){
-        busyExecutor.submit(new Runnable(){
+        singleExecutor.submit(new Runnable(){
             @Override
             public void run() {
                 post(r);
@@ -144,7 +144,7 @@ public class GUIs {
     }
     
     static public void post(Runnable r){
-        guiHandler.post(r);
+        guiHandler.post(new NothrowRunnable(r));
     }
     
     static public void doBusy(Context context,IBusyListener r){
@@ -161,7 +161,7 @@ public class GUIs {
     static public void doBusy(Context context,String msg,Runnable r){
         final ProgressDialog dlg = ProgressDialog.show(context,Contexts.instance().getI18n().string(R.string.clabel_busy),msg,true,false);
         final BusyRunnable br = new BusyRunnable(dlg,r);
-        busyExecutor.submit(br);
+        singleExecutor.submit(br);
         
         guiHandler.post(new Runnable(){
             @Override
@@ -175,9 +175,22 @@ public class GUIs {
                     }
                 }
             }
-        });
-
-        
+        }); 
+    }
+    
+    static class NothrowRunnable implements Runnable{
+        Runnable r;
+        public NothrowRunnable(Runnable r){
+            this.r = r;
+        }
+        @Override
+        public void run() {
+            try{
+                r.run();
+            }catch(Exception x){
+                Logger.e(x.getMessage(),x);
+            }
+        }
     }
     
     static class BusyRunnable implements Runnable{
@@ -201,7 +214,7 @@ public class GUIs {
                     finish = true;
                 }
                 if(run instanceof IBusyListener){
-                    guiHandler.post(new Runnable(){
+                   post(new Runnable(){
                         @Override
                         public void run() {
                             ((IBusyListener)run).onBusyFinish();                        
@@ -216,7 +229,7 @@ public class GUIs {
                     finish = true;
                 }
                 if(run instanceof IBusyListener){
-                    guiHandler.post(new Runnable(){
+                    post(new Runnable(){
                         @Override
                         public void run() {
                             ((IBusyListener)run).onBusyError(x);                        
