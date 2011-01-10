@@ -2,21 +2,14 @@ package com.bottleworks.dailymoney;
 
 import java.io.File;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Environment;
-import android.view.View;
 
 import com.bottleworks.commons.util.Files;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.commons.util.I18N;
-import com.bottleworks.dailymoney.DesktopActivity.DesktopItem;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.Detail;
@@ -24,142 +17,73 @@ import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.Contexts;
 import com.csvreader.CsvWriter;
 
-/**
- * static desktop item loader
- * @author dennis
- *
- */
-public class DesktopTestItemLoader {
-
-    Context context;
-    I18N i18n;
-    public DesktopTestItemLoader(Context context,I18N i18n){
-        this.context = context;
-        this.i18n = i18n;
+public class TestsDesktop extends AbstractDesktop {
+    
+    public TestsDesktop(Context context) {
+        super(context);
+        
     }
     
-    public List<DesktopItem> loadFunctions(){
-        List<DesktopItem> fnsItems = new ArrayList<DesktopItem>();
-        
-        DesktopItem adddetdt =  new DesktopItem(new Runnable(){
-            public void run(){
-              Detail d = new Detail("","",new Date(),0D,"");
-              DetailEditorDialog dlg = new DetailEditorDialog(context,new DetailEditorDialog.OnFinishListener() {
-                  @Override
-                  public boolean onFinish(DetailEditorDialog dlg, View v, Object data) {
-                      switch(v.getId()){
-                      case R.id.deteditor_ok:
-                          Detail dt = (Detail)data;
-                          Contexts.instance().getDataProvider().newDetail(dt);
-                          break;
-                      case R.id.deteditor_close:
-                          GUIs.shortToast(context,i18n.string(R.string.msg_created_detail,dlg.getCounter()));
-                      }
-                      return true;
-                  }
-              }, true, d);
-              dlg.show();
-            }
-        },i18n.string(R.string.dt_adddetail),R.drawable.dt_item_adddetail);
-        
-        Intent intent = new Intent(context,DetailListActivity.class);
-        intent.putExtra(DetailListActivity.INTENT_MODE,DetailListActivity.MODE_WEEK);
-        DesktopItem weeklist = new DesktopItem(new DesktopActivity.IntentRun(context,intent),i18n.string(R.string.dt_detlist_week),R.drawable.dt_item_detail_week);
-        
-        intent = new Intent(context,DetailListActivity.class);
-        intent.putExtra(DetailListActivity.INTENT_MODE,DetailListActivity.MODE_MONTH);
-        DesktopItem monthlist = new DesktopItem(new DesktopActivity.IntentRun(context,intent),i18n.string(R.string.dt_detlist_month),R.drawable.dt_item_detail_month);
-        
-        intent = new Intent(context,DetailListActivity.class);
-        intent.putExtra(DetailListActivity.INTENT_MODE,DetailListActivity.MODE_YEAR);
-        DesktopItem yearlist = new DesktopItem(new DesktopActivity.IntentRun(context,intent),i18n.string(R.string.dt_detlist_year),R.drawable.dt_item_detail_year);
-        
-        DesktopItem accmgntdt = new DesktopItem(new DesktopActivity.ActivityRun(context,AccountMgntActivity.class),i18n.string(R.string.dt_accmgnt),R.drawable.dt_item_account);
-        DesktopItem prefdt = new DesktopItem(new DesktopActivity.ActivityRun(context,PrefsActivity.class),i18n.string(R.string.dt_prefs),R.drawable.dt_item_prefs);
+    @Override
+    public boolean isAvailable(){
+        return Contexts.instance().isOpenTestsDesktop();
+    }
 
-        
-        fnsItems.add(adddetdt);
-        fnsItems.add(weeklist);
-        fnsItems.add(monthlist);
-        fnsItems.add(yearlist);
-        fnsItems.add(accmgntdt);
-        fnsItems.add(prefdt);
+    @Override
+    protected void init() {
+        label = i18n.string(R.string.dt_tests);
+        icon = R.drawable.dt_main;
 
-        /** test */
-
-       
-        
-        fnsItems.add(new DesktopItem(new Runnable(){
+        addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testExportAccount();
             }}, "Export account",R.drawable.dt_item_test));
         
-        fnsItems.add(new DesktopItem(new Runnable(){
+        addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testExportDetail();
             }}, "Export detail",R.drawable.dt_item_test));
-        fnsItems.add(new DesktopItem(new Runnable(){
+        addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testResetDataprovider();
             }}, "Reset dataprovider",R.drawable.dt_item_test));
-        fnsItems.add(new DesktopItem(new Runnable(){
+        addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testCreateTestdata();
             }}, "Create test data",R.drawable.dt_item_test));
         
-        fnsItems.add(new DesktopItem(new Runnable(){
+        addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testBusy();
             }}, "test busy",R.drawable.dt_item_test));
         
-        fnsItems.add(new DesktopItem(new Runnable(){
+        addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testJust();
             }}, "just test",R.drawable.dt_item_test));
-        return fnsItems;
+        
+        DesktopItem padding = new DesktopItem(new Runnable(){
+            @Override
+            public void run() {
+                
+            }}, "padding",R.drawable.dt_item_test);
+        
+        addItem(padding);
+        addItem(padding);
+        addItem(padding);
+        addItem(padding);
+        addItem(padding);
+        addItem(padding);
+        addItem(padding);
+        addItem(padding);
+        addItem(padding);
     }
-
-
-    public List<DesktopItem> loadReports(){
-        List<DesktopItem> reportsItems = new ArrayList<DesktopItem>();
-        
-        DesktopItem accdt = new DesktopItem(new DesktopActivity.ActivityRun(context,AccountMgntActivity.class),i18n.string(R.string.title_accmgnt),R.drawable.dt_item_account);
-        DesktopItem prefdt = new DesktopItem(new DesktopActivity.ActivityRun(context,PrefsActivity.class),i18n.string(R.string.title_prefs),R.drawable.dt_item_prefs);
-        
-        DesktopItem testdt = new DesktopItem(new DesktopActivity.ActivityRun(context,TestActivity.class),"Test Activity",R.drawable.dt_item_test);
-        
-        reportsItems.add(testdt);
-        reportsItems.add(accdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        reportsItems.add(prefdt);
-        
-        return reportsItems;
-    }
-    
-    
-    /*
-     * test
-     */
-    
-   
     
     private void testExportDetail(){
         try{
@@ -277,4 +201,5 @@ public class DesktopTestItemLoader {
         System.out.println(">>>>>>>>>>>>."+Calendar.getInstance().getFirstDayOfWeek());
 //        System.out.println(">>>>>>>>>>>>."+);
     }
+
 }

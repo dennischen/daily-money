@@ -34,6 +34,7 @@ public class Contexts {
     int pref_detailListLayout = 2;
     int pref_maxRecords = 100;//-1 is no limit
     int pref_firstdayWeek = 1;//sunday
+    boolean pref_openTestsDesktop = false;
     
     private CalendarHelper calendarHelper = new CalendarHelper();
     
@@ -83,10 +84,16 @@ public class Contexts {
             pref_maxRecords = Integer.parseInt(prefs.getString(Constants.PREFS_MAX_RECORDS, "100"));
         }catch(Exception x){}
         
+        
+        try{
+            pref_openTestsDesktop = prefs.getBoolean(Constants.PREFS_OPEN_TESTS_DESKTOP, false);
+        }catch(Exception x){}
+        
         Logger.d("preference : use inmemory "+pref_useImpPovider);
         Logger.d("preference : detail layout "+pref_detailListLayout);
         Logger.d("preference : firstday of week "+pref_firstdayWeek);
         Logger.d("preference : max records "+pref_maxRecords);
+        Logger.d("preference : open tests desktop "+pref_openTestsDesktop);
         
         calendarHelper.setFirstDayOfWeek(pref_firstdayWeek);
     }
@@ -101,6 +108,10 @@ public class Contexts {
     
     public int getFirstdayWeek(){
         return pref_firstdayWeek;
+    }
+    
+    public boolean isOpenTestsDesktop(){
+        return pref_openTestsDesktop;
     }
     
     public CalendarHelper getCalendarHelper(){

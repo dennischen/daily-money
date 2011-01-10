@@ -9,13 +9,13 @@
     <string name="defacc_otherexpense">Other expense</string>
     <string name="defacc_otherincome">Other income</string>
     <string name="defacc_salary">Salary</string>
-    <string name="dt_accmgnt">Accounts</string>
-    <string name="dt_adddetail">Add Detail</string>
-    <string name="dt_detlist">Details</string>
-    <string name="dt_detlist_month">Monthly list</string>
-    <string name="dt_detlist_week">Weekly list</string>
-    <string name="dt_detlist_year">Yearly list</string>
-    <string name="dt_prefs">Preferences</string>
+    <string name="dtitem_accmgnt">Accounts</string>
+    <string name="dtitem_adddetail">Add Detail</string>
+    <string name="dtitem_detlist">Details</string>
+    <string name="dtitem_detlist_month">Monthly list</string>
+    <string name="dtitem_detlist_week">Weekly list</string>
+    <string name="dtitem_detlist_year">Yearly list</string>
+    <string name="dtitem_prefs">Preferences</string>
     <string name="label_all_details">All details</string>
     <string name="label_asset">Asset</string>
     <string name="label_date">Date</string>
@@ -30,7 +30,6 @@
     <string name="label_firstday_mon">Monday</string>
     <string name="label_firstday_sun">Sunday</string>
     <string name="label_from_account">From</string>
-    <string name="label_functions">Functions</string>
     <string name="label_income">Income</string>
     <string name="label_initial_value">Initial</string>
     <string name="label_money">Money</string>
@@ -71,6 +70,11 @@
     <string name="title_detmgnt">Detail Manager</string>
     <string name="title_prefs">Preferences</string> 
 <!-- above are sorted -->    
-
+    
+    <string name="dt_main">Main</string>
+    <string name="dt_reports">Reports</string>
+    <string name="dt_tests">Tests</string>
+    <string name="label_prefs_testsdekstop">Open tests desktop</string>
+    <string name="label_prefs_testsdekstop_sum">open the tests desktop, you have to restart the application to access tests</string>
 </resources>
 

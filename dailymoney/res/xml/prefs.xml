@@ -11,4 +11,9 @@
 	<EditTextPreference android:key="max_records" android:title="@string/label_prefs_maxrecords" 
 	    android:numeric="signed"
         android:summary="@string/label_prefs_maxrecords_sum" android:defaultValue="-1"  />
+        
+        
+    <!-- at the bottom -->
+    <CheckBoxPreference android:key="open_testsdekstop" android:title="@string/label_prefs_testsdekstop"
+        android:summary="@string/label_prefs_testsdekstop_sum" android:defaultValue="false" />    
 </PreferenceScreen>

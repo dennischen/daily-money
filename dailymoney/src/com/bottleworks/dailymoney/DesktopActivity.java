@@ -2,14 +2,12 @@ package com.bottleworks.dailymoney;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
@@ -32,6 +30,8 @@ import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.ContextsActivity;
+import com.bottleworks.dailymoney.ui.Desktop;
+import com.bottleworks.dailymoney.ui.Desktop.DesktopItem;
 /**
  * 
  * @author dennis
@@ -39,9 +39,7 @@ import com.bottleworks.dailymoney.ui.ContextsActivity;
  */
 public class DesktopActivity extends ContextsActivity implements OnTabChangeListener, OnItemClickListener {
 
-    
-    private static final String TAB_FUNCTIONS = "functions";
-    private static final String TAB_REPORTS = "reports";
+ 
 
     
     private String currTab = null;
@@ -50,8 +48,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     private DesktopItemAdapter gridViewAdapter;
 
-    List<DesktopItem> dataItems;
-    List<DesktopItem> reportsItems;
+    List<Desktop> desktops = new ArrayList<Desktop>();
     
     String appinfo;
 
@@ -85,29 +82,36 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
 
     private void initialDesktopItem() {
-        DesktopTestItemLoader loader = new DesktopTestItemLoader(this,i18n);
-        dataItems = loader.loadFunctions();
-        reportsItems = loader.loadReports();
+        
+        Desktop[] dts = new Desktop[]{new MainDesktop(this),new ReportsDesktop(this),new TestsDesktop(this)};
+        
+        for(Desktop dt:dts){
+            if(dt.isAvailable()){
+                desktops.add(dt);
+            }
+        }
     }
 
     private void initialTab() {
         TabHost tabs = (TabHost) findViewById(R.id.dt_tabs);
         tabs.setup();
 
-        TabSpec tab = tabs.newTabSpec(TAB_FUNCTIONS);
-        tab.setIndicator(i18n.string(R.string.label_functions),getResources().getDrawable(R.drawable.dt_tab_functions));
-        tab.setContent(R.id.dt_grid);
-        tabs.addTab(tab);
-        currTab = tab.getTag();
+        
+        for(Desktop d:desktops){
+            TabSpec tab = tabs.newTabSpec(d.getLabel());
+            tab.setIndicator(d.getLabel(),getResources().getDrawable(d.getIcon()));
+            tab.setContent(R.id.dt_grid);
+            tabs.addTab(tab);
+            if(currTab==null){
+                currTab = tab.getTag();
+            }
+        }
 
-        tab = tabs.newTabSpec(TAB_REPORTS);
-        tab.setIndicator(i18n.string(R.string.label_reports),getResources().getDrawable(R.drawable.dt_tab_reports));
-        tab.setContent(R.id.dt_grid);
-        tabs.addTab(tab);
-
-        // workaround, force refresh
-        tabs.setCurrentTab(1);
-        tabs.setCurrentTab(0);
+        if(desktops.size()>1){
+            // workaround, force refresh
+            tabs.setCurrentTab(1);
+            tabs.setCurrentTab(0);
+        }
 
         tabs.setOnTabChangedListener(this);
 
@@ -131,6 +135,13 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     
     private void loadData() {
         loadAppInfo();
+        for(Desktop d:desktops){
+            if(d.getLabel().equals(currTab)){
+                d.refresh();
+                break;
+            }
+        }
+        
         gridViewAdapter.notifyDataSetChanged();
     }
 
@@ -168,61 +179,15 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     
     
     List<DesktopItem> getCurrentDesktopItems(){
-        if(TAB_FUNCTIONS.equals(currTab)){
-            return dataItems;
-        }else if(TAB_REPORTS.equals(currTab)){
-            return reportsItems;
+        
+        for(Desktop d:desktops){
+            if(d.getLabel().equals(currTab)){
+                return d.getItems();
+            }
         }
         return Collections.EMPTY_LIST;
     }
 
-    static class DesktopItem {
-        int icon;
-        String label;
-        Runnable run;
-
-        public DesktopItem(Runnable run, String label) {
-            this(run,label,R.drawable.dt_item);
-        }
-
-        public DesktopItem(Runnable run, String label, int icon) {
-            this.run = run;
-            this.label = label;
-            this.icon = icon;
-        }
-
-        public void run() {
-            run.run();
-        }
-    }
-
-    public  static class IntentRun implements Runnable {
-        Intent intent;
-        Context context;
-
-        IntentRun(Context context,Intent intent) {
-            this.context = context;
-            this.intent = intent;
-        }
-
-        public void run() {
-            context.startActivity(intent);
-        }
-    }
-    
-    public  static class ActivityRun implements Runnable {
-        Class activity;
-        Context context;
-
-        ActivityRun(Context context,Class activity) {
-            this.context = context;
-            this.activity = activity;
-        }
-
-        public void run() {
-            context.startActivity(new Intent(context,activity));
-        }
-    }
     
     public class DesktopItemAdapter extends BaseAdapter {
 
@@ -256,13 +221,12 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
             tv = (TextView)view.findViewById(R.id.dt_label);
             
             DesktopItem item = getCurrentDesktopItems().get(position);
-            iv.setImageResource(item.icon);
-            tv.setText(item.label);
+            iv.setImageResource(item.getIcon());
+            tv.setText(item.getLabel());
             return view;
         }
 
     }
-    
     
     
 
