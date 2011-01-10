@@ -32,12 +32,17 @@ public class GUIs {
     
     public static final int NO_ICON_RES=0x0;
     
-    static public void alert(Context context,String title,String msg,String btn,int icon){
+    public static final int OK_BUTTON = AlertDialog.BUTTON_POSITIVE;
+    public static final int CANCEL_BUTTON = AlertDialog.BUTTON_NEGATIVE;
+    
+    static public void alert(Context context,String title,String msg,String oktext,int icon){
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle(title);
+        if(title!=null){
+            alertDialog.setTitle(title);
+        }
         alertDialog.setMessage(msg);
         
-        alertDialog.setButton(btn, new DialogInterface.OnClickListener() {
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,oktext, new DialogInterface.OnClickListener() {
            public void onClick(DialogInterface dialog, int which) {
                dialog.dismiss();
            }
@@ -45,14 +50,48 @@ public class GUIs {
         if(icon!=NO_ICON_RES){
             alertDialog.setIcon(icon);
         }
+        alertDialog.setCancelable(true);
         alertDialog.show();
     }
     
     static public void alert(Context context,String msg){
-        alert(context,context.getString(R.string.clabel_alert),msg,context.getString(R.string.cact_ok),NO_ICON_RES);
+        alert(context,null,msg,context.getString(R.string.cact_ok),NO_ICON_RES);
     }
     
+    static public void alert(Context context,int msg){
+        alert(context,null,context.getString(msg),context.getString(R.string.cact_ok),NO_ICON_RES);
+    }
     
+    static public void confirm(Context context,int msg,OnFinishListener listener){
+        confirm(context,null,context.getString(msg),context.getString(R.string.cact_ok),context.getString(R.string.cact_cancel),NO_ICON_RES,listener);
+    }
+    
+    static public void confirm(Context context,String msg,OnFinishListener listener){
+        confirm(context,null,msg,context.getString(R.string.cact_ok),context.getString(R.string.cact_cancel),NO_ICON_RES,listener);
+    }
+    
+    static public void confirm(Context context,String title, String msg, String oktext,String canceltext,int icon,final OnFinishListener listener){
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        if(title!=null){
+            alertDialog.setTitle(title);
+        }
+        alertDialog.setMessage(msg);
+        
+        DialogInterface.OnClickListener l = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                listener.onFinish(which);
+            }
+         };
+        
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,oktext,l);
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,canceltext,l);
+        if(icon!=NO_ICON_RES){
+            alertDialog.setIcon(icon);
+        }
+        alertDialog.setCancelable(true);
+        alertDialog.show();
+    }
     
     static public void shortToast(Context context,String msg){
         toast(context,msg,Toast.LENGTH_SHORT);

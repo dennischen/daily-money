@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent" android:padding="5dp" >
+	<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+			android:layout_width="fill_parent" android:layout_height="wrap_content" android:gravity="center">
+			<Button android:text="@string/label_export_csv" android:id="@+id/datamain_export_csv" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_export" ></Button>
+			<Button android:text="@string/label_import_csv" android:id="@+id/datamain_import_csv" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_import" ></Button>
+			<Button android:text="@string/label_reset" android:id="@+id/datamain_reset" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_reset" ></Button>
+			<Button android:text="@string/label_create_default" android:id="@+id/datamain_create_default" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_create_default" ></Button>
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

@@ -69,6 +69,31 @@
     <string name="title_detlist">明細列表</string>
     <string name="title_detmgnt">明細管理器</string>
     <string name="title_prefs">喜好設定</string>
+    
+    
+    <string name="dt_main">主要桌面</string>
+    <string name="dt_reports">報表桌面</string>
+    <string name="dt_tests">測試桌面</string>
+    <string name="label_prefs_testsdekstop">測試桌面</string>
+    <string name="label_prefs_testsdekstop_sum">啟用測試桌面, 必重新啟動才能套用變更</string>
+    
+    <string name="label_export_csv">匯出 CSV</string>
+    <string name="label_import_csv">匯入 CSV</string>
+    <string name="label_reset">重置所有資料</string>
+    <string name="label_create_default">建立預設的資料(帳戶)</string>
+    
+    
+    <string name="msg_csv_exported">資料全部被匯出到 %1$s</string>
+    <string name="msg_csv_imported">資料從 %1$s 被匯入</string>
+    <string name="msg_rested">資料已經被重置</string>
+    <string name="msg_default_created">預設的資料(帳戶)已經被建立</string>
+    <string name="title_datamain">資料維護</string>
+    
+    <string name="qmsg_export_csv">您想要匯出到CSV檔嗎?舊的檔案將被覆蓋!</string>
+    <string name="qmsg_import_csv">您想要匯入CSV檔嗎?目前的資料將完全被取代</string>
+    <string name="qmsg_reset">您想要重置所有資料嗎?</string>
+    <string name="qmsg_create_default">您想要建立預設的資料(帳戶)嗎?</string>
+    <string name="dtitem_datamain">資料維護</string>    
     <!-- above are sorted -->
 
 </resources>

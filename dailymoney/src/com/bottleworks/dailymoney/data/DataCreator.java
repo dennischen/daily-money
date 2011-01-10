@@ -25,7 +25,6 @@ public class DataCreator {
 
     public void createDefaultAccount() {
         createAccountNoThrow(i18n.string(R.string.defacc_salary), AccountType.INCOME, 0D);
-        createAccountNoThrow(i18n.string(R.string.defacc_interest), AccountType.INCOME, 0D);
         createAccountNoThrow(i18n.string(R.string.defacc_otherincome), AccountType.INCOME, 0D);
 
         createAccountNoThrow(i18n.string(R.string.defacc_food), AccountType.EXPENSE, 0D);
@@ -36,7 +35,7 @@ public class DataCreator {
         createAccountNoThrow(i18n.string(R.string.defacc_bank), AccountType.ASSET, 0D);
     }
 
-    public void createTestData() {
+    public void createTestData(int loop) {
         CalendarHelper cal = Contexts.instance().getCalendarHelper();
         
         Account income1 = createAccountNoThrow(i18n.string(R.string.defacc_salary), AccountType.INCOME, 0D);
@@ -54,7 +53,7 @@ public class DataCreator {
         
         int base = 0;
 
-        for(int i=0;i<100;i++){
+        for(int i=0;i<loop;i++){
             createDetail(income1, asset1, cal.dateBefore(today, base + 3), 5000D, "salary "+i);
             createDetail(income2, asset2, cal.dateBefore(today, base + 3), 10D, "interset "+i);
     
@@ -79,9 +78,9 @@ public class DataCreator {
 
     private Account createAccountNoThrow(String name, AccountType type, double initval) {
         try {
-            Logger.d("createDefaultAccount : " + name);
             Account account = null;
             if ((account = idp.findAccount(type.getType(), name)) == null) {
+                Logger.d("createDefaultAccount : " + name);
                 account = new Account(type.getType(), name, initval);
                 idp.newAccount(account);
             }

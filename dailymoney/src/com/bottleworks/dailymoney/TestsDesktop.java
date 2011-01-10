@@ -32,7 +32,7 @@ public class TestsDesktop extends AbstractDesktop {
     @Override
     protected void init() {
         label = i18n.string(R.string.dt_tests);
-        icon = R.drawable.dt_main;
+        icon = R.drawable.dt_tests;
 
         addItem(new DesktopItem(new Runnable(){
             @Override
@@ -48,14 +48,13 @@ public class TestsDesktop extends AbstractDesktop {
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
-                testResetDataprovider();
-            }}, "Reset dataprovider",R.drawable.dt_item_test));
+                testCreateTestdata(1);
+            }}, "Create test data",R.drawable.dt_item_test));
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
-                testCreateTestdata();
-            }}, "Create test data",R.drawable.dt_item_test));
-        
+                testCreateTestdata(100);
+            }}, "Create many test data",R.drawable.dt_item_test));
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
@@ -131,7 +130,7 @@ public class TestsDesktop extends AbstractDesktop {
 
     }
     
-    private void testCreateTestdata() {
+    private void testCreateTestdata(final int loop) {
         GUIs.doBusy(context,new GUIs.BusyAdapter(){
             @Override
             public void onBusyFinish() {
@@ -140,7 +139,7 @@ public class TestsDesktop extends AbstractDesktop {
             @Override
             public void run() {
                 IDataProvider idp = Contexts.instance().getDataProvider();
-                new DataCreator(idp,i18n).createTestData();
+                new DataCreator(idp,i18n).createTestData(loop);
             }});
         
     }
