@@ -11,7 +11,11 @@
 	<EditTextPreference android:key="max_records" android:title="@string/label_prefs_maxrecords" 
 	    android:numeric="signed"
         android:summary="@string/label_prefs_maxrecords_sum" android:defaultValue="-1"  />
-        
+    
+    <EditTextPreference android:key="working_folder" android:title="@string/label_prefs_workingfolder" 
+        android:summary="@string/label_prefs_workingfolder_sum" android:defaultValue="bwDailyMoney"  />
+    <CheckBoxPreference android:key="export_datedcsv" android:title="@string/label_prefs_datedcsv"
+        android:summary="@string/label_prefs_datedcsv_sum" android:defaultValue="true" />       
         
     <!-- at the bottom -->
     <CheckBoxPreference android:key="open_testsdekstop" android:title="@string/label_prefs_testsdekstop"

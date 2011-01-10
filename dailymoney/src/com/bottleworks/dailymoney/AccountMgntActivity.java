@@ -63,11 +63,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
         setContentView(R.layout.accmgnt);
         initialTab();
         initialContent();
-    }
-    
-    @Override
-    public void onResume(){
-        super.onResume();
+        
         reloadData();
     }
 

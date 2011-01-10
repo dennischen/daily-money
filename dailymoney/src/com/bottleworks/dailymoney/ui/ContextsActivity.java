@@ -31,7 +31,5 @@ public class ContextsActivity extends Activity {
     @Override
     protected void onPause(){
         super.onPause();
-        Contexts.instance().cleanContext(this);
-        i18n = null;
     }
 }

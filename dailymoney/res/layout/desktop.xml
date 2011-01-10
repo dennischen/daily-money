@@ -13,6 +13,6 @@
 			</FrameLayout>
 		</LinearLayout>
 	</TabHost>
-	<TextView android:id="@+id/dt_info"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="12px" 
+	<TextView android:id="@+id/dt_info"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="12sp" 
 	android:gravity="center" android:background="@color/dt_info_bg" android:textColor="@color/dt_info_fg"/>
 </LinearLayout>

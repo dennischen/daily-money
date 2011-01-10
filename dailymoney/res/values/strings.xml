@@ -89,16 +89,25 @@
     <string name="msg_default_created">Default date was created</string>
     <string name="title_datamain">Data Maintenance</string>
     
-    <string name="qmsg_export_csv">Do you want to export CSV? older CSV file will be replaced!</string>
-    <string name="qmsg_import_csv">Do you want to import CSV? current data will be replaced!</string>
+    <string name="qmsg_export_csv">Do you want to export CSV to %1$s? older CSV file will be replaced!</string>
+    <string name="qmsg_import_csv">Do you want to import CSV from %1$s? current data will be replaced!</string>
     <string name="qmsg_reset">Do you want to reset all data?</string>
     <string name="qmsg_create_default">Do you want to create default data?</string>
     <string name="dtitem_datamain">Data</string>
+    
+    
+    <string name="msg_no_csv">No CSV Files</string>
+    <string name="label_clear_folder">Clear working folder</string>
+    <string name="msg_folder_cleared">Working folder %1$s was cleared</string>
+    
+    <string name="label_prefs_workingfolder">Working folder</string>
+    <string name="label_prefs_workingfolder_sum">Set the folder name in sdcard for exporting data</string>
+    <string name="label_prefs_datedcsv">Dated CSV</string>
+    <string name="label_prefs_datedcsv_sum">Also write a CSV file that named with current date</string>
+    
+     <string name="qmsg_clear_folder">Do you want to clear working folder %1$s? all CSV will be removed</string>
 <!-- above are verified -->    
 
-    <string name="msg_no_csv">No CSV Files</string>
-    <string name="label_clear_folder">Clear folder</string>
-    <string name="msg_folder_cleared">Folder %1$s was cleared</string>
     
 </resources>
 

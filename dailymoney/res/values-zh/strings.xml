@@ -88,12 +88,23 @@
     <string name="msg_default_created">預設的資料(帳戶)已經被建立</string>
     <string name="title_datamain">資料維護</string>
     
-    <string name="qmsg_export_csv">您想要匯出到CSV檔嗎?舊的檔案將被覆蓋!</string>
-    <string name="qmsg_import_csv">您想要匯入CSV檔嗎?目前的資料將完全被取代</string>
+    <string name="qmsg_export_csv">您想要從%1$s匯出到CSV檔嗎?舊的檔案將被覆蓋!</string>
+    <string name="qmsg_import_csv">您想要從%1$s匯入CSV檔嗎?目前的資料將完全被取代</string>
     <string name="qmsg_reset">您想要重置所有資料嗎?</string>
     <string name="qmsg_create_default">您想要建立預設的資料(帳戶)嗎?</string>
-    <string name="dtitem_datamain">資料維護</string>    
-    <!-- above are sorted -->
+    <string name="dtitem_datamain">資料維護</string>  
+    
+    
+    <string name="msg_no_csv">沒有CSV檔案</string>
+    <string name="label_clear_folder">清除工作目錄</string>
+    <string name="msg_folder_cleared">工作目錄 %1$s 已經被清除</string>
+    
+    <string name="label_prefs_workingfolder">工作目錄</string>
+    <string name="label_prefs_workingfolder_sum">設定sdcard中的工作目錄的名稱，CSV將匯出到這個目錄</string>
+    <string name="label_prefs_datedcsv">日期名稱的CSV</string>
+    <string name="label_prefs_datedcsv_sum">在匯出時,也同時建立一個包含日期名稱的CSV檔</string>  
+    <string name="qmsg_clear_folder">您想要清除工作目錄%1$s嗎?所有的CSV檔將被移除</string>
+    <!-- above are verified -->
 
 </resources>
 

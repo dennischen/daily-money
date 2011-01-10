@@ -3,7 +3,7 @@
 	android:layout_width="fill_parent" android:layout_height="fill_parent" android:padding="5dp">
 	<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
-			android:layout_gravity="center" android:paddingLeft="30dp" android:paddingRight="30dp"
+			android:layout_gravity="center_horizontal" android:paddingLeft="30dp" android:paddingRight="30dp"
 			android:layout_width="fill_parent" android:layout_height="wrap_content">
 			<Button android:text="@string/label_export_csv" android:id="@+id/datamain_export_csv" android:layout_width="fill_parent"
 				android:gravity="center" android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_export"></Button>

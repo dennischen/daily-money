@@ -32,7 +32,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     
     String workingFolder;
     
-    boolean exportBackup = false;
+    boolean datedCSV = false;
     
     DateFormat format = new SimpleDateFormat("yyyyMMdd");
 
@@ -41,7 +41,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datamain);
         workingFolder = Contexts.instance().getPrefWorkingFolder();
-        exportBackup = Contexts.instance().isPrefExportBackup();
+        datedCSV = Contexts.instance().isPrefExportDatedCSV();
         initialListener();
 
     }
@@ -76,17 +76,37 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     }
 
     private void doClearFolder() {
-        File sd = Environment.getExternalStorageDirectory();
-        File folder = new File(sd, workingFolder);
-        if (!folder.exists()) {
-            return;
-        }
-        for(File f: folder.listFiles()){
-           if(f.isFile() && f.getName().toLowerCase().endsWith(".csv")){
-               f.delete();
-           }
-        }
-        GUIs.alert(DataMaintenanceActivity.this, i18n.string(R.string.msg_folder_cleared,workingFolder));
+        final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+            @Override
+            public void onBusyFinish() {
+                GUIs.alert(DataMaintenanceActivity.this, i18n.string(R.string.msg_folder_cleared,workingFolder));
+            }
+
+            @Override
+            public void run() {
+                File sd = Environment.getExternalStorageDirectory();
+                File folder = new File(sd, workingFolder);
+                if (!folder.exists()) {
+                    return;
+                }
+                for(File f: folder.listFiles()){
+                   if(f.isFile() && f.getName().toLowerCase().endsWith(".csv")){
+                       f.delete();
+                   }
+                }
+            }
+        };
+
+        GUIs.confirm(this, i18n.string(R.string.qmsg_clear_folder,workingFolder), new GUIs.OnFinishListener() {
+            @Override
+            public boolean onFinish(Object data) {
+                if (((Integer) data).intValue() == GUIs.OK_BUTTON) {
+                    GUIs.doBusy(DataMaintenanceActivity.this, job);
+                }
+                return true;
+            }
+        });
+        
     }
 
     private void doCreateDefault() {
@@ -152,7 +172,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             }
         };
 
-        GUIs.confirm(this, i18n.string(R.string.qmsg_export_csv), new GUIs.OnFinishListener() {
+        GUIs.confirm(this, i18n.string(R.string.qmsg_export_csv,workingFolder), new GUIs.OnFinishListener() {
             @Override
             public boolean onFinish(Object data) {
                 if (((Integer) data).intValue() == GUIs.OK_BUTTON) {
@@ -179,7 +199,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             }
         };
 
-        GUIs.confirm(this, i18n.string(R.string.qmsg_import_csv), new GUIs.OnFinishListener() {
+        GUIs.confirm(this, i18n.string(R.string.qmsg_import_csv,workingFolder), new GUIs.OnFinishListener() {
             @Override
             public boolean onFinish(Object data) {
                 if (((Integer) data).intValue() == GUIs.OK_BUTTON) {
@@ -222,7 +242,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         String csv = sw.toString();
         File file = getWorkingFile("details.csv", true);
         Files.saveString(csv, file, CSV_ENCODEING);
-        if(exportBackup){
+        if(datedCSV){
             file = getWorkingFile("details."+format.format(new Date())+".csv", true);
             Files.saveString(csv, file, CSV_ENCODEING);
         }
@@ -238,7 +258,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         csv = sw.toString();
         file = getWorkingFile("accounts.csv", true);
         Files.saveString(csv, file, CSV_ENCODEING);
-        if(exportBackup){
+        if(datedCSV){
             file = getWorkingFile("accounts."+format.format(new Date())+".csv", true);
             Files.saveString(csv, file, CSV_ENCODEING);
         }

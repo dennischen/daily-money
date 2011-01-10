@@ -194,6 +194,7 @@ public class GUIs {
             try{
                 run.run();
                 synchronized(this){
+                    //dlg is safe to be dismissed in other thread.
                     if(dlg.isShowing()){
                         dlg.dismiss();
                     }
@@ -222,8 +223,6 @@ public class GUIs {
                         }});
                 }
             }
-            //dlg is safe to be dismissed in other thread.
-            
         }
     }
 
