@@ -83,8 +83,8 @@
     <string name="label_create_default">Create default data</string>
     
     
-    <string name="msg_csv_exported">Data was all exported to %1$s</string>
-    <string name="msg_csv_imported">Date was imported from %1$s</string>
+    <string name="msg_csv_exported">Data (%1$s) was all exported to %2$s, </string>
+    <string name="msg_csv_imported">Data was imported from %2$s (%1$s)</string>
     <string name="msg_rested">Date was reseted</string>
     <string name="msg_default_created">Default date was created</string>
     <string name="title_datamain">Data Maintenance</string>
@@ -96,5 +96,7 @@
     <string name="dtitem_datamain">Data</string>
 <!-- above are verified -->    
 
+    <string name="msg_no_csv">No CSV Files</string>
+    <string name="label_clear_folder">Clear folder</string>
 </resources>
 

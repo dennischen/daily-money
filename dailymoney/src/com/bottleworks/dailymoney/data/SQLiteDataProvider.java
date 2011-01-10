@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.bottleworks.commons.util.Logger;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -111,9 +113,15 @@ public class SQLiteDataProvider implements IDataProvider {
     @Override
     public void newAccount(Account account) throws DuplicateKeyException {
         String id = normalizeAccountId(account.getType(), account.getName());
+        newAccount(id,account);
+    }
+    
+    @Override
+    public void newAccount(String id,Account account) throws DuplicateKeyException {
         if (findAccount(id) != null) {
             throw new DuplicateKeyException("duplicate account id " + id);
         }
+        Logger.d("new account "+id);
         account.setId(id);
 
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -235,8 +243,20 @@ public class SQLiteDataProvider implements IDataProvider {
     @Override
     public void newDetail(Detail detail) {
         int id = nextDetailId();
+        try {
+            newDetail(id,detail);
+        } catch (DuplicateKeyException e) {
+            Logger.e(e.getMessage(),e);
+        }
+    }
+    
+    @Override
+    public void newDetail(int id,Detail detail) throws DuplicateKeyException {
+        if (findDetail(id) != null) {
+            throw new DuplicateKeyException("duplicate detail id " + id);
+        }
+        Logger.d("new detail "+id+","+detail.getNote());
         detail.setId(id);
-
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         applyContextValue(detail, cv);

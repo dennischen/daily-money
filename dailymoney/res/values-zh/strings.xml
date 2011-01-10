@@ -81,10 +81,9 @@
     <string name="label_import_csv">匯入 CSV</string>
     <string name="label_reset">重置所有資料</string>
     <string name="label_create_default">建立預設的資料(帳戶)</string>
-    
-    
-    <string name="msg_csv_exported">資料全部被匯出到 %1$s</string>
-    <string name="msg_csv_imported">資料從 %1$s 被匯入</string>
+
+    <string name="msg_csv_exported">資料(%1$s)全部被匯出到 %2$s</string>
+    <string name="msg_csv_imported">資料從 %2$s (%1$s)被匯入</string>
     <string name="msg_rested">資料已經被重置</string>
     <string name="msg_default_created">預設的資料(帳戶)已經被建立</string>
     <string name="title_datamain">資料維護</string>

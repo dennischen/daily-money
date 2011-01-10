@@ -35,6 +35,7 @@ public class Contexts {
     int pref_maxRecords = 100;//-1 is no limit
     int pref_firstdayWeek = 1;//sunday
     boolean pref_openTestsDesktop = false;
+    String pref_workingFolder = "bwDailyMoney";
     
     private CalendarHelper calendarHelper = new CalendarHelper();
     
@@ -97,6 +98,11 @@ public class Contexts {
         
         calendarHelper.setFirstDayOfWeek(pref_firstdayWeek);
     }
+    
+    public String getWorkingFolder(){
+        return pref_workingFolder;
+    }
+    
     
     public int getPrefDetailListLayout(){
         return pref_detailListLayout;

@@ -121,6 +121,10 @@ public class GUIs {
         shortToast(context,Contexts.instance().getI18n().string(R.string.cmsg_error,e.getMessage()));
     }
     
+    static public void error(Context context,Throwable e){
+        alert(context,Contexts.instance().getI18n().string(R.string.cmsg_error,e.getMessage()));
+    }
+    
     static public View inflateView(Context context,ViewGroup parent, int resourceid){
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return inflater.inflate(resourceid, parent);
@@ -204,6 +208,12 @@ public class GUIs {
                 }
             }catch(final Throwable x){
                 Logger.e(x.getMessage(),x);
+                synchronized(this){
+                    if(dlg.isShowing()){
+                        dlg.dismiss();
+                    }
+                    finish = true;
+                }
                 if(run instanceof IBusyListener){
                     guiHandler.post(new Runnable(){
                         @Override

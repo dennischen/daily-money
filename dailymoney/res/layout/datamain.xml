@@ -12,6 +12,8 @@
 				android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_reset" ></Button>
 			<Button android:text="@string/label_create_default" android:id="@+id/datamain_create_default" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_create_default" ></Button>
+			<Button android:text="@string/label_clear_folder" android:id="@+id/datamain_clear_folder" android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_reset" ></Button>
 		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

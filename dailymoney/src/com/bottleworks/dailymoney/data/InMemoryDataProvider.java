@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import com.bottleworks.commons.util.Logger;
 /**
  * a fake in memory data provider for development.
  * @author dennis
@@ -35,7 +37,11 @@ public class InMemoryDataProvider implements IDataProvider {
 
     @Override
     public synchronized void newAccount(Account account) throws DuplicateKeyException {
-        String id = normalizeAccountId(account.getType(),account.getName());
+        newAccount(normalizeAccountId(account.getType(),account.getName()),account);
+    }
+    
+    public synchronized void newAccount(String id, Account account) throws DuplicateKeyException {
+        
         if (findAccount(id) != null) {
             throw new DuplicateKeyException("duplicate account id " + id);
         }
@@ -123,7 +129,17 @@ public class InMemoryDataProvider implements IDataProvider {
 
     @Override
     public void newDetail(Detail detail){
-        int id = nextDetailId();
+        try {
+            newDetail(nextDetailId(),detail);
+        } catch (DuplicateKeyException e) {
+            Logger.e(e.getMessage(),e);
+        }
+    }
+    
+    public void newDetail(int id,Detail detail) throws DuplicateKeyException{
+        if (findDetail(id) != null) {
+            throw new DuplicateKeyException("duplicate detail id " + id);
+        }
         detail.setId(id);
         detailList.add(detail);
         Collections.sort(detailList,new DetailComparator());

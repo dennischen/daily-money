@@ -25,6 +25,7 @@ public interface IDataProvider {
     Account findAccount(String type,String name);
     
     void newAccount(Account account) throws DuplicateKeyException;
+    void newAccount(String id,Account account) throws DuplicateKeyException;
     
     boolean updateAccount(String id,Account account);
     
@@ -41,6 +42,7 @@ public interface IDataProvider {
     Detail findDetail(int id);
     
     void newDetail(Detail detail);
+    void newDetail(int id,Detail detail)throws DuplicateKeyException;
     
     boolean updateDetail(int id,Detail detail);
     
