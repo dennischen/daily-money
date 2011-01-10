@@ -223,10 +223,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
 
         sw = new StringWriter();
         csvw = new CsvWriter(sw, ',');
-        csvw.writeRecord(new String[]{"id","name","type","init"});
+        csvw.writeRecord(new String[]{"id","type","name","init"});
         for (Account a : idp.listAccount(null)) {
             count++;
-            csvw.writeRecord(new String[]{a.getId(),a.getName(),a.getType(),Formats.normalizeDouble2String(a.getInitialValue())});
+            csvw.writeRecord(new String[]{a.getId(),a.getType(),a.getName(),Formats.normalizeDouble2String(a.getInitialValue())});
         }
         csvw.close();
         csv = sw.toString();
@@ -272,7 +272,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         while(reader.readRecord()){
             Detail det = new Detail(reader.get("from"),reader.get("to"),Formats.normalizeString2Date(reader.get("date")),Formats.normalizeString2Double(reader.get("value")),reader.get("note"));
             det.setArchived(Boolean.parseBoolean(reader.get("archived")));
-            idp.newDetail(Integer.parseInt(reader.get("id")),det);
+            idp.newDetailNoCheck(Integer.parseInt(reader.get("id")),det);
             count ++;
         }
         reader.close();
@@ -282,8 +282,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         reader = new CsvReader(sw);
         reader.readHeaders();
         while(reader.readRecord()){
-            Account acc = new Account(reader.get("name"),reader.get("type"),Formats.normalizeString2Double(reader.get("init")));
-            idp.newAccount(reader.get("id"),acc);
+            Account acc = new Account(reader.get("type"),reader.get("name"),Formats.normalizeString2Double(reader.get("init")));
+            idp.newAccountNoCheck(reader.get("id"),acc);
             count ++;
         }
         reader.close();

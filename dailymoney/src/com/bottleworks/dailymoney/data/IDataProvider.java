@@ -26,6 +26,7 @@ public interface IDataProvider {
     
     void newAccount(Account account) throws DuplicateKeyException;
     void newAccount(String id,Account account) throws DuplicateKeyException;
+    void newAccountNoCheck(String id,Account account);
     
     boolean updateAccount(String id,Account account);
     
@@ -43,6 +44,7 @@ public interface IDataProvider {
     
     void newDetail(Detail detail);
     void newDetail(int id,Detail detail)throws DuplicateKeyException;
+    void newDetailNoCheck(int id,Detail detail);
     
     boolean updateDetail(int id,Detail detail);
     

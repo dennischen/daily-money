@@ -22,6 +22,7 @@ public class InMemoryDataProvider implements IDataProvider {
 
     public void reset() {
         accountList.clear();
+        detailList.clear();
     }
 
     @Override
@@ -41,10 +42,12 @@ public class InMemoryDataProvider implements IDataProvider {
     }
     
     public synchronized void newAccount(String id, Account account) throws DuplicateKeyException {
-        
         if (findAccount(id) != null) {
             throw new DuplicateKeyException("duplicate account id " + id);
         }
+        newAccountNoCheck(id,account);
+    }
+    public synchronized void newAccountNoCheck(String id, Account account) {
         account.setId(id);
         accountList.add(account);
     }
@@ -77,6 +80,8 @@ public class InMemoryDataProvider implements IDataProvider {
         acc.setType(account.getType());
         acc.setInitialValue(account.getInitialValue());
 
+        //TODO change all detail's form and to id 
+        
         // reset id;
         id = normalizeAccountId(account.getType(),account.getName());
         account.setId(id);
@@ -140,6 +145,10 @@ public class InMemoryDataProvider implements IDataProvider {
         if (findDetail(id) != null) {
             throw new DuplicateKeyException("duplicate detail id " + id);
         }
+        newDetailNoCheck(id,detail);
+    }
+    
+    public void newDetailNoCheck(int id,Detail detail){
         detail.setId(id);
         detailList.add(detail);
         Collections.sort(detailList,new DetailComparator());

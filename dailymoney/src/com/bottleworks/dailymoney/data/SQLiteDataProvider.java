@@ -116,14 +116,17 @@ public class SQLiteDataProvider implements IDataProvider {
         newAccount(id,account);
     }
     
-    @Override
-    public void newAccount(String id,Account account) throws DuplicateKeyException {
+    public synchronized void newAccount(String id, Account account) throws DuplicateKeyException {
         if (findAccount(id) != null) {
             throw new DuplicateKeyException("duplicate account id " + id);
         }
+        newAccountNoCheck(id,account);
+    }
+    
+    @Override
+    public void newAccountNoCheck(String id,Account account){
         Logger.d("new account "+id);
         account.setId(id);
-
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         applyContextValue(account, cv);
@@ -250,11 +253,15 @@ public class SQLiteDataProvider implements IDataProvider {
         }
     }
     
-    @Override
-    public void newDetail(int id,Detail detail) throws DuplicateKeyException {
+    public void newDetail(int id,Detail detail) throws DuplicateKeyException{
         if (findDetail(id) != null) {
             throw new DuplicateKeyException("duplicate detail id " + id);
         }
+        newDetailNoCheck(id,detail);
+    }
+    
+    @Override
+    public void newDetailNoCheck(int id,Detail detail){
         Logger.d("new detail "+id+","+detail.getNote());
         detail.setId(id);
         SQLiteDatabase db = helper.getWritableDatabase();
