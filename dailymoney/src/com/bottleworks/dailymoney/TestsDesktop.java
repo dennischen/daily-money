@@ -26,7 +26,7 @@ public class TestsDesktop extends AbstractDesktop {
     
     @Override
     public boolean isAvailable(){
-        return Contexts.instance().isOpenTestsDesktop();
+        return Contexts.instance().isPrefOpenTestsDesktop();
     }
 
     @Override

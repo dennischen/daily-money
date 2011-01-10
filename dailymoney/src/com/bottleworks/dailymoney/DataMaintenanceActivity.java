@@ -32,13 +32,16 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     
     String workingFolder;
     
+    boolean exportBackup = false;
+    
     DateFormat format = new SimpleDateFormat("yyyyMMdd");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datamain);
-        workingFolder = Contexts.instance().getWorkingFolder();
+        workingFolder = Contexts.instance().getPrefWorkingFolder();
+        exportBackup = Contexts.instance().isPrefExportBackup();
         initialListener();
 
     }
@@ -83,6 +86,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                f.delete();
            }
         }
+        GUIs.alert(DataMaintenanceActivity.this, i18n.string(R.string.msg_folder_cleared,workingFolder));
     }
 
     private void doCreateDefault() {
@@ -218,8 +222,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         String csv = sw.toString();
         File file = getWorkingFile("details.csv", true);
         Files.saveString(csv, file, CSV_ENCODEING);
-        file = getWorkingFile("details."+format.format(new Date())+".csv", true);
-        Files.saveString(csv, file, CSV_ENCODEING);
+        if(exportBackup){
+            file = getWorkingFile("details."+format.format(new Date())+".csv", true);
+            Files.saveString(csv, file, CSV_ENCODEING);
+        }
 
         sw = new StringWriter();
         csvw = new CsvWriter(sw, ',');
@@ -232,8 +238,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         csv = sw.toString();
         file = getWorkingFile("accounts.csv", true);
         Files.saveString(csv, file, CSV_ENCODEING);
-        file = getWorkingFile("accounts."+format.format(new Date())+".csv", true);
-        Files.saveString(csv, file, CSV_ENCODEING);
+        if(exportBackup){
+            file = getWorkingFile("accounts."+format.format(new Date())+".csv", true);
+            Files.saveString(csv, file, CSV_ENCODEING);
+        }
         
         final String msg = i18n.string(R.string.msg_csv_exported,Integer.toString(count),workingFolder);
         GUIs.post(new Runnable(){

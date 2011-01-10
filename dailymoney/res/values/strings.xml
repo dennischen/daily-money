@@ -89,7 +89,7 @@
     <string name="msg_default_created">Default date was created</string>
     <string name="title_datamain">Data Maintenance</string>
     
-    <string name="qmsg_export_csv">Do you want to export CSV? older SCV file will be replaced!</string>
+    <string name="qmsg_export_csv">Do you want to export CSV? older CSV file will be replaced!</string>
     <string name="qmsg_import_csv">Do you want to import CSV? current data will be replaced!</string>
     <string name="qmsg_reset">Do you want to reset all data?</string>
     <string name="qmsg_create_default">Do you want to create default data?</string>
@@ -98,5 +98,7 @@
 
     <string name="msg_no_csv">No CSV Files</string>
     <string name="label_clear_folder">Clear folder</string>
+    <string name="msg_folder_cleared">Folder %1$s was cleared</string>
+    
 </resources>
 

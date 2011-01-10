@@ -36,6 +36,7 @@ public class Contexts {
     int pref_firstdayWeek = 1;//sunday
     boolean pref_openTestsDesktop = false;
     String pref_workingFolder = "bwDailyMoney";
+    boolean pref_exportBackup = true;
     
     private CalendarHelper calendarHelper = new CalendarHelper();
     
@@ -99,10 +100,13 @@ public class Contexts {
         calendarHelper.setFirstDayOfWeek(pref_firstdayWeek);
     }
     
-    public String getWorkingFolder(){
+    public String getPrefWorkingFolder(){
         return pref_workingFolder;
     }
     
+    public boolean isPrefExportBackup(){
+        return pref_exportBackup;
+    }
     
     public int getPrefDetailListLayout(){
         return pref_detailListLayout;
@@ -112,11 +116,11 @@ public class Contexts {
         return pref_maxRecords;
     }
     
-    public int getFirstdayWeek(){
+    public int getPrefFirstdayWeek(){
         return pref_firstdayWeek;
     }
     
-    public boolean isOpenTestsDesktop(){
+    public boolean isPrefOpenTestsDesktop(){
         return pref_openTestsDesktop;
     }
     
