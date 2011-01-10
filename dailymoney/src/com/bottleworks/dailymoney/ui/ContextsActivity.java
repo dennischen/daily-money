@@ -19,17 +19,19 @@ public class ContextsActivity extends Activity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        i18n = Contexts.instance().initContext(this).getI18n();
+        Contexts.instance().initContext(this);
+        i18n = new I18N(this);
     }
     
     @Override
     protected void onResume(){
         super.onResume();
-        i18n = Contexts.instance().initContext(this).getI18n();
+        Contexts.instance().initContext(this);
     }
     
     @Override
     protected void onPause(){
         super.onPause();
+        Contexts.instance().cleanContext(this);
     }
 }
