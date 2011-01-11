@@ -8,7 +8,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-
+/**
+ * 
+ * @author dennis
+ *
+ */
 public class Streams {
 
     public static void flush(InputStream in, File out) throws IOException{

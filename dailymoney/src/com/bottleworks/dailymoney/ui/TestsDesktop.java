@@ -1,14 +1,18 @@
-package com.bottleworks.dailymoney;
+package com.bottleworks.dailymoney.ui;
 
 import java.util.Calendar;
 
 import android.content.Context;
 
 import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.dailymoney.R;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.ui.Contexts;
-
+/**
+ * 
+ * @author dennis
+ *
+ */
 public class TestsDesktop extends AbstractDesktop {
     
     public TestsDesktop(Context context) {

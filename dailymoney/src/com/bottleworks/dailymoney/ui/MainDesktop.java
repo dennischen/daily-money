@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney;
+package com.bottleworks.dailymoney.ui;
 
 import java.util.Date;
 
@@ -7,9 +7,18 @@ import android.content.Intent;
 import android.view.View;
 
 import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.dailymoney.AccountMgntActivity;
+import com.bottleworks.dailymoney.DataMaintenanceActivity;
+import com.bottleworks.dailymoney.DetailEditorDialog;
+import com.bottleworks.dailymoney.DetailListActivity;
+import com.bottleworks.dailymoney.PrefsActivity;
+import com.bottleworks.dailymoney.R;
 import com.bottleworks.dailymoney.data.Detail;
-import com.bottleworks.dailymoney.ui.Contexts;
-
+/**
+ * 
+ * @author dennis
+ *
+ */
 public class MainDesktop extends AbstractDesktop {
 
     public MainDesktop(Context context) {

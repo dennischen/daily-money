@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +27,9 @@ import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.ContextsActivity;
 import com.bottleworks.dailymoney.ui.Desktop;
+import com.bottleworks.dailymoney.ui.MainDesktop;
+import com.bottleworks.dailymoney.ui.ReportsDesktop;
+import com.bottleworks.dailymoney.ui.TestsDesktop;
 import com.bottleworks.dailymoney.ui.Desktop.DesktopItem;
 /**
  * 
@@ -65,7 +67,6 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
 
     private void initialApplicationInfo() {
-        Application app = getApplication();
         appinfo = i18n.string(R.string.app_name);
         String ver = Contexts.instance().getApplicationVersionName();
         appinfo += " ver : "+ver;
@@ -167,8 +168,8 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     }
     
     
+    @SuppressWarnings("unchecked")
     List<DesktopItem> getCurrentDesktopItems(){
-        
         for(Desktop d:desktops){
             if(d.getLabel().equals(currTab)){
                 return d.getItems();

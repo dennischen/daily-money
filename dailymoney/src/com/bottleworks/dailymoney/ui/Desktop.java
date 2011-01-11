@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.bottleworks.commons.util.I18N;
 import com.bottleworks.dailymoney.R;
 
 /**
@@ -104,10 +104,10 @@ public class Desktop {
     }
 
     public static class ActivityRun implements Runnable {
-        Class activity;
+        Class<? extends Activity> activity;
         Context context;
 
-        public ActivityRun(Context context, Class activity) {
+        public ActivityRun(Context context, Class<? extends Activity> activity) {
             this.context = context;
             this.activity = activity;
         }

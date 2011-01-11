@@ -7,7 +7,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * provide life cyce and easy access to contexts
+ * provide life cycle and easy access to contexts
  * @author dennis
  *
  */

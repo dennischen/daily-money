@@ -2,21 +2,15 @@ package com.bottleworks.dailymoney;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.AlertDialog;
-import android.app.Application;
 import android.content.DialogInterface;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -34,7 +28,11 @@ import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.ContextsActivity;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
-
+/**
+ * 
+ * @author dennis
+ *
+ */
 public class DataMaintenanceActivity extends ContextsActivity implements OnClickListener {
 
     String CSV_ENCODEING = "utf8";

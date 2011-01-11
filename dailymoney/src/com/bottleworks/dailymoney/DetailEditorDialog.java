@@ -1,6 +1,5 @@
 package com.bottleworks.dailymoney;
 
-import java.io.ObjectInputStream.GetField;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     private SimpleAdapter toAccountAdapter;
 
     public DetailEditorDialog(Context context, OnFinishListener listener, boolean modeCreate, Detail detail) {
-        super(context, R.style.theme_acceidtor);
+        super(context, android.R.style.Theme);
         this.modeCreate = modeCreate;
         this.detail = detail;
         this.listener = listener;
@@ -152,6 +151,8 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
         cancelBtn.setOnClickListener(this);
         closeBtn.setOnClickListener(this);
+        
+        moneyEditor.requestFocus();
     }
     
     public int getCounter(){
@@ -412,7 +413,10 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
             if (modeCreate) {
                 workingDetail = clone(workingDetail);
                 workingDetail.setMoney(0D);
+                workingDetail.setNote("");
                 moneyEditor.setText("");
+                moneyEditor.requestFocus();
+                noteEditor.setText("");
                 counterCreate++;
                 okBtn.setText(Contexts.instance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
                 cancelBtn.setVisibility(Button.GONE);

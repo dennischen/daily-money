@@ -4,11 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
-import com.bottleworks.dailymoney.DetailEditorDialog;
-import com.bottleworks.dailymoney.R;
-import com.bottleworks.dailymoney.ui.Contexts;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,6 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.Toast;
+
+import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.ui.Contexts;
 
 /**
  * 

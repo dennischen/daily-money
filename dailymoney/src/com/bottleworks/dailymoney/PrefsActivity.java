@@ -7,7 +7,11 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-
+/**
+ * 
+ * @author dennis
+ *
+ */
 public class PrefsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
     boolean dirty = false;
     @Override

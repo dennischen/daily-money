@@ -18,7 +18,6 @@ import android.widget.Spinner;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.I18N;
-import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.ui.Contexts;
@@ -38,7 +37,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     private OnFinishListener listener;
     
     public AccountEditorDialog(Context context,OnFinishListener listener,boolean modeCreate,Account account) {
-        super(context,R.style.theme_acceidtor);
+        super(context,android.R.style.Theme);
         this.modeCreate = modeCreate;
         this.account = account;
         this.listener = listener;
@@ -196,6 +195,9 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
             // continue to editor next record if is new mode
             if (modeCreate) {
                 workingAccount = clone(workingAccount);
+                workingAccount.setName("");
+                nameEditor.setText("");
+                nameEditor.requestFocus();
                 counterCreate++;
                 okBtn.setText(Contexts.instance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
                 cancelBtn.setVisibility(Button.GONE);

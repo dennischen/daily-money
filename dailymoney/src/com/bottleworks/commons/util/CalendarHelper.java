@@ -6,10 +6,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
+/**
+ * 
+ * @author dennis
+ *
+ */
 public class CalendarHelper {
 
-    int firstDayOfWeek = 1;//1 SUN, 2 MON
+    int firstDayOfWeek = 1;//1 SUN, 2 MON..etc
     
     TimeZone timeZone;
 
