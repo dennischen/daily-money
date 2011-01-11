@@ -87,7 +87,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
                 String name = item.getName();
                 Detail det = (Detail)item.getValue();
 
-                if(name.equals(bindingFrom[0])){
+                if("layout".equals(name)){
                     
                     RelativeLayout layout = (RelativeLayout)view;
                     
@@ -135,7 +135,6 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
                         layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_unknow));
                         last = null;
                     }
-                    layout.getBackground().setState(new int[]{});
                     return true;
                 }
                 
@@ -168,9 +167,8 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
                 
                 
                 if("from".equals(name)){
-                    if(last==lastFrom){
-                        view.setBackgroundDrawable(null);
-                    }else{
+                    view.setBackgroundDrawable(null);
+                    if(last!=lastFrom){
                         if(AccountType.INCOME== lastFrom){
                             view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_income));
                         }else if(AccountType.EXPENSE== lastFrom){
@@ -183,6 +181,19 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
                             view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_other));
                         }else{
                             view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_unknow));
+                        }
+                    }
+                }
+                
+                if("to".equals(name)){
+                    view.setBackgroundDrawable(null);
+                    if(AccountType.INCOME == lastFrom){
+                        if(AccountType.ASSET== lastTo){
+                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_asset));
+                        }else if(AccountType.LIABILITY== lastTo){
+                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_liability));
+                        }else if(AccountType.OTHER== lastTo){
+                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_other));
                         }
                     }
                 }
@@ -247,7 +258,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
         row.put(bindingFrom[2], new NamedItem(bindingFrom[2],det,to));
         row.put(bindingFrom[3], new NamedItem(bindingFrom[3],det,money));
         row.put(bindingFrom[4], new NamedItem(bindingFrom[4],det,det.getNote()));
-        row.put(bindingFrom[5], new NamedItem(bindingFrom[5],det,format.format(det.getDate())+" "+dayOfWeekFormat.format(det.getDate())));
+        row.put(bindingFrom[5], new NamedItem(bindingFrom[5],det,format.format(det.getDate())+" "+dayOfWeekFormat.format(det.getDate())+","));
         
         return row;
     }

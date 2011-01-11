@@ -45,7 +45,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     
     static final String APPVER = "appver:";
     
-    DateFormat backupformat = new SimpleDateFormat("yyyyMMdd-HHmmSS");
+    DateFormat backupformat = new SimpleDateFormat("yyyyMMdd-HHmmss");
     
     int vercode = 0;
 

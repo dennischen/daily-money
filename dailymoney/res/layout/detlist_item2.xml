@@ -17,9 +17,11 @@
         <TextView android:id="@+id/detlist_item_date" android:text="Date" android:layout_width="wrap_content"
             android:layout_height="fill_parent" android:textSize="11sp" android:gravity="left" android:layout_marginRight="3dp"
             android:singleLine="true"/>
-        <TextView android:id="@+id/detlist_item_to" android:text="To" android:layout_weight="1"
+        <TextView android:id="@+id/detlist_item_to" android:text="To" android:paddingLeft="5dp" android:paddingRight="5dp"
             android:layout_width="wrap_content" android:layout_height="fill_parent" android:textSize="11sp" android:gravity="left" 
             android:singleLine="true"/>
+        <TextView android:layout_weight="1"
+            android:layout_width="wrap_content" android:layout_height="fill_parent" android:textSize="11sp" android:singleLine="true"/>
         <TextView android:id="@+id/detlist_item_from" android:text="From" android:layout_width="wrap_content"
             android:paddingLeft="5dp" android:paddingRight="5dp"
             android:layout_height="fill_parent" android:textSize="11sp" android:gravity="right" 
