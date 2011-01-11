@@ -1,8 +1,10 @@
 package com.bottleworks.dailymoney;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.text.DateFormat;
@@ -39,11 +41,11 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     
     String workingFolder;
     
-    boolean datedCSV = false;
+    boolean backupcsv = false;
     
     static final String APPVER = "appver:";
     
-    DateFormat format = new SimpleDateFormat("yyyyMMdd");
+    DateFormat backupformat = new SimpleDateFormat("yyyyMMdd-HHmmSS");
     
     int vercode = 0;
 
@@ -52,7 +54,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datamain);
         workingFolder = Contexts.instance().getPrefWorkingFolder();
-        datedCSV = Contexts.instance().isPrefExportDatedCSV();
+        backupcsv = Contexts.instance().isPrefBackupCSV();
         
         vercode = Contexts.instance().getApplicationVersionCode();
         
@@ -220,16 +222,13 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     
     
 
-    private File getWorkingFile(String name, boolean create) throws IOException {
+    private File getWorkingFile(String name) throws IOException {
         File sd = Environment.getExternalStorageDirectory();
         File folder = new File(sd, workingFolder);
         if (!folder.exists()) {
             folder.mkdir();
         }
         File file = new File(folder, name);
-        if (create && !file.exists()) {
-            file.createNewFile();
-        }
         return file;
     }
 
@@ -256,6 +255,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         StringWriter sw;
         CsvWriter csvw;
         int count = 0;
+        String backupstamp = backupformat.format(new Date());
         if(detail){
             sw = new StringWriter();
             csvw = new CsvWriter(sw, ',');
@@ -268,12 +268,16 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             }
             csvw.close();
             String csv = sw.toString();
-            File file = getWorkingFile("details.csv", true);
-            Files.saveString(csv, file, CSV_ENCODEING);
-            if(datedCSV){
-                file = getWorkingFile("details."+format.format(new Date())+".csv", true);
-                Files.saveString(csv, file, CSV_ENCODEING);
+            File file = getWorkingFile("details.csv");
+            if(file.exists()){
+                if(backupcsv){
+                    Files.copyFileTo(file,new File(file.getParentFile(),"details."+backupstamp+".csv"));
+                }
+            }else{
+                file.createNewFile();
             }
+                
+            Files.saveString(csv, file, CSV_ENCODEING);
             if(Contexts.DEBUG){
                 Logger.d("export to details.csv");
             }
@@ -289,12 +293,16 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             }
             csvw.close();
             String csv = sw.toString();
-            File file = getWorkingFile("accounts.csv", true);
-            Files.saveString(csv, file, CSV_ENCODEING);
-            if(datedCSV){
-                file = getWorkingFile("accounts."+format.format(new Date())+".csv", true);
-                Files.saveString(csv, file, CSV_ENCODEING);
+            File file = getWorkingFile("accounts.csv");
+            if(file.exists()){
+                if(backupcsv){
+                    Files.copyFileTo(file,new File(file.getParentFile(),"accounts."+backupstamp+".csv"));
+                }
+            }else{
+                file.createNewFile();
             }
+               
+            Files.saveString(csv, file, CSV_ENCODEING);
             if(Contexts.DEBUG){
                 Logger.d("export to accounts.csv");
             }
@@ -350,8 +358,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 GUIs.alert(DataMaintenanceActivity.this,R.string.msg_no_csv);                
             }};
             
-        File details = getWorkingFile("details.csv", false);
-        File accounts = getWorkingFile("accounts.csv", false);
+        File details = getWorkingFile("details.csv");
+        File accounts = getWorkingFile("accounts.csv");
         
         if((detail && (!details.exists() || !details.canRead())) || 
                 (account && (!accounts.exists() || !accounts.canRead())) ){
@@ -365,10 +373,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         try{
             int count = 0;
             if(account){
-                accountReader = new CsvReader(new FileReader(accounts));
+                accountReader = new CsvReader(new InputStreamReader(new FileInputStream(accounts),CSV_ENCODEING));
             }
             if(detail){
-                detailReader = new CsvReader(new FileReader(details));
+                detailReader = new CsvReader(new InputStreamReader(new FileInputStream(details),CSV_ENCODEING));
             }
             
             if((accountReader!=null && !accountReader.readHeaders())){

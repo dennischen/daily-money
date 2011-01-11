@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 import android.app.Application;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +25,6 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.ContextsActivity;
 import com.bottleworks.dailymoney.ui.Desktop;
@@ -52,7 +49,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     
     String appinfo;
 
-    private static DateFormat dayOfWeekFormat = new SimpleDateFormat("EEEE"); 
+    private DateFormat dayOfWeekFormat = new SimpleDateFormat("EEEE"); 
     
     @Override
     public void onCreate(Bundle savedInstanceState) {

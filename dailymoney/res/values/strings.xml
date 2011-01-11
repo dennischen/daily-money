@@ -24,11 +24,11 @@
     <string name="label_detlayout_type2">Note - Money</string>
     <string name="label_detlist_from">&lt; %1$s</string>
     <string name="label_detlist_money">$%1$s</string>
-    <string name="label_detlist_sum_income">Income $%1$s </string>
-    <string name="label_detlist_sum_expense">Expense $%1$s </string>
+    <string name="label_detlist_sum_income">Income $%1$s</string>
+    <string name="label_detlist_sum_expense">Expense $%1$s</string>
     <string name="label_detlist_sum_asset">Asset $%1$s </string>
-    <string name="label_detlist_sum_liability">Liability $%1$s </string>
-    <string name="label_detlist_sum_other">Other $%1$s </string>
+    <string name="label_detlist_sum_liability">Liability $%1$s</string>
+    <string name="label_detlist_sum_other">Other $%1$s</string>
     <string name="label_detlist_to">%1$s</string>
     <string name="label_expense">Expense</string>
     <string name="label_firstday_mon">Monday</string>
@@ -106,8 +106,8 @@
     
     <string name="label_prefs_workingfolder">Working folder</string>
     <string name="label_prefs_workingfolder_sum">Set the folder name in sdcard for exporting data</string>
-    <string name="label_prefs_datedcsv">Dated CSV</string>
-    <string name="label_prefs_datedcsv_sum">Also write a CSV file that named with current date</string>
+    <string name="label_prefs_backupcsv">Backup CSV</string>
+    <string name="label_prefs_backupcsv_sum">Backup old CSV when doing export</string>
     
     <string name="qmsg_clear_folder">Do you want to clear working folder %1$s? all CSV will be removed</string>
     <string name="defacc_creditcard">Credit card</string>

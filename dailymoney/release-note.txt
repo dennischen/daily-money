@@ -3,6 +3,7 @@
 === Features ===
  * 3    Add new account type Liability and Other
  * 1    Import & export should have a option for All/Account only/Detail only
+ * 6    Backup CSV when do export.
 === Bugs ===
  * 2    Wrong display in detail list if account not found
 

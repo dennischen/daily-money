@@ -24,11 +24,11 @@
     <string name="label_detlayout_type2">備註-金錢</string>
     <string name="label_detlist_from">&lt; %1$s</string>
     <string name="label_detlist_money">$%1$s</string>
-    <string name="label_detlist_sum_income">收入 $%1$s, </string>
-    <string name="label_detlist_sum_expense">支出 $%1$s, </string>
-    <string name="label_detlist_sum_asset">資產 $%1$s</string>
-    <string name="label_detlist_sum_liability">債務 $%1$s</string>
-    <string name="label_detlist_sum_other">其他 $%1$s</string>
+    <string name="label_detlist_sum_income">收入$%1$s</string>
+    <string name="label_detlist_sum_expense">支出$%1$s</string>
+    <string name="label_detlist_sum_asset">資產$%1$s</string>
+    <string name="label_detlist_sum_liability">債務$%1$s</string>
+    <string name="label_detlist_sum_other">其他$%1$s</string>
     <string name="label_detlist_to">%1$s</string>
     <string name="label_expense">花費</string>
     <string name="label_firstday_mon">星期一</string>
@@ -105,8 +105,8 @@
     
     <string name="label_prefs_workingfolder">工作目錄</string>
     <string name="label_prefs_workingfolder_sum">設定sdcard中的工作目錄的名稱，CSV將匯出到這個目錄</string>
-    <string name="label_prefs_datedcsv">日期名稱的CSV</string>
-    <string name="label_prefs_datedcsv_sum">在匯出時,也同時建立一個包含日期名稱的CSV檔</string>  
+    <string name="label_prefs_backupcsv">備份CSV</string>
+    <string name="label_prefs_backupcsv_sum">當匯出時備份舊的CSV</string>
     <string name="qmsg_clear_folder">您想要清除工作目錄%1$s嗎?所有的CSV檔將被移除</string>
     <string name="defacc_creditcard">信用卡</string>
     

@@ -8,5 +8,5 @@ public class Constants {
     static final public String PREFS_OPEN_TESTS_DESKTOP = "open_testsdekstop";
     
     static final public String PREFS_WORKING_FOLDER = "working_folder";
-    static final public String PREFS_EXPORT_DATED_CSV = "export_datedcsv";
+    static final public String PREFS_BACKUP_CSV = "backup_csv";
 }

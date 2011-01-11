@@ -42,7 +42,7 @@ public class Contexts {
     int pref_firstdayWeek = 1;//sunday
     boolean pref_openTestsDesktop = false;
     String pref_workingFolder = "bwDailyMoney";
-    boolean pref_exportDatedCSV = true;
+    boolean pref_backupCSV = true;
     
     private CalendarHelper calendarHelper = new CalendarHelper();
     
@@ -131,7 +131,7 @@ public class Contexts {
             pref_workingFolder = prefs.getString(Constants.PREFS_WORKING_FOLDER, pref_workingFolder);
         }catch(Exception x){Logger.e(x.getMessage());}
         try{
-            pref_exportDatedCSV = prefs.getBoolean(Constants.PREFS_EXPORT_DATED_CSV, pref_exportDatedCSV);
+            pref_backupCSV = prefs.getBoolean(Constants.PREFS_BACKUP_CSV, pref_backupCSV);
         }catch(Exception x){Logger.e(x.getMessage());}
         if(DEBUG){
             Logger.d("preference : use inmemory "+pref_useImpPovider);
@@ -140,7 +140,7 @@ public class Contexts {
             Logger.d("preference : max records "+pref_maxRecords);
             Logger.d("preference : open tests desktop "+pref_openTestsDesktop);
             Logger.d("preference : open working_folder"+pref_workingFolder);
-            Logger.d("preference : open export dated csv"+pref_exportDatedCSV);
+            Logger.d("preference : backup csv"+pref_backupCSV);
         }
         calendarHelper.setFirstDayOfWeek(pref_firstdayWeek);
     }
@@ -149,8 +149,8 @@ public class Contexts {
         return pref_workingFolder;
     }
     
-    public boolean isPrefExportDatedCSV(){
-        return pref_exportDatedCSV;
+    public boolean isPrefBackupCSV(){
+        return pref_backupCSV;
     }
     
     public int getPrefDetailListLayout(){

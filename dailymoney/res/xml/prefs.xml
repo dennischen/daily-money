@@ -14,8 +14,8 @@
     
     <EditTextPreference android:key="working_folder" android:title="@string/label_prefs_workingfolder" 
         android:summary="@string/label_prefs_workingfolder_sum" android:defaultValue="bwDailyMoney"  />
-    <CheckBoxPreference android:key="export_datedcsv" android:title="@string/label_prefs_datedcsv"
-        android:summary="@string/label_prefs_datedcsv_sum" android:defaultValue="true" />       
+    <CheckBoxPreference android:key="backup_csv" android:title="@string/label_prefs_backupcsv"
+        android:summary="@string/label_prefs_backupcsv_sum" android:defaultValue="true" />       
         
     <!-- at the bottom -->
     <CheckBoxPreference android:key="open_testsdekstop" android:title="@string/label_prefs_testsdekstop"

@@ -220,7 +220,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
 //        
 //    }
     
-    private static DateFormat dayOfWeekFormat = new SimpleDateFormat("E"); 
+    private DateFormat dayOfWeekFormat = new SimpleDateFormat("E"); 
     public void reloadData(List<Detail> data) {
         listViewData = data;;
         listViewMapList.clear();
