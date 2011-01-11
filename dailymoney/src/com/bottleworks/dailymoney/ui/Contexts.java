@@ -2,8 +2,12 @@ package com.bottleworks.dailymoney.ui;
 
 import java.text.DateFormat;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
@@ -12,6 +16,7 @@ import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.Constants;
+import com.bottleworks.dailymoney.R;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.data.InMemoryDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteDataProvider;
@@ -43,6 +48,8 @@ public class Contexts {
     
     private boolean prefsDirty = true;
     
+    public static final boolean DEBUG = true; 
+    
     private Contexts(){
     }
     
@@ -72,6 +79,36 @@ public class Contexts {
         return this;
     }
     
+    
+    
+    public String getApplicationVersionName(){
+        if(context instanceof Activity){
+            Application app = ((Activity)context).getApplication();
+            String name = app.getPackageName();
+            PackageInfo pi;
+            try {
+                pi = app.getPackageManager().getPackageInfo(name,0);
+                return pi.versionName;
+            } catch (NameNotFoundException e) {
+            }
+        }
+        return "";
+    }
+    
+    public int getApplicationVersionCode(){
+        if(context instanceof Activity){
+            Application app = ((Activity)context).getApplication();
+            String name = app.getPackageName();
+            PackageInfo pi;
+            try {
+                pi = app.getPackageManager().getPackageInfo(name,0);
+                return pi.versionCode;
+            } catch (NameNotFoundException e) {
+            }
+        }
+        return 0;
+    }
+    
     private void reloadPreference() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         try{
@@ -96,15 +133,15 @@ public class Contexts {
         try{
             pref_exportDatedCSV = prefs.getBoolean(Constants.PREFS_EXPORT_DATED_CSV, pref_exportDatedCSV);
         }catch(Exception x){Logger.e(x.getMessage());}
-        
-        Logger.d("preference : use inmemory "+pref_useImpPovider);
-        Logger.d("preference : detail layout "+pref_detailListLayout);
-        Logger.d("preference : firstday of week "+pref_firstdayWeek);
-        Logger.d("preference : max records "+pref_maxRecords);
-        Logger.d("preference : open tests desktop "+pref_openTestsDesktop);
-        Logger.d("preference : open working_folder"+pref_workingFolder);
-        Logger.d("preference : open export dated csv"+pref_exportDatedCSV);
-        
+        if(DEBUG){
+            Logger.d("preference : use inmemory "+pref_useImpPovider);
+            Logger.d("preference : detail layout "+pref_detailListLayout);
+            Logger.d("preference : firstday of week "+pref_firstdayWeek);
+            Logger.d("preference : max records "+pref_maxRecords);
+            Logger.d("preference : open tests desktop "+pref_openTestsDesktop);
+            Logger.d("preference : open working_folder"+pref_workingFolder);
+            Logger.d("preference : open export dated csv"+pref_exportDatedCSV);
+        }
         calendarHelper.setFirstDayOfWeek(pref_firstdayWeek);
     }
     
@@ -155,15 +192,19 @@ public class Contexts {
             dataProvider = new InMemoryDataProvider();
         }else{
 //            dataProvider = new InMemoryDataProvider();
-            dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"));
+            dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"),calendarHelper);
         }
         
         dataProvider.init();
-        Logger.d("initDataProvider :"+dataProvider);
+        if(DEBUG){
+            Logger.d("initDataProvider :"+dataProvider);
+        }
     }
     public void cleanDataProvider(Context context){
         if(dataProvider!=null){
-            Logger.d("cleanDataProvider :"+dataProvider);
+            if(DEBUG){
+                Logger.d("cleanDataProvider :"+dataProvider);
+            }
             dataProvider.destroyed();
             dataProvider = null;
         }

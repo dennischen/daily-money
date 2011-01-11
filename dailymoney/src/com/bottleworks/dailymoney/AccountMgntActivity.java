@@ -171,7 +171,6 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
 
     @Override
     public void onTabChanged(String tabId) {
-        Logger.d("switch to tab : " + tabId);
         currTab = tabId;
         reloadData();
     }
@@ -185,7 +184,6 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Logger.d("option menu selected :" + item.getItemId());
         switch (item.getItemId()) {
         case R.id.accmgnt_menu_new:
             doNewAccount();
@@ -206,7 +204,6 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        Logger.d("context menu selected :" + item.getItemId() + ", pos " + info.position);
         switch (item.getItemId()) {
         case R.id.accmgnt_menu_edit:
             doEditAccount(info.position);

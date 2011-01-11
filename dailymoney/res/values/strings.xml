@@ -20,13 +20,15 @@
     <string name="label_asset">Asset</string>
     <string name="label_date">Date</string>
     <string name="label_liability">Liability</string>
-    <string name="label_detlayout_type1">Type 1</string>
-    <string name="label_detlayout_type2">Type 2</string>
+    <string name="label_detlayout_type1">To - Money</string>
+    <string name="label_detlayout_type2">Note - Money</string>
     <string name="label_detlist_from">&lt; %1$s</string>
     <string name="label_detlist_money">$%1$s</string>
-    <string name="label_detlist_sum_income">Income $%1$s, </string>
-    <string name="label_detlist_sum_expense">Expense $%1$s, </string>
-    <string name="label_detlist_sum_liability">Liability $%1$s</string>
+    <string name="label_detlist_sum_income">Income $%1$s </string>
+    <string name="label_detlist_sum_expense">Expense $%1$s </string>
+    <string name="label_detlist_sum_asset">Asset $%1$s </string>
+    <string name="label_detlist_sum_liability">Liability $%1$s </string>
+    <string name="label_detlist_sum_other">Other $%1$s </string>
     <string name="label_detlist_to">%1$s</string>
     <string name="label_expense">Expense</string>
     <string name="label_firstday_mon">Monday</string>
@@ -38,7 +40,7 @@
     <string name="label_month_details">%1$s (%2$s records)</string>
     <string name="label_note">Note</string>
     <string name="label_other">Other</string>
-    <string name="label_prefs_detlayout">Detail list type</string>
+    <string name="label_prefs_detlayout">Detail layout</string>
     <string name="label_prefs_detlayout_sum">Choose different type for detail list layout</string>
     <string name="label_prefs_firstday_week">First day of week</string>
     <string name="label_prefs_firstday_week_sum">Set the first day of week</string>
@@ -81,8 +83,8 @@
     
     <string name="label_export_csv">Export CSV</string>
     <string name="label_import_csv">Import CSV</string>
-    <string name="label_reset">Reset all</string>
-    <string name="label_create_default">Create default data</string>
+    <string name="label_reset">Reset data</string>
+    <string name="label_create_default">Create default data(account)</string>
     
     
     <string name="msg_csv_exported">Data (%1$s) was all exported to %2$s, </string>
@@ -91,8 +93,8 @@
     <string name="msg_default_created">Default date was created</string>
     <string name="title_datamain">Data Maintenance</string>
     
-    <string name="qmsg_export_csv">Do you want to export CSV to %1$s? older CSV file will be replaced!</string>
-    <string name="qmsg_import_csv">Do you want to import CSV from %1$s? current data will be replaced!</string>
+    <string name="qmsg_export_csv">Do you want to export CSV and replace it?</string>
+    <string name="qmsg_import_csv">Do you want to import CSV and replace data?</string>
     <string name="qmsg_reset">Do you want to reset all data?</string>
     <string name="qmsg_create_default">Do you want to create default data?</string>
     <string name="dtitem_datamain">Data</string>
@@ -109,9 +111,14 @@
     
     <string name="qmsg_clear_folder">Do you want to clear working folder %1$s? all CSV will be removed</string>
     <string name="defacc_creditcard">Credit card</string>
+    
+    <string name="label_account">Account</string>
+    <string name="label_detail">Detail</string>
+    <string name="label_account_only">Account only</string>
+    <string name="label_detail_only">Detail only</string>
 <!-- above are verified -->    
 
-    
+   
     
 </resources>
 

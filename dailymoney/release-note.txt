@@ -1,10 +1,10 @@
 = Last =
 == 0.9.0 ==
 === Features ===
- * 3 Add new account type Liability and Other
- 
+ * 3    Add new account type Liability and Other
+ * 1    Import & export should have a option for All/Account only/Detail only
 === Bugs ===
- * 
+ * 2    Wrong display in detail list if account not found
 
 = History =
 == 0.9.0 ==

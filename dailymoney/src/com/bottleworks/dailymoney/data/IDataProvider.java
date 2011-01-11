@@ -19,6 +19,10 @@ public interface IDataProvider {
     void destroyed();
     
     void reset();
+    
+    void deleteAllAccount();
+    
+    void deleteAllDetail();
 
     Account findAccount(String id);
     

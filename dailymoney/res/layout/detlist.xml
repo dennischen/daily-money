@@ -15,16 +15,23 @@
 	</LinearLayout>
 	<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/detlist_infobar"
 	android:textSize="18sp" android:text="Information here" android:singleLine="true" android:background="@color/detlist_info_bg"
-	android:textColor="@color/detlist_info_fg" android:gravity="center"/>
+	android:textColor="@color/detlist_info_fg" android:gravity="center" android:ellipsize="end"/>
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"  android:background="@color/detlist_summary_bg"
     android:gravity="center">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_income"
-        android:textSize="14sp" android:text=".." android:textColor="@color/income_fge"/>
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_expense"
-        android:textSize="14sp" android:text=".." android:textColor="@color/expense_fge"/>
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_liability"
-        android:textSize="14sp" android:text=".." android:textColor="@color/liability_fge"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_unknow"
+        android:textSize="12sp" android:text="......" android:textColor="@color/unknow_fge"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_income" android:gravity="center"
+        android:textSize="12sp" android:textColor="@color/income_fge" android:paddingRight="5dp" android:ellipsize="start" android:layout_weight="1"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_expense"  android:gravity="center"
+        android:textSize="12sp" android:textColor="@color/expense_fge" android:paddingRight="5dp"  android:ellipsize="start"  android:layout_weight="1"/>        
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_asset"  android:gravity="center"
+        android:textSize="12sp" android:textColor="@color/asset_fge" android:paddingRight="5dp"  android:ellipsize="start"  android:layout_weight="1"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_liability"  android:gravity="center"
+        android:textSize="12sp" android:textColor="@color/liability_fge"  android:paddingRight="5dp"  android:ellipsize="start"  android:layout_weight="1"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_other"  android:gravity="center"
+        android:textSize="12sp" android:textColor="@color/other_fge" android:ellipsize="start"  android:layout_weight="1"/>
     </LinearLayout>
+
     
     <ListView android:id="@+id/detlist_list" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
 </LinearLayout>

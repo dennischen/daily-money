@@ -169,8 +169,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         return counterCreate;
     }
     
-    private void doOk(){
-        Logger.d("acceditor doOK");   
+    private void doOk(){   
         I18N i18n = Contexts.instance().getI18n();
         //verify
         if(Spinner.INVALID_POSITION==typeEditor.getSelectedItemPosition()){
@@ -208,14 +207,12 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     }
     
     private void doCancel(){
-        Logger.d("acceditor doCancel");
         if(listener==null || listener.onFinish(this,findViewById(R.id.acceditor_cancel), null)){
             dismiss();
         }
     }
     
     private void doClose(){
-        Logger.d("acceditor doClose");
         if(listener==null || listener.onFinish(this,findViewById(R.id.acceditor_close), null)){
             dismiss();
         }

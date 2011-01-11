@@ -90,13 +90,17 @@ public class DataCreator {
         try {
             Account account = null;
             if ((account = idp.findAccount(type.getType(), name)) == null) {
-                Logger.d("createDefaultAccount : " + name);
+                if(Contexts.DEBUG){
+                    Logger.d("createDefaultAccount : " + name);
+                }
                 account = new Account(type.getType(), name, initval);
                 idp.newAccount(account);
             }
             return account;
         } catch (DuplicateKeyException e) {
-            Logger.d(e.getMessage(), e);
+            if(Contexts.DEBUG){
+                Logger.d(e.getMessage(), e);
+            }
         }
         return null;
     }

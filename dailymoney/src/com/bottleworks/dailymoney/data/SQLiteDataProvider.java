@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.ui.Contexts;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -19,9 +21,11 @@ import static com.bottleworks.dailymoney.data.SQLiteMeta.*;
 public class SQLiteDataProvider implements IDataProvider {
 
     SQLiteHelper helper;
+    CalendarHelper calHelper;
 
-    public SQLiteDataProvider(SQLiteHelper helper) {
+    public SQLiteDataProvider(SQLiteHelper helper,CalendarHelper calHelper) {
         this.helper = helper;
+        this.calHelper = calHelper;
     }
 
     @Override
@@ -125,7 +129,9 @@ public class SQLiteDataProvider implements IDataProvider {
     
     @Override
     public void newAccountNoCheck(String id,Account account){
-        Logger.d("new account "+id);
+        if(Contexts.DEBUG){
+            Logger.d("new account "+id);
+        }
         account.setId(id);
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -209,7 +215,7 @@ public class SQLiteDataProvider implements IDataProvider {
         values.put(COL_DET_FROM_TYPE, det.getFromType());
         values.put(COL_DET_TO, det.getTo());
         values.put(COL_DET_TO_TYPE, det.getToType());
-        values.put(COL_DET_DATE, det.getDate().getTime());
+        values.put(COL_DET_DATE, calHelper.toDayMiddle(det.getDate()).getTime());
         values.put(COL_DET_MONEY, det.getMoney());
         values.put(COL_DET_ARCHIVED, det.isArchived() ? 1 : 0);
         values.put(COL_DET_NOTE, det.getNote());
@@ -262,7 +268,9 @@ public class SQLiteDataProvider implements IDataProvider {
     
     @Override
     public void newDetailNoCheck(int id,Detail detail){
-        Logger.d("new detail "+id+","+detail.getNote());
+        if(Contexts.DEBUG){
+            Logger.d("new detail "+id+","+detail.getNote());
+        }
         detail.setId(id);
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -299,7 +307,7 @@ public class SQLiteDataProvider implements IDataProvider {
     public List<Detail> listAllDetail() {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = null;
-        c = db.query(TB_DET,COL_DET_ALL,null,null, null, null, COL_DET_DATE +" DESC,"+COL_DET_ID+" DESC");
+        c = db.query(TB_DET,COL_DET_ALL,null,null, null, null, DET_ORDERBY);
         List<Detail> result = new ArrayList<Detail>();
         Detail det;
         while(c.moveToNext()){
@@ -433,6 +441,27 @@ public class SQLiteDataProvider implements IDataProvider {
         
         c.close();
         return r;
+    }
+
+    @Override
+    public void deleteAllAccount() {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete(TB_ACC, null, null);
+        return ;
+        
+        
+    }
+
+    @Override
+    public void deleteAllDetail() {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete(TB_DET, null, null);
+        detId = 0;
+        detId_set = false;
+        return ;
+        
+        
+        
     }
 
 }

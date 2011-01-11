@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,7 +50,11 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     TextView infoView;
     TextView sumIncomeView;
     TextView sumExpenseView;
+    TextView sumAssetView;
     TextView sumLiabilityView;
+    TextView sumOtherView;
+    TextView sumUnknowView;
+    
     View toolbarView;
     
     private Date targetDate;
@@ -144,7 +149,10 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         toolbarView = findViewById(R.id.detlist_toolbar);
         sumIncomeView = (TextView)findViewById(R.id.detlist_sum_income);
         sumExpenseView = (TextView)findViewById(R.id.detlist_sum_expense);
+        sumAssetView = (TextView)findViewById(R.id.detlist_sum_asset);
         sumLiabilityView = (TextView)findViewById(R.id.detlist_sum_liability);
+        sumOtherView = (TextView)findViewById(R.id.detlist_sum_other);
+        sumUnknowView = (TextView)findViewById(R.id.detlist_sum_unknow);
         
         
         findViewById(R.id.detlist_prev).setOnClickListener(this);
@@ -163,10 +171,14 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         final CalendarHelper cal = Contexts.instance().getCalendarHelper();
         final Date start;
         final Date end;
-        infoView.setText("......");
-        sumIncomeView.setText("..");
-        sumExpenseView.setText("..");
-        sumLiabilityView.setText("..");
+        infoView.setText("");
+        sumIncomeView.setVisibility(TextView.GONE);
+        sumExpenseView.setVisibility(TextView.GONE);
+        sumAssetView.setVisibility(TextView.GONE);
+        sumLiabilityView.setVisibility(TextView.GONE);
+        sumOtherView.setVisibility(TextView.GONE);
+        
+        sumUnknowView.setVisibility(TextView.VISIBLE);
         switch(mode){
         case MODE_ALL:
             start = end = null;
@@ -212,7 +224,9 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
             
             double expense;
             double income;
+            double asset;
             double liability;
+            double other;
             int count;
             
             @Override
@@ -220,17 +234,37 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
                 data = idp.listDetail(start,end,Contexts.instance().getPrefMaxRecords());
                 count = idp.countDetail(start, end);
                 income = idp.sumFrom(AccountType.INCOME,start,end);
-                expense = idp.sumTo(AccountType.EXPENSE,start,end);
-                liability = idp.sumFrom(AccountType.LIABILITY,start,end) -  idp.sumTo(AccountType.LIABILITY,start,end);
+                expense = idp.sumTo(AccountType.EXPENSE,start,end);//nagivate
+                asset = idp.sumTo(AccountType.ASSET,start,end) - idp.sumFrom(AccountType.ASSET,start,end);
+                liability = idp.sumTo(AccountType.LIABILITY,start,end) - idp.sumFrom(AccountType.LIABILITY,start,end);
+                liability = -liability;
+                other = idp.sumTo(AccountType.OTHER,start,end) - idp.sumFrom(AccountType.OTHER,start,end);
             }
             @Override
             public void onBusyFinish() {
-                
+                sumUnknowView.setVisibility(TextView.GONE);
               //update data
                 detailListHelper.reloadData(data);
-                sumIncomeView.setText(i18n.string(R.string.label_detlist_sum_income,Formats.double2String(income)));
-                sumExpenseView.setText(i18n.string(R.string.label_detlist_sum_expense,Formats.double2String(expense)));
-                sumLiabilityView.setText(i18n.string(R.string.label_detlist_sum_liability,Formats.double2String(liability)));
+                if(income!=0){
+                    sumIncomeView.setText(i18n.string(R.string.label_detlist_sum_income,Formats.double2String(income)));
+                    sumIncomeView.setVisibility(TextView.VISIBLE);
+                }
+                if(expense!=0){
+                    sumExpenseView.setText(i18n.string(R.string.label_detlist_sum_expense,Formats.double2String(expense)));
+                    sumExpenseView.setVisibility(TextView.VISIBLE);
+                }
+                if(asset!=0){
+                    sumAssetView.setText(i18n.string(R.string.label_detlist_sum_asset,Formats.double2String(asset)));
+                    sumAssetView.setVisibility(TextView.VISIBLE);
+                }
+                if(liability!=0){
+                    sumLiabilityView.setText(i18n.string(R.string.label_detlist_sum_liability,Formats.double2String(liability)));
+                    sumLiabilityView.setVisibility(TextView.VISIBLE);
+                }
+                if(other!=0){
+                    sumOtherView.setText(i18n.string(R.string.label_detlist_sum_other,Formats.double2String(other)));
+                    sumOtherView.setVisibility(TextView.VISIBLE);
+                }
                 
               //update info
                 switch(mode){
@@ -265,7 +299,6 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Logger.d("option menu selected :" + item.getItemId());
         switch (item.getItemId()) {
         case R.id.detlist_menu_new:
             detailListHelper.doNewDetail();
@@ -287,7 +320,6 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        Logger.d("context menu selected :" + item.getItemId() + ", pos " + info.position);
         switch (item.getItemId()) {
         case R.id.detlist_menu_edit:
             detailListHelper.doEditDetail(info.position);

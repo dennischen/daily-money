@@ -97,6 +97,10 @@ public class CalendarHelper {
     public Date toDayStart(Date d) {
         return toDayStart(calendar(d));
     }
+    
+    public Date toDayMiddle(Date d) {
+        return toDayMiddle(calendar(d));
+    }
 
     public Date toDayEnd(Date d) {
         return toDayEnd(calendar(d));
@@ -104,6 +108,14 @@ public class CalendarHelper {
     
     public Date toDayStart(Calendar cal) {
         cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+    
+    public Date toDayMiddle(Calendar cal) {
+        cal.set(Calendar.HOUR_OF_DAY, 12);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);

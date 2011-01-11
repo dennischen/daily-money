@@ -22,6 +22,7 @@
     <string name="cmsg_error">Error : %1$s</string>
     <string name="cmsg_field_empty">%1$s is empty</string>  
     <string name="cmsg_field_zero">%1$s is zero</string> 
+     <string name="clabel_all">All</string>
     <!-- above are verified --> 
 
 </resources>

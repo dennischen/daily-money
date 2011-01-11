@@ -346,7 +346,6 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     }
 
     private void doOk() {
-        Logger.d("doOK");
         I18N i18n = Contexts.instance().getI18n();
         // verify
         int fromPos = fromEditor.getSelectedItemPosition();
@@ -425,14 +424,12 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     }
 
     private void doCancel() {
-        Logger.d("doCancel");
         if (listener == null || listener.onFinish(this, findViewById(R.id.deteditor_cancel), null)) {
             dismiss();
         }
     }
 
     private void doClose() {
-        Logger.d("doClose");
         if (listener == null || listener.onFinish(this, findViewById(R.id.deteditor_close), null)) {
             dismiss();
         }

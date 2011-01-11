@@ -70,14 +70,8 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     private void initialApplicationInfo() {
         Application app = getApplication();
         appinfo = i18n.string(R.string.app_name);
-        String name = app.getPackageName();
-        try {
-            PackageInfo pi = app.getPackageManager().getPackageInfo(name,0);
-            String ver = pi.versionName;
-            appinfo += " ver : "+ver;
-        } catch (NameNotFoundException e) {
-            appinfo += " ver : unknow";
-        }
+        String ver = Contexts.instance().getApplicationVersionName();
+        appinfo += " ver : "+ver;
     }
 
 
@@ -147,7 +141,6 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     @Override
     public void onTabChanged(String tabId) {
-        Logger.d("switch to tab : " + tabId);
         currTab = tabId;
         loadData();
     }
@@ -161,7 +154,6 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Logger.d("option menu selected :" + item.getItemId());
         // switch (item.getItemId()) {
         // case R.id.accmgnt_menu_new:
         // doNewAccount();

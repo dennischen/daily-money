@@ -26,7 +26,9 @@
     <string name="label_detlist_money">$%1$s</string>
     <string name="label_detlist_sum_income">收入 $%1$s, </string>
     <string name="label_detlist_sum_expense">支出 $%1$s, </string>
+    <string name="label_detlist_sum_asset">資產 $%1$s</string>
     <string name="label_detlist_sum_liability">債務 $%1$s</string>
+    <string name="label_detlist_sum_other">其他 $%1$s</string>
     <string name="label_detlist_to">%1$s</string>
     <string name="label_expense">花費</string>
     <string name="label_firstday_mon">星期一</string>
@@ -48,8 +50,8 @@
     <string name="label_prefs_maxrecords">最大筆數</string>
     <string name="label_reports">報表</string>
     <string name="label_to_account">到帳戶</string>
-    <string name="label_week_details">%5$s %1$s到%2$s - 周 %3$s/%4$s(%6$筆)</string>
-    <string name="label_year_details">%1$s (%1$s筆)</string>
+    <string name="label_week_details">%5$s %1$s到%2$s - 周%3$s/%4$s(%6$s筆)</string>
+    <string name="label_year_details">%1$s (%2$s筆)</string>
     <string name="msg_account_created">帳戶 %1$s 成功的被建立在帳戶型態 %2$s 中</string>
     <string name="msg_account_deleted">帳戶 %1$s 成功的刪除</string>
     <string name="msg_account_existed">帳戶 %1$s 已經存在於帳戶型態 %2$s 中</string>
@@ -90,8 +92,8 @@
     <string name="msg_default_created">預設的資料(帳戶)已經被建立</string>
     <string name="title_datamain">資料維護</string>
     
-    <string name="qmsg_export_csv">您想要從%1$s匯出到CSV檔嗎?舊的檔案將被覆蓋!</string>
-    <string name="qmsg_import_csv">您想要從%1$s匯入CSV檔嗎?目前的資料將完全被取代</string>
+    <string name="qmsg_export_csv">您想要匯出資料並覆蓋CSV檔嗎?</string>
+    <string name="qmsg_import_csv">您想要匯入CSV檔並覆蓋資料嗎?</string>
     <string name="qmsg_reset">您想要重置所有資料嗎?</string>
     <string name="qmsg_create_default">您想要建立預設的資料(帳戶)嗎?</string>
     <string name="dtitem_datamain">資料維護</string>  
@@ -107,6 +109,11 @@
     <string name="label_prefs_datedcsv_sum">在匯出時,也同時建立一個包含日期名稱的CSV檔</string>  
     <string name="qmsg_clear_folder">您想要清除工作目錄%1$s嗎?所有的CSV檔將被移除</string>
     <string name="defacc_creditcard">信用卡</string>
+    
+    <string name="label_account">帳戶</string>
+    <string name="label_detail">明細</string>
+    <string name="label_account_only">只有帳戶</string>
+    <string name="label_detail_only">只有明細</string>
     <!-- above are verified -->
 
 </resources>

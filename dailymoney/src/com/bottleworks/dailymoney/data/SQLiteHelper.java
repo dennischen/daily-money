@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney.data;
 
 import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.ui.Contexts;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -43,20 +44,27 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Logger.d("create schema " +ACC_CREATE_SQL);
+        if(Contexts.DEBUG){
+            Logger.d("create schema " +ACC_CREATE_SQL);
+        }
         db.execSQL(ACC_CREATE_SQL);
         
-        Logger.d("create schema " +DET_CREATE_SQL);
+        if(Contexts.DEBUG){
+            Logger.d("create schema " +DET_CREATE_SQL);
+        }
         db.execSQL(DET_CREATE_SQL);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Logger.d("update db from "+oldVersion+" to "+newVersion);
-        
-        Logger.d("drop schema "+ACC_DROP_SQL);
+        if(Contexts.DEBUG){
+            Logger.d("update db from "+oldVersion+" to "+newVersion);
+            Logger.d("drop schema "+ACC_DROP_SQL);
+        }
         db.execSQL(ACC_DROP_SQL);
-        Logger.d("drop schema "+DET_DROP_SQL);
+        if(Contexts.DEBUG){
+            Logger.d("drop schema "+DET_DROP_SQL);
+        }
         db.execSQL(DET_DROP_SQL);
         
         onCreate(db);

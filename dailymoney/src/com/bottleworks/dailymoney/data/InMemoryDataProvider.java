@@ -237,4 +237,15 @@ public class InMemoryDataProvider implements IDataProvider {
         }
         return sum;
     }
+
+    @Override
+    public void deleteAllAccount() {
+        accountList.clear();
+  
+    }
+
+    @Override
+    public void deleteAllDetail() {
+        detailList.clear();
+    }
 }
