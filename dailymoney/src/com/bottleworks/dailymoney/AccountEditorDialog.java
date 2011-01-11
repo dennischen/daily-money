@@ -12,15 +12,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
+import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.ui.Contexts;
+import com.bottleworks.dailymoney.ui.NamedItem;
 
 /**
  * Edit or create a account
@@ -98,11 +102,12 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         String type = workingAccount.getType();
         int selpos,i;
         selpos = i = -1;
+        I18N i18n = Contexts.instance().getI18n();
         for (AccountType at : AccountType.getSupportedType()) {
             i++;
             Map<String, Object> row = new HashMap<String, Object>();
             data.add(row);
-            row.put(spfrom[0], AccountType.getDisplay(Contexts.instance().getI18n(),at.getType()));
+            row.put(spfrom[0], new NamedItem(spfrom[0],at,at.getDisplay(i18n)));
             
             if(at.getType().equals(type)){
                 selpos = i;
@@ -110,7 +115,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         }
         SimpleAdapter adapter = new SimpleAdapter(getContext(), data, R.layout.simple_spitem, spfrom, spto);
         adapter.setDropDownViewResource(R.layout.simple_spdd);
-        
+        adapter.setViewBinder(new AccountTypeViewBinder());
         typeEditor.setAdapter(adapter);
         if(selpos>-1){
             typeEditor.setSelection(selpos);
@@ -231,6 +236,37 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
 
     public static interface OnFinishListener {   
         public boolean onFinish(AccountEditorDialog dlg,View v,Object data);
+    }
+    
+    class AccountTypeViewBinder implements SimpleAdapter.ViewBinder{
+        @Override
+        public boolean setViewValue(View view, Object data, String text) {
+            
+            NamedItem item = (NamedItem)data;
+            String name = item.getName();
+            AccountType at = (AccountType)item.getValue();
+            if(!(view instanceof TextView)){
+               return false;
+            }
+            if("display".equals(name)){
+                if(AccountType.INCOME == at){
+                   ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.income_fgd));
+                }else if(AccountType.ASSET == at){
+                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.asset_fgd)); 
+                }else if(AccountType.EXPENSE == at){
+                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.expense_fgd));
+                }else if(AccountType.LIABILITY == at){
+                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.liability_fgd)); 
+                }else if(AccountType.OTHER == at){
+                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.other_fgd)); 
+                }else{
+                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.unknow_fgd));
+                }
+                ((TextView)view).setText(item.getToString());
+                return true;
+            }
+            return false;
+        }
     }
 
 }

@@ -17,32 +17,38 @@
 	
 	<color name="expense_bg_s">#FFFF9AB5</color>
 	<color name="expense_bg_e">#CCFF9AB5</color>
-	<color name="expense_fge">#CCFF9AB5</color>
+	<color name="expense_fgl">#CCFF9AB5</color>
+	<color name="expense_fgd">#9F3A55</color>
 	<color name="expense_fg">#000000</color>
 	
 	<color name="income_bg_s">#FF7AFFA2</color>
 	<color name="income_bg_e">#CC7AFFA2</color>
-	<color name="income_fge">#CC7AFFA2</color>
+	<color name="income_fgl">#CC7AFFA2</color>
+	<color name="income_fgd">#1A9F42</color>
 	<color name="income_fg">#000000</color>
 	
 	<color name="asset_bg_s">#FFF6D174</color>
 	<color name="asset_bg_e">#CCF6D174</color>
-	<color name="asset_fge">#CCF6D174</color>
+	<color name="asset_fgl">#CCF6D174</color>
+	<color name="asset_fgd">#967114</color>
     <color name="asset_fg">#000000</color>
     
     <color name="liability_bg_s">#FF7A95FF</color>
     <color name="liability_bg_e">#CC7A95FF</color>
-    <color name="liability_fge">#CC7A95FF</color>
+    <color name="liability_fgl">#CC7A95FF</color>
+    <color name="liability_fgd">#1A359F</color>
     <color name="liability_fg">#000000</color>
     
     <color name="other_bg_s">#FF61D0FF</color>
     <color name="other_bg_e">#CC61D0FF</color>
-    <color name="other_fge">#CC61D0FF</color>
+    <color name="other_fgl">#CC61D0FF</color>
+    <color name="other_fgd">#01709F</color>
     <color name="other_fg">#000000</color>
     
     <color name="unknow_bg_s">#FF555555</color>
     <color name="unknow_bg_e">#CC555555</color>
-    <color name="unknow_fge">#CC555555</color>
+    <color name="unknow_fgl">#CC555555</color>
+    <color name="unknow_fgd">#555555</color>
     <color name="unknow_fg">#000000</color>
     
     <color name="dt_info_bg">#FF7A95FF</color>

@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,131 +76,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
         }
         
         listViewAdapter = new SimpleAdapter(activity, listViewMapList, layout, bindingFrom, bindingTo);
-        listViewAdapter.setViewBinder(new SimpleAdapter.ViewBinder(){
-            
-            AccountType last = null;
-            AccountType lastFrom = null;
-            AccountType lastTo = null;
-            @Override
-            public boolean setViewValue(View view, Object data, String text) {
-                NamedItem item = (NamedItem)data;
-                String name = item.getName();
-                Detail det = (Detail)item.getValue();
-
-                if("layout".equals(name)){
-                    
-                    RelativeLayout layout = (RelativeLayout)view;
-                    
-                    Account fromAcc = accountCache.get(det.getFrom());
-                    Account toAcc = accountCache.get(det.getTo());
-                    int flag = 0;
-                    if(toAcc!=null){
-                        if(AccountType.EXPENSE.getType().equals(toAcc.getType())){
-                            flag |= 1;
-                        }else if(AccountType.ASSET.getType().equals(toAcc.getType())){
-                            flag |= 4;
-                        }else if(AccountType.LIABILITY.getType().equals(toAcc.getType())){
-                            flag |= 8;
-                        }else if(AccountType.OTHER.getType().equals(toAcc.getType())){
-                            flag |= 16;
-                        }
-                        lastTo = AccountType.find(toAcc.getType());
-                    }else{
-                        lastTo = AccountType.UNKONW;
-                    }
-                    if(fromAcc!=null){
-                        if(AccountType.INCOME.getType().equals(fromAcc.getType())){
-                            flag |= 2;
-                        }
-                        lastFrom = AccountType.find(fromAcc.getType());
-                    }else{
-                        lastFrom = AccountType.UNKONW;
-                    }
-                    if( (flag & 1) == 1){//expense
-                        layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_expense));
-                        last = AccountType.EXPENSE;
-                    }else if( (flag & 2) == 2){//income
-                        layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_income));
-                        last = AccountType.INCOME;
-                    }else if( (flag & 4) == 4){
-                        layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_asset));
-                        last = AccountType.ASSET;
-                    }else if( (flag & 8) == 8){
-                        layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_liability));
-                        last = AccountType.LIABILITY;
-                    }else if( (flag & 16) == 16){
-                        layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_other));
-                        last = AccountType.OTHER;
-                    }else{
-                        layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_unknow));
-                        last = null;
-                    }
-                    return true;
-                }
-                
-                if(!(view instanceof TextView)){
-                   return false;
-                }
-                
-                if(AccountType.INCOME.equals(last)){
-                   ((TextView)view).setTextColor(activity.getResources().getColor(R.color.income_fg));
-                   if("money".equals(name)){
-                       ((TextView)view).setText("+"+text);
-                       return true;
-                   }
-                }else if(AccountType.ASSET.equals(last)){
-                    ((TextView)view).setTextColor(activity.getResources().getColor(R.color.asset_fg)); 
-                }else if(AccountType.EXPENSE.equals(last)){
-                    ((TextView)view).setTextColor(activity.getResources().getColor(R.color.expense_fg));
-                    if("money".equals(name)){
-                        ((TextView)view).setText("-"+text);
-                        return true;
-                    }
-                }else if(AccountType.LIABILITY.equals(last)){
-                    ((TextView)view).setTextColor(activity.getResources().getColor(R.color.liability_fg)); 
-                }else if(AccountType.OTHER.equals(last)){
-                    ((TextView)view).setTextColor(activity.getResources().getColor(R.color.other_fg)); 
-                }else{
-                    ((TextView)view).setTextColor(activity.getResources().getColor(R.color.unknow_fg));
-                }
-                
-                
-                
-                if("from".equals(name)){
-                    view.setBackgroundDrawable(null);
-                    if(last!=lastFrom){
-                        if(AccountType.INCOME== lastFrom){
-                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_income));
-                        }else if(AccountType.EXPENSE== lastFrom){
-                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_expense));
-                        }else if(AccountType.ASSET== lastFrom){
-                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_asset));
-                        }else if(AccountType.LIABILITY== lastFrom){
-                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_liability));
-                        }else if(AccountType.OTHER== lastFrom){
-                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_other));
-                        }else{
-                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_unknow));
-                        }
-                    }
-                }
-                
-                if("to".equals(name)){
-                    view.setBackgroundDrawable(null);
-                    if(AccountType.INCOME == lastFrom){
-                        if(AccountType.ASSET== lastTo){
-                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_asset));
-                        }else if(AccountType.LIABILITY== lastTo){
-                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_liability));
-                        }else if(AccountType.OTHER== lastTo){
-                            view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_other));
-                        }
-                    }
-                }
-                
-                
-                return false;
-            }});
+        listViewAdapter.setViewBinder(new ListViewBinder());
         
         listView = listview;
         listView.setAdapter(listViewAdapter);
@@ -243,6 +120,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
         listViewAdapter.notifyDataSetChanged();
     }
 
+    private DecimalFormat moneyFormat = new DecimalFormat("###,###,###,##0.###");
 
     private Map<String, Object> toDetailMap(Detail det,DateFormat format){
         Map<String, Object> row = new HashMap<String, Object>();
@@ -251,7 +129,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
         
         String from = fromAcc==null?det.getFrom():(i18n.string(R.string.label_detlist_from,fromAcc.getName(),AccountType.getDisplay(i18n, fromAcc.getType())));
         String to = toAcc==null?det.getTo():(i18n.string(R.string.label_detlist_to,toAcc.getName(),AccountType.getDisplay(i18n, toAcc.getType())));
-        String money = i18n.string(R.string.label_detlist_money,Formats.double2String(det.getMoney()));
+        String money = i18n.string(R.string.label_detlist_money,Formats.money2String(det.getMoney()));
         row.put(bindingFrom[0], new NamedItem(bindingFrom[0],det,bindingFrom[0]));
         row.put(bindingFrom[1], new NamedItem(bindingFrom[1],det,from));
         row.put(bindingFrom[2], new NamedItem(bindingFrom[2],det,to));
@@ -362,6 +240,132 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
             return false;
         }
 
+    }
+    
+    class ListViewBinder implements SimpleAdapter.ViewBinder{
+        AccountType last = null;
+        AccountType lastFrom = null;
+        AccountType lastTo = null;
+        @Override
+        public boolean setViewValue(View view, Object data, String text) {
+            NamedItem item = (NamedItem)data;
+            String name = item.getName();
+            Detail det = (Detail)item.getValue();
+
+            if("layout".equals(name)){
+                
+                RelativeLayout layout = (RelativeLayout)view;
+                
+                Account fromAcc = accountCache.get(det.getFrom());
+                Account toAcc = accountCache.get(det.getTo());
+                int flag = 0;
+                if(toAcc!=null){
+                    if(AccountType.EXPENSE.getType().equals(toAcc.getType())){
+                        flag |= 1;
+                    }else if(AccountType.ASSET.getType().equals(toAcc.getType())){
+                        flag |= 4;
+                    }else if(AccountType.LIABILITY.getType().equals(toAcc.getType())){
+                        flag |= 8;
+                    }else if(AccountType.OTHER.getType().equals(toAcc.getType())){
+                        flag |= 16;
+                    }
+                    lastTo = AccountType.find(toAcc.getType());
+                }else{
+                    lastTo = AccountType.UNKONW;
+                }
+                if(fromAcc!=null){
+                    if(AccountType.INCOME.getType().equals(fromAcc.getType())){
+                        flag |= 2;
+                    }
+                    lastFrom = AccountType.find(fromAcc.getType());
+                }else{
+                    lastFrom = AccountType.UNKONW;
+                }
+                if( (flag & 1) == 1){//expense
+                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_expense));
+                    last = AccountType.EXPENSE;
+                }else if( (flag & 2) == 2){//income
+                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_income));
+                    last = AccountType.INCOME;
+                }else if( (flag & 4) == 4){
+                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_asset));
+                    last = AccountType.ASSET;
+                }else if( (flag & 8) == 8){
+                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_liability));
+                    last = AccountType.LIABILITY;
+                }else if( (flag & 16) == 16){
+                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_other));
+                    last = AccountType.OTHER;
+                }else{
+                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_unknow));
+                    last = null;
+                }
+                return true;
+            }
+            
+            if(!(view instanceof TextView)){
+               return false;
+            }
+            
+            if(AccountType.INCOME.equals(last)){
+               ((TextView)view).setTextColor(activity.getResources().getColor(R.color.income_fg));
+//               if("money".equals(name)){
+//                   ((TextView)view).setText(text);
+//                   return true;
+//               }
+            }else if(AccountType.ASSET.equals(last)){
+                ((TextView)view).setTextColor(activity.getResources().getColor(R.color.asset_fg)); 
+            }else if(AccountType.EXPENSE.equals(last)){
+                ((TextView)view).setTextColor(activity.getResources().getColor(R.color.expense_fg));
+//                if("money".equals(name)){
+//                    ((TextView)view).setText(text);
+//                    return true;
+//                }
+            }else if(AccountType.LIABILITY.equals(last)){
+                ((TextView)view).setTextColor(activity.getResources().getColor(R.color.liability_fg)); 
+            }else if(AccountType.OTHER.equals(last)){
+                ((TextView)view).setTextColor(activity.getResources().getColor(R.color.other_fg)); 
+            }else{
+                ((TextView)view).setTextColor(activity.getResources().getColor(R.color.unknow_fg));
+            }
+            
+            
+            
+            if("from".equals(name)){
+                view.setBackgroundDrawable(null);
+                if(last!=lastFrom){
+                    if(AccountType.INCOME== lastFrom){
+                        view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_income));
+                    }else if(AccountType.EXPENSE== lastFrom){
+                        view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_expense));
+                    }else if(AccountType.ASSET== lastFrom){
+                        view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_asset));
+                    }else if(AccountType.LIABILITY== lastFrom){
+                        view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_liability));
+                    }else if(AccountType.OTHER== lastFrom){
+                        view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_other));
+                    }else{
+                        view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_unknow));
+                    }
+                }
+            }
+            
+            if("to".equals(name)){
+                view.setBackgroundDrawable(null);
+                if(AccountType.INCOME == lastFrom){
+                    if(AccountType.ASSET== lastTo){
+                        view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_asset));
+                    }else if(AccountType.LIABILITY== lastTo){
+                        view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_liability));
+                    }else if(AccountType.OTHER== lastTo){
+                        view.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_other));
+                    }
+                }
+            }
+            
+            
+            return false;
+        }
     }
     
 }

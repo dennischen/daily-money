@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Formats;
@@ -28,6 +29,7 @@ import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.Contexts;
+import com.bottleworks.dailymoney.ui.NamedItem;
 
 /**
  * Edit or create a detail
@@ -151,8 +153,6 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
         cancelBtn.setOnClickListener(this);
         closeBtn.setOnClickListener(this);
-        
-        moneyEditor.requestFocus();
     }
     
     public int getCounter(){
@@ -165,13 +165,16 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         fromAccountMapList = new ArrayList<Map<String, Object>>();
         fromAccountAdapter = new SimpleAdapter(getContext(), fromAccountMapList, R.layout.simple_spitem, spfrom, spto);
         fromAccountAdapter.setDropDownViewResource(R.layout.simple_spdd);
+        fromAccountAdapter.setViewBinder(new AccountViewBinder());
         fromEditor.setAdapter(fromAccountAdapter);
+        
 
         toEditor = (Spinner) findViewById(R.id.deteditor_to);
         toAccountList = new ArrayList<Account>();
         toAccountMapList = new ArrayList<Map<String, Object>>();
         toAccountAdapter = new SimpleAdapter(getContext(), toAccountMapList, R.layout.simple_spitem, spfrom, spto);
         toAccountAdapter.setDropDownViewResource(R.layout.simple_spdd);
+        toAccountAdapter.setViewBinder(new AccountViewBinder());
         toEditor.setAdapter(toAccountAdapter);
 
         reloadSpinnerData();
@@ -204,7 +207,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
     private void reloadSpinnerData() {
         IDataProvider idp = Contexts.instance().getDataProvider();
-        // I18N i18n = Contexts.instance().getI18n();
+         I18N i18n = Contexts.instance().getI18n();
 
         // initial from
         AccountType[] avail = AccountType.getFromType();
@@ -226,8 +229,8 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
             // String display =
             // AccountType.getDisplay(Contexts.instance().getI18n(),acc.getType())
             // + "-" + acc.getName();
-            String display = acc.getType() + "-" + acc.getName();
-            row.put(spfrom[0], display);
+            String display = AccountType.find(acc.getType()).getDisplay(i18n) + "-" + acc.getName();
+            row.put(spfrom[0], new NamedItem(spfrom[0],acc,display));
             if (acc.getId().equals(fromAccount)) {
                 fromsel = i;
                 fromType = acc.getType();
@@ -254,8 +257,8 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
             // String display =
             // AccountType.getDisplay(Contexts.instance().getI18n(),acc.getType())
             // + "-" + acc.getName();
-            String display = acc.getType() + "-" + acc.getName();
-            row.put(spfrom[0], display);
+            String display = AccountType.find(acc.getType()).getDisplay(i18n) + "-" + acc.getName();
+            row.put(spfrom[0], new NamedItem(spfrom[0],acc,display));
             if (acc.getId().equals(toAccount)) {
                 tosel = i;
                 // toType = acc.getType();
@@ -441,6 +444,39 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
     public static interface OnFinishListener {
         public boolean onFinish(DetailEditorDialog dlg, View v, Object data);
+    }
+    
+    
+    class AccountViewBinder implements SimpleAdapter.ViewBinder{
+        @Override
+        public boolean setViewValue(View view, Object data, String text) {
+            
+            NamedItem item = (NamedItem)data;
+            String name = item.getName();
+            Account acc = (Account)item.getValue();
+            if(!(view instanceof TextView)){
+               return false;
+            }
+            AccountType at = AccountType.find(acc.getType());
+            if("display".equals(name)){
+                if(AccountType.INCOME == at){
+                   ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.income_fgd));
+                }else if(AccountType.ASSET == at){
+                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.asset_fgd)); 
+                }else if(AccountType.EXPENSE == at){
+                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.expense_fgd));
+                }else if(AccountType.LIABILITY == at){
+                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.liability_fgd)); 
+                }else if(AccountType.OTHER == at){
+                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.other_fgd)); 
+                }else{
+                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.unknow_fgd));
+                }
+                ((TextView)view).setText(item.getToString());
+                return true;
+            }
+            return false;
+        }
     }
 
 }

@@ -44,6 +44,11 @@ public class TestsDesktop extends AbstractDesktop {
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
+                testCreateTestdata(25);
+            }}, "test data25",R.drawable.dt_item_test));
+        addItem(new DesktopItem(new Runnable(){
+            @Override
+            public void run() {
                 testCreateTestdata(50);
             }}, "test data50",R.drawable.dt_item_test));
         addItem(new DesktopItem(new Runnable(){

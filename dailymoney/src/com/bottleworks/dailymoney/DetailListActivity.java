@@ -244,23 +244,23 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
               //update data
                 detailListHelper.reloadData(data);
                 if(income!=0){
-                    sumIncomeView.setText(i18n.string(R.string.label_detlist_sum_income,Formats.double2String(income)));
+                    sumIncomeView.setText(i18n.string(R.string.label_detlist_sum_income,Formats.money2String(income)));
                     sumIncomeView.setVisibility(TextView.VISIBLE);
                 }
                 if(expense!=0){
-                    sumExpenseView.setText(i18n.string(R.string.label_detlist_sum_expense,Formats.double2String(expense)));
+                    sumExpenseView.setText(i18n.string(R.string.label_detlist_sum_expense,Formats.money2String(expense)));
                     sumExpenseView.setVisibility(TextView.VISIBLE);
                 }
                 if(asset!=0){
-                    sumAssetView.setText(i18n.string(R.string.label_detlist_sum_asset,Formats.double2String(asset)));
+                    sumAssetView.setText(i18n.string(R.string.label_detlist_sum_asset,Formats.money2String(asset)));
                     sumAssetView.setVisibility(TextView.VISIBLE);
                 }
                 if(liability!=0){
-                    sumLiabilityView.setText(i18n.string(R.string.label_detlist_sum_liability,Formats.double2String(liability)));
+                    sumLiabilityView.setText(i18n.string(R.string.label_detlist_sum_liability,Formats.money2String(liability)));
                     sumLiabilityView.setVisibility(TextView.VISIBLE);
                 }
                 if(other!=0){
-                    sumOtherView.setText(i18n.string(R.string.label_detlist_sum_other,Formats.double2String(other)));
+                    sumOtherView.setText(i18n.string(R.string.label_detlist_sum_other,Formats.money2String(other)));
                     sumOtherView.setVisibility(TextView.VISIBLE);
                 }
                 

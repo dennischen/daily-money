@@ -12,12 +12,13 @@ import java.util.Date;
  */
 public class Formats {
 
-    static DecimalFormat doubleFormat = new DecimalFormat("#0.###");
+    private static DecimalFormat doubleFormat = new DecimalFormat("#0.###");
+    private static DecimalFormat moneyFormat = new DecimalFormat("###,###,###,##0.###");
     
     /** format should not be changed if i start a export/import function **/
-    static DateFormat norDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    static DateFormat norDatetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    static DecimalFormat norDoubleFormat = new DecimalFormat("#0.###");
+    private static DateFormat norDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static DateFormat norDatetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static DecimalFormat norDoubleFormat = new DecimalFormat("#0.###");
     
     
     public static String double2String(Double d){
@@ -64,5 +65,13 @@ public class Formats {
     
     public static Date normalizeString2Datetime(String date) throws ParseException {
         return norDateFormat.parse(date);
+    }
+
+    public static String money2String(Double money) {
+        return money2String(money==null?0D:money.doubleValue());
+    }
+    
+    public static String money2String(double money) {
+        return moneyFormat.format(money);
     }
 }

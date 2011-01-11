@@ -109,17 +109,17 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
                 TextView tv = (TextView)view;
                 
                 if(at==AccountType.INCOME){
-                    tv.setTextColor(getResources().getColor(R.color.income_fge)); 
+                    tv.setTextColor(getResources().getColor(R.color.income_fgl)); 
                 }else if(at==AccountType.EXPENSE){
-                    tv.setTextColor(getResources().getColor(R.color.expense_fge));
+                    tv.setTextColor(getResources().getColor(R.color.expense_fgl));
                 }else if(at==AccountType.ASSET){
-                    tv.setTextColor(getResources().getColor(R.color.asset_fge));
+                    tv.setTextColor(getResources().getColor(R.color.asset_fgl));
                 }else if(at==AccountType.LIABILITY){
-                    tv.setTextColor(getResources().getColor(R.color.liability_fge));
+                    tv.setTextColor(getResources().getColor(R.color.liability_fgl));
                 }else if(at==AccountType.OTHER){
-                    tv.setTextColor(getResources().getColor(R.color.other_fge));
+                    tv.setTextColor(getResources().getColor(R.color.other_fgl));
                 }else{
-                    tv.setTextColor(getResources().getColor(R.color.unknow_fge));
+                    tv.setTextColor(getResources().getColor(R.color.unknow_fgl));
                 }
                 
                 //reset
