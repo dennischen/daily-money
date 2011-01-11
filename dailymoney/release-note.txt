@@ -1,5 +1,5 @@
 = Last =
-== 0.9.0 ==
+== 0.9.1 ==
 === Features ===
  * 3    Add new account type Liability and Other
  * 1    Import & export should have a option for All/Account only/Detail only
