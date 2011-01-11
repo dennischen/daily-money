@@ -35,7 +35,7 @@ import com.bottleworks.dailymoney.ui.NamedItem;
 
 /**
  * this activity manages the account (of detail) with tab widgets of android,
- * there are 4 type of account, income, expense, asset and debt.
+ * there are 4 type of account, income, expense, asset and liability.
  * 
  * @author dennis
  * @see {@link AccountType}
@@ -115,6 +115,10 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
                     tv.setTextColor(getResources().getColor(R.color.expense_fge));
                 }else if(at==AccountType.ASSET){
                     tv.setTextColor(getResources().getColor(R.color.asset_fge));
+                }else if(at==AccountType.LIABILITY){
+                    tv.setTextColor(getResources().getColor(R.color.liability_fge));
+                }else if(at==AccountType.OTHER){
+                    tv.setTextColor(getResources().getColor(R.color.other_fge));
                 }else{
                     tv.setTextColor(getResources().getColor(R.color.unknow_fge));
                 }

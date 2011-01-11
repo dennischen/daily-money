@@ -56,8 +56,8 @@ public interface IDataProvider {
     
     List<Detail> listDetail(Date start, Date end, int max);
 
-    double sumIncome(Date start, Date end);
+    double sumFrom(AccountType type,Date start, Date end);
 
-    double sumExpense(Date start, Date end);
+    double sumTo(AccountType type,Date start, Date end);
     
 }

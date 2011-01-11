@@ -16,15 +16,17 @@
     <string name="dtitem_detlist_week">Weekly list</string>
     <string name="dtitem_detlist_year">Yearly list</string>
     <string name="dtitem_prefs">Preferences</string>
-    <string name="label_all_details">All details</string>
+    <string name="label_all_details">All details (%1$s records)</string>
     <string name="label_asset">Asset</string>
     <string name="label_date">Date</string>
-    <string name="label_debt">Debt</string>
+    <string name="label_liability">Liability</string>
     <string name="label_detlayout_type1">Type 1</string>
     <string name="label_detlayout_type2">Type 2</string>
     <string name="label_detlist_from">&lt; %1$s</string>
     <string name="label_detlist_money">$%1$s</string>
-    <string name="label_detlist_summary">Income +$%2$s , Expense -$%3$s (%1$s records)</string>
+    <string name="label_detlist_sum_income">Income $%1$s, </string>
+    <string name="label_detlist_sum_expense">Expense $%1$s, </string>
+    <string name="label_detlist_sum_liability">Liability $%1$s</string>
     <string name="label_detlist_to">%1$s</string>
     <string name="label_expense">Expense</string>
     <string name="label_firstday_mon">Monday</string>
@@ -33,7 +35,7 @@
     <string name="label_income">Income</string>
     <string name="label_initial_value">Initial</string>
     <string name="label_money">Money</string>
-    <string name="label_month_details">%1$s</string>
+    <string name="label_month_details">%1$s (%2$s records)</string>
     <string name="label_note">Note</string>
     <string name="label_other">Other</string>
     <string name="label_prefs_detlayout">Detail list type</string>
@@ -46,8 +48,8 @@
     <string name="label_prefs_maxrecords_sum">Set number of max records in detail list, -1 means no limit</string>
     <string name="label_reports">Reports</string>
     <string name="label_to_account">To</string>
-    <string name="label_week_details">%5$s %1$s to %2$s - Week %3$s/%4$s</string>
-    <string name="label_year_details">%1$s</string>
+    <string name="label_week_details">%5$s %1$s to %2$s - Week %3$s/%4$s (%6$s)</string>
+    <string name="label_year_details">%1$s (%2$s records)</string>
     <string name="msg_account_created">Account %1$s was created in type %2$s</string>
     <string name="msg_account_deleted">Account %1$s was deleted</string>
     <string name="msg_account_existed">%1$s is existed in type %2$s</string>
@@ -105,9 +107,11 @@
     <string name="label_prefs_datedcsv">Dated CSV</string>
     <string name="label_prefs_datedcsv_sum">Also write a CSV file that named with current date</string>
     
-     <string name="qmsg_clear_folder">Do you want to clear working folder %1$s? all CSV will be removed</string>
+    <string name="qmsg_clear_folder">Do you want to clear working folder %1$s? all CSV will be removed</string>
+    <string name="defacc_creditcard">Credit card</string>
 <!-- above are verified -->    
 
+    
     
 </resources>
 

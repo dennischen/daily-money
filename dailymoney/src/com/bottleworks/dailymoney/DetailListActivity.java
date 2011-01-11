@@ -22,6 +22,7 @@ import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.Contexts;
@@ -46,7 +47,9 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     DetailListHelper detailListHelper;
     
     TextView infoView;
-    TextView summaryView;
+    TextView sumIncomeView;
+    TextView sumExpenseView;
+    TextView sumLiabilityView;
     View toolbarView;
     
     private Date targetDate;
@@ -139,7 +142,9 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         
         infoView = (TextView)findViewById(R.id.detlist_infobar);
         toolbarView = findViewById(R.id.detlist_toolbar);
-        summaryView = (TextView)findViewById(R.id.detlist_summarybar);
+        sumIncomeView = (TextView)findViewById(R.id.detlist_sum_income);
+        sumExpenseView = (TextView)findViewById(R.id.detlist_sum_expense);
+        sumLiabilityView = (TextView)findViewById(R.id.detlist_sum_liability);
         
         
         findViewById(R.id.detlist_prev).setOnClickListener(this);
@@ -155,20 +160,23 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     
 
     private void reloadData() {
-        CalendarHelper cal = Contexts.instance().getCalendarHelper();
+        final CalendarHelper cal = Contexts.instance().getCalendarHelper();
         final Date start;
         final Date end;
+        infoView.setText("......");
+        sumIncomeView.setText("..");
+        sumExpenseView.setText("..");
+        sumLiabilityView.setText("..");
         switch(mode){
         case MODE_ALL:
             start = end = null;
             toolbarView.setVisibility(TextView.GONE);
-            infoView.setText(i18n.string(R.string.label_all_details));
             break;
         case MODE_MONTH:
             start = cal.monthStartDate(currentDate);
             end = cal.monthEndDate(currentDate);
             toolbarView.setVisibility(TextView.VISIBLE);
-            infoView.setText(i18n.string(R.string.label_month_details,monthDateFormat.format(currentDate)));
+            
             modeBtn.setVisibility(ImageButton.VISIBLE);
             if(allowYearSwitch){
                 modeBtn.setImageResource(R.drawable.btn_year);
@@ -180,7 +188,6 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
             start = cal.yearStartDate(currentDate);
             end = cal.yearEndDate(currentDate);
             toolbarView.setVisibility(TextView.VISIBLE);
-            infoView.setText(i18n.string(R.string.label_year_details,yearDateFormat.format(currentDate)));
 
             if(allowYearSwitch){
                 modeBtn.setVisibility(ImageButton.VISIBLE);
@@ -194,13 +201,10 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
             start = cal.weekStartDate(currentDate);
             end = cal.weekEndDate(currentDate);
             toolbarView.setVisibility(TextView.VISIBLE);
-            infoView.setText(i18n.string(R.string.label_week_details,weekDateFormat.format(start),weekDateFormat.format(end),
-                    cal.weekOfMonth(currentDate),cal.weekOfYear(currentDate),yearDateFormat.format(start)));
             modeBtn.setVisibility(ImageButton.VISIBLE);
             modeBtn.setImageResource(R.drawable.btn_month);
             break;
         }
-        summaryView.setText("......");
         final IDataProvider idp = Contexts.instance().getDataProvider();
 //        detailListHelper.reloadData(idp.listAllDetail());
         GUIs.doBusy(this,new GUIs.BusyAdapter() {
@@ -208,31 +212,40 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
             
             double expense;
             double income;
+            double liability;
             int count;
             
             @Override
             public void run() {
                 data = idp.listDetail(start,end,Contexts.instance().getPrefMaxRecords());
                 count = idp.countDetail(start, end);
-                income = idp.sumIncome(start,end);
-                expense = idp.sumExpense(start,end);
+                income = idp.sumFrom(AccountType.INCOME,start,end);
+                expense = idp.sumTo(AccountType.EXPENSE,start,end);
+                liability = idp.sumFrom(AccountType.LIABILITY,start,end) -  idp.sumTo(AccountType.LIABILITY,start,end);
             }
             @Override
             public void onBusyFinish() {
                 
               //update data
                 detailListHelper.reloadData(data);
-                summaryView.setText(i18n.string(R.string.label_detlist_summary,Integer.toString(count),Formats.double2String(income),Formats.double2String(expense)));
+                sumIncomeView.setText(i18n.string(R.string.label_detlist_sum_income,Formats.double2String(income)));
+                sumExpenseView.setText(i18n.string(R.string.label_detlist_sum_expense,Formats.double2String(expense)));
+                sumLiabilityView.setText(i18n.string(R.string.label_detlist_sum_liability,Formats.double2String(liability)));
+                
               //update info
                 switch(mode){
                 case MODE_ALL:
+                    infoView.setText(i18n.string(R.string.label_all_details,Integer.toString(count)));
                     break;
                 case MODE_MONTH:
+                    infoView.setText(i18n.string(R.string.label_month_details,monthDateFormat.format(currentDate),Integer.toString(count)));
                     break;
                 case MODE_YEAR:
+                    infoView.setText(i18n.string(R.string.label_year_details,yearDateFormat.format(currentDate),Integer.toString(count)));
                     break;
                 default:
-                    
+                    infoView.setText(i18n.string(R.string.label_week_details,weekDateFormat.format(start),weekDateFormat.format(end),
+                            cal.weekOfMonth(currentDate),cal.weekOfYear(currentDate),yearDateFormat.format(start),Integer.toString(count)));
                     break;
                 }
                 

@@ -17,8 +17,8 @@ public enum AccountType {
     INCOME("A",R.drawable.acc_tab_income),
     EXPENSE("B",R.drawable.acc_tab_expense),
     ASSET("C",R.drawable.acc_tab_asset),
-    DEBT("D",R.drawable.na),
-    OTHER("E",R.drawable.na);
+    LIABILITY("D",R.drawable.acc_tab_liability),
+    OTHER("E",R.drawable.acc_tab_other);
     
     String type;
     int drawable;
@@ -38,16 +38,16 @@ public enum AccountType {
         return drawable;
     }
 
-    static final AccountType[] supported = new  AccountType[]{INCOME,EXPENSE,ASSET/*,DEBT,OTHER*/};
+    static final AccountType[] supported = new  AccountType[]{INCOME,EXPENSE,ASSET,LIABILITY,OTHER};
     
-    static final AccountType[] from = new  AccountType[]{ASSET,INCOME};
+    static final AccountType[] from = new  AccountType[]{ASSET,INCOME,LIABILITY,OTHER};
     
-    static final AccountType[] fromIncome = new  AccountType[]{EXPENSE,ASSET/*,DEBT,OTHER*/};
-    static final AccountType[] fromAsset = new  AccountType[]{EXPENSE,ASSET/*,DEBT,OTHER*/};
+    static final AccountType[] fromIncome = new  AccountType[]{ASSET,EXPENSE,LIABILITY,OTHER};
+    static final AccountType[] fromAsset = new  AccountType[]{EXPENSE,ASSET,LIABILITY,OTHER};
     static final AccountType[] fromUnknow = new  AccountType[]{};
     static final AccountType[] fromExpense = new  AccountType[]{};
-    static final AccountType[] fromDebt = new  AccountType[]{};
-    static final AccountType[] fromOther = new  AccountType[]{};
+    static final AccountType[] fromLiability = new  AccountType[]{EXPENSE,ASSET,LIABILITY,OTHER};
+    static final AccountType[] fromOther = new  AccountType[]{EXPENSE,ASSET,LIABILITY,OTHER};
     
     static public AccountType[] getSupportedType(){
         return supported;
@@ -60,8 +60,8 @@ public enum AccountType {
             return EXPENSE;
         }else if(ASSET.type.equals(type)){
             return ASSET;
-        }else if(DEBT.type.equals(type)){
-            return DEBT;
+        }else if(LIABILITY.type.equals(type)){
+            return LIABILITY;
         }else if(OTHER.type.equals(type)){
             return OTHER;
         }
@@ -77,8 +77,8 @@ public enum AccountType {
             return i18n.string(R.string.label_expense);
         case ASSET:
             return i18n.string(R.string.label_asset);
-        case DEBT:
-            return i18n.string(R.string.label_debt);
+        case LIABILITY:
+            return i18n.string(R.string.label_liability);
         case OTHER:
             return i18n.string(R.string.label_other);
         default:
@@ -98,8 +98,8 @@ public enum AccountType {
             return fromExpense;
         case ASSET:
             return fromAsset;
-        case DEBT:
-            return fromDebt;
+        case LIABILITY:
+            return fromLiability;
         case OTHER:
             return fromOther;
         default:

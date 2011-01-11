@@ -217,10 +217,10 @@ public class InMemoryDataProvider implements IDataProvider {
     }
 
     @Override
-    public double sumIncome(Date start, Date end) {
+    public double sumFrom(AccountType type,Date start, Date end) {
         double sum = 0D;
         for(Detail d:listDetail(start,end,-1)){
-            if(d.getFrom().startsWith(AccountType.INCOME.type)){
+            if(d.getFrom().startsWith(type.type)){
                 sum += d.getMoney();
             }
         }
@@ -228,10 +228,10 @@ public class InMemoryDataProvider implements IDataProvider {
     }
 
     @Override
-    public double sumExpense(Date start, Date end) {
+    public double sumTo(AccountType type,Date start, Date end) {
         double sum = 0D;
         for(Detail d:listDetail(start,end,-1)){
-            if(d.getTo().startsWith(AccountType.EXPENSE.type)){
+            if(d.getTo().startsWith(type.type)){
                 sum += d.getMoney();
             }
         }

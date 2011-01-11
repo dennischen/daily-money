@@ -16,8 +16,15 @@
 	<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/detlist_infobar"
 	android:textSize="18sp" android:text="Information here" android:singleLine="true" android:background="@color/detlist_info_bg"
 	android:textColor="@color/detlist_info_fg" android:gravity="center"/>
-	<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/detlist_summarybar"
-    android:textSize="14sp" android:text="......" android:singleLine="true" android:background="@color/detlist_summary_bg"
-    android:textColor="@color/detlist_summary_fg" android:gravity="center"/>
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"  android:background="@color/detlist_summary_bg"
+    android:gravity="center">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_income"
+        android:textSize="14sp" android:text=".." android:textColor="@color/income_fge"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_expense"
+        android:textSize="14sp" android:text=".." android:textColor="@color/expense_fge"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_liability"
+        android:textSize="14sp" android:text=".." android:textColor="@color/liability_fge"/>
+    </LinearLayout>
+    
     <ListView android:id="@+id/detlist_list" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
 </LinearLayout>

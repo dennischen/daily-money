@@ -1,0 +1,18 @@
+= Last =
+== 0.9.0 ==
+=== Features ===
+ * 3 Add new account type Liability and Other
+ 
+=== Bugs ===
+ * 
+
+= History =
+== 0.9.0 ==
+=== Features ===
+ * Edit/Update account
+ * Edit/Update detail
+ * List weekly/monthly/weekly detail
+ * Export/Import to CSV
+ 
+=== Bugs ===
+ * 

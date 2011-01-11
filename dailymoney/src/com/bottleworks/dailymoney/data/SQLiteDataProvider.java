@@ -372,13 +372,13 @@ public class SQLiteDataProvider implements IDataProvider {
     }
 
     @Override
-    public double sumIncome(Date start, Date end) {
+    public double sumFrom(AccountType type,Date start, Date end) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         StringBuilder query =  new StringBuilder();
 
         StringBuilder where = new StringBuilder();
-        where.append(" WHERE ").append(COL_DET_FROM_TYPE).append(" = '").append(AccountType.INCOME.type).append("'");
+        where.append(" WHERE ").append(COL_DET_FROM_TYPE).append(" = '").append(type.type).append("'");
         if(start!=null){
             where.append(" AND ");
             where.append(COL_DET_DATE + ">=" + start.getTime());
@@ -404,13 +404,13 @@ public class SQLiteDataProvider implements IDataProvider {
     }
 
     @Override
-    public double sumExpense(Date start, Date end) {
+    public double sumTo(AccountType type,Date start, Date end) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         StringBuilder query =  new StringBuilder();
 
         StringBuilder where = new StringBuilder();
-        where.append(" WHERE ").append(COL_DET_TO_TYPE).append(" = '").append(AccountType.EXPENSE.type).append("'");
+        where.append(" WHERE ").append(COL_DET_TO_TYPE).append(" = '").append(type.type).append("'");
         if(start!=null){
             where.append(" AND ");
             where.append(COL_DET_DATE + ">=" + start.getTime());

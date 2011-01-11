@@ -16,15 +16,17 @@
     <string name="dtitem_detlist_year">年明細列表</string>
     <string name="dtitem_detlist">明細列表</string>
     <string name="dtitem_prefs">喜好設定</string>
-    <string name="label_all_details">全部明細</string>
+    <string name="label_all_details">全部明細(%1$s筆)</string>
     <string name="label_asset">資產</string>
     <string name="label_date">日期</string>
-    <string name="label_debt">負債</string>
+    <string name="label_liability">債務</string>
     <string name="label_detlayout_type1">帳戶-金錢</string>
     <string name="label_detlayout_type2">備註-金錢</string>
     <string name="label_detlist_from">&lt; %1$s</string>
     <string name="label_detlist_money">$%1$s</string>
-    <string name="label_detlist_summary">收入 +$%2$s , 支出 -$%3$s (共%1$s筆)</string>
+    <string name="label_detlist_sum_income">收入 $%1$s, </string>
+    <string name="label_detlist_sum_expense">支出 $%1$s, </string>
+    <string name="label_detlist_sum_liability">債務 $%1$s</string>
     <string name="label_detlist_to">%1$s</string>
     <string name="label_expense">花費</string>
     <string name="label_firstday_mon">星期一</string>
@@ -33,7 +35,7 @@
     <string name="label_income">收入</string>
     <string name="label_initial_value">初始值</string>
     <string name="label_money">金錢</string>
-    <string name="label_month_details">%1$s</string>
+    <string name="label_month_details">%1$s (%2$s筆)</string>
     <string name="label_note">備註</string>
     <string name="label_other">其他</string>
     <string name="label_prefs_detlayout_sum">選擇不同的明細排版</string>
@@ -46,8 +48,8 @@
     <string name="label_prefs_maxrecords">最大筆數</string>
     <string name="label_reports">報表</string>
     <string name="label_to_account">到帳戶</string>
-    <string name="label_week_details">%5$s %1$s 到 %2$s - 周數 %3$s/%4$s</string>
-    <string name="label_year_details">%1$s</string>
+    <string name="label_week_details">%5$s %1$s到%2$s - 周 %3$s/%4$s(%6$筆)</string>
+    <string name="label_year_details">%1$s (%1$s筆)</string>
     <string name="msg_account_created">帳戶 %1$s 成功的被建立在帳戶型態 %2$s 中</string>
     <string name="msg_account_deleted">帳戶 %1$s 成功的刪除</string>
     <string name="msg_account_existed">帳戶 %1$s 已經存在於帳戶型態 %2$s 中</string>
@@ -104,6 +106,7 @@
     <string name="label_prefs_datedcsv">日期名稱的CSV</string>
     <string name="label_prefs_datedcsv_sum">在匯出時,也同時建立一個包含日期名稱的CSV檔</string>  
     <string name="qmsg_clear_folder">您想要清除工作目錄%1$s嗎?所有的CSV檔將被移除</string>
+    <string name="defacc_creditcard">信用卡</string>
     <!-- above are verified -->
 
 </resources>

@@ -12,8 +12,7 @@
 	
 	<color name="detlist_info_bg">#303030</color>
 	<color name="detlist_info_fg">#F5B800</color>
-    <color name="detlist_summary_bg">#303030</color>
-    <color name="detlist_summary_fg">#00B8F5</color>	
+    <color name="detlist_summary_bg">#303030</color>	
 	
 	
 	<color name="expense_bg_s">#FFFF9AB5</color>
@@ -26,10 +25,20 @@
 	<color name="income_fge">#CC7AFFA2</color>
 	<color name="income_fg">#000000</color>
 	
-	<color name="asset_bg_s">#FF7A95FF</color>
-	<color name="asset_bg_e">#CC7A95FF</color>
-	<color name="asset_fge">#CC7A95FF</color>
+	<color name="asset_bg_s">#FFF6D174</color>
+	<color name="asset_bg_e">#CCF6D174</color>
+	<color name="asset_fge">#CCF6D174</color>
     <color name="asset_fg">#000000</color>
+    
+    <color name="liability_bg_s">#FF7A95FF</color>
+    <color name="liability_bg_e">#CC7A95FF</color>
+    <color name="liability_fge">#CC7A95FF</color>
+    <color name="liability_fg">#000000</color>
+    
+    <color name="other_bg_s">#FF61D0FF</color>
+    <color name="other_bg_e">#CC61D0FF</color>
+    <color name="other_fge">#CC61D0FF</color>
+    <color name="other_fg">#000000</color>
     
     <color name="unknow_bg_s">#FF555555</color>
     <color name="unknow_bg_e">#CC555555</color>
