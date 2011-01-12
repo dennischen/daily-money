@@ -1,8 +1,17 @@
 package com.bottleworks.dailymoney.ui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
+import android.os.Parcelable;
+import android.text.Html;
 
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.R;
@@ -16,8 +25,8 @@ import com.bottleworks.dailymoney.data.IDataProvider;
  */
 public class TestsDesktop extends AbstractDesktop {
     
-    public TestsDesktop(Context context) {
-        super(context);
+    public TestsDesktop(Activity activity) {
+        super(activity);
         
     }
     
@@ -35,8 +44,59 @@ public class TestsDesktop extends AbstractDesktop {
             @Override
             public void run() {
                 Contexts.uiInstance().getDataProvider().reset();
+                GUIs.shortToast(activity,"reset data provider");
             }}, "rest data provider",R.drawable.dt_item_test));
+        addItem(new DesktopItem(new Runnable(){
+            @Override
+            public void run() {
+                Intent intent = null;
+//                intent = new Intent(Intent.ACTION_MAIN);
+//                intent.addCategory(Intent.CATEGORY_HOME);
+                
+                
+//                intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                intent.setType("vnd.android.cursor.item/phone");
+                
+                activity.startActivityForResult(intent,1);
+                
+                
+                
+                
+                GUIs.shortToast(activity,"send mail");
+            }}, "start cal",R.drawable.dt_item_test));
         
+        addItem(new DesktopItem(new Runnable(){
+            @Override
+            public void run() {
+//                Intent intent = new Intent(Intent.ACTION_SEND);
+                Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                
+//                intent.setType("text/plain");
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Mail subject test "+new Date());
+//                intent.putExtra(android.content.Intent.EXTRA_TEXT, "Mail body test");
+                intent.setType("text/html");
+//                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Mail html subject test");
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<html><body><i>Mail body test</i>/"+ new Date()+"</body></html>"));
+                File folder = new File(Environment.getExternalStorageDirectory(),"bwDailyMoney");
+                File file1 = new File(folder,"accounts.csv");
+                File file2 = new File(folder,"details.csv");
+                ArrayList<Parcelable> attachment = new ArrayList<Parcelable>();
+                attachment.add( Uri.fromFile(file1));
+                attachment.add( Uri.fromFile(file2));
+                intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachment);
+                
+//                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file1));
+                
+                activity.startActivity(Intent.createChooser(intent, "Email:"));
+                
+//                activity.startActivityForResult(intent,1);
+                
+                
+                
+                
+                
+                GUIs.shortToast(activity,"send mail");
+            }}, "send mail",R.drawable.dt_item_test));
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
@@ -86,10 +146,10 @@ public class TestsDesktop extends AbstractDesktop {
     }
     
     private void testCreateTestdata(final int loop) {
-        GUIs.doBusy(context,new GUIs.BusyAdapter(){
+        GUIs.doBusy(activity,new GUIs.BusyAdapter(){
             @Override
             public void onBusyFinish() {
-                GUIs.shortToast(context,"create test data");
+                GUIs.shortToast(activity,"create test data");
             }
             @Override
             public void run() {

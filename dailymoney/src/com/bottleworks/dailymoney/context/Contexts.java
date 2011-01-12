@@ -1,21 +1,31 @@
 package com.bottleworks.dailymoney.context;
 
+import java.io.File;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.text.Html;
 
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.Constants;
+import com.bottleworks.dailymoney.R;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.data.InMemoryDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteDataProvider;
@@ -82,8 +92,68 @@ public class Contexts {
         return this;
     }
     
+    public boolean sharHtmlContent(String subject,String html){
+        return sharHtmlContent(subject,html,null);
+    }
+    public boolean sharHtmlContent(String subject,String html,List<File> attachments){
+        return sharContent(subject,html,true,attachments);
+    }
     
     
+    public boolean sharTextContent(String subject,String text){
+        return sharTextContent(subject,text,null);
+    }
+    public boolean sharTextContent(String subject,String text,List<File> attachments){
+        return sharContent(subject,text,false,attachments);
+    }
+
+    
+    public boolean sharContent(String subject,String content,boolean htmlContent,List<File> attachments){
+        if(!(context instanceof Activity)){
+            return false;
+        }
+        
+        Intent intent;
+        if(attachments == null || attachments.size()<=1){
+            intent = new Intent(Intent.ACTION_SEND);
+        }else{
+            intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+        }
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+        if(htmlContent){
+            intent.setType("text/html");
+            intent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml(content));
+        }else{
+            intent.setType("text/plain");
+            intent.putExtra(android.content.Intent.EXTRA_TEXT, content);
+        }
+        
+        ArrayList<Parcelable> parcels = new ArrayList<Parcelable>();
+        if (attachments != null) {
+            for (File f : attachments) {
+                parcels.add(Uri.fromFile(f));
+            }
+        }
+
+        if(parcels.size()==1){
+            intent.putExtra(Intent.EXTRA_STREAM, parcels.get(0));
+        }else if(parcels.size()>1){
+            intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, parcels);
+        }
+        try{
+            ((Activity)context).startActivity(Intent.createChooser(intent, i18n.string(R.string.clabel_share)));
+        }catch(Exception x){
+            Logger.e(x.getMessage(),x);
+            return false;
+        }
+        return true;
+    }
+    
+    
+    /**
+     * for ui context only
+     * @return
+     */
     public String getApplicationVersionName(){
         if(context instanceof Activity){
             Application app = ((Activity)context).getApplication();
@@ -98,6 +168,10 @@ public class Contexts {
         return "";
     }
     
+    /**
+     * for ui context only
+     * @return
+     */
     public int getApplicationVersionCode(){
         if(context instanceof Activity){
             Application app = ((Activity)context).getApplication();

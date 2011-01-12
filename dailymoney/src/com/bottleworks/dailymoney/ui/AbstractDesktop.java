@@ -1,6 +1,6 @@
 package com.bottleworks.dailymoney.ui;
 
-import android.content.Context;
+import android.app.Activity;
 
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.dailymoney.context.Contexts;
@@ -11,8 +11,8 @@ import com.bottleworks.dailymoney.context.Contexts;
  */
 public abstract class AbstractDesktop extends Desktop {
     protected I18N i18n;
-    public AbstractDesktop(Context context) {
-        super(context);
+    public AbstractDesktop(Activity activity) {
+        super(activity);
         i18n = Contexts.uiInstance().getI18n();
         init();
     }

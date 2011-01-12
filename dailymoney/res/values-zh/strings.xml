@@ -114,6 +114,10 @@
     <string name="label_detail">明細</string>
     <string name="label_account_only">只有帳戶</string>
     <string name="label_detail_only">只有明細</string>
+    
+    <string name="label_share_csv">分享CSV</string>
+    <string name="msg_share_csv">Daily Money CSV 檔</string>
+    <string name="qmsg_share_csv">Share which CSV files?</string>
     <!-- above are verified -->
 
 </resources>

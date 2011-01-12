@@ -9,6 +9,9 @@
 				android:gravity="center" android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_export"></Button>
 			<Button android:text="@string/label_import_csv" android:id="@+id/datamain_import_csv" android:layout_width="fill_parent"
 				android:gravity="center" android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_import"></Button>
+			<Button android:text="@string/label_share_csv" android:id="@+id/datamain_share_csv"
+                android:layout_width="fill_parent" android:gravity="center" android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/btn_share"></Button>
 			<Button android:text="@string/label_reset" android:id="@+id/datamain_reset" android:layout_width="fill_parent"
 				android:gravity="center" android:layout_height="wrap_content" android:drawableLeft="@drawable/btn_reset"></Button>
 			<Button android:text="@string/label_create_default" android:id="@+id/datamain_create_default"

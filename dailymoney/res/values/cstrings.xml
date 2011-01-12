@@ -11,6 +11,7 @@
     <string name="cact_stop">Stop</string>
     <string name="cact_update">Update</string>
     <string name="clabel_alert">Alert</string>
+    <string name="clabel_share">Share</string>
     <string name="clabel_busy">Busy</string>
     <string name="clabel_error">Error</string>
     <string name="clabel_info">Information</string>

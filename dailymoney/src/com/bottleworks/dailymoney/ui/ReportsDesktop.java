@@ -1,6 +1,6 @@
 package com.bottleworks.dailymoney.ui;
 
-import android.content.Context;
+import android.app.Activity;
 
 import com.bottleworks.dailymoney.R;
 /**
@@ -10,8 +10,8 @@ import com.bottleworks.dailymoney.R;
  */
 public class ReportsDesktop extends AbstractDesktop {
 
-    public ReportsDesktop(Context context) {
-        super(context);
+    public ReportsDesktop(Activity activity) {
+        super(activity);
     }
 
     @Override

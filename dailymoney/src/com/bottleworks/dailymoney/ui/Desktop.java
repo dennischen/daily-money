@@ -19,20 +19,20 @@ public class Desktop {
 
     protected String label;
     protected int icon;
-    protected Context context;
+    protected Activity activity;
 
     List<DesktopItem> items = new ArrayList<DesktopItem>();
 
-    public Desktop(Context context){
-        this(context,"",0);
+    public Desktop(Activity activity){
+        this(activity,"",0);
     }
     
-    public Desktop(Context context,String label, int icon) {
-        this(context,label, icon, null);
+    public Desktop(Activity activity,String label, int icon) {
+        this(activity,label, icon, null);
     }
 
-    public Desktop(Context context,String label, int icon, List<DesktopItem> items) {
-        this.context = context;
+    public Desktop(Activity activity,String label, int icon, List<DesktopItem> items) {
+        this.activity = activity;
         this.label = label;
         this.icon = icon;
         if (items != null) {

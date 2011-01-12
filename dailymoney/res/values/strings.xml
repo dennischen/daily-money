@@ -116,8 +116,14 @@
     <string name="label_detail">Detail</string>
     <string name="label_account_only">Account only</string>
     <string name="label_detail_only">Detail only</string>
+    
+    <string name="label_share_csv">Share CSV</string>
+    <string name="msg_share_csv_title">Daily Money %1$s</string>
+    <string name="msg_share_csv_content">Daily Money CSV 檔案</string>
+    <string name="qmsg_share_csv">分享那些CSV檔?</string>
 <!-- above are verified -->    
 
+    
    
     
 </resources>

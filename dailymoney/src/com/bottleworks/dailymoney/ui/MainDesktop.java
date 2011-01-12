@@ -2,7 +2,7 @@ package com.bottleworks.dailymoney.ui;
 
 import java.util.Date;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
@@ -22,8 +22,8 @@ import com.bottleworks.dailymoney.data.Detail;
  */
 public class MainDesktop extends AbstractDesktop {
 
-    public MainDesktop(Context context) {
-        super(context);
+    public MainDesktop(Activity activity) {
+        super(activity);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class MainDesktop extends AbstractDesktop {
         DesktopItem adddetdt = new DesktopItem(new Runnable() {
             public void run() {
                 Detail d = new Detail("", "", new Date(), 0D, "");
-                DetailEditorDialog dlg = new DetailEditorDialog(context, new DetailEditorDialog.OnFinishListener() {
+                DetailEditorDialog dlg = new DetailEditorDialog(activity, new DetailEditorDialog.OnFinishListener() {
                     @Override
                     public boolean onFinish(DetailEditorDialog dlg, View v, Object data) {
                         switch (v.getId()) {
@@ -43,7 +43,7 @@ public class MainDesktop extends AbstractDesktop {
                             Contexts.uiInstance().getDataProvider().newDetail(dt);
                             break;
                         case R.id.deteditor_close:
-                            GUIs.shortToast(context, i18n.string(R.string.msg_created_detail, dlg.getCounter()));
+                            GUIs.shortToast(activity, i18n.string(R.string.msg_created_detail, dlg.getCounter()));
                         }
                         return true;
                     }
@@ -52,28 +52,28 @@ public class MainDesktop extends AbstractDesktop {
             }
         }, i18n.string(R.string.dtitem_adddetail), R.drawable.dt_item_adddetail);
 
-        Intent intent = new Intent(context, DetailListActivity.class);
+        Intent intent = new Intent(activity, DetailListActivity.class);
         intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_WEEK);
-        DesktopItem weeklist = new DesktopItem(new IntentRun(context, intent),
+        DesktopItem weeklist = new DesktopItem(new IntentRun(activity, intent),
                 i18n.string(R.string.dtitem_detlist_week), R.drawable.dt_item_detail_week);
 
-        intent = new Intent(context, DetailListActivity.class);
+        intent = new Intent(activity, DetailListActivity.class);
         intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_MONTH);
-        DesktopItem monthlist = new DesktopItem(new IntentRun(context, intent),
+        DesktopItem monthlist = new DesktopItem(new IntentRun(activity, intent),
                 i18n.string(R.string.dtitem_detlist_month), R.drawable.dt_item_detail_month);
 
-        intent = new Intent(context, DetailListActivity.class);
+        intent = new Intent(activity, DetailListActivity.class);
         intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_YEAR);
-        DesktopItem yearlist = new DesktopItem(new IntentRun(context, intent),
+        DesktopItem yearlist = new DesktopItem(new IntentRun(activity, intent),
                 i18n.string(R.string.dtitem_detlist_year), R.drawable.dt_item_detail_year);
 
-        DesktopItem accmgntdt = new DesktopItem(new ActivityRun(context, AccountMgntActivity.class),
+        DesktopItem accmgntdt = new DesktopItem(new ActivityRun(activity, AccountMgntActivity.class),
                 i18n.string(R.string.dtitem_accmgnt), R.drawable.dt_item_account);
         
-        DesktopItem datamaindt = new DesktopItem(new ActivityRun(context, DataMaintenanceActivity.class),
+        DesktopItem datamaindt = new DesktopItem(new ActivityRun(activity, DataMaintenanceActivity.class),
                 i18n.string(R.string.dtitem_datamain), R.drawable.dt_item_datamain);
         
-        DesktopItem prefdt = new DesktopItem(new ActivityRun(context, PrefsActivity.class),
+        DesktopItem prefdt = new DesktopItem(new ActivityRun(activity, PrefsActivity.class),
                 i18n.string(R.string.dtitem_prefs), R.drawable.dt_item_prefs);
         
 

@@ -1,10 +1,15 @@
 = Last =
 == 0.9.2 ==
 === Features ===
- * 
+ * 7    Support back(share) CSV file by email
 === Bugs ===
  * 
 
+
+
+
+
+<hr/>
 = History =
 == 0.9.1 ==
 === Features ===
@@ -19,7 +24,4 @@
  * Edit/Update account
  * Edit/Update detail
  * List weekly/monthly/weekly detail
- * Export/Import to CSV
- 
-=== Bugs ===
- * 
+ * Export/Import to CSV 

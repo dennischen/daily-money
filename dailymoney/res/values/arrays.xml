@@ -18,7 +18,7 @@
         <item>@string/label_firstday_mon</item>
     </string-array>
     
-    <string-array name="csv_impexp_options">
+    <string-array name="csv_type_options">
         <item>@string/clabel_all</item>
         <item>@string/label_account_only</item>
         <item>@string/label_detail_only</item>

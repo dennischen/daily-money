@@ -7,7 +7,9 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -63,6 +65,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     private void initialListener() {
         findViewById(R.id.datamain_import_csv).setOnClickListener(this);
         findViewById(R.id.datamain_export_csv).setOnClickListener(this);
+        findViewById(R.id.datamain_share_csv).setOnClickListener(this);
         findViewById(R.id.datamain_reset).setOnClickListener(this);
         findViewById(R.id.datamain_create_default).setOnClickListener(this);
         findViewById(R.id.datamain_clear_folder).setOnClickListener(this);
@@ -76,6 +79,9 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             break;
         case R.id.datamain_export_csv:
             doExportCSV();
+            break;
+        case R.id.datamain_share_csv:
+            doShareCSV();
             break;
         case R.id.datamain_reset:
             doReset();
@@ -172,17 +178,26 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
 
     private void doExportCSV() {        
         new AlertDialog.Builder(this).setTitle(i18n.string(R.string.qmsg_export_csv))
-                .setItems(R.array.csv_impexp_options, new DialogInterface.OnClickListener() {
+                .setItems(R.array.csv_type_options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, final int which) {
                         final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+                            int count = -1;
                             public void onBusyError(Throwable t) {
                                 GUIs.error(DataMaintenanceActivity.this, t);
+                            }
+                            public void onBusyFinish() {
+                                if(count>=0){
+                                    String msg = i18n.string(R.string.msg_csv_exported,Integer.toString(count),workingFolder);
+                                    GUIs.alert(DataMaintenanceActivity.this,msg);
+                                }else{
+                                    GUIs.alert(DataMaintenanceActivity.this,R.string.msg_no_csv);
+                                }
                             }
                             @Override
                             public void run() {
                                 try {
-                                    _exportToCSV(which);
+                                    count = _exportToCSV(which);
                                 } catch (Exception e) {
                                     throw new RuntimeException(e.getMessage(),e);
                                 }
@@ -196,18 +211,55 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     private void doImportCSV() {
         
         new AlertDialog.Builder(this).setTitle(i18n.string(R.string.qmsg_import_csv))
-                .setItems(R.array.csv_impexp_options, new DialogInterface.OnClickListener() {
+                .setItems(R.array.csv_type_options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, final int which) {
                         final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+                            int count = -1;
                             public void onBusyError(Throwable t) {
                                 GUIs.error(DataMaintenanceActivity.this, t);
                             }
-
+                            public void onBusyFinish() {
+                                if(count>=0){
+                                    String msg = i18n.string(R.string.msg_csv_imported,Integer.toString(count),workingFolder);
+                                    GUIs.alert(DataMaintenanceActivity.this,msg);
+                                }else{
+                                    GUIs.alert(DataMaintenanceActivity.this,R.string.msg_no_csv);
+                                }
+                            }
                             @Override
                             public void run() {
                                 try {
-                                    _importFromCSV(which);
+                                    count = _importFromCSV(which);
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e.getMessage(),e);
+                                }
+                            }
+                        };
+                        GUIs.doBusy(DataMaintenanceActivity.this, job);
+                    }
+                }).show();
+    }
+    
+    private void doShareCSV() {        
+        new AlertDialog.Builder(this).setTitle(i18n.string(R.string.qmsg_share_csv))
+                .setItems(R.array.csv_type_options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, final int which) {
+                        final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+                            int count = -1;
+                            public void onBusyError(Throwable t) {
+                                GUIs.error(DataMaintenanceActivity.this, t);
+                            }
+                            public void onBusyFinish() {
+                                if(count<0){
+                                    GUIs.alert(DataMaintenanceActivity.this,R.string.msg_no_csv);
+                                }
+                            }
+                            @Override
+                            public void run() {
+                                try {
+                                    count = _shareCSV(which);
                                 } catch (Exception e) {
                                     throw new RuntimeException(e.getMessage(),e);
                                 }
@@ -231,7 +283,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     }
 
     /** running in thread **/
-    private void _exportToCSV(int mode) throws IOException {
+    private int _exportToCSV(int mode) throws IOException {
         if(Contexts.DEBUG){
             Logger.d("export to csv "+mode);
         }
@@ -247,7 +299,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             case 2:
                 detail = true;
                 break;
-            default :return;
+            default :return -1;
         }
         IDataProvider idp = Contexts.uiInstance().getDataProvider();
         StringWriter sw;
@@ -306,14 +358,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             }
         }
         
-        final String msg = i18n.string(R.string.msg_csv_exported,Integer.toString(count),workingFolder);
-        GUIs.post(new Runnable(){
-            @Override
-            public void run() {
-                GUIs.alert(DataMaintenanceActivity.this,msg);                
-            }});
-        
-
+        return count;
     }
     
     private int getAppver(String str){
@@ -330,7 +375,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     }
     
     /** running in thread **/
-    private void _importFromCSV(int mode) throws Exception{
+    private int _importFromCSV(int mode) throws Exception{
         if(Contexts.DEBUG){
             Logger.d("import from csv "+mode);
         }
@@ -346,23 +391,16 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             case 2:
                 detail = true;
                 break;
-            default :return;
+            default :return -1;
         }
         
         IDataProvider idp = Contexts.uiInstance().getDataProvider();
-        Runnable nocsv = new Runnable(){
-            @Override
-            public void run() {
-                GUIs.alert(DataMaintenanceActivity.this,R.string.msg_no_csv);                
-            }};
-            
         File details = getWorkingFile("details.csv");
         File accounts = getWorkingFile("accounts.csv");
         
         if((detail && (!details.exists() || !details.canRead())) || 
                 (account && (!accounts.exists() || !accounts.canRead())) ){
-            GUIs.post(nocsv);
-            return;
+            return -1;
         }
         
         CsvReader accountReader=null;
@@ -378,14 +416,12 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             }
             
             if((accountReader!=null && !accountReader.readHeaders())){
-                GUIs.post(nocsv);
-                return;
+                return -1;
             }
             
             //don't combine with account checker
             if((detailReader!=null && !detailReader.readHeaders())){
-                GUIs.post(nocsv);
-                return;
+                return -1;
             }
             
             if(detail){
@@ -421,13 +457,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                     Logger.d("import to accounts.csv ver:"+appver);
                 }
             }
-            
-            final String msg = i18n.string(R.string.msg_csv_imported,Integer.toString(count),workingFolder);
-            GUIs.post(new Runnable(){
-                @Override
-                public void run() {
-                    GUIs.alert(DataMaintenanceActivity.this,msg);                
-                }});
+            return count;
         }finally{
             if(accountReader!=null){
                 accountReader.close();
@@ -436,5 +466,57 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 detailReader.close();
             }
         }
+    }
+    
+    
+    /** running in thread **/
+    private int _shareCSV(int mode) throws Exception{
+        if(Contexts.DEBUG){
+            Logger.d("share csv "+mode);
+        }
+        boolean account = false;
+        boolean detail = false;
+        switch(mode){
+            case 0:
+                account = detail = true;
+                break;
+            case 1:
+                account = true;
+                break;
+            case 2:
+                detail = true;
+                break;
+            default :return -1;
+        }
+        
+        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        File details = getWorkingFile("details.csv");
+        File accounts = getWorkingFile("accounts.csv");
+        
+        if((detail && (!details.exists() || !details.canRead())) || 
+                (account && (!accounts.exists() || !accounts.canRead())) ){
+            return -1;
+        }
+        
+        int count = 0;
+
+        List<File> files = new ArrayList<File>();
+        
+        if (detail) {
+            files.add(details);
+            count++;
+        }
+
+        if (account) {
+            files.add(accounts);
+            count++;
+        }
+        
+        if(count>0){
+            DateFormat df = Contexts.uiInstance().getDateFormat();
+            Contexts.uiInstance().sharTextContent(i18n.string(R.string.msg_share_csv_title,df.format(new Date())),i18n.string(R.string.msg_share_csv_content),files);
+        }
+        return count;
+            
     }
 }
