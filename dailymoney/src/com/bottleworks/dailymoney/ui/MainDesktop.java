@@ -13,6 +13,7 @@ import com.bottleworks.dailymoney.DetailEditorDialog;
 import com.bottleworks.dailymoney.DetailListActivity;
 import com.bottleworks.dailymoney.PrefsActivity;
 import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.data.Detail;
 /**
  * 
@@ -39,7 +40,7 @@ public class MainDesktop extends AbstractDesktop {
                         switch (v.getId()) {
                         case R.id.deteditor_ok:
                             Detail dt = (Detail) data;
-                            Contexts.instance().getDataProvider().newDetail(dt);
+                            Contexts.uiInstance().getDataProvider().newDetail(dt);
                             break;
                         case R.id.deteditor_close:
                             GUIs.shortToast(context, i18n.string(R.string.msg_created_detail, dlg.getCounter()));

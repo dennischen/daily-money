@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney;
 
-import com.bottleworks.dailymoney.ui.Contexts;
+
+import com.bottleworks.dailymoney.context.Contexts;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -28,7 +29,7 @@ public class PrefsActivity extends PreferenceActivity implements OnSharedPrefere
     protected void onPause(){
         super.onPause();
         if(dirty){
-            Contexts.instance().setPreferenceDirty();
+            Contexts.uiInstance().setPreferenceDirty();
         }
         dirty = false;
         PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);

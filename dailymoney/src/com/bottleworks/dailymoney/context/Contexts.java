@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney.ui;
+package com.bottleworks.dailymoney.context;
 
 import java.text.DateFormat;
 
@@ -28,7 +28,8 @@ import com.bottleworks.dailymoney.data.SQLiteHelper;
  */
 public class Contexts {
 
-    private static Contexts instance;
+    private static Contexts uiContexts;
+//    private static Contexts serviceContexts;
     
     private Context context;
     
@@ -52,16 +53,19 @@ public class Contexts {
     private Contexts(){
     }
     
-    static public Contexts instance(){
-        if(instance == null){
+    /** get a Contexts instance for activity use **/
+    static public Contexts uiInstance(){
+        if(uiContexts == null){
             synchronized(Contexts.class){
-                if(instance==null){
-                    instance = new Contexts();
+                if(uiContexts==null){
+                    uiContexts = new Contexts();
                 }
             }
         }
-        return instance;
+        return uiContexts;
     }
+    
+    
 
 
     

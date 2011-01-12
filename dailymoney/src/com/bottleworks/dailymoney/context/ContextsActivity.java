@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney.ui;
+package com.bottleworks.dailymoney.context;
 
 
 import com.bottleworks.commons.util.I18N;
@@ -19,19 +19,19 @@ public class ContextsActivity extends Activity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        Contexts.instance().initContext(this);
+        Contexts.uiInstance().initContext(this);
         i18n = new I18N(this);
     }
     
     @Override
     protected void onResume(){
         super.onResume();
-        Contexts.instance().initContext(this);
+        Contexts.uiInstance().initContext(this);
     }
     
     @Override
     protected void onPause(){
         super.onPause();
-        Contexts.instance().cleanContext(this);
+        Contexts.uiInstance().cleanContext(this);
     }
 }

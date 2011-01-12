@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
 /**
@@ -22,7 +23,7 @@ public class TestsDesktop extends AbstractDesktop {
     
     @Override
     public boolean isAvailable(){
-        return Contexts.instance().isPrefOpenTestsDesktop();
+        return Contexts.uiInstance().isPrefOpenTestsDesktop();
     }
 
     @Override
@@ -33,7 +34,7 @@ public class TestsDesktop extends AbstractDesktop {
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
-                Contexts.instance().getDataProvider().reset();
+                Contexts.uiInstance().getDataProvider().reset();
             }}, "rest data provider",R.drawable.dt_item_test));
         
         addItem(new DesktopItem(new Runnable(){
@@ -92,7 +93,7 @@ public class TestsDesktop extends AbstractDesktop {
             }
             @Override
             public void run() {
-                IDataProvider idp = Contexts.instance().getDataProvider();
+                IDataProvider idp = Contexts.uiInstance().getDataProvider();
                 new DataCreator(idp,i18n).createTestData(loop);
             }});
         

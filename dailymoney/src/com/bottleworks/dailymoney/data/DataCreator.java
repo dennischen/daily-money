@@ -6,7 +6,7 @@ import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.R;
-import com.bottleworks.dailymoney.ui.Contexts;
+import com.bottleworks.dailymoney.context.Contexts;
 
 /**
  * 
@@ -38,7 +38,8 @@ public class DataCreator {
     }
 
     public void createTestData(int loop) {
-        CalendarHelper cal = Contexts.instance().getCalendarHelper();
+        //only for call from ui, so use uiInstance
+        CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
         
         Account income1 = createAccountNoThrow(i18n.string(R.string.defacc_salary), AccountType.INCOME, 0D);
         Account income2 = createAccountNoThrow(i18n.string(R.string.defacc_otherincome), AccountType.INCOME, 0D);

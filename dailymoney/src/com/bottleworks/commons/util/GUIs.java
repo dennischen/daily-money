@@ -21,7 +21,7 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.bottleworks.dailymoney.R;
-import com.bottleworks.dailymoney.ui.Contexts;
+import com.bottleworks.dailymoney.context.Contexts;
 
 /**
  * 
@@ -119,11 +119,11 @@ public class GUIs {
     }
     
     static public void errorToast(Context context,Throwable e){
-        shortToast(context,Contexts.instance().getI18n().string(R.string.cmsg_error,e.getMessage()));
+        shortToast(context,Contexts.uiInstance().getI18n().string(R.string.cmsg_error,e.getMessage()));
     }
     
     static public void error(Context context,Throwable e){
-        alert(context,Contexts.instance().getI18n().string(R.string.cmsg_error,e.getMessage()));
+        alert(context,Contexts.uiInstance().getI18n().string(R.string.cmsg_error,e.getMessage()));
     }
     
     static public View inflateView(Context context,ViewGroup parent, int resourceid){
@@ -156,7 +156,7 @@ public class GUIs {
         doBusy(context,(Runnable)r);
     }
     static public void doBusy(Context context,Runnable r){
-        doBusy(context,Contexts.instance().getI18n().string(R.string.cmsg_busy),r); 
+        doBusy(context,Contexts.uiInstance().getI18n().string(R.string.cmsg_busy),r); 
     }
     
     //lock & release rotation!! not work in sdk(2.1,2.2) but work fine in my i9000

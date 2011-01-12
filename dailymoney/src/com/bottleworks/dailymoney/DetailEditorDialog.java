@@ -24,11 +24,11 @@ import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.NamedItem;
 
 /**
@@ -82,7 +82,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
             setTitle(R.string.title_deteditor_update);
         }
         setContentView(R.layout.deteditor);
-        format = Contexts.instance().getDateFormat();
+        format = Contexts.uiInstance().getDateFormat();
         initialEditor();
     }
 
@@ -206,8 +206,8 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     }
 
     private void reloadSpinnerData() {
-        IDataProvider idp = Contexts.instance().getDataProvider();
-         I18N i18n = Contexts.instance().getI18n();
+        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+         I18N i18n = Contexts.uiInstance().getI18n();
 
         // initial from
         AccountType[] avail = AccountType.getFromType();
@@ -302,7 +302,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
     @Override
     public void onClick(View v) {
-        CalendarHelper cal = Contexts.instance().getCalendarHelper();
+        CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
         switch (v.getId()) {
         case R.id.deteditor_ok:
             doOk();
@@ -350,7 +350,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     }
 
     private void doOk() {
-        I18N i18n = Contexts.instance().getI18n();
+        I18N i18n = Contexts.uiInstance().getI18n();
         // verify
         int fromPos = fromEditor.getSelectedItemPosition();
         if (Spinner.INVALID_POSITION == fromPos) {
@@ -366,13 +366,14 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         }
         String datestr = dateEditor.getText().toString().trim();
         if ("".equals(datestr)) {
+            dateEditor.requestFocus();
             GUIs.alert(getContext(), i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_date)));
             return;
         }
 
         Date date = null;
         try {
-            date = Contexts.instance().getDateFormat().parse(datestr);
+            date = Contexts.uiInstance().getDateFormat().parse(datestr);
         } catch (ParseException e) {
             Logger.e(e.getMessage(), e);
             GUIs.errorToast(getContext(), e);
@@ -381,6 +382,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
         String moneystr = moneyEditor.getText().toString();
         if ("".equals(moneystr)) {
+            moneyEditor.requestFocus();
             GUIs.alert(getContext(), i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_money)));
             return;
         }
@@ -421,7 +423,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
                 moneyEditor.requestFocus();
                 noteEditor.setText("");
                 counterCreate++;
-                okBtn.setText(Contexts.instance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
+                okBtn.setText(Contexts.uiInstance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
                 cancelBtn.setVisibility(Button.GONE);
                 closeBtn.setVisibility(Button.VISIBLE);
             } else {

@@ -1,7 +1,6 @@
 package com.bottleworks.dailymoney;
 
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,11 +19,11 @@ import android.widget.TextView;
 
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.I18N;
+import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.NamedItem;
 
 /**
@@ -67,7 +66,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
     public void setup(ListView listview){
         
         int layout = 0;
-        switch(Contexts.instance().getPrefDetailListLayout()){
+        switch(Contexts.uiInstance().getPrefDetailListLayout()){
         case 2:
             layout = R.layout.detlist_item2;
             break;
@@ -84,7 +83,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
             listView.setOnItemClickListener(this);
         }
         
-        IDataProvider idp = Contexts.instance().getDataProvider();
+        IDataProvider idp = Contexts.uiInstance().getDataProvider();
         for(Account acc:idp.listAccount(null)){
             accountCache.put(acc.getId(),acc);
         }
@@ -111,7 +110,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
     public void reloadData(List<Detail> data) {
         listViewData = data;;
         listViewMapList.clear();
-        DateFormat dateFormat = Contexts.instance().getDateFormat();//for 2010/01/01
+        DateFormat dateFormat = Contexts.uiInstance().getDateFormat();//for 2010/01/01
         for (Detail det : listViewData) {
             Map<String, Object> row = toDetailMap(det,dateFormat);
             listViewMapList.add(row);
@@ -119,8 +118,6 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
 
         listViewAdapter.notifyDataSetChanged();
     }
-
-    private DecimalFormat moneyFormat = new DecimalFormat("###,###,###,##0.###");
 
     private Map<String, Object> toDetailMap(Detail det,DateFormat format){
         Map<String, Object> row = new HashMap<String, Object>();
@@ -146,12 +143,12 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
         case R.id.deteditor_ok:
             Detail workingdet = (Detail)data;
             boolean modeCreate = dlg.isModeCreate();
-            IDataProvider idp = Contexts.instance().getDataProvider();
+            IDataProvider idp = Contexts.uiInstance().getDataProvider();
             if (modeCreate) {
-                Contexts.instance().getDataProvider().newDetail(workingdet);
+                Contexts.uiInstance().getDataProvider().newDetail(workingdet);
                 if(!listener.onDetailCreated(workingdet)){
                     listViewData.add(0,workingdet);
-                    listViewMapList.add(0,toDetailMap(workingdet,Contexts.instance().getDateFormat()));
+                    listViewMapList.add(0,toDetailMap(workingdet,Contexts.uiInstance().getDateFormat()));
                     listViewAdapter.notifyDataSetChanged();
                 }
             } else {
@@ -160,7 +157,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
                 if(!listener.onDetailUpdated(workingdet)){
                     int pos = listViewData.indexOf(odet);
                     listViewData.set(pos,workingdet);
-                    listViewMapList.set(pos,toDetailMap(workingdet,Contexts.instance().getDateFormat()));
+                    listViewMapList.set(pos,toDetailMap(workingdet,Contexts.uiInstance().getDateFormat()));
                     listViewAdapter.notifyDataSetChanged();
                 }
             }
@@ -193,7 +190,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
 
     public void doDeleteDetail(int pos) {
         Detail d = (Detail) listViewData.get(pos);
-        Contexts.instance().getDataProvider().deleteDetail(d.getId());
+        Contexts.uiInstance().getDataProvider().deleteDetail(d.getId());
         if(!listener.onDetailDeleted(d)){
             listViewData.remove(pos);
             listViewMapList.remove(pos);

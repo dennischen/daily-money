@@ -1,8 +1,9 @@
 package com.bottleworks.dailymoney;
 
+import com.bottleworks.dailymoney.context.ContextsActivity;
+
 import android.os.Bundle;
 
-import com.bottleworks.dailymoney.ui.ContextsActivity;
 /**
  * 
  * @author dennis

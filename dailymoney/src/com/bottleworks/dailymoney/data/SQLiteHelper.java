@@ -1,7 +1,7 @@
 package com.bottleworks.dailymoney.data;
 
 import com.bottleworks.commons.util.Logger;
-import com.bottleworks.dailymoney.ui.Contexts;
+import com.bottleworks.dailymoney.context.Contexts;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -24,12 +24,12 @@ import android.widget.TextView;
 
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.dailymoney.context.Contexts;
+import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.DuplicateKeyException;
 import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.ui.Contexts;
-import com.bottleworks.dailymoney.ui.ContextsActivity;
 import com.bottleworks.dailymoney.ui.NamedItem;
 
 /**
@@ -150,7 +150,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     }
 
     private void reloadData() {
-        IDataProvider idp = Contexts.instance().getDataProvider();
+        IDataProvider idp = Contexts.uiInstance().getDataProvider();
         listViewData = null;
 
         AccountType type = AccountType.find(currTab);
@@ -222,7 +222,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
         Account acc = (Account) listViewData.get(pos);
         String name = acc.getName();
 
-        Contexts.instance().getDataProvider().deleteAccount(acc.getId());
+        Contexts.uiInstance().getDataProvider().deleteAccount(acc.getId());
         reloadData();
         GUIs.shortToast(this, i18n.string(R.string.msg_account_deleted, name));
 
@@ -254,7 +254,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
             boolean modeCreate = dlg.isModeCreate();
             String name = workingacc.getName();
             String type = workingacc.getType();
-            IDataProvider idp = Contexts.instance().getDataProvider();
+            IDataProvider idp = Contexts.uiInstance().getDataProvider();
             Account namedAcc = idp.findAccount(type,name);
             if (modeCreate) {
                 if (namedAcc != null) {

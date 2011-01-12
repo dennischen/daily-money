@@ -60,11 +60,11 @@ public class Formats {
     }
     
     public static String normalizeDatetime2String(Date date) {
-        return norDateFormat.format(date);
+        return norDatetimeFormat.format(date);
     }
     
     public static Date normalizeString2Datetime(String date) throws ParseException {
-        return norDateFormat.parse(date);
+        return norDatetimeFormat.parse(date);
     }
 
     public static String money2String(Double money) {

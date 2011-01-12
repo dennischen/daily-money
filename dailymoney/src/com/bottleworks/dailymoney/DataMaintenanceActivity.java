@@ -20,12 +20,12 @@ import com.bottleworks.commons.util.Files;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.context.Contexts;
+import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.ui.Contexts;
-import com.bottleworks.dailymoney.ui.ContextsActivity;
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 /**
@@ -51,10 +51,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datamain);
-        workingFolder = Contexts.instance().getPrefWorkingFolder();
-        backupcsv = Contexts.instance().isPrefBackupCSV();
+        workingFolder = Contexts.uiInstance().getPrefWorkingFolder();
+        backupcsv = Contexts.uiInstance().isPrefBackupCSV();
         
-        vercode = Contexts.instance().getApplicationVersionCode();
+        vercode = Contexts.uiInstance().getApplicationVersionCode();
         
         initialListener();
 
@@ -133,7 +133,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
 
             @Override
             public void run() {
-                IDataProvider idp = Contexts.instance().getDataProvider();
+                IDataProvider idp = Contexts.uiInstance().getDataProvider();
                 new DataCreator(idp, i18n).createDefaultAccount();
             }
         };
@@ -154,7 +154,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
             @Override
             public void run() {
-                IDataProvider idp = Contexts.instance().getDataProvider();
+                IDataProvider idp = Contexts.uiInstance().getDataProvider();
                 idp.reset();
             }
         };
@@ -249,7 +249,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 break;
             default :return;
         }
-        IDataProvider idp = Contexts.instance().getDataProvider();
+        IDataProvider idp = Contexts.uiInstance().getDataProvider();
         StringWriter sw;
         CsvWriter csvw;
         int count = 0;
@@ -349,7 +349,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             default :return;
         }
         
-        IDataProvider idp = Contexts.instance().getDataProvider();
+        IDataProvider idp = Contexts.uiInstance().getDataProvider();
         Runnable nocsv = new Runnable(){
             @Override
             public void run() {

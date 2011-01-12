@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Logger;
-import com.bottleworks.dailymoney.ui.Contexts;
+import com.bottleworks.dailymoney.context.Contexts;
 
 import android.content.ContentValues;
 import android.database.Cursor;

@@ -24,8 +24,8 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.dailymoney.ui.Contexts;
-import com.bottleworks.dailymoney.ui.ContextsActivity;
+import com.bottleworks.dailymoney.context.Contexts;
+import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.ui.Desktop;
 import com.bottleworks.dailymoney.ui.MainDesktop;
 import com.bottleworks.dailymoney.ui.ReportsDesktop;
@@ -68,7 +68,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     private void initialApplicationInfo() {
         appinfo = i18n.string(R.string.app_name);
-        String ver = Contexts.instance().getApplicationVersionName();
+        String ver = Contexts.uiInstance().getApplicationVersionName();
         appinfo += " ver : "+ver;
     }
 
@@ -121,7 +121,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     private void loadAppInfo(){
         Date now = new Date();
-        String date = Contexts.instance().getDateFormat().format(now)+" "+dayOfWeekFormat.format(now)+" - ";
+        String date = Contexts.uiInstance().getDateFormat().format(now)+" "+dayOfWeekFormat.format(now)+" - ";
         ((TextView)findViewById(R.id.dt_info)).setText(date + appinfo);
     }
     

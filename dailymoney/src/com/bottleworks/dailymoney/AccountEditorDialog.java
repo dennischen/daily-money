@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,10 +19,9 @@ import android.widget.TextView;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.I18N;
+import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
-import com.bottleworks.dailymoney.data.Detail;
-import com.bottleworks.dailymoney.ui.Contexts;
 import com.bottleworks.dailymoney.ui.NamedItem;
 
 /**
@@ -102,7 +100,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         String type = workingAccount.getType();
         int selpos,i;
         selpos = i = -1;
-        I18N i18n = Contexts.instance().getI18n();
+        I18N i18n = Contexts.uiInstance().getI18n();
         for (AccountType at : AccountType.getSupportedType()) {
             i++;
             Map<String, Object> row = new HashMap<String, Object>();
@@ -174,7 +172,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     }
     
     private void doOk(){   
-        I18N i18n = Contexts.instance().getI18n();
+        I18N i18n = Contexts.uiInstance().getI18n();
         //verify
         if(Spinner.INVALID_POSITION==typeEditor.getSelectedItemPosition()){
             GUIs.shortToast(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_type)));
@@ -182,11 +180,13 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         }
         String name = nameEditor.getText().toString().trim();
         if("".equals(name)){
+            nameEditor.requestFocus();
             GUIs.alert(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_name)));
             return;
         }
         String initval = initvalEditor.getText().toString();
         if("".equals(initval)){
+            initvalEditor.requestFocus();
             GUIs.alert(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.label_initial_value)));
             return;
         }
@@ -204,7 +204,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
                 nameEditor.setText("");
                 nameEditor.requestFocus();
                 counterCreate++;
-                okBtn.setText(Contexts.instance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
+                okBtn.setText(Contexts.uiInstance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
                 cancelBtn.setVisibility(Button.GONE);
                 closeBtn.setVisibility(Button.VISIBLE);
             } else {
