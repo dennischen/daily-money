@@ -92,23 +92,23 @@ public class Contexts {
         return this;
     }
     
-    public boolean sharHtmlContent(String subject,String html){
-        return sharHtmlContent(subject,html,null);
+    public boolean shareHtmlContent(String subject,String html){
+        return shareHtmlContent(subject,html,null);
     }
-    public boolean sharHtmlContent(String subject,String html,List<File> attachments){
-        return sharContent(subject,html,true,attachments);
+    public boolean shareHtmlContent(String subject,String html,List<File> attachments){
+        return shareContent(subject,html,true,attachments);
     }
     
     
-    public boolean sharTextContent(String subject,String text){
-        return sharTextContent(subject,text,null);
+    public boolean shareTextContent(String subject,String text){
+        return shareTextContent(subject,text,null);
     }
-    public boolean sharTextContent(String subject,String text,List<File> attachments){
-        return sharContent(subject,text,false,attachments);
+    public boolean shareTextContent(String subject,String text,List<File> attachments){
+        return shareContent(subject,text,false,attachments);
     }
 
     
-    public boolean sharContent(String subject,String content,boolean htmlContent,List<File> attachments){
+    public boolean shareContent(String subject,String content,boolean htmlContent,List<File> attachments){
         if(!(context instanceof Activity)){
             return false;
         }

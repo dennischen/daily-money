@@ -489,7 +489,6 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             default :return -1;
         }
         
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
         File details = getWorkingFile("details.csv");
         File accounts = getWorkingFile("accounts.csv");
         
@@ -514,7 +513,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         
         if(count>0){
             DateFormat df = Contexts.uiInstance().getDateFormat();
-            Contexts.uiInstance().sharTextContent(i18n.string(R.string.msg_share_csv_title,df.format(new Date())),i18n.string(R.string.msg_share_csv_content),files);
+            Contexts.uiInstance().shareTextContent(i18n.string(R.string.msg_share_csv_title,df.format(new Date())),i18n.string(R.string.msg_share_csv_content),files);
         }
         return count;
             
