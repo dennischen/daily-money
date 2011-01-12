@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,6 +53,8 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     String appinfo;
 
     private DateFormat dayOfWeekFormat = new SimpleDateFormat("EEEE"); 
+    
+    DesktopItem lastClickedItem;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -163,7 +166,8 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
          if(parent == gridView){
-             getCurrentDesktopItems().get(pos).run();
+             lastClickedItem = getCurrentDesktopItems().get(pos);
+             lastClickedItem.run();
          }
     }
     
@@ -176,6 +180,15 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
             }
         }
         return Collections.EMPTY_LIST;
+    }
+    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+            Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(lastClickedItem!=null){
+            lastClickedItem.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     

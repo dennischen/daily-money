@@ -5,13 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import android.widget.TextView;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.I18N;
+import com.bottleworks.dailymoney.calculator2.Calculator;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
@@ -31,15 +35,19 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  */
 public class AccountEditorDialog extends Dialog implements android.view.View.OnClickListener{
 
-    
+    private final int CAL_CODE = 99;
     private boolean modeCreate;
     private int counterCreate;
     private Account account;
     private Account workingAccount;
     private OnFinishListener listener;
+    Activity activity;
     
-    public AccountEditorDialog(Context context,OnFinishListener listener,boolean modeCreate,Account account) {
-        super(context,android.R.style.Theme);
+    ImageButton cal2Btn;
+    
+    public AccountEditorDialog(Activity activity,OnFinishListener listener,boolean modeCreate,Account account) {
+        super(activity,android.R.style.Theme);
+        this.activity = activity;
         this.modeCreate = modeCreate;
         this.account = account;
         this.listener = listener;
@@ -131,7 +139,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         });
         
         
-        onTypeChanged(AccountType.getSupportedType()[selpos]);
+        
         
         okBtn = (Button)findViewById(R.id.acceditor_ok); 
         if(modeCreate){
@@ -146,9 +154,13 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         
         cancelBtn = (Button)findViewById(R.id.acceditor_cancel); 
         closeBtn =  (Button)findViewById(R.id.acceditor_close);
+        cal2Btn = (ImageButton)findViewById(R.id.acceditor_cal2);
         
         cancelBtn.setOnClickListener(this);
         closeBtn.setOnClickListener(this);
+        cal2Btn.setOnClickListener(this);
+        
+        onTypeChanged(AccountType.getSupportedType()[selpos]);
     }
     
     @Override
@@ -163,10 +175,20 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         case R.id.acceditor_close:
             doClose();
             break;
+        case R.id.acceditor_cal2:
+            doCalculator2();
+            break;
         }
     }
     
     
+    private void doCalculator2() {
+        Intent intent = null;
+        intent = new Intent(activity,Calculator.class);
+        intent.putExtra(Calculator.VALUE_PARAMETER,initvalEditor.getText().toString());
+        activity.startActivityForResult(intent,CAL_CODE);
+    }
+
     public int getCounter(){
         return counterCreate;
     }
@@ -228,6 +250,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     private void onTypeChanged(AccountType type){
         boolean enableInitval = !(type==AccountType.INCOME || type==AccountType.EXPENSE);
         initvalEditor.setEnabled(enableInitval);
+        cal2Btn.setEnabled(enableInitval);
         if(!enableInitval){
             initvalEditor.setText("0");
         }

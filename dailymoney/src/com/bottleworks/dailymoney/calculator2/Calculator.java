@@ -63,7 +63,6 @@ public class Calculator extends Activity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        System.out.println("22>>>>>>>>>>>>>>>>>>>>"+this);
         setContentView(R.layout.cal2_main);
 
         mPersist = new Persist(this);
@@ -174,7 +173,6 @@ public class Calculator extends Activity {
             }else{
                 /** modify by dennis **/
                 String result = mLogic.calculateNumbericResult();
-                System.out.println(">>>>>>>>>>>>>RESULT "+result);
                 Intent intent = new Intent();
                 intent.putExtra(VALUE_PARAMETER,result);
                 setResult(RESULT_OK, intent);

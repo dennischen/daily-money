@@ -87,6 +87,10 @@ public class Desktop {
             return label;
         }
 
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            
+        }
+
     }
 
     public static class IntentRun implements Runnable {

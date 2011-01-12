@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +26,7 @@ import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.calculator2.Calculator;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
@@ -39,6 +42,8 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  */
 public class DetailEditorDialog extends Dialog implements android.view.View.OnClickListener {
 
+    private final int CAL_CODE = 88;
+    
     private boolean modeCreate;
     private int counterCreate;
     private Detail detail;
@@ -57,9 +62,12 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
     private SimpleAdapter fromAccountAdapter;
     private SimpleAdapter toAccountAdapter;
+    
+    Activity activity;
 
-    public DetailEditorDialog(Context context, OnFinishListener listener, boolean modeCreate, Detail detail) {
-        super(context, android.R.style.Theme);
+    public DetailEditorDialog(Activity activity, OnFinishListener listener, boolean modeCreate, Detail detail) {
+        super(activity, android.R.style.Theme);
+        this.activity = activity;
         this.modeCreate = modeCreate;
         this.detail = detail;
         this.listener = listener;
@@ -137,6 +145,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
             findViewById(R.id.deteditor_today).setOnClickListener(this);
             findViewById(R.id.deteditor_datepicker).setOnClickListener(this);
         }
+        findViewById(R.id.deteditor_cal2).setOnClickListener(this);
 
         okBtn = (Button) findViewById(R.id.deteditor_ok);
         if (modeCreate) {
@@ -346,7 +355,17 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
                 Logger.e(e.getMessage(), e);
             }
             break;
+        case R.id.deteditor_cal2:
+            doCalculator2();
+            break;
         }
+    }
+    
+    private void doCalculator2() {
+        Intent intent = null;
+        intent = new Intent(activity,Calculator.class);
+        intent.putExtra(Calculator.VALUE_PARAMETER,moneyEditor.getText().toString());
+        activity.startActivityForResult(intent,CAL_CODE);
     }
 
     private void doOk() {
