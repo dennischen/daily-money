@@ -253,7 +253,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
                 return;
             } else {
                 idp.updateAccount(account.getId(),workingAccount);
-                GUIs.shortToast(this, i18n.string(R.string.msg_account_updated, name,AccountType.getDisplay(i18n, account.getType())));
+                GUIs.shortToast(this, i18n.string(R.string.msg_account_updated, name,AccountType.getDisplay(i18n, workingAccount.getType())));
             }
             
             setResult(RESULT_OK);
