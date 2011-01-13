@@ -95,7 +95,7 @@
     
     <string name="qmsg_export_csv">Do you want to export CSV and replace it?</string>
     <string name="qmsg_import_csv">Do you want to import CSV and replace data?</string>
-    <string name="qmsg_reset">Do you want to reset all data?</string>
+    <string name="qmsg_reset">Do you want to reset data?</string>
     <string name="qmsg_create_default">Do you want to create default data?</string>
     <string name="dtitem_datamain">Data</string>
     

@@ -157,23 +157,28 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
 
     private void doReset() {
 
-        final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+        
+        
+        new AlertDialog.Builder(this).setTitle(i18n.string(R.string.qmsg_reset))
+        .setItems(R.array.csv_type_options, new DialogInterface.OnClickListener() {
             @Override
-            public void run() {
-                IDataProvider idp = Contexts.uiInstance().getDataProvider();
-                idp.reset();
+            public void onClick(DialogInterface dialog, final int which) {
+                final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+                    public void onBusyError(Throwable t) {
+                        GUIs.error(DataMaintenanceActivity.this, t);
+                    }
+                    @Override
+                    public void run() {
+                        try {
+                            _resetDate(which);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e.getMessage(),e);
+                        }
+                    }
+                };
+                GUIs.doBusy(DataMaintenanceActivity.this, job);
             }
-        };
-
-        GUIs.confirm(this, i18n.string(R.string.qmsg_reset), new GUIs.OnFinishListener() {
-            @Override
-            public boolean onFinish(Object data) {
-                if (((Integer) data).intValue() == GUIs.OK_BUTTON) {
-                    GUIs.doBusy(DataMaintenanceActivity.this, job);
-                }
-                return true;
-            }
-        });
+        }).show();
     }
 
     private void doExportCSV() {        
@@ -280,6 +285,35 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         }
         File file = new File(folder, name);
         return file;
+    }
+    
+    
+    private void _resetDate(int mode){
+        if(Contexts.DEBUG){
+            Logger.d("reset date"+mode);
+        }
+        boolean account = false;
+        boolean detail = false;
+        switch(mode){
+            case 0:
+                account = detail = true;
+                break;
+            case 1:
+                account = true;
+                break;
+            case 2:
+                detail = true;
+                break;
+        }
+        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        if(account && detail){
+            idp.reset();
+        }else if(account){
+            idp.deleteAllAccount();
+        }else if(detail){
+            idp.deleteAllDetail();
+        }
+        
     }
 
     /** running in thread **/

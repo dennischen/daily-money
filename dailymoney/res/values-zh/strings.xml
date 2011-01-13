@@ -83,7 +83,7 @@
     
     <string name="label_export_csv">匯出 CSV</string>
     <string name="label_import_csv">匯入 CSV</string>
-    <string name="label_reset">重置所有資料</string>
+    <string name="label_reset">重置資料</string>
     <string name="label_create_default">建立預設的資料(帳戶)</string>
 
     <string name="msg_csv_exported">資料(%1$s)全部被匯出到 %2$s</string>
@@ -94,7 +94,7 @@
     
     <string name="qmsg_export_csv">您想要匯出資料並覆蓋CSV檔嗎?</string>
     <string name="qmsg_import_csv">您想要匯入CSV檔並覆蓋資料嗎?</string>
-    <string name="qmsg_reset">您想要重置所有資料嗎?</string>
+    <string name="qmsg_reset">您想要重置資料嗎?</string>
     <string name="qmsg_create_default">您想要建立預設的資料(帳戶)嗎?</string>
     <string name="dtitem_datamain">資料維護</string>  
     
