@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,8 +22,11 @@ import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.dailymoney.calculator2.Calculator;
 import com.bottleworks.dailymoney.context.Contexts;
+import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
+import com.bottleworks.dailymoney.data.DuplicateKeyException;
+import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.NamedItem;
 
 /**
@@ -33,26 +34,20 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  * @author dennis
  *
  */
-public class AccountEditorDialog extends Dialog implements android.view.View.OnClickListener{
+public class AccountEditorActivity extends ContextsActivity implements android.view.View.OnClickListener{
 
-    private final int CAL_CODE = 99;
+    public static final String PARAMETER_MODE_CREATE = "modeCreate";
+    public static final String PARAMETER_ACCOUNT = "account";
+        
     private boolean modeCreate;
     private int counterCreate;
     private Account account;
     private Account workingAccount;
-    private OnFinishListener listener;
+
     Activity activity;
     
     ImageButton cal2Btn;
     
-    public AccountEditorDialog(Activity activity,OnFinishListener listener,boolean modeCreate,Account account) {
-        super(activity,android.R.style.Theme);
-        this.activity = activity;
-        this.modeCreate = modeCreate;
-        this.account = account;
-        this.listener = listener;
-        workingAccount = clone(account);
-    }
     
     /** clone account without id **/
     private Account clone(Account account){
@@ -62,25 +57,21 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.acceditor);
+        initIntent();
+        initialEditor();
+    }
+    
+    private void initIntent() {
+        modeCreate = getIntent().getExtras().getBoolean(PARAMETER_MODE_CREATE,true);
+        account = (Account)getIntent().getExtras().get(PARAMETER_ACCOUNT);
+        workingAccount = clone(account);
+        
         if(modeCreate){
             setTitle(R.string.title_acceditor_create);
         }else{
             setTitle(R.string.title_acceditor_update);
         }
-        setContentView(R.layout.acceditor);
-        initialEditor();
-    }
-    
-    public Account getAccount(){
-        return account;
-    }
-    
-//    public Account getWorkingAccount(){
-//        return workingAccount;
-//    }
-    
-    public boolean isModeCreate(){
-        return modeCreate;
     }
     
     
@@ -119,7 +110,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
                 selpos = i;
             }
         }
-        SimpleAdapter adapter = new SimpleAdapter(getContext(), data, R.layout.simple_spitem, spfrom, spto);
+        SimpleAdapter adapter = new SimpleAdapter(this, data, R.layout.simple_spitem, spfrom, spto);
         adapter.setDropDownViewResource(R.layout.simple_spdd);
         adapter.setViewBinder(new AccountTypeViewBinder());
         typeEditor.setAdapter(adapter);
@@ -184,67 +175,102 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     
     private void doCalculator2() {
         Intent intent = null;
-        intent = new Intent(activity,Calculator.class);
+        intent = new Intent(this,Calculator.class);
+        intent.putExtra(Calculator.PARAMETER_NEED_RESULT,true);
         intent.putExtra(Calculator.PARAMETER_START_VALUE,initvalEditor.getText().toString());
-        activity.startActivityForResult(intent,CAL_CODE);
-    }
-
-    public int getCounter(){
-        return counterCreate;
+        startActivityForResult(intent,Constants.REQUEST_CALCULATOR_CODE);
     }
     
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Constants.REQUEST_CALCULATOR_CODE && resultCode==Activity.RESULT_OK){
+            String result = data.getExtras().getString(Calculator.PARAMETER_RESULT_VALUE);
+            try{
+                double d = Double.parseDouble(result);
+                initvalEditor.setText(Formats.double2String(d));
+            }catch(Exception x){
+            }
+        }
+    }
     private void doOk(){   
         I18N i18n = Contexts.uiInstance().getI18n();
         //verify
         if(Spinner.INVALID_POSITION==typeEditor.getSelectedItemPosition()){
-            GUIs.shortToast(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_type)));
+            GUIs.shortToast(this,i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_type)));
             return;
         }
         String name = nameEditor.getText().toString().trim();
         if("".equals(name)){
             nameEditor.requestFocus();
-            GUIs.alert(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_name)));
+            GUIs.alert(this,i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_name)));
             return;
         }
         String initval = initvalEditor.getText().toString();
         if("".equals(initval)){
             initvalEditor.requestFocus();
-            GUIs.alert(getContext(),i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.label_initial_value)));
+            GUIs.alert(this,i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.label_initial_value)));
             return;
         }
+        String type = AccountType.getSupportedType()[typeEditor.getSelectedItemPosition()].getType();
         //assign
-        workingAccount.setType(AccountType.getSupportedType()[typeEditor.getSelectedItemPosition()].getType());
+        workingAccount.setType(type);
         workingAccount.setName(name);
         workingAccount.setInitialValue(Formats.string2Double(initval));
-        if (listener == null) {
-            dismiss();
-        } else if (listener.onFinish(this, findViewById(R.id.acceditor_ok), workingAccount)) {
-            // continue to editor next record if is new mode
-            if (modeCreate) {
-                workingAccount = clone(workingAccount);
-                workingAccount.setName("");
-                nameEditor.setText("");
-                nameEditor.requestFocus();
-                counterCreate++;
-                okBtn.setText(Contexts.uiInstance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
-                cancelBtn.setVisibility(Button.GONE);
-                closeBtn.setVisibility(Button.VISIBLE);
+        
+        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        
+        Account namedAcc = idp.findAccount(type,name);
+        if (modeCreate) {
+            if (namedAcc != null) {
+                GUIs.alert(
+                        this,i18n.string(R.string.msg_account_existed, name,
+                                AccountType.getDisplay(i18n, namedAcc.getType())));
+                return;
             } else {
-                dismiss();
+                try {
+                    idp.newAccount(workingAccount);
+                    GUIs.shortToast(this, i18n.string(R.string.msg_account_created, name,AccountType.getDisplay(i18n, workingAccount.getType())));
+                } catch (DuplicateKeyException e) {
+                    GUIs.alert(this, i18n.string(R.string.cmsg_error, e.getMessage()));
+                    return;
+                }
             }
+            
+            workingAccount = clone(workingAccount);
+            workingAccount.setName("");
+            nameEditor.setText("");
+            nameEditor.requestFocus();
+            counterCreate++;
+            okBtn.setText(Contexts.uiInstance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
+            cancelBtn.setVisibility(Button.GONE);
+            closeBtn.setVisibility(Button.VISIBLE);
+            
+        } else {
+            if (namedAcc != null && !namedAcc.getId().equals(account.getId())) {
+                GUIs.alert(this,i18n.string(R.string.msg_account_existed, name,
+                                AccountType.getDisplay(i18n, namedAcc.getType())));
+                return;
+            } else {
+                idp.updateAccount(account.getId(),workingAccount);
+                GUIs.shortToast(this, i18n.string(R.string.msg_account_updated, name,AccountType.getDisplay(i18n, account.getType())));
+            }
+            
+            setResult(RESULT_OK);
+            finish();
         }
+        
     }
     
-    private void doCancel(){
-        if(listener==null || listener.onFinish(this,findViewById(R.id.acceditor_cancel), null)){
-            dismiss();
-        }
+    private void doCancel() {
+        setResult(RESULT_CANCELED);
+        finish();
     }
-    
-    private void doClose(){
-        if(listener==null || listener.onFinish(this,findViewById(R.id.acceditor_close), null)){
-            dismiss();
-        }
+
+    private void doClose() {
+        setResult(RESULT_OK);
+        GUIs.shortToast(this,i18n.string(R.string.msg_created_account,counterCreate));
+        finish();
     }
     
     private void onTypeChanged(AccountType type){
@@ -254,11 +280,6 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
         if(!enableInitval){
             initvalEditor.setText("0");
         }
-    }
-
-
-    public static interface OnFinishListener {   
-        public boolean onFinish(AccountEditorDialog dlg,View v,Object data);
     }
     
     class AccountTypeViewBinder implements SimpleAdapter.ViewBinder{
@@ -273,17 +294,17 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
             }
             if("display".equals(name)){
                 if(AccountType.INCOME == at){
-                   ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.income_fgd));
+                   ((TextView)view).setTextColor(getResources().getColor(R.color.income_fgd));
                 }else if(AccountType.ASSET == at){
-                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.asset_fgd)); 
+                    ((TextView)view).setTextColor(getResources().getColor(R.color.asset_fgd)); 
                 }else if(AccountType.EXPENSE == at){
-                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.expense_fgd));
+                    ((TextView)view).setTextColor(getResources().getColor(R.color.expense_fgd));
                 }else if(AccountType.LIABILITY == at){
-                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.liability_fgd)); 
+                    ((TextView)view).setTextColor(getResources().getColor(R.color.liability_fgd)); 
                 }else if(AccountType.OTHER == at){
-                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.other_fgd)); 
+                    ((TextView)view).setTextColor(getResources().getColor(R.color.other_fgd)); 
                 }else{
-                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.unknow_fgd));
+                    ((TextView)view).setTextColor(getResources().getColor(R.color.unknow_fgd));
                 }
                 ((TextView)view).setText(item.getToString());
                 return true;

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -28,7 +30,6 @@ import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
-import com.bottleworks.dailymoney.data.DuplicateKeyException;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.NamedItem;
 
@@ -39,7 +40,7 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  * @author dennis
  * @see {@link AccountType}
  */
-public class AccountMgntActivity extends ContextsActivity implements OnTabChangeListener,OnItemClickListener, AccountEditorDialog.OnFinishListener {
+public class AccountMgntActivity extends ContextsActivity implements OnTabChangeListener,OnItemClickListener{
     
     private static String[] bindingFrom = new String[] { "name", "initvalue", "id" };
     
@@ -145,8 +146,20 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
 //        listView.setOnItemClickListener(this);
         
         registerForContextMenu(listView);
-        
-        
+    }
+    
+    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Constants.REQUEST_ACCOUNT_EDITOR_CODE && resultCode==Activity.RESULT_OK){
+            GUIs.delayPost(new Runnable(){
+                @Override
+                public void run() {
+                    reloadData();
+                }});
+            
+        }
     }
 
     private void reloadData() {
@@ -230,70 +243,29 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
 
     private void doEditAccount(int pos) {
         Account acc = (Account) listViewData.get(pos);
-        AccountEditorDialog dlg = new AccountEditorDialog(this, this, false, acc);
-        dlg.show();
+        Intent intent = null;
+        intent = new Intent(this,AccountEditorActivity.class);
+        intent.putExtra(AccountEditorActivity.PARAMETER_MODE_CREATE,false);
+        intent.putExtra(AccountEditorActivity.PARAMETER_ACCOUNT,acc);
+        startActivityForResult(intent,Constants.REQUEST_ACCOUNT_EDITOR_CODE);
     }
     
     private void doCopyAccount(int pos) {
         Account acc = (Account) listViewData.get(pos);
-        AccountEditorDialog dlg = new AccountEditorDialog(this, this, true, acc);
-        dlg.show();
+        Intent intent = null;
+        intent = new Intent(this,AccountEditorActivity.class);
+        intent.putExtra(AccountEditorActivity.PARAMETER_MODE_CREATE,true);
+        intent.putExtra(AccountEditorActivity.PARAMETER_ACCOUNT,acc);
+        startActivityForResult(intent,Constants.REQUEST_ACCOUNT_EDITOR_CODE);
     }
 
     private void doNewAccount() {
         Account acc = new Account(currTab, "", 0D);
-        AccountEditorDialog dlg = new AccountEditorDialog(this, this, true, acc);
-        dlg.show();
-    }
-
-    @Override
-    public boolean onFinish(AccountEditorDialog dlg, View v, Object data) {
-        switch (v.getId()) {
-        case R.id.acceditor_ok:
-            Account workingacc = (Account)data;
-            boolean modeCreate = dlg.isModeCreate();
-            String name = workingacc.getName();
-            String type = workingacc.getType();
-            IDataProvider idp = Contexts.uiInstance().getDataProvider();
-            Account namedAcc = idp.findAccount(type,name);
-            if (modeCreate) {
-                if (namedAcc != null) {
-                    GUIs.alert(
-                            this,i18n.string(R.string.msg_account_existed, name,
-                                    AccountType.getDisplay(i18n, namedAcc.getType())));
-                    return false;
-                } else {
-                    try {
-                        idp.newAccount(workingacc);
-                        GUIs.shortToast(this, i18n.string(R.string.msg_account_created, name,AccountType.getDisplay(i18n, workingacc.getType())));
-                    } catch (DuplicateKeyException e) {
-                        GUIs.alert(this, i18n.string(R.string.cmsg_error, e.getMessage()));
-                        return false;
-                    }
-
-                }
-            } else {
-                Account oacc = ((AccountEditorDialog)dlg).getAccount();
-                if (namedAcc != null && !namedAcc.getId().equals(oacc.getId())) {
-                    GUIs.alert(
-                            this,i18n.string(R.string.msg_account_existed, name,
-                                    AccountType.getDisplay(i18n, namedAcc.getType())));
-                    return false;
-                } else {
-                    idp.updateAccount(oacc.getId(),workingacc);
-                    GUIs.shortToast(this, i18n.string(R.string.msg_account_updated, name,AccountType.getDisplay(i18n, oacc.getType())));
-                }
-                reloadData();
-            }
-            break;
-        case R.id.acceditor_cancel:
-            break;
-        case R.id.acceditor_close:
-            GUIs.shortToast(this,i18n.string(R.string.msg_created_account,dlg.getCounter()));
-            reloadData();
-            break;
-        }
-        return true;
+        Intent intent = null;
+        intent = new Intent(this,AccountEditorActivity.class);
+        intent.putExtra(AccountEditorActivity.PARAMETER_MODE_CREATE,true);
+        intent.putExtra(AccountEditorActivity.PARAMETER_ACCOUNT,acc);
+        startActivityForResult(intent,Constants.REQUEST_ACCOUNT_EDITOR_CODE);
     }
 
     @Override

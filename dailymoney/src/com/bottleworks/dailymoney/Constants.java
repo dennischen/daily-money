@@ -17,5 +17,6 @@ public class Constants {
     
     public static final int REQUEST_CALCULATOR_CODE = 1;
     public static final int REQUEST_DETAIL_EDITOR_CODE = 2;
+    public static final int REQUEST_ACCOUNT_EDITOR_CODE = 3;
     
 }
