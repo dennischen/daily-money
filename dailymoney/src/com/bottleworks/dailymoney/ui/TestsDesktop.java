@@ -52,13 +52,14 @@ public class TestsDesktop extends AbstractDesktop {
             public void run() {
                 Intent intent = null;
                 intent = new Intent(activity,Calculator.class);
-                intent.putExtra(Calculator.VALUE_PARAMETER,"12345");
+                intent.putExtra(Calculator.PARAMETER_START_VALUE,"12345");
+                intent.putExtra(Calculator.PARAMETER_NEED_RESULT,true);
                 activity.startActivityForResult(intent,999);
-                GUIs.shortToast(activity,"cal2");
+                GUIs.shortToast(activity,"Call Calculator");
             }}, "start cal",R.drawable.dt_item_test){
             public void onActivityResult(int requestCode, int resultCode, Intent data) {
                 if(requestCode==999 && resultCode==Activity.RESULT_OK){
-                    System.out.println(">>>>>>>>>>>Calculator value = "+data.getExtras().getString(Calculator.VALUE_PARAMETER));
+                    GUIs.shortToast(activity,"Calculator result = "+data.getExtras().getString(Calculator.PARAMETER_RESULT_VALUE));
                 }
             }
         });

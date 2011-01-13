@@ -19,10 +19,10 @@
 <resources>
 
 
-    <color name="magic_flame">#00ffffff</color>
-    <color name="button_text">#ffffffff</color>
+    <color name="cal2_magic_flame">#00ffffff</color>
+    <color name="cal2_button_text">#ffffffff</color>
     
-    <style name="button_style">
+    <style name="cal2_button_style">
        <item name="android:textSize">40dp</item>
        <item name="android:layout_width">fill_parent</item>
        <item name="android:layout_height">fill_parent</item>
@@ -32,15 +32,15 @@
        <item name="android:layout_marginLeft">1dp</item>
     </style>
 
-    <style name="digit_button_style" parent="button_style">
+    <style name="cal2_digit_button_style" parent="cal2_button_style">
        <item name="android:background">@drawable/cal2_blue_button</item>
     </style>
 
-    <style name="button_small_style" parent="button_style">
+    <style name="cal2_button_small_style" parent="cal2_button_style">
        <item name="android:textSize">30dp</item>
     </style>
 
-    <style name="display_style">
+    <style name="cal2_display_style">
        <item name="android:textSize">40dp</item>
        <item name="android:gravity">right|center_vertical</item>
        <item name="android:textColor">#ffffff</item>
@@ -58,75 +58,77 @@
 
     <string name="cal2_app_name">Calculator</string>
     <!-- If there is a syntax error in the user entered calculation, an error dialog will appear.  This is the title. -->
-    <string name="error">Error</string>
+    <string name="cal2_error">Error</string>
     <!-- Displayed numbers for the digit buttons -->
-    <string name="digit0">0</string>
+    <string name="cal2_digit0">0</string>
     <!-- Displayed numbers for the digit buttons -->
-    <string name="digit1">1</string>
+    <string name="cal2_digit1">1</string>
     <!-- Displayed numbers for the digit buttons -->
-    <string name="digit2">2</string>
+    <string name="cal2_digit2">2</string>
     <!-- Displayed numbers for the digit buttons -->
-    <string name="digit3">3</string>
+    <string name="cal2_digit3">3</string>
     <!-- Displayed numbers for the digit buttons -->
-    <string name="digit4">4</string>
+    <string name="cal2_digit4">4</string>
     <!-- Displayed numbers for the digit buttons -->
-    <string name="digit5">5</string>
+    <string name="cal2_digit5">5</string>
     <!-- Displayed numbers for the digit buttons -->
-    <string name="digit6">6</string>
+    <string name="cal2_digit6">6</string>
     <!-- Displayed numbers for the digit buttons -->
-    <string name="digit7">7</string>
+    <string name="cal2_digit7">7</string>
     <!-- Displayed numbers for the digit buttons -->
-    <string name="digit8">8</string>
+    <string name="cal2_digit8">8</string>
     <!-- Displayed numbers for the digit buttons -->
-    <string name="digit9">9</string>
+    <string name="cal2_digit9">9</string>
     <!-- Button name on screen to delete the last entered digit or operator -->
-    <string name="del">DELETE</string>
+    <string name="cal2_del">DELETE</string>
     <!-- Button name on screen to clear the entire calculation field -->
-    <string name="clear">CLEAR</string>
+    <string name="cal2_clear">CLEAR</string>
     <!-- Do not translate. Unicode division sign; don't translate. Displayed as button on screen. -->
-    <string name="div">\u00f7</string>
+    <string name="cal2_div">\u00f7</string>
     <!-- Do not translate. Unicode multiplication sign; don't translate. Displayed as button on screen. -->
-    <string name="mul">\u00d7</string>
+    <string name="cal2_mul">\u00d7</string>
     <!-- Do not translate. Plus sign, displayed as button on screen -->
-    <string name="plus">+</string>
+    <string name="cal2_plus">+</string>
     <!-- Do not translate. Unicode minus sign; don't translate. Displayed as button on screen. -->
-    <string name="minus">\u2212</string>
+    <string name="cal2_minus">\u2212</string>
     <!-- Do not translate. Decimal point; don't translate. Displayed as button on screen. -->
-    <string name="dot">.</string>
+    <string name="cal2_dot">.</string>
     <!-- Do not translate. Equal sign; don't translate. Displayed as button on screen. -->
-    <string name="equal">=</string>
+    <string name="cal2_equal">=</string>
     <!-- Do not translate. Down arrow; don't translate. Displayed as button on screen. -->
-    <string name="enter">\u2193</string>
+    <string name="cal2_enter">\u2193</string>
     <!-- Displayed on buttons on screen for the sin function. -->
-    <string name="sin">sin</string>
+    <string name="cal2_sin">sin</string>
     <!-- Displayed on buttons on screen for the cos function. -->
-    <string name="cos">cos</string>
+    <string name="cal2_cos">cos</string>
     <!-- Displayed on buttons on screen for the tan function. -->
-    <string name="tan">tan</string>
+    <string name="cal2_tan">tan</string>
        
     <!-- Do not translate. Unicode pi sign; don't translate. Displayed as button on screen. -->
-    <string name="pi">\u03c0</string>
+    <string name="cal2_pi">\u03c0</string>
     <!-- Displayed on buttons on screen for the e function. -->
-    <string name="e">e</string>
+    <string name="cal2_e">e</string>
     <!-- Displayed on buttons on screen for the ln function. -->
-    <string name="ln">ln</string>
+    <string name="cal2_ln">ln</string>
     <!-- Displayed on buttons on screen for the log function. -->
-    <string name="lg">log</string>
+    <string name="cal2_lg">log</string>
     <!-- Displayed on buttons on screen for a left parenthesis. -->
-    <string name="leftParen">(</string>
+    <string name="cal2_leftParen">(</string>
     <!-- Displayed on buttons on screen for a right parenthesis. -->
-    <string name="rightParen">)</string>
+    <string name="cal2_rightParen">)</string>
     <!-- Do not translate. Unicode square root sign; don't translate. Displayed on button on screen. -->
-    <string name="sqrt">\u221a</string>
+    <string name="cal2_sqrt">\u221a</string>
     <!-- Do not translate. Displayed on buttons on screen. -->
-    <string name="power">^</string>
+    <string name="cal2_power">^</string>
     <!-- Do not translate. -->
-    <string name="factorial">!</string>
+    <string name="cal2_factorial">!</string>
     <!-- Menu item text to take user to the screen with the basic digits and operators. -->
-    <string name="basic">Basic panel</string>
+    <string name="cal2_basic">Basic panel</string>
     <!-- Menu item text to take user to the screen with the advanced functions, such as sin, cos, ln, log, etc. -->
-    <string name="advanced">Advanced panel</string>
+    <string name="cal2_advanced">Advanced panel</string>
     <!-- Menu item text to clear the calculation history. -->
-    <string name="clear_history">Clear history</string>
+    <string name="cal2_clear_history">Clear history</string>
     
+    <string name="cal2_ok">OK</string>
+    <string name="cal2_close">CLOSE</string>
 </resources>

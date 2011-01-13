@@ -72,8 +72,8 @@ class HistoryAdapter extends BaseAdapter {
             view = convertView;
         }
 
-        TextView expr   = (TextView) view.findViewById(R.id.historyExpr);
-        TextView result = (TextView) view.findViewById(R.id.historyResult);
+        TextView expr   = (TextView) view.findViewById(R.id.cal2_historyExpr);
+        TextView result = (TextView) view.findViewById(R.id.cal2_historyResult);
 
         HistoryEntry entry = mEntries.elementAt(position);
         String base = entry.getBase();

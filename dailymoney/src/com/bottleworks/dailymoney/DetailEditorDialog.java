@@ -364,7 +364,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     private void doCalculator2() {
         Intent intent = null;
         intent = new Intent(activity,Calculator.class);
-        intent.putExtra(Calculator.VALUE_PARAMETER,moneyEditor.getText().toString());
+        intent.putExtra(Calculator.PARAMETER_START_VALUE,moneyEditor.getText().toString());
         activity.startActivityForResult(intent,CAL_CODE);
     }
 

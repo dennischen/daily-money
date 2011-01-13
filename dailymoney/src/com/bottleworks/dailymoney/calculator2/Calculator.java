@@ -31,12 +31,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.KeyEvent;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Calculator extends Activity {
+public class Calculator extends Activity implements OnClickListener {
     
-    public static final String VALUE_PARAMETER = "cal2_value";
+    public static final String PARAMETER_START_VALUE = "cal2_startValue";
+    public static final String PARAMETER_NEED_RESULT = "cal2_needResult";
+    public static final String PARAMETER_RESULT_VALUE = "cal2_resultValue";
     
     
     EventListener mListener = new EventListener();
@@ -68,34 +71,42 @@ public class Calculator extends Activity {
         mPersist = new Persist(this);
         mHistory = mPersist.history;
 
-        mDisplay = (CalculatorDisplay) findViewById(R.id.display);
+        mDisplay = (CalculatorDisplay) findViewById(R.id.cal2_display);
 
-        mLogic = new Logic(this, mHistory, mDisplay, (Button) findViewById(R.id.equal));
+        mLogic = new Logic(this, mHistory, mDisplay, (Button) findViewById(R.id.cal2_equal));
         HistoryAdapter historyAdapter = new HistoryAdapter(this, mHistory, mLogic);
         mHistory.setObserver(historyAdapter);
         View view;
-        mPanelSwitcher = (PanelSwitcher) findViewById(R.id.panelswitch);
+        mPanelSwitcher = (PanelSwitcher) findViewById(R.id.cal2_panelswitch);
                                        
         mListener.setHandler(mLogic, mPanelSwitcher);
 
         mDisplay.setOnKeyListener(mListener);
 
 
-        if ((view = findViewById(R.id.del)) != null) {
-//            view.setOnClickListener(mListener);
+        if ((view = findViewById(R.id.cal2_del)) != null) {
             view.setOnLongClickListener(mListener);
         }
-        /*
-        if ((view = findViewById(R.id.clear)) != null) {
-            view.setOnClickListener(mListener);
-        }
-        */
+        
+        
         
         /**modify by dennis, provide initial value  **/
-        String initval = getIntent().getExtras().getString(VALUE_PARAMETER);
-        if(initval!=null){
-            mLogic.setNumbericResult(initval);
+        boolean needresult = getIntent().getExtras().getBoolean(PARAMETER_NEED_RESULT,false);
+        String startValue = getIntent().getExtras().getString(PARAMETER_START_VALUE);
+        
+        if(startValue!=null){
+            mLogic.setNumbericResult(startValue);
         }
+        
+        if(needresult){
+            findViewById(R.id.cal2_span).setVisibility(View.GONE);
+            findViewById(R.id.cal2_ok).setOnClickListener(this);
+            findViewById(R.id.cal2_close).setOnClickListener(this);
+        }else{
+            findViewById(R.id.cal2_ok).setVisibility(View.GONE);
+            findViewById(R.id.cal2_close).setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -103,13 +114,13 @@ public class Calculator extends Activity {
         super.onCreateOptionsMenu(menu);
         MenuItem item;
         
-        item = menu.add(0, CMD_CLEAR_HISTORY, 0, R.string.clear_history);
+        item = menu.add(0, CMD_CLEAR_HISTORY, 0, R.string.cal2_clear_history);
         item.setIcon(R.drawable.cal2_clear_history);
         
-        item = menu.add(0, CMD_ADVANCED_PANEL, 0, R.string.advanced);
+        item = menu.add(0, CMD_ADVANCED_PANEL, 0, R.string.cal2_advanced);
         item.setIcon(R.drawable.cal2_advanced);
         
-        item = menu.add(0, CMD_BASIC_PANEL, 0, R.string.basic);
+        item = menu.add(0, CMD_BASIC_PANEL, 0, R.string.cal2_basic);
         item.setIcon(R.drawable.cal2_simple);
 
         return true;
@@ -166,19 +177,9 @@ public class Calculator extends Activity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){ 
-            if( mPanelSwitcher.getCurrentIndex() == ADVANCED_PANEL) {
-                mPanelSwitcher.moveRight();
-                return true;
-            }else{
-                /** modify by dennis **/
-                String result = mLogic.calculateNumbericResult();
-                Intent intent = new Intent();
-                intent.putExtra(VALUE_PARAMETER,result);
-                setResult(RESULT_OK, intent);
-                finish();
-                return true;
-            }
+        if (keyCode == KeyEvent.KEYCODE_BACK && mPanelSwitcher.getCurrentIndex() == ADVANCED_PANEL) {
+            mPanelSwitcher.moveRight();
+            return true;
         } else {
             return super.onKeyDown(keyCode, keyEvent);
         }
@@ -201,5 +202,22 @@ public class Calculator extends Activity {
         int h = Math.min(display.getWidth(), display.getHeight());
         float ratio = (float)h/HVGA_WIDTH_PIXELS;
         view.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontPixelSize*ratio);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+        case R.id.cal2_ok:
+            String result = mLogic.getNumbericResult();
+            Intent intent = new Intent();
+            intent.putExtra(PARAMETER_RESULT_VALUE,result);
+            setResult(RESULT_OK, intent);
+            finish();
+            break;
+        case R.id.cal2_close:
+            setResult(RESULT_CANCELED);
+            finish();
+            break;
+        }
     }
 }

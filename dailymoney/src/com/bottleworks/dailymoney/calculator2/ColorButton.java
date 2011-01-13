@@ -61,11 +61,11 @@ class ColorButton extends Button implements OnClickListener {
     private void init(Calculator calc) {
         Resources res = getResources();
 
-        CLICK_FEEDBACK_COLOR = res.getColor(R.color.magic_flame);
+        CLICK_FEEDBACK_COLOR = res.getColor(R.color.cal2_magic_flame);
         mFeedbackPaint = new Paint();
         mFeedbackPaint.setStyle(Style.STROKE);
         mFeedbackPaint.setStrokeWidth(2);
-        getPaint().setColor(res.getColor(R.color.button_text));
+        getPaint().setColor(res.getColor(R.color.cal2_button_text));
         
         mAnimStart = -1;
 

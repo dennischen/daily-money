@@ -18,267 +18,124 @@
  */
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:background="#ff000000">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="#ff000000">
 
-            <com.bottleworks.dailymoney.calculator2.CalculatorDisplay
-                 android:id="@+id/display"
-                 android:layout_width="fill_parent"
-                 android:layout_height="0dp"
-                 android:layout_weight="1"
-                 >
+	<com.bottleworks.dailymoney.calculator2.CalculatorDisplay
+		android:id="@+id/cal2_display" android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="1">
 
-                <EditText style="@style/display_style" />
-                <EditText style="@style/display_style" />
+		<EditText style="@style/cal2_display_style" />
+		<EditText style="@style/cal2_display_style" />
 
-            </com.bottleworks.dailymoney.calculator2.CalculatorDisplay>
+	</com.bottleworks.dailymoney.calculator2.CalculatorDisplay>
 
-    <com.bottleworks.dailymoney.calculator2.PanelSwitcher
-         android:id="@+id/panelswitch"
-         android:layout_width="fill_parent"
-         android:layout_height="0dp"
-         android:layout_weight="4"
-         >
+	<com.bottleworks.dailymoney.calculator2.PanelSwitcher android:id="@+id/cal2_panelswitch"
+		android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="4">
 
-    <LinearLayout
-         android:id="@+id/simplePad"
-         android:layout_width="fill_parent"
-         android:layout_height="fill_parent"
-         android:orientation="vertical"
-         android:layout_gravity="center"
-         >
+		<LinearLayout android:id="@+id/cal2_simplePad" android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:orientation="vertical" android:layout_gravity="center">
 
-        <LinearLayout
-             android:layout_width="fill_parent"
-             android:layout_height="0dp"
-             android:layout_weight="2"
-             >
 
-            <View
-                android:background="@drawable/cal2_button"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="3"
-                />
-                        
-            <!-- marginRight has to be 0 to catch border-touch -->
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                 android:id="@+id/del"
-                 android:text="@string/clear"
-                 android:layout_width="0dp"
-                 android:layout_weight="1"
-                 android:layout_height="fill_parent"
-                 android:layout_marginRight="0dp"
-                 android:textSize="15dp"
-                 style="@style/button_style"
-                 />
-	</LinearLayout>
+			<LinearLayout android:layout_weight="3" android:layout_width="fill_parent" android:layout_height="0dp">
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_digit7"
+					android:text="@string/cal2_digit7" style="@style/cal2_digit_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_digit8"
+					android:text="@string/cal2_digit8" style="@style/cal2_digit_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_digit9"
+					android:text="@string/cal2_digit9" style="@style/cal2_digit_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_div"
+					android:text="@string/cal2_div" style="@style/cal2_button_style" />
+			</LinearLayout>
 
-        <LinearLayout
-             android:layout_weight="3"
-             android:layout_width="fill_parent"
-             android:layout_height="0dp">
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/digit7"
-                android:text="@string/digit7"
-                style="@style/digit_button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/digit8"
-                android:text="@string/digit8"
-                style="@style/digit_button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/digit9"
-                android:text="@string/digit9"
-                style="@style/digit_button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/div"
-                android:text="@string/div"
-                style="@style/button_style"
-                />
-        </LinearLayout>
+			<LinearLayout android:layout_weight="3" android:layout_width="fill_parent" android:layout_height="0dp">
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_digit4"
+					android:text="@string/cal2_digit4" style="@style/cal2_digit_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_digit5"
+					android:text="@string/cal2_digit5" style="@style/cal2_digit_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_digit6"
+					android:text="@string/cal2_digit6" style="@style/cal2_digit_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_mul"
+					android:text="@string/cal2_mul" style="@style/cal2_button_style" />
+			</LinearLayout>
 
-        <LinearLayout
-             android:layout_weight="3"
-             android:layout_width="fill_parent"
-             android:layout_height="0dp"
-             >
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/digit4"
-                android:text="@string/digit4"
-                style="@style/digit_button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/digit5"
-                android:text="@string/digit5"
-                style="@style/digit_button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/digit6"
-                android:text="@string/digit6"
-                style="@style/digit_button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/mul"
-                android:text="@string/mul"
-                style="@style/button_style"
-                />
-        </LinearLayout>
+			<LinearLayout android:layout_weight="3" android:layout_width="fill_parent" android:layout_height="0dp">
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_digit1"
+					android:text="@string/cal2_digit1" style="@style/cal2_digit_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_digit2"
+					android:text="@string/cal2_digit2" style="@style/cal2_digit_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_digit3"
+					android:text="@string/cal2_digit3" style="@style/cal2_digit_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_minus"
+					android:text="@string/cal2_minus" style="@style/cal2_button_style" />
+			</LinearLayout>
 
-        <LinearLayout
-             android:layout_weight="3"
-             android:layout_width="fill_parent"
-             android:layout_height="0dp"
-             >
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/digit1"
-                android:text="@string/digit1"
-                style="@style/digit_button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/digit2"
-                android:text="@string/digit2"
-                style="@style/digit_button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/digit3"
-                android:text="@string/digit3"
-                style="@style/digit_button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/minus"
-                android:text="@string/minus"
-                style="@style/button_style"
-                />
-        </LinearLayout>
+			<LinearLayout android:layout_weight="3" android:layout_width="fill_parent" android:layout_height="0dp">
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_dot"
+					android:text="@string/cal2_dot" style="@style/cal2_digit_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_digit0"
+					android:text="@string/cal2_digit0" style="@style/cal2_digit_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_equal"
+					android:text="@string/cal2_equal" style="@style/cal2_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_plus"
+					android:text="@string/cal2_plus" style="@style/cal2_button_style" />
+			</LinearLayout>
+			
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="2">
 
-        <LinearLayout
-             android:layout_weight="3"
-             android:layout_width="fill_parent"
-             android:layout_height="0dp"
-             >
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/dot"
-                android:text="@string/dot"
-                style="@style/digit_button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/digit0"
-                android:text="@string/digit0"
-                style="@style/digit_button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/equal"
-                android:text="@string/equal"
-                style="@style/button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/plus"
-                android:text="@string/plus"
-                style="@style/button_style"
-                />
-        </LinearLayout>
-    </LinearLayout>
+                <View android:background="@drawable/cal2_button"  android:id="@+id/cal2_span" android:layout_width="0dp" android:layout_height="fill_parent"
+                    android:layout_weight="3" />
 
-    <LinearLayout android:id="@+id/advancedPad"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:orientation="vertical"
-                  android:layout_gravity="center"
-                  >
+                <!-- marginRight has to be 0 to catch border-touch -->
+                <com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_ok"
+                    android:text="@string/cal2_ok" android:layout_width="0dp" android:layout_weight="2" android:layout_height="fill_parent"
+                    android:layout_marginRight="0dp" android:textSize="15dp" style="@style/cal2_button_style" />
+                <com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_close"
+                    android:text="@string/cal2_close" android:layout_width="0dp" android:layout_weight="1" android:layout_height="fill_parent"
+                    android:layout_marginRight="0dp" android:textSize="15dp" style="@style/cal2_button_style" />
+                <com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_del"
+                    android:text="@string/cal2_clear" android:layout_width="0dp" android:layout_weight="1" android:layout_height="fill_parent"
+                    android:layout_marginRight="0dp" android:textSize="15dp" style="@style/cal2_button_style" />
+            </LinearLayout>			
+		</LinearLayout>
 
-        <LinearLayout
-             android:layout_weight="1"
-             android:layout_width="fill_parent"
-             android:layout_height="0dp"
-             >
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/sin"
-                android:text="@string/sin"
-                style="@style/button_small_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/cos"
-                android:text="@string/cos"
-                style="@style/button_small_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/tan"
-                android:text="@string/tan"
-                style="@style/button_small_style"
-                />
-        </LinearLayout>
+		<LinearLayout android:id="@+id/cal2_advancedPad" android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:orientation="vertical" android:layout_gravity="center">
 
-        <LinearLayout
-             android:layout_weight="1"
-             android:layout_width="fill_parent"
-             android:layout_height="0dp"
-             >
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/ln"
-                android:text="@string/ln"
-                style="@style/button_small_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/lg"
-                android:text="@string/lg"
-                style="@style/button_small_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/factorial"
-                android:text="@string/factorial"
-                style="@style/button_style"
-                />
-        </LinearLayout>
+			<LinearLayout android:layout_weight="1" android:layout_width="fill_parent" android:layout_height="0dp">
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_sin"
+					android:text="@string/cal2_sin" style="@style/cal2_button_small_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_cos"
+					android:text="@string/cal2_cos" style="@style/cal2_button_small_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_tan"
+					android:text="@string/cal2_tan" style="@style/cal2_button_small_style" />
+			</LinearLayout>
 
-        <LinearLayout
-             android:layout_weight="1"
-             android:layout_width="fill_parent"
-             android:layout_height="0dp"
-             >
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/pi"
-                android:text="@string/pi"
-                style="@style/button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/e"
-                android:text="@string/e"
-                style="@style/button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/power"
-                android:text="@string/power"
-                style="@style/button_style"
-                />
-        </LinearLayout>
+			<LinearLayout android:layout_weight="1" android:layout_width="fill_parent" android:layout_height="0dp">
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_ln"
+					android:text="@string/cal2_ln" style="@style/cal2_button_small_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_lg"
+					android:text="@string/cal2_lg" style="@style/cal2_button_small_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_factorial"
+					android:text="@string/cal2_factorial" style="@style/cal2_button_style" />
+			</LinearLayout>
 
-        <LinearLayout
-             android:layout_weight="1"
-             android:layout_width="fill_parent"
-             android:layout_height="0dp"
-             >
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/leftParen"
-                android:text="@string/leftParen"
-                style="@style/button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/rightParen"
-                android:text="@string/rightParen"
-                style="@style/button_style"
-                />
-            <com.bottleworks.dailymoney.calculator2.ColorButton
-                android:id="@+id/sqrt"
-                android:text="@string/sqrt"
-                style="@style/button_style"
-                />
-        </LinearLayout>
-    </LinearLayout>
-    </com.bottleworks.dailymoney.calculator2.PanelSwitcher>
+			<LinearLayout android:layout_weight="1" android:layout_width="fill_parent" android:layout_height="0dp">
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_pi"
+					android:text="@string/cal2_pi" style="@style/cal2_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_e"
+					android:text="@string/cal2_e" style="@style/cal2_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_power"
+					android:text="@string/cal2_power" style="@style/cal2_button_style" />
+			</LinearLayout>
+
+			<LinearLayout android:layout_weight="1" android:layout_width="fill_parent" android:layout_height="0dp">
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_leftParen"
+					android:text="@string/cal2_leftParen" style="@style/cal2_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_rightParen"
+					android:text="@string/cal2_rightParen" style="@style/cal2_button_style" />
+				<com.bottleworks.dailymoney.calculator2.ColorButton android:id="@+id/cal2_sqrt"
+					android:text="@string/cal2_sqrt" style="@style/cal2_button_style" />
+			</LinearLayout>
+		</LinearLayout>
+	</com.bottleworks.dailymoney.calculator2.PanelSwitcher>
 </LinearLayout>

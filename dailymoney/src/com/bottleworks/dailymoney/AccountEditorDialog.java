@@ -185,7 +185,7 @@ public class AccountEditorDialog extends Dialog implements android.view.View.OnC
     private void doCalculator2() {
         Intent intent = null;
         intent = new Intent(activity,Calculator.class);
-        intent.putExtra(Calculator.VALUE_PARAMETER,initvalEditor.getText().toString());
+        intent.putExtra(Calculator.PARAMETER_START_VALUE,initvalEditor.getText().toString());
         activity.startActivityForResult(intent,CAL_CODE);
     }
 

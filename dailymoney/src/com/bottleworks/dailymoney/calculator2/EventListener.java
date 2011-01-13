@@ -43,16 +43,16 @@ class EventListener implements View.OnKeyListener,
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-        case R.id.del:
+        case R.id.cal2_del:
             mHandler.onDelete();
             break;
 
-        case R.id.equal:
+        case R.id.cal2_equal:
             mHandler.onEnter();
             break;
 
             /*
-        case R.id.clear:
+        case R.id.cal2_clear:
             mHandler.onClear();
             break;
             */
@@ -76,7 +76,7 @@ class EventListener implements View.OnKeyListener,
     //@Override
     public boolean onLongClick(View view) {
         int id = view.getId();
-        if (id == R.id.del) {
+        if (id == R.id.cal2_del) {
             mHandler.onClear();
             return true;
         }

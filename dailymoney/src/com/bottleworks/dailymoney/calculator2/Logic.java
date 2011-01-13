@@ -55,7 +55,7 @@ class Logic {
     private final String mErrorString;
 
     Logic(Context context, History history, CalculatorDisplay display, Button equalButton) {
-        mErrorString = context.getResources().getString(R.string.error);
+        mErrorString = context.getResources().getString(R.string.cal2_error);
         try {
             // in calculator we use log() for base-10,
             // unlike in arity-lib where log() is natural logarithm
@@ -67,7 +67,7 @@ class Logic {
         mDisplay = display;
         mDisplay.setLogic(this);
         mEqualButton = equalButton;
-        mEnterString = context.getText(R.string.enter).toString();
+        mEnterString = context.getText(R.string.cal2_enter).toString();
 
         clearWithHistory(false);
     }
@@ -210,12 +210,8 @@ class Logic {
     }
     
     /* add by dennis */
-    public String calculateNumbericResult(){
+    public String getNumbericResult(){
         String exp = mResult;
-        onEnter();
-        if(!"".equals(mResult)){
-            exp = mResult;
-        }
         return exp.replace(MINUS,'-');
     }
 
@@ -226,5 +222,6 @@ class Logic {
         }
         mResult = result.replace('-', MINUS);
         mDisplay.setText(mResult,Scroll.NONE);
+        mIsError = false;
     }
 }
