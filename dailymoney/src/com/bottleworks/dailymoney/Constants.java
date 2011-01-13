@@ -13,4 +13,9 @@ public class Constants {
     
     static final public String PREFS_WORKING_FOLDER = "working_folder";
     static final public String PREFS_BACKUP_CSV = "backup_csv";
+    
+    
+    public static final int REQUEST_CALCULATOR_CODE = 1;
+    public static final int REQUEST_DETAIL_EDITOR_CODE = 2;
+    
 }

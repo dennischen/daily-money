@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +26,7 @@ import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.calculator2.Calculator;
 import com.bottleworks.dailymoney.context.Contexts;
+import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
@@ -40,15 +39,19 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  * @author dennis
  * 
  */
-public class DetailEditorDialog extends Dialog implements android.view.View.OnClickListener {
-
-    private final int CAL_CODE = 88;
+public class DetailEditorActivity extends ContextsActivity implements android.view.View.OnClickListener {
+    
+    public static final String PARAMETER_MODE_CREATE = "modeCreate";
+    public static final String PARAMETER_DETAIL = "detail";
+    
+//    public static final String PARAMETER_RESULT_DETAIL = "detail";
+//    public static final String PARAMETER_RESULT_WORKING_DETAIL = "workingDetail";
+   
     
     private boolean modeCreate;
     private int counterCreate;
     private Detail detail;
     private Detail workingDetail;
-    private OnFinishListener listener;
 
     private DateFormat format;
 
@@ -62,17 +65,17 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
 
     private SimpleAdapter fromAccountAdapter;
     private SimpleAdapter toAccountAdapter;
-    
-    Activity activity;
 
-    public DetailEditorDialog(Activity activity, OnFinishListener listener, boolean modeCreate, Detail detail) {
-        super(activity, android.R.style.Theme);
-        this.activity = activity;
-        this.modeCreate = modeCreate;
-        this.detail = detail;
-        this.listener = listener;
-        workingDetail = clone(detail);
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.deteditor);
+        format = Contexts.uiInstance().getDateFormat();
+        initIntent();
+        initialEditor();
     }
+    
 
     /** clone a detail without id **/
     private Detail clone(Detail detail) {
@@ -81,29 +84,17 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         return d;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+    private void initIntent() {
+        modeCreate = getIntent().getExtras().getBoolean(PARAMETER_MODE_CREATE,true);
+        detail = (Detail)getIntent().getExtras().get(PARAMETER_DETAIL);
+        workingDetail = clone(detail);
+        
         if(modeCreate){
             setTitle(R.string.title_deteditor_create);
         }else{
             setTitle(R.string.title_deteditor_update);
         }
-        setContentView(R.layout.deteditor);
-        format = Contexts.uiInstance().getDateFormat();
-        initialEditor();
-    }
-
-    public Detail getDetail() {
-        return detail;
-    }
-
-    // public Detail getWorkingDetail(){
-    // return workingDetail;
-    // }
-
-    public boolean isModeCreate() {
-        return modeCreate;
     }
 
     private static String[] spfrom = new String[] { "display" };
@@ -163,16 +154,12 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         cancelBtn.setOnClickListener(this);
         closeBtn.setOnClickListener(this);
     }
-    
-    public int getCounter(){
-        return counterCreate;
-    }
 
     private void initialSpinner() {
         fromEditor = (Spinner) findViewById(R.id.deteditor_from);
         fromAccountList = new ArrayList<Account>();
         fromAccountMapList = new ArrayList<Map<String, Object>>();
-        fromAccountAdapter = new SimpleAdapter(getContext(), fromAccountMapList, R.layout.simple_spitem, spfrom, spto);
+        fromAccountAdapter = new SimpleAdapter(this, fromAccountMapList, R.layout.simple_spitem, spfrom, spto);
         fromAccountAdapter.setDropDownViewResource(R.layout.simple_spdd);
         fromAccountAdapter.setViewBinder(new AccountViewBinder());
         fromEditor.setAdapter(fromAccountAdapter);
@@ -181,7 +168,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         toEditor = (Spinner) findViewById(R.id.deteditor_to);
         toAccountList = new ArrayList<Account>();
         toAccountMapList = new ArrayList<Map<String, Object>>();
-        toAccountAdapter = new SimpleAdapter(getContext(), toAccountMapList, R.layout.simple_spitem, spfrom, spto);
+        toAccountAdapter = new SimpleAdapter(this, toAccountMapList, R.layout.simple_spitem, spfrom, spto);
         toAccountAdapter.setDropDownViewResource(R.layout.simple_spdd);
         toAccountAdapter.setViewBinder(new AccountViewBinder());
         toEditor.setAdapter(toAccountAdapter);
@@ -344,7 +331,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         case R.id.deteditor_datepicker:
             try {
                 Date d = format.parse(dateEditor.getText().toString());
-                GUIs.openDatePicker(getContext(), d, new GUIs.OnFinishListener() {
+                GUIs.openDatePicker(this, d, new GUIs.OnFinishListener() {
                     @Override
                     public boolean onFinish(Object data) {
                         updateDateEditor((Date) data);
@@ -363,9 +350,27 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
     
     private void doCalculator2() {
         Intent intent = null;
-        intent = new Intent(activity,Calculator.class);
+        intent = new Intent(this,Calculator.class);
+        intent.putExtra(Calculator.PARAMETER_NEED_RESULT,true);
         intent.putExtra(Calculator.PARAMETER_START_VALUE,moneyEditor.getText().toString());
-        activity.startActivityForResult(intent,CAL_CODE);
+        startActivityForResult(intent,Constants.REQUEST_CALCULATOR_CODE);
+    }
+    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Constants.REQUEST_CALCULATOR_CODE && resultCode==Activity.RESULT_OK){
+            String result = data.getExtras().getString(Calculator.PARAMETER_RESULT_VALUE);
+            try{
+                double d = Double.parseDouble(result);
+                if(d>0){
+                    moneyEditor.setText(Formats.double2String(d));
+                }else{
+                    moneyEditor.setText("0");
+                }
+            }catch(Exception x){
+            }
+        }
     }
 
     private void doOk() {
@@ -373,20 +378,20 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         // verify
         int fromPos = fromEditor.getSelectedItemPosition();
         if (Spinner.INVALID_POSITION == fromPos) {
-            GUIs.alert(getContext(),
+            GUIs.alert(this,
                     i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_from_account)));
             return;
         }
         int toPos = toEditor.getSelectedItemPosition();
         if (Spinner.INVALID_POSITION == toPos) {
-            GUIs.alert(getContext(),
+            GUIs.alert(this,
                     i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_to_account)));
             return;
         }
         String datestr = dateEditor.getText().toString().trim();
         if ("".equals(datestr)) {
             dateEditor.requestFocus();
-            GUIs.alert(getContext(), i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_date)));
+            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_date)));
             return;
         }
 
@@ -395,19 +400,19 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
             date = Contexts.uiInstance().getDateFormat().parse(datestr);
         } catch (ParseException e) {
             Logger.e(e.getMessage(), e);
-            GUIs.errorToast(getContext(), e);
+            GUIs.errorToast(this, e);
             return;
         }
 
         String moneystr = moneyEditor.getText().toString();
         if ("".equals(moneystr)) {
             moneyEditor.requestFocus();
-            GUIs.alert(getContext(), i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_money)));
+            GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_money)));
             return;
         }
         double money = Formats.string2Double(moneystr);
         if (money==0) {
-            GUIs.alert(getContext(), i18n.string(R.string.cmsg_field_zero, i18n.string(R.string.label_money)));
+            GUIs.alert(this, i18n.string(R.string.cmsg_field_zero, i18n.string(R.string.label_money)));
             return;
         }
         
@@ -417,7 +422,7 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         Account toAcc =  toAccountList.get(toPos);
 
         if (fromAcc.getId().equals(toAcc.getId())) {
-            GUIs.alert(getContext(), i18n.string(R.string.msg_same_from_to));
+            GUIs.alert(this, i18n.string(R.string.msg_same_from_to));
             return;
         }
 
@@ -429,44 +434,41 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
         workingDetail.setDate(date);
         workingDetail.setMoney(money);
         workingDetail.setNote(note.trim());
+        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        if (modeCreate) {
+            
+            idp.newDetail(workingDetail);
 
-        if (listener == null) {
-            dismiss();
-        } else if (listener.onFinish(this, findViewById(R.id.deteditor_ok), workingDetail)) {
-            // continue to editor next record if is new mode
-            if (modeCreate) {
-                workingDetail = clone(workingDetail);
-                workingDetail.setMoney(0D);
-                workingDetail.setNote("");
-                moneyEditor.setText("");
-                moneyEditor.requestFocus();
-                noteEditor.setText("");
-                counterCreate++;
-                okBtn.setText(Contexts.uiInstance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
-                cancelBtn.setVisibility(Button.GONE);
-                closeBtn.setVisibility(Button.VISIBLE);
-            } else {
-                dismiss();
-            }
+            workingDetail = clone(workingDetail);
+            workingDetail.setMoney(0D);
+            workingDetail.setNote("");
+            moneyEditor.setText("");
+            moneyEditor.requestFocus();
+            noteEditor.setText("");
+            counterCreate++;
+            okBtn.setText(Contexts.uiInstance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
+            cancelBtn.setVisibility(Button.GONE);
+            closeBtn.setVisibility(Button.VISIBLE);
+        } else {
+            
+            idp.updateDetail(detail.getId(),workingDetail);
+            
+            GUIs.shortToast(this, i18n.string(R.string.msg_detail_updated));
+            setResult(RESULT_OK);
+            finish();
         }
     }
 
     private void doCancel() {
-        if (listener == null || listener.onFinish(this, findViewById(R.id.deteditor_cancel), null)) {
-            dismiss();
-        }
+        setResult(RESULT_CANCELED);
+        finish();
     }
 
     private void doClose() {
-        if (listener == null || listener.onFinish(this, findViewById(R.id.deteditor_close), null)) {
-            dismiss();
-        }
+        setResult(RESULT_OK);
+        GUIs.shortToast(this,i18n.string(R.string.msg_created_detail,counterCreate));
+        finish();
     }
-
-    public static interface OnFinishListener {
-        public boolean onFinish(DetailEditorDialog dlg, View v, Object data);
-    }
-    
     
     class AccountViewBinder implements SimpleAdapter.ViewBinder{
         @Override
@@ -481,17 +483,17 @@ public class DetailEditorDialog extends Dialog implements android.view.View.OnCl
             AccountType at = AccountType.find(acc.getType());
             if("display".equals(name)){
                 if(AccountType.INCOME == at){
-                   ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.income_fgd));
+                   ((TextView)view).setTextColor(DetailEditorActivity.this.getResources().getColor(R.color.income_fgd));
                 }else if(AccountType.ASSET == at){
-                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.asset_fgd)); 
+                    ((TextView)view).setTextColor(DetailEditorActivity.this.getResources().getColor(R.color.asset_fgd)); 
                 }else if(AccountType.EXPENSE == at){
-                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.expense_fgd));
+                    ((TextView)view).setTextColor(DetailEditorActivity.this.getResources().getColor(R.color.expense_fgd));
                 }else if(AccountType.LIABILITY == at){
-                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.liability_fgd)); 
+                    ((TextView)view).setTextColor(DetailEditorActivity.this.getResources().getColor(R.color.liability_fgd)); 
                 }else if(AccountType.OTHER == at){
-                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.other_fgd)); 
+                    ((TextView)view).setTextColor(DetailEditorActivity.this.getResources().getColor(R.color.other_fgd)); 
                 }else{
-                    ((TextView)view).setTextColor(getContext().getResources().getColor(R.color.unknow_fgd));
+                    ((TextView)view).setTextColor(DetailEditorActivity.this.getResources().getColor(R.color.unknow_fgd));
                 }
                 ((TextView)view).setText(item.getToString());
                 return true;

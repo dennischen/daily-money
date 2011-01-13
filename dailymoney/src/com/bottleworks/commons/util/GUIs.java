@@ -21,7 +21,6 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.bottleworks.dailymoney.R;
-import com.bottleworks.dailymoney.context.Contexts;
 
 /**
  * 
@@ -119,11 +118,11 @@ public class GUIs {
     }
     
     static public void errorToast(Context context,Throwable e){
-        shortToast(context,Contexts.uiInstance().getI18n().string(R.string.cmsg_error,e.getMessage()));
+        shortToast(context,context.getString(R.string.cmsg_error,e.getMessage()));
     }
     
     static public void error(Context context,Throwable e){
-        alert(context,Contexts.uiInstance().getI18n().string(R.string.cmsg_error,e.getMessage()));
+        alert(context,context.getString(R.string.cmsg_error,e.getMessage()));
     }
     
     static public View inflateView(Context context,ViewGroup parent, int resourceid){
@@ -131,15 +130,20 @@ public class GUIs {
         return inflater.inflate(resourceid, parent);
     }
     
-    
+    private static ExecutorService delayPostExecutor = Executors.newSingleThreadExecutor();
     private static ExecutorService singleExecutor = Executors.newSingleThreadExecutor();
     private static Handler guiHandler = new Handler();
     
-    
-    static public void postResume(final Runnable r){
-        singleExecutor.submit(new Runnable(){
+    static public void delayPost(final Runnable r){
+        delayPost(r,50);
+    }
+    static public void delayPost(final Runnable r,final long delay){
+        delayPostExecutor.submit(new Runnable(){
             @Override
             public void run() {
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {}
                 post(r);
             }});
     }
@@ -156,7 +160,7 @@ public class GUIs {
         doBusy(context,(Runnable)r);
     }
     static public void doBusy(Context context,Runnable r){
-        doBusy(context,Contexts.uiInstance().getI18n().string(R.string.cmsg_busy),r); 
+        doBusy(context,context.getString(R.string.cmsg_busy),r); 
     }
     
     //lock & release rotation!! not work in sdk(2.1,2.2) but work fine in my i9000

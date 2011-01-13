@@ -8,8 +8,9 @@ import android.view.View;
 
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.AccountMgntActivity;
+import com.bottleworks.dailymoney.Constants;
 import com.bottleworks.dailymoney.DataMaintenanceActivity;
-import com.bottleworks.dailymoney.DetailEditorDialog;
+import com.bottleworks.dailymoney.DetailEditorActivity;
 import com.bottleworks.dailymoney.DetailListActivity;
 import com.bottleworks.dailymoney.PrefsActivity;
 import com.bottleworks.dailymoney.R;
@@ -34,21 +35,11 @@ public class MainDesktop extends AbstractDesktop {
         DesktopItem adddetdt = new DesktopItem(new Runnable() {
             public void run() {
                 Detail d = new Detail("", "", new Date(), 0D, "");
-                DetailEditorDialog dlg = new DetailEditorDialog(activity, new DetailEditorDialog.OnFinishListener() {
-                    @Override
-                    public boolean onFinish(DetailEditorDialog dlg, View v, Object data) {
-                        switch (v.getId()) {
-                        case R.id.deteditor_ok:
-                            Detail dt = (Detail) data;
-                            Contexts.uiInstance().getDataProvider().newDetail(dt);
-                            break;
-                        case R.id.deteditor_close:
-                            GUIs.shortToast(activity, i18n.string(R.string.msg_created_detail, dlg.getCounter()));
-                        }
-                        return true;
-                    }
-                }, true, d);
-                dlg.show();
+                Intent intent = null;
+                intent = new Intent(activity,DetailEditorActivity.class);
+                intent.putExtra(DetailEditorActivity.PARAMETER_MODE_CREATE,true);
+                intent.putExtra(DetailEditorActivity.PARAMETER_DETAIL,d);
+                activity.startActivityForResult(intent,Constants.REQUEST_DETAIL_EDITOR_CODE);
             }
         }, i18n.string(R.string.dtitem_adddetail), R.drawable.dt_item_adddetail);
 

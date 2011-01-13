@@ -14,7 +14,7 @@
 		android:layout_weight="1"  android:src="@drawable/btn_week"/>
 	</LinearLayout>
 	<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/detlist_infobar"
-	android:textSize="18sp" android:text="Information here" android:singleLine="true" android:background="@color/detlist_info_bg"
+	android:textSize="18sp" android:text="" android:singleLine="true" android:background="@color/detlist_info_bg"
 	android:textColor="@color/detlist_info_fg" android:gravity="center" android:ellipsize="end"/>
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"  android:background="@color/detlist_summary_bg"
     android:gravity="center">

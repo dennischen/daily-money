@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -72,18 +73,12 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         setContentView(R.layout.detlist);
         initialIntent();
         initialContent();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        GUIs.postResume(new Runnable() {
+        GUIs.delayPost(new Runnable() {
             @Override
             public void run() {
                 reloadData();
             }
-        });
-        
+        },25);
     }
     
 
@@ -113,32 +108,9 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         
         detailListHelper = new DetailListHelper(this, i18n,false, new DetailListHelper.OnDetailListener() {
             @Override
-            public boolean onDetailUpdated(Detail detail) {
-                GUIs.shortToast(DetailListActivity.this, i18n.string(R.string.msg_detail_updated));
-                reloadData();
-                return true;
-            }
-
-            @Override
-            public boolean onDetailDeleted(Detail detail) {
+            public void onDetailDeleted(Detail detail) {
                 GUIs.shortToast(DetailListActivity.this, i18n.string(R.string.msg_detail_deleted));
                 reloadData();
-                return true;
-            }
-
-            @Override
-            public boolean onDetailCreated(Detail detail) {
-                return false;
-            }
-
-            @Override
-            public boolean onEditorClosed(int counter) {
-                if(counter>0){
-                    GUIs.shortToast(DetailListActivity.this,i18n.string(R.string.msg_created_detail,counter));
-                    reloadData();
-                    return true;
-                }
-                return false;
             }
         });
         
@@ -162,6 +134,52 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         ListView listView = (ListView)findViewById(R.id.detlist_list);
         detailListHelper.setup(listView);
         registerForContextMenu(listView);
+        
+        reloadToolbar();
+    }
+    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Constants.REQUEST_DETAIL_EDITOR_CODE && resultCode==Activity.RESULT_OK){
+            GUIs.delayPost(new Runnable(){
+                @Override
+                public void run() {
+                    reloadData();
+                }});
+            
+        }
+    }
+    
+    private void reloadToolbar(){
+        switch(mode){
+        case MODE_ALL:
+            toolbarView.setVisibility(TextView.GONE);
+            break;
+        case MODE_MONTH:
+            toolbarView.setVisibility(TextView.VISIBLE);
+            modeBtn.setVisibility(ImageButton.VISIBLE);
+            if(allowYearSwitch){
+                modeBtn.setImageResource(R.drawable.btn_year);
+            }else{
+                modeBtn.setImageResource(R.drawable.btn_week);
+            }
+            break;
+        case MODE_YEAR:
+            toolbarView.setVisibility(TextView.VISIBLE);
+            if(allowYearSwitch){
+                modeBtn.setVisibility(ImageButton.VISIBLE);
+                modeBtn.setImageResource(R.drawable.btn_week);
+            }else{
+                modeBtn.setVisibility(ImageButton.GONE);
+            }
+            break;
+        default:
+            toolbarView.setVisibility(TextView.VISIBLE);
+            modeBtn.setVisibility(ImageButton.VISIBLE);
+            modeBtn.setImageResource(R.drawable.btn_month);
+            break;
+        }
     }
     
 
@@ -170,6 +188,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         final Date start;
         final Date end;
         infoView.setText("");
+        reloadToolbar();
         sumIncomeView.setVisibility(TextView.GONE);
         sumExpenseView.setVisibility(TextView.GONE);
         sumAssetView.setVisibility(TextView.GONE);
@@ -177,6 +196,8 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         sumOtherView.setVisibility(TextView.GONE);
         
         sumUnknowView.setVisibility(TextView.VISIBLE);
+        
+        
         switch(mode){
         case MODE_ALL:
             start = end = null;

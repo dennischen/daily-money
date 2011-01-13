@@ -3,11 +3,15 @@
  */
 package com.bottleworks.dailymoney.data;
 
+import java.io.Serializable;
+
 /**
  * @author dennis
  *
  */
-public class Account {
+public class Account implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private String id;
     

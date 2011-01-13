@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -31,9 +32,9 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  * @author dennis
  *
  */
-public class DetailListHelper implements OnItemClickListener,DetailEditorDialog.OnFinishListener {
+public class DetailListHelper implements OnItemClickListener{
     
-private static String[] bindingFrom = new String[] { "layout","from", "to", "money" , "note", "date" };
+    private static String[] bindingFrom = new String[] { "layout","from", "to", "money" , "note", "date" };
     
     private static int[] bindingTo = new int[] { R.id.detlist_item_layout,R.id.detlist_item_from, R.id.detlist_item_to, R.id.detlist_item_money,R.id.detlist_item_note,R.id.detlist_item_date };
     
@@ -48,17 +49,17 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
     
     private Map<String,Account> accountCache = new HashMap<String,Account>();
     
-    private boolean editable;
+    private boolean clickeditable;
     
     private OnDetailListener listener;
     
     Activity activity;
     I18N i18n;
-    public DetailListHelper(Activity context,I18N i18n,boolean editable,OnDetailListener listener){
-        this.activity = context;
+    public DetailListHelper(Activity activity,I18N i18n,boolean clickeditable,OnDetailListener listener){
+        this.activity = activity;
         this.i18n = i18n;
-        this.editable = editable;
-        this.listener = listener==null?new OnDetailAdapter():listener;
+        this.clickeditable = clickeditable;
+        this.listener = listener;
     }
     
     
@@ -79,7 +80,7 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
         
         listView = listview;
         listView.setAdapter(listViewAdapter);
-        if(editable){
+        if(clickeditable){
             listView.setOnItemClickListener(this);
         }
         
@@ -93,18 +94,10 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-        //click for editor
         if(parent == listView){
             doEditDetail(pos);
         }
     }
-//    public doCreateDetail(){
-//        
-//    }
-//    
-//    public doCopyDetail(){
-//        
-//    }
     
     private DateFormat dayOfWeekFormat = new SimpleDateFormat("E"); 
     public void reloadData(List<Detail> data) {
@@ -137,61 +130,32 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
         return row;
     }
 
-    @Override
-    public boolean onFinish(DetailEditorDialog dlg, View v, Object data) {
-        switch (v.getId()) {
-        case R.id.deteditor_ok:
-            Detail workingdet = (Detail)data;
-            boolean modeCreate = dlg.isModeCreate();
-            IDataProvider idp = Contexts.uiInstance().getDataProvider();
-            if (modeCreate) {
-                Contexts.uiInstance().getDataProvider().newDetail(workingdet);
-                if(!listener.onDetailCreated(workingdet)){
-                    listViewData.add(0,workingdet);
-                    listViewMapList.add(0,toDetailMap(workingdet,Contexts.uiInstance().getDateFormat()));
-                    listViewAdapter.notifyDataSetChanged();
-                }
-            } else {
-                Detail odet = dlg.getDetail();
-                idp.updateDetail(odet.getId(),workingdet);
-                if(!listener.onDetailUpdated(workingdet)){
-                    int pos = listViewData.indexOf(odet);
-                    listViewData.set(pos,workingdet);
-                    listViewMapList.set(pos,toDetailMap(workingdet,Contexts.uiInstance().getDateFormat()));
-                    listViewAdapter.notifyDataSetChanged();
-                }
-            }
-            break;
-        case R.id.deteditor_cancel:
-        case R.id.deteditor_close:
-            listener.onEditorClosed(dlg.getCounter());
-            break;
-            
-        }
-        return true;
-    }
-
-
     public void doNewDetail() {
         Detail d = new Detail("","",new Date(),0D,"");
-        DetailEditorDialog dlg = new DetailEditorDialog(activity,this, true, d);
-        dlg.show();
+        Intent intent = null;
+        intent = new Intent(activity,DetailEditorActivity.class);
+        intent.putExtra(DetailEditorActivity.PARAMETER_MODE_CREATE,true);
+        intent.putExtra(DetailEditorActivity.PARAMETER_DETAIL,d);
+        activity.startActivityForResult(intent,Constants.REQUEST_DETAIL_EDITOR_CODE);
     }
 
 
 
     public void doEditDetail(int pos) {
         Detail d = (Detail) listViewData.get(pos);
-        DetailEditorDialog dlg = new DetailEditorDialog(activity,this, false, d);
-        dlg.show();
+        Intent intent = null;
+        intent = new Intent(activity,DetailEditorActivity.class);
+        intent.putExtra(DetailEditorActivity.PARAMETER_MODE_CREATE,false);
+        intent.putExtra(DetailEditorActivity.PARAMETER_DETAIL,d);
+        activity.startActivityForResult(intent,Constants.REQUEST_DETAIL_EDITOR_CODE);
     }
-
-
 
     public void doDeleteDetail(int pos) {
         Detail d = (Detail) listViewData.get(pos);
         Contexts.uiInstance().getDataProvider().deleteDetail(d.getId());
-        if(!listener.onDetailDeleted(d)){
+        if(listener!=null){
+            listener.onDetailDeleted(d);
+        }else{
             listViewData.remove(pos);
             listViewMapList.remove(pos);
             listViewAdapter.notifyDataSetChanged();
@@ -202,41 +166,16 @@ private static String[] bindingFrom = new String[] { "layout","from", "to", "mon
 
     public void doCopyDetail(int pos) {
         Detail d = (Detail) listViewData.get(pos);
-        DetailEditorDialog dlg = new DetailEditorDialog(activity,this, true, d);
-        dlg.show();
+        Intent intent = null;
+        intent = new Intent(activity,DetailEditorActivity.class);
+        intent.putExtra(DetailEditorActivity.PARAMETER_MODE_CREATE,true);
+        intent.putExtra(DetailEditorActivity.PARAMETER_DETAIL,d);
+        activity.startActivityForResult(intent,Constants.REQUEST_DETAIL_EDITOR_CODE);
     }
     
     
     public static interface OnDetailListener {
-        /** return ture if listener has reload the data*/
-        public boolean onDetailUpdated(Detail detail);
-        public boolean onDetailDeleted(Detail detail);
-        public boolean onDetailCreated(Detail detail);
-        public boolean onEditorClosed(int counter);
-    }
-    
-    public static class OnDetailAdapter implements OnDetailListener{
-
-        @Override
-        public boolean onDetailUpdated(Detail detail) {
-            return false;
-        }
-
-        @Override
-        public boolean onDetailDeleted(Detail detail) {
-            return false;
-        }
-
-        @Override
-        public boolean onDetailCreated(Detail detail) {
-            return false;
-        }
-
-        @Override
-        public boolean onEditorClosed(int counter) {
-            return false;
-        }
-
+        public void onDetailDeleted(Detail detail);
     }
     
     class ListViewBinder implements SimpleAdapter.ViewBinder{

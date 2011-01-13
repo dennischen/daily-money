@@ -211,8 +211,16 @@ class Logic {
     
     /* add by dennis */
     public String getNumbericResult(){
-        String exp = mResult;
-        return exp.replace(MINUS,'-');
+        String exp =  mDisplay.getText().toString();
+        exp = exp.replace(MINUS,'-');
+        try{
+            Double.parseDouble(exp);
+            return exp.trim();
+        }catch(Exception x){}
+        
+        exp = mResult;
+        exp = exp.replace(MINUS,'-');
+        return exp.trim();
     }
 
     /* add by dennis */
@@ -220,8 +228,9 @@ class Logic {
         if(result.equals("0")){
             result = "";
         }
-        mResult = result.replace('-', MINUS);
-        mDisplay.setText(mResult,Scroll.NONE);
+        mResult = "";
+        result = result.replace('-', MINUS);
+        mDisplay.setText(result,Scroll.NONE);
         mIsError = false;
     }
 }
