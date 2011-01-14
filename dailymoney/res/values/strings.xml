@@ -23,7 +23,7 @@
     <string name="label_detlayout_type1">To - Money</string>
     <string name="label_detlayout_type2">Note - Money</string>
     <string name="label_detlist_from">&lt; %1$s</string>
-    <string name="label_detlist_money">$%1$s</string>
+    <string name="label_item_money">$%1$s</string>
     <string name="label_detlist_sum_income">Income $%1$s</string>
     <string name="label_detlist_sum_expense">Expense $%1$s</string>
     <string name="label_detlist_sum_asset">Asset $%1$s </string>
@@ -119,20 +119,29 @@
     
     <string name="label_share_csv">Share CSV</string>
     <string name="msg_share_csv_title">Daily Money %1$s</string>
-    <string name="msg_share_csv_content">Daily Money CSV 檔案</string>
+    <string name="msg_share_csv_content">Daily Money CSV Files</string>
     <string name="qmsg_share_csv">Share which CSV files?</string>
     
     <string name="msg_firsttime_use_hint">Welcome to Daily Money, click Add Detail to start</string>
-<!-- above are verified -->    
-
+    
     <string name="label_balt_income">Total Income</string>
     <string name="label_balt_expense">Total Expense</string>
     <string name="label_balt_asset">Total Asset</string>
     <string name="label_balt_liability">Total Liability</string>
     <string name="label_balt_other">Total Other</string>
     
-   <string name="label_balance_to_day">until %1$s</string>
-   
+    <string name="label_balance_mode_month">Balance in month %1$s</string>
+    <string name="label_balance_mode_year">Balance in year %1$s</string>
+    
+    <string name="label_balance_mode_month_total">Balance until month %1$s</string>
+    <string name="label_balance_mode_year_total">Balance until year %1$s</string>
+    
+    <string name="dtitem_report_monthly_balance">Monthly balance</string>
+    <string name="dtitem_report_yearly_balance">Yearly balance</string>
+    <string name="dtitem_report_total_balance">Total balance</string>
+<!-- above are verified -->    
+
+
     
 </resources>
 

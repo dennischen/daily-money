@@ -21,11 +21,28 @@ public class ReportsDesktop extends AbstractDesktop {
         label = i18n.string(R.string.dt_reports);
         icon = R.drawable.dt_reports;
         
-        Intent intent = new Intent(activity, BalanceActivity.class);
-        DesktopItem balance = new DesktopItem(new IntentRun(activity, intent),
-                "Balance", R.drawable.dt_item_detail_week);
+        Intent intent = null;
         
-        addItem(balance);
+        intent = new Intent(activity, BalanceActivity.class);
+        intent.putExtra(BalanceActivity.INTENT_TOTAL_MODE, false);
+        intent.putExtra(BalanceActivity.INTENT_MODE, BalanceActivity.MODE_MONTH);
+        DesktopItem monthBalance = new DesktopItem(new IntentRun(activity, intent),
+                i18n.string(R.string.dtitem_report_monthly_balance), R.drawable.dt_item_detail_month);
+        addItem(monthBalance);
+        
+        intent = new Intent(activity, BalanceActivity.class);
+        intent.putExtra(BalanceActivity.INTENT_TOTAL_MODE, false);
+        intent.putExtra(BalanceActivity.INTENT_MODE, BalanceActivity.MODE_YEAR);
+        DesktopItem yearBalance = new DesktopItem(new IntentRun(activity, intent),
+                i18n.string(R.string.dtitem_report_yearly_balance), R.drawable.dt_item_detail_year);
+        addItem(yearBalance);
+        
+        intent = new Intent(activity, BalanceActivity.class);
+        intent.putExtra(BalanceActivity.INTENT_TOTAL_MODE, true);
+        intent.putExtra(BalanceActivity.INTENT_MODE, BalanceActivity.MODE_MONTH);
+        DesktopItem totalBalance = new DesktopItem(new IntentRun(activity, intent),
+                i18n.string(R.string.dtitem_report_total_balance), R.drawable.dt_item_detail_month);
+        addItem(totalBalance);
     }
 
 }

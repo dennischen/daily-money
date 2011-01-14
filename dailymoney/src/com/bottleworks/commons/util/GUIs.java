@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Handler;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import com.bottleworks.dailymoney.R;
  */
 public class GUIs {
 
+    private static final int HVGA_HEIGHT_PIXELS = 480;
+    private static final int HVGA_WIDTH_PIXELS  = 320;
     
     public static final int NO_ICON_RES=0x0;
     
@@ -308,5 +311,18 @@ public class GUIs {
     
     public static interface OnFinishListener {   
         public boolean onFinish(Object data);
+    }
+
+    public static float geDPRatio(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+//        int h = Math.min(display.getWidth(), display.getHeight());
+        int h = Math.min(display.getWidth(), display.getHeight());
+        float ratio = 0; 
+        if(activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            ratio = (float)h/HVGA_WIDTH_PIXELS;
+        }else{
+            ratio = (float)h/HVGA_HEIGHT_PIXELS;
+        }
+        return ratio;
     }
 }

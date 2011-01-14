@@ -46,16 +46,15 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     
     private static int[] bindingTo = new int[] { R.id.accmgnt_item_name, R.id.accmgnt_item_initvalue, R.id.accmgnt_item_id };
     
-    
     private List<Account> listViewData = new ArrayList<Account>();
     
     private List<Map<String, Object>> listViewMapList = new ArrayList<Map<String, Object>>();
 
-    private String currTab = null;
-
     private ListView listView;
     
     private SimpleAdapter listViewAdapter;
+    
+    private String currTab = null;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {

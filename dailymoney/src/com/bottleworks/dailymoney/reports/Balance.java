@@ -8,16 +8,15 @@ package com.bottleworks.dailymoney.reports;
 public class Balance {
 
     String name;
+    
+    String type;
     double money;
     
     int indent;
 
-    public Balance(String name) {
+    public Balance(String name, String type, double money) {
         this.name = name;
-    }
-
-    public Balance(String name, double money) {
-        this.name = name;
+        this.type = type;
         this.money = money;
     }
 
@@ -43,6 +42,14 @@ public class Balance {
 
     public void setIndent(int indent) {
         this.indent = indent;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
     

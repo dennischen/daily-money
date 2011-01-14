@@ -4,13 +4,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.bottleworks.commons.util.CalendarHelper;
@@ -22,6 +27,7 @@ import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.IDataProvider;
+import com.bottleworks.dailymoney.ui.NamedItem;
 
 /**
  * 
@@ -30,26 +36,40 @@ import com.bottleworks.dailymoney.data.IDataProvider;
  */
 public class BalanceActivity extends ContextsActivity implements OnClickListener {
 
-    public static final int MODE_DAY = 0;
-    public static final int MODE_MONTH = 1;
-    public static final int MODE_YEAR = 2;
+    public static final int MODE_MONTH = 0;
+    public static final int MODE_YEAR = 1;
 
     public static final String INTENT_BALANCE_DATE = "balanceDate";
     public static final String INTENT_MODE = "mode";
     public static final String INTENT_TARGET_DATE = "target";
+    public static final String INTENT_TOTAL_MODE = "modeTotal";
 
     TextView infoView;
     View toolbarView;
 
     private Date targetDate;
     private Date currentDate;
-    private int mode = MODE_DAY;
+    private int mode = MODE_MONTH;
+    private boolean totalMode = false;
 
-    private DateFormat endDateFormat;
+    private DateFormat monthDateFormat;
+    private DateFormat yearDateFormat;
 
     ImageButton modeBtn;
 
     CalendarHelper calHelper;
+    
+    private static String[] bindingFrom = new String[] { "layout","name", "money"};
+    
+    private static int[] bindingTo = new int[] { R.id.report_balance_layout, R.id.report_balance_item_name, R.id.report_balance_item_money};
+    
+    private List<Balance> listViewData = new ArrayList<Balance>();
+    
+    private List<Map<String, Object>> listViewMapList = new ArrayList<Map<String, Object>>();
+
+    private ListView listView;
+    
+    private SimpleAdapter listViewAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +87,8 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
     private void initialIntent() {
         Bundle b = getIntentExtras();
-        mode = b.getInt(INTENT_MODE, MODE_DAY);
+        mode = b.getInt(INTENT_MODE, MODE_MONTH);
+        totalMode = b.getBoolean(INTENT_TOTAL_MODE, true);
         Object o = b.get(INTENT_BALANCE_DATE);
         if (o instanceof Date) {
             targetDate = (Date) o;
@@ -79,7 +100,8 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
     private void initialContent() {
 
-        endDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        monthDateFormat = new SimpleDateFormat("yyyy/MM");
+        yearDateFormat = new SimpleDateFormat("yyyy");
 
         infoView = (TextView) findViewById(R.id.report_balance_infobar);
         toolbarView = findViewById(R.id.report_balance_toolbar);
@@ -90,15 +112,127 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         modeBtn = (ImageButton) findViewById(R.id.report_balance_mode);
         modeBtn.setOnClickListener(this);
         reloadToolbar();
+        
+        
+        
+        
+        listViewAdapter = new SimpleAdapter(this, listViewMapList, R.layout.report_balance_item, bindingFrom, bindingTo);
+        listViewAdapter.setViewBinder(new SimpleAdapter.ViewBinder(){
+
+            @Override
+            public boolean setViewValue(View view, Object data, String text) {
+                NamedItem item = (NamedItem)data;
+                String name = item.getName();
+                Balance b = (Balance)item.getValue();
+                
+                
+                if("layout".equals(name)){
+                    LinearLayout layout = (LinearLayout)view;
+                    adjustLayout(layout,b);
+                    return true;
+                }
+                
+                //not textview, not initval
+                if(!(view instanceof TextView)){
+                    return false;
+                }
+                AccountType at = AccountType.find(b.getType());
+                TextView tv = (TextView)view;
+                
+                if(at==AccountType.INCOME){
+                    if(b.indent==0){
+                        tv.setTextColor(getResources().getColor(R.color.income_fgl));
+                    }else{
+                        tv.setTextColor(getResources().getColor(R.color.income_fgd));
+                    }
+                }else if(at==AccountType.EXPENSE){
+                    if(b.indent==0){
+                        tv.setTextColor(getResources().getColor(R.color.expense_fgl));
+                    }else{
+                        tv.setTextColor(getResources().getColor(R.color.expense_fgd));
+                    }
+                }else if(at==AccountType.ASSET){
+                    if(b.indent==0){
+                        tv.setTextColor(getResources().getColor(R.color.asset_fgl));
+                    }else{
+                        tv.setTextColor(getResources().getColor(R.color.asset_fgd));
+                    }
+                }else if(at==AccountType.LIABILITY){
+                    if(b.indent==0){
+                        tv.setTextColor(getResources().getColor(R.color.liability_fgl));
+                    }else{
+                        tv.setTextColor(getResources().getColor(R.color.liability_fgd));
+                    }
+                }else if(at==AccountType.OTHER){
+                    if(b.indent==0){
+                        tv.setTextColor(getResources().getColor(R.color.other_fgl));
+                    }else{
+                        tv.setTextColor(getResources().getColor(R.color.other_fgd));
+                    }
+                }else{
+                    if(b.indent==0){
+                        tv.setTextColor(getResources().getColor(R.color.unknow_fgl));
+                    }else{
+                        tv.setTextColor(getResources().getColor(R.color.unknow_fgd));
+                    }
+                }
+                adjustItem(tv,b,GUIs.geDPRatio(BalanceActivity.this));
+                return false;
+            }});
+        
+        listView = (ListView) findViewById(R.id.report_balance_list);
+        listView.setAdapter(listViewAdapter);
+        
+        
     }
+
+    protected void adjustLayout(LinearLayout layout, Balance b) {
+        switch(b.indent){
+        case 0:
+            layout.setBackgroundDrawable((getResources().getDrawable(R.color.report_balance_indent0_bg)));
+            break;
+        case 1:
+            layout.setBackgroundDrawable((getResources().getDrawable(R.color.report_balance_list_bg)));
+            break;
+        default:
+            layout.setBackgroundDrawable((getResources().getDrawable(R.color.report_balance_list_bg)));
+            break;    
+        }
+    }
+    
+    protected void adjustItem(TextView tv, Balance b,float dp) {
+        float fontPixelSize = 18;
+        float ratio = 0;
+        int marginLeft = 0;
+        int marginRight = 5;
+        int paddingTB = 0;
+        
+        switch(b.indent){
+        case 0:
+            ratio = 1F;
+            paddingTB = 5;
+            marginLeft = 5;
+            break;
+        case 1:
+            ratio = 0.85F;
+            marginLeft = 15;
+            break;
+        default:
+            ratio = 0.75F;
+            marginLeft = 25;
+            break;    
+        }
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontPixelSize*ratio);
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)tv.getLayoutParams();
+        lp.setMargins((int)(marginLeft*dp), lp.topMargin, (int)(marginRight*dp), lp.bottomMargin);
+        tv.setPadding(tv.getPaddingLeft(), (int)(paddingTB*dp), tv.getPaddingRight(),  (int)(paddingTB*dp));
+    }
+
 
     private void reloadToolbar() {
         switch (mode) {
-        case MODE_MONTH:
-            modeBtn.setImageResource(R.drawable.btn_year);
-            break;
         case MODE_YEAR:
-            modeBtn.setImageResource(R.drawable.btn_day);
+            modeBtn.setImageResource(R.drawable.btn_year);
             break;
         default:
             modeBtn.setImageResource(R.drawable.btn_month);
@@ -107,26 +241,30 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     }
 
     private List<Balance> adjustTotalBalance(AccountType type, String totalName, List<Balance> items) {
+        if(items.size()==0){
+            return items;
+        }
         double total = 0;
         for (Balance b : items) {
             b.setIndent(1);
             total += b.money;
         }
-        Balance bt = new Balance(totalName, total);
+        Balance bt = new Balance(totalName,type.getType(), total);
+        bt.setIndent(0);
         items.add(0, bt);
         return items;
     }
 
-    private List<Balance> calBalance(AccountType type, Date end, boolean nat) {
+    private List<Balance> calBalance(AccountType type,Date start,Date end, boolean nat) {
         IDataProvider idp = Contexts.uiInstance().getDataProvider();
         List<Account> accs = idp.listAccount(type);
         List<Balance> blist = new ArrayList<Balance>();
         for (Account acc : accs) {
-            double from = idp.sumFrom(acc, null, end);
-            double to = idp.sumTo(acc, null, end);
-            double init = acc.getInitialValue();
+            double from = idp.sumFrom(acc, start, end);
+            double to = idp.sumTo(acc, start, end);
+            double init = totalMode?acc.getInitialValue():0;
             double b = init + to - from;
-            Balance balance = new Balance(acc.getName(), ((nat & b != 0) ? -b : b));
+            Balance balance = new Balance(acc.getName(),type.getType(), ((nat & b != 0) ? -b : b));
             blist.add(balance);
         }
         return blist;
@@ -135,17 +273,17 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     private void reloadData() {
         final CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
         final Date end;
+        final Date start;
         infoView.setText("");
         reloadToolbar();
         switch (mode) {
-        case MODE_MONTH:
-            end = cal.monthEndDate(currentDate);
-            break;
         case MODE_YEAR:
             end = cal.yearEndDate(currentDate);
+            start = totalMode?null:cal.yearStartDate(currentDate);
             break;
         default:
-            end = cal.toDayEnd(currentDate);
+            end = cal.monthEndDate(currentDate);
+            start = totalMode?null:cal.monthStartDate(currentDate);
             break;
         }
         GUIs.doBusy(this, new GUIs.BusyAdapter() {
@@ -153,43 +291,61 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
             @Override
             public void run() {
-                List<Balance> income = calBalance(AccountType.INCOME, end, true);
+                List<Balance> income = calBalance(AccountType.INCOME, start,end, true);
                 income = adjustTotalBalance(AccountType.INCOME, i18n.string(R.string.label_balt_income), income);
                 all.addAll(income);
 
-                List<Balance> expense = calBalance(AccountType.EXPENSE, end, false);
-                expense = adjustTotalBalance(AccountType.INCOME, i18n.string(R.string.label_balt_expense), expense);
+                List<Balance> expense = calBalance(AccountType.EXPENSE, start,end, false);
+                expense = adjustTotalBalance(AccountType.EXPENSE, i18n.string(R.string.label_balt_expense), expense);
                 all.addAll(expense);
 
-                List<Balance> asset = calBalance(AccountType.ASSET, end, false);
-                asset = adjustTotalBalance(AccountType.INCOME, i18n.string(R.string.label_balt_asset), asset);
+                List<Balance> asset = calBalance(AccountType.ASSET,start, end, false);
+                asset = adjustTotalBalance(AccountType.ASSET, i18n.string(R.string.label_balt_asset), asset);
                 all.addAll(asset);
 
-                List<Balance> liability = calBalance(AccountType.LIABILITY, end, false);
-                liability = adjustTotalBalance(AccountType.INCOME, i18n.string(R.string.label_balt_liability),
+                List<Balance> liability = calBalance(AccountType.LIABILITY, start,end, false);
+                liability = adjustTotalBalance(AccountType.LIABILITY, i18n.string(R.string.label_balt_liability),
                         liability);
                 all.addAll(liability);
 
-                List<Balance> other = calBalance(AccountType.OTHER, end, false);
-                other = adjustTotalBalance(AccountType.INCOME, i18n.string(R.string.label_balt_other), other);
+                List<Balance> other = calBalance(AccountType.OTHER, start,end, false);
+                other = adjustTotalBalance(AccountType.OTHER, i18n.string(R.string.label_balt_other), other);
                 all.addAll(other);
             }
 
             @Override
             public void onBusyFinish() {
+                listViewData.clear();
+                listViewData.addAll(all);
+                listViewMapList.clear();
 
-                StringBuilder sb = new StringBuilder();
-                for (Balance b : all) {
-                    for (int i = 0; i < b.indent; i++) {
-                        sb.append("> ");
-                    }
-                    sb.append(b.name + " : " + Formats.double2String(b.money)).append("\n");
+                for (Balance b : listViewData) {
+                    Map<String, Object> row = new HashMap<String, Object>();
+                    listViewMapList.add(row);
+                    String money = i18n.string(R.string.label_item_money,Formats.money2String(b.getMoney()));
+                    row.put(bindingFrom[0], new NamedItem(bindingFrom[0],b,""));//layout
+                    row.put(bindingFrom[1], new NamedItem(bindingFrom[1],b,b.getName()));
+                    row.put(bindingFrom[2], new NamedItem(bindingFrom[2],b,money));
                 }
-                System.out.println(">>>>>>>>>>" +sb.toString());
-                ((TextView) findViewById(R.id.text)).setText(sb.toString());
 
+                listViewAdapter.notifyDataSetChanged();
+                
+                
                 // update info
-                infoView.setText(i18n.string(R.string.label_balance_to_day, endDateFormat.format(end)));
+                if(totalMode){
+                    if(mode==MODE_MONTH){
+                        infoView.setText(i18n.string(R.string.label_balance_mode_month_total, monthDateFormat.format(end)));
+                    }else if(mode==MODE_YEAR){
+                        infoView.setText(i18n.string(R.string.label_balance_mode_year_total, yearDateFormat.format(end)));
+                    }
+                }else{
+                    if(mode==MODE_MONTH){
+                        infoView.setText(i18n.string(R.string.label_balance_mode_month,monthDateFormat.format(currentDate)));
+                    }else if(mode==MODE_YEAR){
+                        infoView.setText(i18n.string(R.string.label_balance_mode_year,yearDateFormat.format(currentDate)));
+                    }
+                }
+                
 
             }
         });
@@ -216,16 +372,12 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
     private void onMode() {
         switch (mode) {
-        case MODE_DAY:
-            mode = MODE_MONTH;
-            reloadData();
-            break;
         case MODE_MONTH:
             mode = MODE_YEAR;
             reloadData();
             break;
         case MODE_YEAR:
-            mode = MODE_DAY;
+            mode = MODE_MONTH;
             reloadData();
             break;
         }
@@ -234,10 +386,6 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     private void onNext() {
         CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
         switch (mode) {
-        case MODE_DAY:
-            currentDate = cal.dateAfter(currentDate, 1);
-            reloadData();
-            break;
         case MODE_MONTH:
             currentDate = cal.monthAfter(currentDate, 1);
             reloadData();
@@ -252,10 +400,6 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     private void onPrev() {
         CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
         switch (mode) {
-        case MODE_DAY:
-            currentDate = cal.dateBefore(currentDate, 1);
-            reloadData();
-            break;
         case MODE_MONTH:
             currentDate = cal.monthBefore(currentDate, 1);
             reloadData();
@@ -269,7 +413,6 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
     private void onToday() {
         switch (mode) {
-        case MODE_DAY:
         case MODE_MONTH:
         case MODE_YEAR:
             currentDate = targetDate;
