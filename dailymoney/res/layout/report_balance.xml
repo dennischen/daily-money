@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:id="@+id/report_balance_toolbar" android:background="@color/report_balance_info_bg"
+	android:gravity="center" android:paddingTop="5dp">
+		<ImageButton android:id="@+id/report_balance_prev" android:layout_width="fill_parent" android:layout_height="wrap_content" 
+		android:layout_weight="1" android:src="@drawable/btn_back"/>
+		<ImageButton android:id="@+id/report_balance_today" android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_weight="1"  android:src="@drawable/btn_today"/>
+		<ImageButton android:id="@+id/report_balance_next" android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_weight="1"  android:src="@drawable/btn_forward"/>
+		<ImageButton android:id="@+id/report_balance_mode" android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_weight="1"  android:src="@drawable/btn_week"/>
+	</LinearLayout>
+	<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/report_balance_infobar"
+	android:textSize="18sp" android:text="" android:singleLine="true" android:background="@color/report_balance_info_bg"
+	android:textColor="@color/report_balance_info_fg" android:gravity="center" android:ellipsize="end"/>
+    
+    <TextView android:layout_width="fill_parent" android:layout_height="fill_parent"
+             android:id="@+id/text"/>
+</LinearLayout>

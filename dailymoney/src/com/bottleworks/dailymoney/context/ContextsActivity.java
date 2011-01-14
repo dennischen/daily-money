@@ -34,4 +34,17 @@ public class ContextsActivity extends Activity {
         super.onPause();
         Contexts.uiInstance().cleanContext(this);
     }
+    
+    
+    Bundle fakeExtra;
+    protected Bundle getIntentExtras(){
+        if(getIntent()!=null && getIntent().getExtras()!=null){
+            return getIntent().getExtras();
+        }
+        //if extra is null;
+        if(fakeExtra==null){
+            fakeExtra = new Bundle();
+        }
+        return fakeExtra;
+    }
 }

@@ -125,7 +125,13 @@
     <string name="msg_firsttime_use_hint">Welcome to Daily Money, click Add Detail to start</string>
 <!-- above are verified -->    
 
+    <string name="label_balt_income">Total Income</string>
+    <string name="label_balt_expense">Total Expense</string>
+    <string name="label_balt_asset">Total Asset</string>
+    <string name="label_balt_liability">Total Liability</string>
+    <string name="label_balt_other">Total Other</string>
     
+   <string name="label_balance_to_day">until %1$s</string>
    
     
 </resources>

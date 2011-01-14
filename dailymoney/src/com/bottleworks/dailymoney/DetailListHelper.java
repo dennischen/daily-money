@@ -134,8 +134,8 @@ public class DetailListHelper implements OnItemClickListener{
         Detail d = new Detail("","",new Date(),0D,"");
         Intent intent = null;
         intent = new Intent(activity,DetailEditorActivity.class);
-        intent.putExtra(DetailEditorActivity.PARAMETER_MODE_CREATE,true);
-        intent.putExtra(DetailEditorActivity.PARAMETER_DETAIL,d);
+        intent.putExtra(DetailEditorActivity.INTENT_MODE_CREATE,true);
+        intent.putExtra(DetailEditorActivity.INTENT_DETAIL,d);
         activity.startActivityForResult(intent,Constants.REQUEST_DETAIL_EDITOR_CODE);
     }
 
@@ -145,8 +145,8 @@ public class DetailListHelper implements OnItemClickListener{
         Detail d = (Detail) listViewData.get(pos);
         Intent intent = null;
         intent = new Intent(activity,DetailEditorActivity.class);
-        intent.putExtra(DetailEditorActivity.PARAMETER_MODE_CREATE,false);
-        intent.putExtra(DetailEditorActivity.PARAMETER_DETAIL,d);
+        intent.putExtra(DetailEditorActivity.INTENT_MODE_CREATE,false);
+        intent.putExtra(DetailEditorActivity.INTENT_DETAIL,d);
         activity.startActivityForResult(intent,Constants.REQUEST_DETAIL_EDITOR_CODE);
     }
 
@@ -168,8 +168,8 @@ public class DetailListHelper implements OnItemClickListener{
         Detail d = (Detail) listViewData.get(pos);
         Intent intent = null;
         intent = new Intent(activity,DetailEditorActivity.class);
-        intent.putExtra(DetailEditorActivity.PARAMETER_MODE_CREATE,true);
-        intent.putExtra(DetailEditorActivity.PARAMETER_DETAIL,d);
+        intent.putExtra(DetailEditorActivity.INTENT_MODE_CREATE,true);
+        intent.putExtra(DetailEditorActivity.INTENT_DETAIL,d);
         activity.startActivityForResult(intent,Constants.REQUEST_DETAIL_EDITOR_CODE);
     }
     

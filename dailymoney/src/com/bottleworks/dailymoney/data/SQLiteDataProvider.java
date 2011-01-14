@@ -410,6 +410,38 @@ public class SQLiteDataProvider implements IDataProvider {
         c.close();
         return r;
     }
+    
+    @Override
+    public double sumFrom(Account acc,Date start, Date end) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        StringBuilder query =  new StringBuilder();
+
+        StringBuilder where = new StringBuilder();
+        where.append(" WHERE ").append(COL_DET_FROM).append(" = '").append(acc.getId()).append("'");
+        if(start!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + ">=" + start.getTime());
+        }
+        if(end!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + "<=" +end.getTime());
+        }
+        
+        query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
+        query.append(" ORDER BY ").append(DET_ORDERBY);
+        
+        
+        Cursor c = db.rawQuery(query.toString(),null);
+        
+        double r = 0D;
+        if(c.moveToNext()){
+            r = c.getDouble(0);
+        }
+        
+        c.close();
+        return r;
+    }
 
     @Override
     public double sumTo(AccountType type,Date start, Date end) {
@@ -419,6 +451,38 @@ public class SQLiteDataProvider implements IDataProvider {
 
         StringBuilder where = new StringBuilder();
         where.append(" WHERE ").append(COL_DET_TO_TYPE).append(" = '").append(type.type).append("'");
+        if(start!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + ">=" + start.getTime());
+        }
+        if(end!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + "<=" +end.getTime());
+        }
+        
+        query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
+        query.append(" ORDER BY ").append(DET_ORDERBY);
+        
+        
+        Cursor c = db.rawQuery(query.toString(),null);
+        
+        double r = 0D;
+        if(c.moveToNext()){
+            r = c.getDouble(0);
+        }
+        
+        c.close();
+        return r;
+    }
+    
+    @Override
+    public double sumTo(Account acc,Date start, Date end) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        StringBuilder query =  new StringBuilder();
+
+        StringBuilder where = new StringBuilder();
+        where.append(" WHERE ").append(COL_DET_TO).append(" = '").append(acc.getId()).append("'");
         if(start!=null){
             where.append(" AND ");
             where.append(COL_DET_DATE + ">=" + start.getTime());

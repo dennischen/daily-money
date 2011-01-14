@@ -61,7 +61,11 @@ public interface IDataProvider {
     List<Detail> listDetail(Date start, Date end, int max);
 
     double sumFrom(AccountType type,Date start, Date end);
+    double sumFrom(Account account,Date start, Date end);
 
+    
     double sumTo(AccountType type,Date start, Date end);
+    double sumTo(Account account,Date start, Date end);
+    
     
 }

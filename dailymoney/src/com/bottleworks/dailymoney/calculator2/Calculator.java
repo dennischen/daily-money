@@ -38,9 +38,9 @@ import android.widget.TextView;
 
 public class Calculator extends Activity implements OnClickListener {
     
-    public static final String PARAMETER_START_VALUE = "cal2_startValue";
-    public static final String PARAMETER_NEED_RESULT = "cal2_needResult";
-    public static final String PARAMETER_RESULT_VALUE = "cal2_resultValue";
+    public static final String INTENT_START_VALUE = "cal2_startValue";
+    public static final String INTENT_NEED_RESULT = "cal2_needResult";
+    public static final String INTENT_RESULT_VALUE = "cal2_resultValue";
     
     
     EventListener mListener = new EventListener();
@@ -92,8 +92,8 @@ public class Calculator extends Activity implements OnClickListener {
         
         
         /**modify by dennis, provide initial value  **/
-        boolean needresult = getIntent().getExtras().getBoolean(PARAMETER_NEED_RESULT,false);
-        String startValue = getIntent().getExtras().getString(PARAMETER_START_VALUE);
+        boolean needresult = getIntent().getExtras().getBoolean(INTENT_NEED_RESULT,false);
+        String startValue = getIntent().getExtras().getString(INTENT_START_VALUE);
         
         if(startValue!=null){
             mLogic.setNumbericResult(startValue);
@@ -216,7 +216,7 @@ public class Calculator extends Activity implements OnClickListener {
         case R.id.cal2_ok:
             String result = mLogic.getNumbericResult();
             Intent intent = new Intent();
-            intent.putExtra(PARAMETER_RESULT_VALUE,result);
+            intent.putExtra(INTENT_RESULT_VALUE,result);
             setResult(RESULT_OK, intent);
             finish();
             break;

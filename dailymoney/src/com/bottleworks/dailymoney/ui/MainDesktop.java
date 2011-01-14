@@ -4,9 +4,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.view.View;
 
-import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.AccountMgntActivity;
 import com.bottleworks.dailymoney.Constants;
 import com.bottleworks.dailymoney.DataMaintenanceActivity;
@@ -14,7 +12,6 @@ import com.bottleworks.dailymoney.DetailEditorActivity;
 import com.bottleworks.dailymoney.DetailListActivity;
 import com.bottleworks.dailymoney.PrefsActivity;
 import com.bottleworks.dailymoney.R;
-import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.data.Detail;
 /**
  * 
@@ -37,8 +34,8 @@ public class MainDesktop extends AbstractDesktop {
                 Detail d = new Detail("", "", new Date(), 0D, "");
                 Intent intent = null;
                 intent = new Intent(activity,DetailEditorActivity.class);
-                intent.putExtra(DetailEditorActivity.PARAMETER_MODE_CREATE,true);
-                intent.putExtra(DetailEditorActivity.PARAMETER_DETAIL,d);
+                intent.putExtra(DetailEditorActivity.INTENT_MODE_CREATE,true);
+                intent.putExtra(DetailEditorActivity.INTENT_DETAIL,d);
                 activity.startActivityForResult(intent,Constants.REQUEST_DETAIL_EDITOR_CODE);
             }
         }, i18n.string(R.string.dtitem_adddetail), R.drawable.dt_item_adddetail);

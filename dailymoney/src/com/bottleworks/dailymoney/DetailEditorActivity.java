@@ -41,8 +41,8 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  */
 public class DetailEditorActivity extends ContextsActivity implements android.view.View.OnClickListener {
     
-    public static final String PARAMETER_MODE_CREATE = "modeCreate";
-    public static final String PARAMETER_DETAIL = "detail";
+    public static final String INTENT_MODE_CREATE = "modeCreate";
+    public static final String INTENT_DETAIL = "detail";
     
 //    public static final String PARAMETER_RESULT_DETAIL = "detail";
 //    public static final String PARAMETER_RESULT_WORKING_DETAIL = "workingDetail";
@@ -86,8 +86,9 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
 
 
     private void initIntent() {
-        modeCreate = getIntent().getExtras().getBoolean(PARAMETER_MODE_CREATE,true);
-        detail = (Detail)getIntent().getExtras().get(PARAMETER_DETAIL);
+        Bundle bundle = getIntentExtras();
+        modeCreate = bundle.getBoolean(INTENT_MODE_CREATE,true);
+        detail = (Detail)bundle.get(INTENT_DETAIL);
         workingDetail = clone(detail);
         
         if(modeCreate){
@@ -351,8 +352,8 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
     private void doCalculator2() {
         Intent intent = null;
         intent = new Intent(this,Calculator.class);
-        intent.putExtra(Calculator.PARAMETER_NEED_RESULT,true);
-        intent.putExtra(Calculator.PARAMETER_START_VALUE,moneyEditor.getText().toString());
+        intent.putExtra(Calculator.INTENT_NEED_RESULT,true);
+        intent.putExtra(Calculator.INTENT_START_VALUE,moneyEditor.getText().toString());
         startActivityForResult(intent,Constants.REQUEST_CALCULATOR_CODE);
     }
     
@@ -360,7 +361,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == Constants.REQUEST_CALCULATOR_CODE && resultCode==Activity.RESULT_OK){
-            String result = data.getExtras().getString(Calculator.PARAMETER_RESULT_VALUE);
+            String result = data.getExtras().getString(Calculator.INTENT_RESULT_VALUE);
             try{
                 double d = Double.parseDouble(result);
                 if(d>0){

@@ -84,11 +84,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     
 
     private void initialIntent() {
-        Intent intent = getIntent();
-        if(intent==null){
-            return;
-        }
-        Bundle b = intent.getExtras(); 
+        Bundle b = getIntentExtras(); 
         mode = b.getInt(INTENT_MODE,MODE_WEEK);
         Object o = b.get(INTENT_TARGET_DATE);
         if(o instanceof Date){
@@ -202,39 +198,39 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         switch(mode){
         case MODE_ALL:
             start = end = null;
-            toolbarView.setVisibility(TextView.GONE);
+//            toolbarView.setVisibility(TextView.GONE);
             break;
         case MODE_MONTH:
             start = cal.monthStartDate(currentDate);
             end = cal.monthEndDate(currentDate);
-            toolbarView.setVisibility(TextView.VISIBLE);
-            
-            modeBtn.setVisibility(ImageButton.VISIBLE);
-            if(allowYearSwitch){
-                modeBtn.setImageResource(R.drawable.btn_year);
-            }else{
-                modeBtn.setImageResource(R.drawable.btn_week);
-            }
+//            toolbarView.setVisibility(TextView.VISIBLE);
+//            
+//            modeBtn.setVisibility(ImageButton.VISIBLE);
+//            if(allowYearSwitch){
+//                modeBtn.setImageResource(R.drawable.btn_year);
+//            }else{
+//                modeBtn.setImageResource(R.drawable.btn_week);
+//            }
             break;
         case MODE_YEAR:
             start = cal.yearStartDate(currentDate);
             end = cal.yearEndDate(currentDate);
-            toolbarView.setVisibility(TextView.VISIBLE);
-
-            if(allowYearSwitch){
-                modeBtn.setVisibility(ImageButton.VISIBLE);
-                modeBtn.setImageResource(R.drawable.btn_week);
-            }else{
-                modeBtn.setVisibility(ImageButton.GONE);
-            }
+//            toolbarView.setVisibility(TextView.VISIBLE);
+//
+//            if(allowYearSwitch){
+//                modeBtn.setVisibility(ImageButton.VISIBLE);
+//                modeBtn.setImageResource(R.drawable.btn_week);
+//            }else{
+//                modeBtn.setVisibility(ImageButton.GONE);
+//            }
             
             break;
         default:
             start = cal.weekStartDate(currentDate);
             end = cal.weekEndDate(currentDate);
-            toolbarView.setVisibility(TextView.VISIBLE);
-            modeBtn.setVisibility(ImageButton.VISIBLE);
-            modeBtn.setImageResource(R.drawable.btn_month);
+//            toolbarView.setVisibility(TextView.VISIBLE);
+//            modeBtn.setVisibility(ImageButton.VISIBLE);
+//            modeBtn.setImageResource(R.drawable.btn_month);
             break;
         }
         final IDataProvider idp = Contexts.uiInstance().getDataProvider();

@@ -226,12 +226,34 @@ public class InMemoryDataProvider implements IDataProvider {
         }
         return sum;
     }
+    
+    @Override
+    public double sumFrom(Account acc,Date start, Date end) {
+        double sum = 0D;
+        for(Detail d:listDetail(start,end,-1)){
+            if(d.getFrom().equals(acc.getId())){
+                sum += d.getMoney();
+            }
+        }
+        return sum;
+    }
 
     @Override
     public double sumTo(AccountType type,Date start, Date end) {
         double sum = 0D;
         for(Detail d:listDetail(start,end,-1)){
             if(d.getTo().startsWith(type.type)){
+                sum += d.getMoney();
+            }
+        }
+        return sum;
+    }
+    
+    @Override
+    public double sumTo(Account acc,Date start, Date end) {
+        double sum = 0D;
+        for(Detail d:listDetail(start,end,-1)){
+            if(d.getTo().equals(acc.getId())){
                 sum += d.getMoney();
             }
         }
