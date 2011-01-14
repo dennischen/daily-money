@@ -120,7 +120,9 @@
     <string name="label_share_csv">Share CSV</string>
     <string name="msg_share_csv_title">Daily Money %1$s</string>
     <string name="msg_share_csv_content">Daily Money CSV 檔案</string>
-    <string name="qmsg_share_csv">分享那些CSV檔?</string>
+    <string name="qmsg_share_csv">Share which CSV files?</string>
+    
+    <string name="msg_firsttime_use_hint">Welcome to Daily Money, click Add Detail to start</string>
 <!-- above are verified -->    
 
     

@@ -22,6 +22,7 @@ import com.bottleworks.dailymoney.R;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Config;
@@ -200,7 +201,12 @@ public class Calculator extends Activity implements OnClickListener {
         float fontPixelSize = view.getTextSize();
         Display display = getWindowManager().getDefaultDisplay();
         int h = Math.min(display.getWidth(), display.getHeight());
-        float ratio = (float)h/HVGA_WIDTH_PIXELS;
+        float ratio = 0; 
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            ratio = (float)h/HVGA_WIDTH_PIXELS;
+        }else{
+            ratio = (float)h/HVGA_HEIGHT_PIXELS;
+        }
         view.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontPixelSize*ratio);
     }
 

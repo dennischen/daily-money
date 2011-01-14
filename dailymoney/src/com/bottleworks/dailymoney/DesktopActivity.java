@@ -27,6 +27,8 @@ import android.widget.TextView;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
+import com.bottleworks.dailymoney.data.DataCreator;
+import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.Desktop;
 import com.bottleworks.dailymoney.ui.MainDesktop;
 import com.bottleworks.dailymoney.ui.ReportsDesktop;
@@ -73,6 +75,16 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         appinfo = i18n.string(R.string.app_name);
         String ver = Contexts.uiInstance().getApplicationVersionName();
         appinfo += " ver : "+ver;
+        
+        if(Contexts.uiInstance().isFirstTime()){
+            IDataProvider idp = Contexts.uiInstance().getDataProvider();
+            if(idp.listAccount(null).size()==0){
+                //cause of this function is not ready in previous version, so i check the size for old user
+                new DataCreator(idp,i18n).createDefaultAccount();
+            }
+            GUIs.longToast(this,R.string.msg_firsttime_use_hint);
+        }
+        
     }
 
 

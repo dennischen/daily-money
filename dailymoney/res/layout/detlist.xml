@@ -19,7 +19,7 @@
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"  android:background="@color/detlist_summary_bg"
     android:gravity="center">
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_unknow"
-        android:textSize="12sp" android:text="......" android:textColor="@color/unknow_fgl"/>
+        android:textSize="16sp" android:text="......" android:textColor="@color/unknow_fgl"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_income" android:gravity="center"
         android:textSize="12sp" android:textColor="@color/income_fgl" android:paddingRight="5dp" android:ellipsize="start" android:layout_weight="1"/>
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/detlist_sum_expense"  android:gravity="center"

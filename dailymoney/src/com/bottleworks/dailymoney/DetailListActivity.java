@@ -8,6 +8,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -264,26 +265,38 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
                 sumUnknowView.setVisibility(TextView.GONE);
               //update data
                 detailListHelper.reloadData(data);
+                int showcount = 0;
                 if(income!=0){
                     sumIncomeView.setText(i18n.string(R.string.label_detlist_sum_income,Formats.money2String(income)));
                     sumIncomeView.setVisibility(TextView.VISIBLE);
+                    showcount++;
                 }
                 if(expense!=0){
                     sumExpenseView.setText(i18n.string(R.string.label_detlist_sum_expense,Formats.money2String(expense)));
                     sumExpenseView.setVisibility(TextView.VISIBLE);
+                    showcount++;
                 }
                 if(asset!=0){
                     sumAssetView.setText(i18n.string(R.string.label_detlist_sum_asset,Formats.money2String(asset)));
                     sumAssetView.setVisibility(TextView.VISIBLE);
+                    showcount++;
                 }
                 if(liability!=0){
                     sumLiabilityView.setText(i18n.string(R.string.label_detlist_sum_liability,Formats.money2String(liability)));
                     sumLiabilityView.setVisibility(TextView.VISIBLE);
+                    showcount++;
                 }
                 if(other!=0){
                     sumOtherView.setText(i18n.string(R.string.label_detlist_sum_other,Formats.money2String(other)));
                     sumOtherView.setVisibility(TextView.VISIBLE);
+                    showcount++;
                 }
+                
+                adjustTextSize(sumIncomeView,showcount);
+                adjustTextSize(sumExpenseView,showcount);
+                adjustTextSize(sumAssetView,showcount);
+                adjustTextSize(sumLiabilityView,showcount);
+                adjustTextSize(sumOtherView,showcount);
                 
               //update info
                 switch(mode){
@@ -306,6 +319,14 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         });
         
         
+    }
+    
+    private void adjustTextSize(TextView view,int count){
+        if(count<=3){
+            view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        }else{
+            view.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        }
     }
     
     

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Daily Money</string>
+	<string name="app_name">每日記帳本</string>
     <string name="defacc_bank">銀行</string>
     <string name="defacc_cash">現金</string>
     <string name="defacc_entertainment">娛樂</string>
@@ -117,7 +117,9 @@
     
     <string name="label_share_csv">分享CSV</string>
     <string name="msg_share_csv">Daily Money CSV 檔</string>
-    <string name="qmsg_share_csv">Share which CSV files?</string>
+    <string name="qmsg_share_csv">分享那些CSV檔?</string>
+    
+    <string name="msg_firsttime_use_hint">歡迎使用每日記帳本, 請點選 新增明細 來開始</string>
     <!-- above are verified -->
 
 </resources>

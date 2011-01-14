@@ -16,12 +16,12 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.text.Html;
 
 import com.bottleworks.commons.util.CalendarHelper;
+import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.Constants;
@@ -149,6 +149,41 @@ public class Contexts {
         return true;
     }
     
+    
+    
+    /**
+     * return true is this is first time you call this api in this application
+     */
+    public boolean isFirstTime(){
+        try{
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            if(!prefs.contains("app_firsttime")){
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("app_firsttime",Formats.normalizeDate2String(new Date()));
+                editor.commit();
+                return true;
+            }
+        }catch(Exception x){}
+        return false;
+    }
+    
+    /**
+     * return true is this is first time you call this api in this application and current version
+     */
+    public boolean isFirstVersionTime(){
+        int curr = getApplicationVersionCode();
+        try{
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            int last = prefs.getInt("app_lastver",-1);
+            if(curr!=last){
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("app_lastver",curr);
+                editor.commit();
+                return true;
+            }
+        }catch(Exception x){}
+        return false;
+    }
     
     /**
      * for ui context only
