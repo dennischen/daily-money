@@ -3,6 +3,7 @@
 === Features ===
  * 7    Support back(share) CSV file by email
  * 4    Needs calculator when counting the money 
+ * 10   Provide balance report
 === Bugs ===
  * 
 
