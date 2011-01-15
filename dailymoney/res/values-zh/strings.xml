@@ -137,6 +137,17 @@
     <string name="dtitem_report_monthly_balance">單月份統計</string>
     <string name="dtitem_report_yearly_balance">單年統計</string>
     <string name="dtitem_report_total_balance">總統計</string>
+    
+    <string name="label_count">(%1$s)</string>
+    <string name="label_accdetlist_dateinfo">%1$s 到 %2$s</string> 
+    
+    <string name="label_prefs_password">密碼保護-1</string>
+    <string name="label_prefs_password_sum">設定進入應用程式的密碼, 空值表示不用密碼保謢</string>
+    <string name="label_prefs_passwordvd">密碼保護-2</string>
+    <string name="label_prefs_passwordvd_sum">輸入相同的密碼來啟動密碼保護</string>
+    <string name="title_pdprotection">密碼保護</string>
+    <string name="msg_wrong_password">錯誤的密碼!</string>    
+    
     <!-- above are verified -->
     
 

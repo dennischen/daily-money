@@ -1,7 +1,8 @@
 = Last =
 == 0.9.3 ==
 === Features ===
- * 12    Needs detail list linking in balance report  
+ * 12   Needs detail list linking in balance report  
+ * 11   Provide password protection
 === Bugs ===
  * 
 === Other ===

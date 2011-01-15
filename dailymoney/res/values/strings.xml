@@ -139,9 +139,18 @@
     <string name="dtitem_report_monthly_balance">Monthly balance</string>
     <string name="dtitem_report_yearly_balance">Yearly balance</string>
     <string name="dtitem_report_total_balance">Balance</string>
+    
+    <string name="label_count">(%1$s)</string>
+    <string name="label_accdetlist_dateinfo">%1$s to %2$s</string> 
+    
+    <string name="label_prefs_password">Password protection-1</string>
+    <string name="label_prefs_password_sum">Set application password, empty means no protection</string>
+    <string name="label_prefs_passwordvd">Password protection-2</string>
+    <string name="label_prefs_passwordvd_sum">Set same password again to enable protection</string>
+    <string name="title_pdprotection">Password protection</string>
+    <string name="msg_wrong_password">Wrong password!</string>
 <!-- above are verified -->    
 
-    <string name="label_count">(%1$s)</string>
-    <string name="label_accdetlist_dateinfo">%1$s to %2$s</string>    
+
 </resources>
 

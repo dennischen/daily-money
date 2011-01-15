@@ -4,6 +4,13 @@
 	<CheckBoxPreference android:key="use_improvider" android:title="@string/label_prefs_improvider"
 		android:summary="@string/label_prefs_improvider_sum" android:defaultValue="false" />
 	 -->
+	<EditTextPreference android:key="password" android:title="@string/label_prefs_password" 
+	    android:inputType="textPassword"
+        android:summary="@string/label_prefs_password_sum"/>
+	<EditTextPreference android:key="passwordvd" android:title="@string/label_prefs_passwordvd" 
+        android:inputType="textPassword"
+        android:summary="@string/label_prefs_passwordvd_sum"/>
+         
 	<ListPreference android:key="detail_list_layout" android:title="@string/label_prefs_detlayout"
 		android:summary="@string/label_prefs_detlayout_sum" android:defaultValue="1" android:entries="@array/prefs_detlayout_label"
 		android:entryValues="@array/prefs_detlayout_val" />

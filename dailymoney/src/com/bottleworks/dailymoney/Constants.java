@@ -5,6 +5,8 @@ package com.bottleworks.dailymoney;
  *
  */
 public class Constants {
+    static final public String PREFS_PASSWORD = "password";
+    static final public String PREFS_PASSWORDVD = "passwordvd";
     static final public String PREFS_USE_INMENORY_PROVIDER = "use_improvider"; 
     static final public String PREFS_DETAIL_LIST_LAYOUT = "detail_list_layout";
     static final public String PREFS_FIRSTDAY_WEEK = "firstday_week";
@@ -19,5 +21,8 @@ public class Constants {
     public static final int REQUEST_DETAIL_EDITOR_CODE = 2;
     public static final int REQUEST_ACCOUNT_EDITOR_CODE = 3;
     public static final int REQUEST_ACCOUNT_DETAIL_LIST_CODE = 4;
+    public static final int REQUEST_PASSWORD_PROTECTION_CODE=5;
+    
+    
     
 }

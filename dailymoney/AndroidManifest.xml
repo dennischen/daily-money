@@ -15,7 +15,6 @@
         
         <activity android:name="AccountMgntActivity" android:label="@string/title_accmgnt" android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name="AccountEditorActivity"></activity>
-        
         <activity android:name="AccountDetailListActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>        
         
         <activity android:name="PrefsActivity" android:label="@string/title_prefs" android:theme="@android:style/Theme.NoTitleBar"></activity>
@@ -23,7 +22,9 @@
         
         <activity android:name=".calculator2.Calculator" android:theme="@android:style/Theme.Black.NoTitleBar"/>
                   
-        <activity android:name=".reports.BalanceActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>          
+        <activity android:name=".reports.BalanceActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        
+        <activity android:name="PasswordProtectionActivity" android:theme="@android:style/Theme.Dialog" android:label="@string/title_pdprotection"/>          
                   
     </application>
     <uses-sdk android:minSdkVersion="7" />
