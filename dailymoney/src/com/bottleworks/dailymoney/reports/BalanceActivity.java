@@ -263,8 +263,8 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             double from = idp.sumFrom(acc, start, end);
             double to = idp.sumTo(acc, start, end);
             double init = totalMode?acc.getInitialValue():0;
-            double b = init + to - from;
-            Balance balance = new Balance(acc.getName(),type.getType(), ((nat & b != 0) ? -b : b));
+            double b = init + (nat?(from - to):(to - from));
+            Balance balance = new Balance(acc.getName(),type.getType(), b);
             blist.add(balance);
         }
         return blist;
@@ -303,7 +303,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 asset = adjustTotalBalance(AccountType.ASSET, i18n.string(R.string.label_balt_asset), asset);
                 all.addAll(asset);
 
-                List<Balance> liability = calBalance(AccountType.LIABILITY, start,end, false);
+                List<Balance> liability = calBalance(AccountType.LIABILITY, start,end, true);
                 liability = adjustTotalBalance(AccountType.LIABILITY, i18n.string(R.string.label_balt_liability),
                         liability);
                 all.addAll(liability);

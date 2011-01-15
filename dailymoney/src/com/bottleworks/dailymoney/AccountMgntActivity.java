@@ -123,15 +123,15 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
                 }
                 
                 //reset
-                tv.setVisibility(View.VISIBLE);
+//                tv.setVisibility(View.VISIBLE);
                 
                 if(!name.equals(bindingFrom[1])){
                     return false;
                 }
-                if(at==AccountType.INCOME || at==AccountType.EXPENSE){
-                    tv.setVisibility(View.INVISIBLE);
-                    return true;
-                }
+//                if(at==AccountType.INCOME || at==AccountType.EXPENSE){
+//                    tv.setVisibility(View.INVISIBLE);
+//                    return true;
+//                }
                 
                 text = i18n.string(R.string.label_initial_value)+" : "+data.toString();
                 tv.setText(text);

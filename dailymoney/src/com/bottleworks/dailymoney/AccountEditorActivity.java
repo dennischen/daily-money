@@ -237,7 +237,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
                     return;
                 }
             }
-            
+            setResult(RESULT_OK);
             workingAccount = clone(workingAccount);
             workingAccount.setName("");
             nameEditor.setText("");
@@ -275,12 +275,13 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
     }
     
     private void onTypeChanged(AccountType type){
-        boolean enableInitval = !(type==AccountType.INCOME || type==AccountType.EXPENSE);
-        initvalEditor.setEnabled(enableInitval);
-        cal2Btn.setEnabled(enableInitval);
-        if(!enableInitval){
-            initvalEditor.setText("0");
-        }
+        //allow income and expense have initial value, since 1/15
+//        boolean enableInitval = !(type==AccountType.INCOME || type==AccountType.EXPENSE);
+//        initvalEditor.setEnabled(enableInitval);
+//        cal2Btn.setEnabled(enableInitval);
+//        if(!enableInitval){
+//            initvalEditor.setText("0");
+//        }
     }
     
     class AccountTypeViewBinder implements SimpleAdapter.ViewBinder{

@@ -439,7 +439,8 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         if (modeCreate) {
             
             idp.newDetail(workingDetail);
-
+            setResult(RESULT_OK);
+            
             workingDetail = clone(workingDetail);
             workingDetail.setMoney(0D);
             workingDetail.setNote("");

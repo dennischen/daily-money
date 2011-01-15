@@ -1,4 +1,16 @@
 = Last =
+== 0.9.3 ==
+=== Features ===
+ * 
+=== Bugs ===
+ * 
+=== Other ===
+ * 
+
+
+
+<hr/>
+= History =
 == 0.9.2 ==
 === Features ===
  * 7    Support back(share) CSV file by email
@@ -6,14 +18,9 @@
  * 10   Provide balance report
 === Bugs ===
  * 
-
 === Other ===
  * 8    Account and Detail editor should change to Activity
-
-
-
-<hr/>
-= History =
+===============================================================================
 == 0.9.1 ==
 === Features ===
  * 3    Add new account type Liability and Other
@@ -21,7 +28,7 @@
  * 6    Backup CSV when do export.
 === Bugs ===
  * 2    Wrong display in detail list if account not found
- 
+=============================================================================== 
 == 0.9.0 ==
 === Features ===
  * Edit/Update account

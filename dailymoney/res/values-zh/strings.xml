@@ -131,8 +131,8 @@
     <string name="label_balance_mode_month">%1$s - 單月統計</string>
     <string name="label_balance_mode_year">%1$s - 單年統計</string>
     
-    <string name="label_balance_mode_month_total">全統計到%1$s - 月</string>
-    <string name="label_balance_mode_year_total">全統計到%1$s - 年</string>
+    <string name="label_balance_mode_month_total">統計到%1$s月底</string>
+    <string name="label_balance_mode_year_total">統計到%1$s年底</string>
     
     <string name="dtitem_report_monthly_balance">單月份統計</string>
     <string name="dtitem_report_yearly_balance">單年統計</string>
