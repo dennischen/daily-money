@@ -27,13 +27,11 @@ import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.AccountDetailListActivity;
 import com.bottleworks.dailymoney.Constants;
-import com.bottleworks.dailymoney.DetailEditorActivity;
 import com.bottleworks.dailymoney.R;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
-import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.NamedItem;
 

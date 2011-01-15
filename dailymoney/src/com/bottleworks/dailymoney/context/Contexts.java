@@ -27,7 +27,6 @@ import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.Constants;
 import com.bottleworks.dailymoney.R;
 import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.data.InMemoryDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteHelper;
 
@@ -46,7 +45,9 @@ public class Contexts {
     private IDataProvider dataProvider;
     private I18N i18n;
     
+    @Deprecated
     boolean pref_useImpPovider = false;
+    
     int pref_detailListLayout = 2;
     int pref_maxRecords = -1;//-1 is no limit
     int pref_firstdayWeek = 1;//sunday
