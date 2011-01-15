@@ -301,7 +301,8 @@ public class Contexts {
 
     private void initDataProvider(Context context) {
         if(pref_useImpPovider){
-            dataProvider = new InMemoryDataProvider();
+//            dataProvider = new InMemoryDataProvider();
+            dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"),calendarHelper);
         }else{
 //            dataProvider = new InMemoryDataProvider();
             dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"),calendarHelper);

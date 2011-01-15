@@ -14,7 +14,9 @@
         <activity android:name="DetailEditorActivity"></activity>
         
         <activity android:name="AccountMgntActivity" android:label="@string/title_accmgnt" android:theme="@android:style/Theme.NoTitleBar"></activity>
-        <activity android:name="AccountEditorActivity"></activity>        
+        <activity android:name="AccountEditorActivity"></activity>
+        
+        <activity android:name="AccountDetailListActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>        
         
         <activity android:name="PrefsActivity" android:label="@string/title_prefs" android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name="DataMaintenanceActivity" android:label="@string/title_datamain" android:theme="@android:style/Theme.NoTitleBar"></activity>

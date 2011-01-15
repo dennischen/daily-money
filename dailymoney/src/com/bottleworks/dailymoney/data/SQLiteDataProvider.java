@@ -327,11 +327,13 @@ public class SQLiteDataProvider implements IDataProvider {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = null;
         StringBuilder where = new StringBuilder();
+        where.append(" 1=1 ");
         if(start!=null){
+            where.append(" AND ");
             where.append(COL_DET_DATE + ">=" + start.getTime());
         }
         if(end!=null){
-            where.append(start==null?"":" AND ");
+            where.append(" AND ");
             where.append(COL_DET_DATE + "<=" +end.getTime());
         }
         
@@ -347,17 +349,196 @@ public class SQLiteDataProvider implements IDataProvider {
         return result;
     }
     
+    @Override
+    public List<Detail> listDetail(Account account, int mode, Date start, Date end,int max) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = null;
+        StringBuilder where = new StringBuilder();
+        where.append(" 1=1 ");
+        if(mode ==LIST_DETAIL_MODE_FROM){
+            where.append(" AND ");
+            where.append(COL_DET_FROM + "= '" + account.getId()+"'");
+        }else if(mode==LIST_DETAIL_MODE_TO){
+            where.append(" AND ");
+            where.append(COL_DET_TO + "= '" + account.getId()+"'");
+        }else if(mode==LIST_DETAIL_MODE_BOTH){
+            where.append(" AND (");
+            where.append(COL_DET_FROM + "= '" + account.getId()+"' OR ");
+            where.append(COL_DET_TO + "= '" + account.getId()+"')");
+        }
+        
+        if(start!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + ">=" + start.getTime());
+        }
+        if(end!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + "<=" +end.getTime());
+        }
+        
+        
+        c = db.query(TB_DET,COL_DET_ALL,where.length()==0?null:where.toString(),null, null, null, DET_ORDERBY,max>0?Integer.toString(max):null);
+        List<Detail> result = new ArrayList<Detail>();
+        Detail det;
+        while(c.moveToNext()){
+            det = new Detail();
+            applyCursor(det,c);
+            result.add(det);
+        }
+        c.close();
+        return result;
+    }
+    
+    @Override
+    public List<Detail> listDetail(AccountType type, int mode,Date start, Date end, int max) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = null;
+        StringBuilder where = new StringBuilder();
+        where.append(" 1=1 ");
+        if(mode ==LIST_DETAIL_MODE_FROM){
+            where.append(" AND ");
+            where.append(COL_DET_FROM_TYPE + "= '" + type.getType()+"'");
+        }else if(mode==LIST_DETAIL_MODE_TO){
+            where.append(" AND ");
+            where.append(COL_DET_TO_TYPE + "= '" + type.getType()+"'");
+        }else if(mode==LIST_DETAIL_MODE_BOTH){
+            where.append(" AND (");
+            where.append(COL_DET_FROM_TYPE + "= '" + type.getType()+"' OR ");
+            where.append(COL_DET_TO_TYPE + "= '" + type.getType()+"')");
+        }
+        
+        if(start!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + ">=" + start.getTime());
+        }
+        if(end!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + "<=" +end.getTime());
+        }
+        
+        
+        c = db.query(TB_DET,COL_DET_ALL,where.length()==0?null:where.toString(),null, null, null, DET_ORDERBY,max>0?Integer.toString(max):null);
+        List<Detail> result = new ArrayList<Detail>();
+        Detail det;
+        while(c.moveToNext()){
+            det = new Detail();
+            applyCursor(det,c);
+            result.add(det);
+        }
+        c.close();
+        return result;
+    }
+    
+    @Override
     public int countDetail(Date start, Date end){
         SQLiteDatabase db = helper.getReadableDatabase();
 
         StringBuilder query =  new StringBuilder();
 
         StringBuilder where = new StringBuilder();
+        where.append(" 1=1 ");
         if(start!=null){
+            where.append(" AND ");
             where.append(COL_DET_DATE + ">=" + start.getTime());
         }
         if(end!=null){
-            where.append(start==null?"":" AND ");
+            where.append(" AND ");
+            where.append(COL_DET_DATE + "<=" +end.getTime());
+        }
+        
+        query.append("SELECT COUNT(").append(COL_DET_ID).append(") FROM ").append(TB_DET);
+        
+        if(where.length()>0){
+            query.append(" WHERE ").append(where);
+        }
+        
+        
+        Cursor c = db.rawQuery(query.toString(),null);
+        
+        int i = 0;
+        if(c.moveToNext()){
+            i = c.getInt(0);
+        }
+        
+        c.close();
+        return i;
+    }
+    
+    @Override
+    public int countDetail(Account account, int mode,Date start, Date end){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        StringBuilder query =  new StringBuilder();
+
+        StringBuilder where = new StringBuilder();
+        where.append(" 1=1 ");
+        if(mode ==LIST_DETAIL_MODE_FROM){
+            where.append(" AND ");
+            where.append(COL_DET_FROM + "= '" + account.getId()+"'");
+        }else if(mode==LIST_DETAIL_MODE_TO){
+            where.append(" AND ");
+            where.append(COL_DET_TO + "= '" + account.getId()+"'");
+        }else if(mode==LIST_DETAIL_MODE_BOTH){
+            where.append(" AND (");
+            where.append(COL_DET_FROM + "= '" + account.getId()+"' OR ");
+            where.append(COL_DET_TO + "= '" + account.getId()+"')");
+        }
+        
+        
+        if(start!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + ">=" + start.getTime());
+        }
+        if(end!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + "<=" +end.getTime());
+        }
+        
+        query.append("SELECT COUNT(").append(COL_DET_ID).append(") FROM ").append(TB_DET);
+        
+        if(where.length()>0){
+            query.append(" WHERE ").append(where);
+        }
+        
+        
+        Cursor c = db.rawQuery(query.toString(),null);
+        
+        int i = 0;
+        if(c.moveToNext()){
+            i = c.getInt(0);
+        }
+        
+        c.close();
+        return i;
+    }
+    
+    @Override
+    public int countDetail(AccountType type, int mode,Date start, Date end){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        StringBuilder query =  new StringBuilder();
+
+        StringBuilder where = new StringBuilder();
+        where.append(" 1=1 ");
+        
+        if(mode ==LIST_DETAIL_MODE_FROM){
+            where.append(" AND ");
+            where.append(COL_DET_FROM_TYPE + "= '" + type.getType()+"'");
+        }else if(mode==LIST_DETAIL_MODE_TO){
+            where.append(" AND ");
+            where.append(COL_DET_TO_TYPE + "= '" + type.getType()+"'");
+        }else if(mode==LIST_DETAIL_MODE_BOTH){
+            where.append(" AND (");
+            where.append(COL_DET_FROM_TYPE + "= '" + type.getType()+"' OR ");
+            where.append(COL_DET_TO_TYPE + "= '" + type.getType()+"')");
+        }
+        
+        if(start!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + ">=" + start.getTime());
+        }
+        if(end!=null){
+            where.append(" AND ");
             where.append(COL_DET_DATE + "<=" +end.getTime());
         }
         

@@ -21,7 +21,10 @@
 	<color name="report_balance_summary_bg">#FF303030</color>  
 
     <color name="report_balance_list_bg">#FFFFF8E0</color>
-    <color name="report_balance_indent0_bg">#FF505050</color> 
+    <color name="report_balance_list_bgs">#BBFFF8E0</color>
+    
+    <color name="report_balance_indent0_bg">#FF505050</color>
+    <color name="report_balance_indent0_bgs">#BB505050</color> 
 	
 	<color name="expense_bg_s">#FFFF9AB5</color>
 	<color name="expense_bg_e">#CCFF9AB5</color>
@@ -62,4 +65,6 @@
     <color name="dt_info_bg">#FF7A95FF</color>
     <color name="dt_info_fg">#FF000000</color>
 
+    <color name="accdetlist_info_bg">#FF303030</color>
+    <color name="accdetlist_info_fg">#FFF5B800</color>
 </resources>

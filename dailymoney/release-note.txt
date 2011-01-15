@@ -1,7 +1,7 @@
 = Last =
 == 0.9.3 ==
 === Features ===
- * 
+ * 12    Needs detail list linking in balance report  
 === Bugs ===
  * 
 === Other ===

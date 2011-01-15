@@ -141,7 +141,7 @@
     <string name="dtitem_report_total_balance">Balance</string>
 <!-- above are verified -->    
 
-
-    
+    <string name="label_count">(%1$s)</string>
+    <string name="label_accdetlist_dateinfo">%1$s to %2$s</string>    
 </resources>
 

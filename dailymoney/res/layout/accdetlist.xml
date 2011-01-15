@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/accdetlist_infobar"
+	android:textSize="16sp" android:text="" android:singleLine="true" android:background="@color/accdetlist_info_bg"
+	android:textColor="@color/accdetlist_info_fg" android:gravity="center" android:ellipsize="end"/>
+    <ListView android:id="@+id/accdetlist_list" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
+</LinearLayout>

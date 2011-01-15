@@ -13,6 +13,11 @@ import java.util.List;
  *
  */
 public interface IDataProvider {
+    
+    int LIST_DETAIL_MODE_BOTH = 0;
+    int LIST_DETAIL_MODE_FROM = 1;
+    int LIST_DETAIL_MODE_TO = 2;
+    
 
     void init();
 
@@ -57,8 +62,18 @@ public interface IDataProvider {
     List<Detail> listAllDetail();
 
     int countDetail(Date start, Date end);
+    /**
+     * mode : 0 both, 1 from, 2 to;
+     */
+    int countDetail(AccountType type,int mode,Date start, Date end);
+    int countDetail(Account account,int mode,Date start, Date end);
     
     List<Detail> listDetail(Date start, Date end, int max);
+    /**
+     * mode : 0 both, 1 from, 2 to;
+     */
+    List<Detail> listDetail(AccountType type,int mode,Date start, Date end, int max);
+    List<Detail> listDetail(Account account,int mode,Date start, Date end, int max);
 
     double sumFrom(AccountType type,Date start, Date end);
     double sumFrom(Account account,Date start, Date end);

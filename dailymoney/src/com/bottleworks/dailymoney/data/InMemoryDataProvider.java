@@ -12,7 +12,8 @@ import com.bottleworks.commons.util.Logger;
  * @author dennis
  *
  */
-public class InMemoryDataProvider implements IDataProvider {
+@Deprecated
+public abstract class InMemoryDataProvider implements IDataProvider {
 
     static List<Account> accountList = new ArrayList<Account>();
     static List<Detail> detailList = new ArrayList<Detail>();
