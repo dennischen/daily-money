@@ -14,11 +14,11 @@ import com.bottleworks.dailymoney.R;
 public enum AccountType {
 
     UNKONW("Z",R.drawable.na),
-    INCOME("A",R.drawable.acc_tab_income),
-    EXPENSE("B",R.drawable.acc_tab_expense),
-    ASSET("C",R.drawable.acc_tab_asset),
-    LIABILITY("D",R.drawable.acc_tab_liability),
-    OTHER("E",R.drawable.acc_tab_other);
+    INCOME("A",R.drawable.tab_income),
+    EXPENSE("B",R.drawable.tab_expense),
+    ASSET("C",R.drawable.tab_asset),
+    LIABILITY("D",R.drawable.tab_liability),
+    OTHER("E",R.drawable.tab_other);
     
     String type;
     int drawable;

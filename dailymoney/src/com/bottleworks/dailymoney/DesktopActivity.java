@@ -7,9 +7,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -20,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,17 +26,15 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.dailymoney.calculator2.Calculator;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.DataCreator;
-import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.Desktop;
+import com.bottleworks.dailymoney.ui.Desktop.DesktopItem;
 import com.bottleworks.dailymoney.ui.MainDesktop;
 import com.bottleworks.dailymoney.ui.ReportsDesktop;
 import com.bottleworks.dailymoney.ui.TestsDesktop;
-import com.bottleworks.dailymoney.ui.Desktop.DesktopItem;
 /**
  * 
  * @author dennis

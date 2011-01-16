@@ -66,7 +66,7 @@ public class Desktop {
         Runnable run;
 
         public DesktopItem(Runnable run, String label) {
-            this(run, label, R.drawable.dt_item);
+            this(run, label, R.drawable.dtitem);
         }
 
         public DesktopItem(Runnable run, String label, int icon) {

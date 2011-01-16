@@ -1,17 +1,9 @@
 package com.bottleworks.dailymoney.ui;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
-import android.os.Parcelable;
-import android.text.Html;
 
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.R;
@@ -39,14 +31,14 @@ public class TestsDesktop extends AbstractDesktop {
     @Override
     protected void init() {
         label = i18n.string(R.string.dt_tests);
-        icon = R.drawable.dt_tests;
+        icon = R.drawable.tab_tests;
 
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 Contexts.uiInstance().getDataProvider().reset();
                 GUIs.shortToast(activity,"reset data provider");
-            }}, "rest data provider",R.drawable.dt_item_test));
+            }}, "rest data provider",R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
@@ -56,7 +48,7 @@ public class TestsDesktop extends AbstractDesktop {
                 intent.putExtra(Calculator.INTENT_NEED_RESULT,true);
                 activity.startActivityForResult(intent,999);
                 GUIs.shortToast(activity,"Call Calculator");
-            }}, "start cal",R.drawable.dt_item_test){
+            }}, "start cal",R.drawable.dtitem_test){
             public void onActivityResult(int requestCode, int resultCode, Intent data) {
                 if(requestCode==999 && resultCode==Activity.RESULT_OK){
                     GUIs.shortToast(activity,"Calculator result = "+data.getExtras().getString(Calculator.INTENT_RESULT_VALUE));
@@ -68,38 +60,38 @@ public class TestsDesktop extends AbstractDesktop {
             @Override
             public void run() {
                 testCreateTestdata(1);
-            }}, "test data1",R.drawable.dt_item_test));
+            }}, "test data1",R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testCreateTestdata(25);
-            }}, "test data25",R.drawable.dt_item_test));
+            }}, "test data25",R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testCreateTestdata(50);
-            }}, "test data50",R.drawable.dt_item_test));
+            }}, "test data50",R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testCreateTestdata(100);
-            }}, "test data100",R.drawable.dt_item_test));
+            }}, "test data100",R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testCreateTestdata(200);
-            }}, "test data200",R.drawable.dt_item_test));
+            }}, "test data200",R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 testJust();
-            }}, "just test",R.drawable.dt_item_test));
+            }}, "just test",R.drawable.dtitem_test));
         
         DesktopItem padding = new DesktopItem(new Runnable(){
             @Override
             public void run() {
                 
-            }}, "padding",R.drawable.dt_item_test);
+            }}, "padding",R.drawable.dtitem_test);
         
         addItem(padding);
         addItem(padding);

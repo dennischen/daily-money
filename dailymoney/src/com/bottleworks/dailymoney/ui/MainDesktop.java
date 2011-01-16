@@ -27,7 +27,7 @@ public class MainDesktop extends AbstractDesktop {
     @Override
     protected void init() {
         label = i18n.string(R.string.dt_main);
-        icon = R.drawable.dt_main;
+        icon = R.drawable.tab_main;
 
         DesktopItem adddetdt = new DesktopItem(new Runnable() {
             public void run() {
@@ -38,31 +38,31 @@ public class MainDesktop extends AbstractDesktop {
                 intent.putExtra(DetailEditorActivity.INTENT_DETAIL,d);
                 activity.startActivityForResult(intent,Constants.REQUEST_DETAIL_EDITOR_CODE);
             }
-        }, i18n.string(R.string.dtitem_adddetail), R.drawable.dt_item_adddetail);
+        }, i18n.string(R.string.dtitem_adddetail), R.drawable.dtitem_adddetail);
 
         Intent intent = new Intent(activity, DetailListActivity.class);
         intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_WEEK);
         DesktopItem weeklist = new DesktopItem(new IntentRun(activity, intent),
-                i18n.string(R.string.dtitem_detlist_week), R.drawable.dt_item_detail_week);
+                i18n.string(R.string.dtitem_detlist_week), R.drawable.dtitem_detail_week);
 
         intent = new Intent(activity, DetailListActivity.class);
         intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_MONTH);
         DesktopItem monthlist = new DesktopItem(new IntentRun(activity, intent),
-                i18n.string(R.string.dtitem_detlist_month), R.drawable.dt_item_detail_month);
+                i18n.string(R.string.dtitem_detlist_month), R.drawable.dtitem_detail_month);
 
         intent = new Intent(activity, DetailListActivity.class);
         intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_YEAR);
         DesktopItem yearlist = new DesktopItem(new IntentRun(activity, intent),
-                i18n.string(R.string.dtitem_detlist_year), R.drawable.dt_item_detail_year);
+                i18n.string(R.string.dtitem_detlist_year), R.drawable.dtitem_detail_year);
 
         DesktopItem accmgntdt = new DesktopItem(new ActivityRun(activity, AccountMgntActivity.class),
-                i18n.string(R.string.dtitem_accmgnt), R.drawable.dt_item_account);
+                i18n.string(R.string.dtitem_accmgnt), R.drawable.dtitem_account);
         
         DesktopItem datamaindt = new DesktopItem(new ActivityRun(activity, DataMaintenanceActivity.class),
-                i18n.string(R.string.dtitem_datamain), R.drawable.dt_item_datamain);
+                i18n.string(R.string.dtitem_datamain), R.drawable.dtitem_datamain);
         
         DesktopItem prefdt = new DesktopItem(new ActivityRun(activity, PrefsActivity.class),
-                i18n.string(R.string.dtitem_prefs), R.drawable.dt_item_prefs);
+                i18n.string(R.string.dtitem_prefs), R.drawable.dtitem_prefs);
         
 
         addItem(adddetdt);
