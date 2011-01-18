@@ -3,6 +3,7 @@
 === Features ===
  * 12   Needs detail list linking in balance report  
  * 11   Provide password protection
+ * 13   Supports pie chart of balance
 === Bugs ===
  * 
 === Other ===

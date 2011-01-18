@@ -443,23 +443,26 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(parent == listView){
-            Balance b = listViewData.get(position);
-            
-            Intent intent = null;
-            intent = new Intent(this,AccountDetailListActivity.class);
-            if(currentStartDate !=null){
-                intent.putExtra(AccountDetailListActivity.INTENT_START,currentStartDate);
-            }
-            if(currentEndDate !=null){
-                intent.putExtra(AccountDetailListActivity.INTENT_END,currentEndDate);
-            }            
-            intent.putExtra(AccountDetailListActivity.INTENT_TARGET,b.getTarget());
-            intent.putExtra(AccountDetailListActivity.INTENT_TARGET_INFO,b.getName());
-            this.startActivityForResult(intent,Constants.REQUEST_ACCOUNT_DETAIL_LIST_CODE);
-            
+            doBalancePieChart(position);
         }
     }
     
+    private void doDetailList(int position) {
+        Balance b = listViewData.get(position);
+        
+        Intent intent = null;
+        intent = new Intent(this,AccountDetailListActivity.class);
+        if(currentStartDate !=null){
+            intent.putExtra(AccountDetailListActivity.INTENT_START,currentStartDate);
+        }
+        if(currentEndDate !=null){
+            intent.putExtra(AccountDetailListActivity.INTENT_END,currentEndDate);
+        }            
+        intent.putExtra(AccountDetailListActivity.INTENT_TARGET,b.getTarget());
+        intent.putExtra(AccountDetailListActivity.INTENT_TARGET_INFO,b.getName());
+        this.startActivityForResult(intent,Constants.REQUEST_ACCOUNT_DETAIL_LIST_CODE);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -469,7 +472,6 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 public void run() {
                     reloadData();
                 }});
-            
         }
     }
     
@@ -480,7 +482,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         super.onCreateContextMenu(menu, v, menuInfo);
         if (v.getId() == R.id.report_balance_list) {
             AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;            
-            getMenuInflater().inflate(R.menu.balancelist_ctxmenu, menu);
+            getMenuInflater().inflate(R.menu.balance_ctxmenu, menu);
         }
 
     }
@@ -489,20 +491,30 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
-        case R.id.balancelist_menu_pie:
-            Balance b = listViewData.get(info.position);
-            List<Balance> sub = b.getGroup();
-            AccountType at;
-            if(b.target instanceof AccountType){
-                at = (AccountType)b.target;
-            }else{
-                at = AccountType.find(((Account)b.target).getType());
-            }
-            Intent intent = new BalancePieChart(this,GUIs.getDPRatio(this)).createIntent(at,sub);
-            startActivity(intent);
+        case R.id.balance_menu_piechart:
+            doBalancePieChart(info.position);
+            return true;
+        case R.id.balance_menu_detlist:
+            doDetailList(info.position);
             return true;
         }
         return super.onContextItemSelected(item);
+    }
+    
+    private void doBalancePieChart(int pos){
+        Balance b = listViewData.get(pos);
+        List<Balance> group = b.getGroup();
+        AccountType at;
+        if(b.target instanceof AccountType){
+            at = (AccountType)b.target;
+        }else{
+            //move selection to first
+            group.remove(b);
+            group.add(0,b);
+            at = AccountType.find(((Account)b.target).getType());
+        }
+        Intent intent = new BalancePieChart(this,GUIs.getDPRatio(this)).createIntent(at,group);
+        startActivity(intent);
     }
 
 }

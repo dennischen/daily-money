@@ -29,24 +29,17 @@ public abstract class AbstractChart {
     public static final int CYAN        = 0xEF00FFFF;
     public static final int MAGENTA     = 0xEFFF00FF;
     
-    public static final int RED1         = 0xEFFF5555;
-    public static final int GREEN1       = 0xEF55FF55;
-    public static final int BLUE1        = 0xEF5555FF;
-    public static final int YELLOW1      = 0xEFFFFF55;
-    public static final int CYAN1        = 0xEF55FFFF;
-    public static final int MAGENTA1     = 0xEFFF55FF;
-    
-    public static final int RED2         = 0xEFFFAAAA;
-    public static final int GREEN2       = 0xEFAAFFAA;
-    public static final int BLUE2        = 0xEFAAAAFF;
-    public static final int YELLOW2      = 0xEFFFFFAA;
-    public static final int CYAN2        = 0xEFAAFFFF;
-    public static final int MAGENTA2     = 0xEFFFAAFF;
+    public static final int RED1         = 0xDFFF7777;
+    public static final int GREEN1       = 0xDF77FF77;
+    public static final int BLUE1        = 0xDF7777FF;
+    public static final int YELLOW1      = 0xDFFFFF77;
+    public static final int CYAN1        = 0xDF77FFFF;
+    public static final int MAGENTA1     = 0xDFFF77FF;
     
     
-    public static final int[] colorMaterial = new int[]{GREEN,BLUE,RED,YELLOW,CYAN,MAGENTA,
-        GREEN1,BLUE1,RED1,YELLOW1,CYAN1,MAGENTA1,
-        GREEN2,BLUE2,RED2,YELLOW2,CYAN2,MAGENTA2};
+    
+    public static final int[] colorPool = new int[]{GREEN,BLUE,RED,YELLOW,CYAN,MAGENTA,
+        GREEN1,BLUE1,RED1,YELLOW1,CYAN1,MAGENTA1};
 
     public AbstractChart(Context context, float dpRatio) {
         this.context = context;
@@ -54,27 +47,27 @@ public abstract class AbstractChart {
         i18n = new I18N(context);
     }
     
-    public int[] createColorArray(int size){
-        int[] carr = new int[size];
+    public int[] createColor(int size){
+        int[] color = new int[size];
+        if(size==0) return color;
         int i=0;
         int cmindex=0;
         int trans=0xFFFFFFFF;
         while(true){
-            cmindex = i % colorMaterial.length;
+            cmindex = i % colorPool.length;
             if(i!=0 && cmindex==0){
                 trans = trans-0x40000000;//increase transparent
-                System.out.println("trans "+Integer.toHexString(trans));
             }
-            carr[i] = colorMaterial[ cmindex];
-            carr[i] = carr[i]&trans;
+            color[i] = colorPool[cmindex];
+            color[i] = color[i]&trans;
             i++;
-            if(i==carr.length){
+            if(i==color.length){
                 break;
             }
             
             
         }
-        return carr;
+        return color;
     }
 
     protected DefaultRenderer buildCategoryRenderer(int[] colors) {

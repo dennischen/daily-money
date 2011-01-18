@@ -10,7 +10,6 @@ import org.achartengine.renderer.DefaultRenderer;
 import android.content.Context;
 import android.content.Intent;
 
-import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.data.AccountType;
 
 public class BalancePieChart extends AbstractChart {
@@ -32,16 +31,16 @@ public class BalancePieChart extends AbstractChart {
                 StringBuilder sb = new StringBuilder();
                 sb.append(b.getName());
                 double p = (b.money*100)/total;
-                if(p>0){
+                if(p>=1){
                     sb.append("(").append(percentageFormat.format(p)).append("%)");
-                    series.add(sb.toString(),b.money>0?b.money:0);
+                    series.add(sb.toString(),b.money);
                 }
             }
         }
-        int[] colors = createColorArray(series.getItemCount());
-        DefaultRenderer renderer = buildCategoryRenderer(colors);
+        int[] color = createColor(series.getItemCount());
+        DefaultRenderer renderer = buildCategoryRenderer(color);
         renderer.setLabelsTextSize(14 * dpRatio);
-        renderer.setLegendTextSize(12 * dpRatio);//font height bug of achartengine the font size could not large than 12
-        return ChartFactory.getPieChartIntent(context,series , renderer);
+        renderer.setLegendTextSize(16 * dpRatio);
+        return ChartFactory.getPieChartIntent(context,series , renderer, series.getTitle());
     }
 }

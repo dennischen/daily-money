@@ -149,6 +149,7 @@
     <string name="msg_wrong_password">錯誤的密碼!</string>    
     
     <string name="label_balance_piechart">統計圓餅圖</string>
+    <string name="label_balance_detlist">清單</string>
     <!-- above are verified -->
     
 

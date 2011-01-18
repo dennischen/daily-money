@@ -151,6 +151,7 @@
     <string name="msg_wrong_password">Wrong password!</string>
     
     <string name="label_balance_piechart">Balance Pie Chart</string>
+    <string name="label_balance_detlist">Detail list</string>
 <!-- above are verified -->    
 
 
