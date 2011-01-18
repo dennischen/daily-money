@@ -313,7 +313,7 @@ public class GUIs {
         public boolean onFinish(Object data);
     }
 
-    public static float geDPRatio(Activity activity) {
+    public static float getDPRatio(Activity activity) {
         Display display = activity.getWindowManager().getDefaultDisplay();
 //        int h = Math.min(display.getWidth(), display.getHeight());
         int h = Math.min(display.getWidth(), display.getHeight());

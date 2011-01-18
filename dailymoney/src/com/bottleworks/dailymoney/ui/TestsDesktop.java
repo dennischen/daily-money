@@ -7,10 +7,11 @@ import android.content.Intent;
 
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.R;
-import com.bottleworks.dailymoney.calculator2.Calculator;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
+import com.bottleworks.dailymoney.reports.chartexample.*;
+import com.bottleworks.dailymoney.reports.*;
 /**
  * 
  * @author dennis
@@ -32,7 +33,7 @@ public class TestsDesktop extends AbstractDesktop {
     protected void init() {
         label = i18n.string(R.string.dt_tests);
         icon = R.drawable.tab_tests;
-
+        
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
@@ -43,16 +44,13 @@ public class TestsDesktop extends AbstractDesktop {
             @Override
             public void run() {
                 Intent intent = null;
-                intent = new Intent(activity,Calculator.class);
-                intent.putExtra(Calculator.INTENT_START_VALUE,"12345");
-                intent.putExtra(Calculator.INTENT_NEED_RESULT,true);
+                
+                BalancePieChart chart= new BalancePieChart(activity,GUIs.getDPRatio(activity));
+//                intent = chart.prepare();
                 activity.startActivityForResult(intent,999);
-                GUIs.shortToast(activity,"Call Calculator");
-            }}, "start cal",R.drawable.dtitem_test){
+                GUIs.shortToast(activity,"Call Chat");
+            }}, "start chat",R.drawable.dtitem_test){
             public void onActivityResult(int requestCode, int resultCode, Intent data) {
-                if(requestCode==999 && resultCode==Activity.RESULT_OK){
-                    GUIs.shortToast(activity,"Calculator result = "+data.getExtras().getString(Calculator.INTENT_RESULT_VALUE));
-                }
             }
         });
         

@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney.reports;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 
@@ -15,7 +16,9 @@ public class Balance {
     int indent;
     Serializable target;
 
-    public Balance(String name, String type, double money,Serializable target) {
+    List<Balance> group;
+
+    public Balance(String name, String type, double money, Serializable target) {
         this.name = name;
         this.type = type;
         this.money = money;
@@ -61,7 +64,13 @@ public class Balance {
     public void setTarget(Serializable target) {
         this.target = target;
     }
-    
-    
+
+    public List<Balance> getGroup() {
+        return group;
+    }
+
+    public void setGroup(List<Balance> group) {
+        this.group = group;
+    }
 
 }

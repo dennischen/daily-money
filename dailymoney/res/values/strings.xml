@@ -149,6 +149,8 @@
     <string name="label_prefs_passwordvd_sum">Set same password again to enable protection</string>
     <string name="title_pdprotection">Password protection</string>
     <string name="msg_wrong_password">Wrong password!</string>
+    
+    <string name="label_balance_piechart">Balance Pie Chart</string>
 <!-- above are verified -->    
 
 

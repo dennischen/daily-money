@@ -12,9 +12,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -185,7 +189,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                         tv.setTextColor(getResources().getColor(R.color.unknow_fgd));
                     }
                 }
-                adjustItem(tv,b,GUIs.geDPRatio(BalanceActivity.this));
+                adjustItem(tv,b,GUIs.getDPRatio(BalanceActivity.this));
                 return false;
             }});
         
@@ -193,6 +197,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         listView.setAdapter(listViewAdapter);
         
         listView.setOnItemClickListener(this);
+        registerForContextMenu(listView);
     }
 
     protected void adjustLayout(LinearLayout layout, Balance b) {
@@ -255,13 +260,16 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         if(items.size()==0){
             return items;
         }
+        List<Balance> group = new ArrayList<Balance>(items);
         double total = 0;
         for (Balance b : items) {
             b.setIndent(1);
+            b.setGroup(group);
             total += b.money;
         }
         Balance bt = new Balance(totalName,type.getType(), total,type);
         bt.setIndent(0);
+        bt.setGroup(group);
         items.add(0, bt);
         return items;
     }
@@ -463,6 +471,38 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 }});
             
         }
+    }
+    
+    
+    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId() == R.id.report_balance_list) {
+            AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;            
+            getMenuInflater().inflate(R.menu.balancelist_ctxmenu, menu);
+        }
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+        case R.id.balancelist_menu_pie:
+            Balance b = listViewData.get(info.position);
+            List<Balance> sub = b.getGroup();
+            AccountType at;
+            if(b.target instanceof AccountType){
+                at = (AccountType)b.target;
+            }else{
+                at = AccountType.find(((Account)b.target).getType());
+            }
+            Intent intent = new BalancePieChart(this,GUIs.getDPRatio(this)).createIntent(at,sub);
+            startActivity(intent);
+            return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
 }
