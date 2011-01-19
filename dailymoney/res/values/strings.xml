@@ -150,8 +150,12 @@
     <string name="title_pdprotection">Password protection</string>
     <string name="msg_wrong_password">Wrong password!</string>
     
-    <string name="label_balance_piechart">Balance pie chart</string>
-    <string name="label_balance_detlist">Detail list</string>
+    <string name="act_balance_piechart">Balance monthly pie chart</string>
+    <string name="act_balance_detlist">Detail list</string>
+    <string name="act_balance_account_yeartimechart">Account yearly time chart</string>
+    <string name="act_balance_yeartimechart">Balance Yearly time chart</string>
+    <string name="label_balance_account_yeartimechart">%1$s yearly time chart (%2$s)</string>
+    
 <!-- above are verified -->    
 
 

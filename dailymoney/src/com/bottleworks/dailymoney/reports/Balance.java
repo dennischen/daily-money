@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney.reports;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ public class Balance {
     double money;
     int indent;
     Serializable target;
+    Date date;
 
     List<Balance> group;
 
@@ -73,4 +75,13 @@ public class Balance {
         this.group = group;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    
 }

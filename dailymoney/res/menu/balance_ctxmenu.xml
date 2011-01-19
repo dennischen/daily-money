@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/balance_menu_detlist" android:title="@string/label_balance_detlist" ></item>
-<item android:id="@+id/balance_menu_piechart" android:title="@string/label_balance_piechart" ></item>
+<item android:id="@+id/balance_menu_detlist" android:title="@string/act_balance_detlist" ></item>
+<item android:id="@+id/balance_menu_piechart" android:title="@string/act_balance_piechart" ></item>
+<item android:id="@+id/balance_menu_account_yeartimechart" android:title="@string/act_balance_account_yeartimechart" ></item>
+
 </menu>

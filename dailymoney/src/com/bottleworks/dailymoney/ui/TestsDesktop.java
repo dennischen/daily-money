@@ -43,12 +43,8 @@ public class TestsDesktop extends AbstractDesktop {
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
-                Intent intent = null;
-                
-                GUIs.shortToast(activity,"Call Chat");
-            }}, "start chat",R.drawable.dtitem_test){
-            public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            }
+                testChart();
+            }}, "start chart",R.drawable.dtitem_test){
         });
         
         addItem(new DesktopItem(new Runnable(){
@@ -113,9 +109,16 @@ public class TestsDesktop extends AbstractDesktop {
         
     }
     
+    protected void testChart(){
+        Intent intent = new AverageTemperatureChart().execute(activity,GUIs.getDPRatio(activity));
+        
+        GUIs.shortToast(activity,"Call Chart");
+        activity.startActivity(intent);
+    }
 
     protected void testJust() {
         Calendar.getInstance().setFirstDayOfWeek(Calendar.SUNDAY);
+        
         System.out.println(">>>>>>>>>>>>."+Calendar.getInstance().getFirstDayOfWeek());
 //        System.out.println(">>>>>>>>>>>>."+);
     }
