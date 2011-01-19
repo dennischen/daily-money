@@ -73,7 +73,7 @@ public class BalanceYearTimeChart extends AbstractChart {
         renderer.setYLabelsAlign(Align.RIGHT);
         renderer.setXLabelsAlign(Align.LEFT);
         
-        renderer.setXLabels(16);
+        renderer.setXLabels(12);
         renderer.setYLabels(16);
         renderer.setShowGrid(true);
         renderer.setXLabelsAngle(120);

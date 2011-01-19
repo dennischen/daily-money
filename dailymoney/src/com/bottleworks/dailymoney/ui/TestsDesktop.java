@@ -10,7 +10,6 @@ import com.bottleworks.dailymoney.R;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.reports.chartexample.*;
 import com.bottleworks.dailymoney.reports.*;
 /**
  * 
@@ -110,10 +109,10 @@ public class TestsDesktop extends AbstractDesktop {
     }
     
     protected void testChart(){
-        Intent intent = new AverageTemperatureChart().execute(activity,GUIs.getDPRatio(activity));
-        
-        GUIs.shortToast(activity,"Call Chart");
-        activity.startActivity(intent);
+//        Intent intent = new AverageTemperatureChart().execute(activity,GUIs.getDPRatio(activity));
+//        
+//        GUIs.shortToast(activity,"Call Chart");
+//        activity.startActivity(intent);
     }
 
     protected void testJust() {
