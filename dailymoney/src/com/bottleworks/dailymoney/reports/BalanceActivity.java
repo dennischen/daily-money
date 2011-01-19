@@ -312,24 +312,32 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             public void run() {
                 List<Balance> asset = calBalance(AccountType.ASSET,currentStartDate, currentEndDate, false);
                 asset = adjustTotalBalance(AccountType.ASSET, i18n.string(R.string.label_balt_asset), asset);
-                all.addAll(asset);
-                
+
                 List<Balance> income = calBalance(AccountType.INCOME, currentStartDate,currentEndDate, true);
-                income = adjustTotalBalance(AccountType.INCOME, i18n.string(R.string.label_balt_income), income);
-                all.addAll(income);
+                income = adjustTotalBalance(AccountType.INCOME, i18n.string(R.string.label_balt_income), income);                
 
                 List<Balance> expense = calBalance(AccountType.EXPENSE, currentStartDate,currentEndDate, false);
                 expense = adjustTotalBalance(AccountType.EXPENSE, i18n.string(R.string.label_balt_expense), expense);
-                all.addAll(expense);
 
                 List<Balance> liability = calBalance(AccountType.LIABILITY, currentStartDate,currentEndDate, true);
-                liability = adjustTotalBalance(AccountType.LIABILITY, i18n.string(R.string.label_balt_liability),
-                        liability);
-                all.addAll(liability);
+                liability = adjustTotalBalance(AccountType.LIABILITY, i18n.string(R.string.label_balt_liability),liability);
 
                 List<Balance> other = calBalance(AccountType.OTHER, currentStartDate,currentEndDate, false);
                 other = adjustTotalBalance(AccountType.OTHER, i18n.string(R.string.label_balt_other), other);
-                all.addAll(other);
+                
+                if(totalMode){
+                    all.addAll(asset);
+                    all.addAll(liability);
+                    all.addAll(income);
+                    all.addAll(expense);
+                    all.addAll(other);
+                }else{
+                    all.addAll(income);
+                    all.addAll(expense);
+                    all.addAll(asset);
+                    all.addAll(liability);
+                    all.addAll(other);
+                }
             }
 
             @Override
@@ -481,7 +489,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         if (v.getId() == R.id.report_balance_list) {
-            AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;            
+//            AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;            
             getMenuInflater().inflate(R.menu.balance_ctxmenu, menu);
         }
 
@@ -509,6 +517,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             at = (AccountType)b.target;
         }else{
             //move selection to first
+            group = new ArrayList<Balance>(group);
             group.remove(b);
             group.add(0,b);
             at = AccountType.find(((Account)b.target).getType());

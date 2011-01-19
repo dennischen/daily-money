@@ -128,15 +128,15 @@
     <string name="label_balt_liability">總債務</string>
     <string name="label_balt_other">總其他</string>
     
-    <string name="label_balance_mode_month">%1$s - 單月統計</string>
-    <string name="label_balance_mode_year">%1$s - 單年統計</string>
+    <string name="label_balance_mode_month">%1$s - 單月結算</string>
+    <string name="label_balance_mode_year">%1$s - 單年結算</string>
     
     <string name="label_balance_mode_month_total">統計到%1$s月底</string>
     <string name="label_balance_mode_year_total">統計到%1$s年底</string>
     
-    <string name="dtitem_report_monthly_balance">單月份統計</string>
-    <string name="dtitem_report_yearly_balance">單年統計</string>
-    <string name="dtitem_report_total_balance">總統計</string>
+    <string name="dtitem_report_monthly_balance">單月份結算</string>
+    <string name="dtitem_report_yearly_balance">單年結算</string>
+    <string name="dtitem_report_total_balance">總結算</string>
     
     <string name="label_count">(%1$s)</string>
     <string name="label_accdetlist_dateinfo">%1$s 到 %2$s</string> 
@@ -148,8 +148,8 @@
     <string name="title_pdprotection">密碼保護</string>
     <string name="msg_wrong_password">錯誤的密碼!</string>    
     
-    <string name="label_balance_piechart">統計圓餅圖</string>
-    <string name="label_balance_detlist">清單</string>
+    <string name="label_balance_piechart">結算圓餅圖</string>
+    <string name="label_balance_detlist">明細清單</string>
     <!-- above are verified -->
     
 

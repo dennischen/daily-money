@@ -312,18 +312,13 @@ public class GUIs {
     public static interface OnFinishListener {   
         public boolean onFinish(Object data);
     }
+    
+    public static int converDP2Pixel(Context context,float dp){
+        return (int)(dp*getDPRatio(context)+0.5F);
+    }
 
-    public static float getDPRatio(Activity activity) {
-        Display display = activity.getWindowManager().getDefaultDisplay();
-//        int h = Math.min(display.getWidth(), display.getHeight());
-        int h = Math.min(display.getWidth(), display.getHeight());
-        float ratio = 0; 
-        if(activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            ratio = (float)h/HVGA_WIDTH_PIXELS;
-        }else{
-            ratio = (float)h/HVGA_HEIGHT_PIXELS;
-        }
-        return ratio;
+    public static float getDPRatio(Context context) {
+        return context.getResources().getDisplayMetrics().density;
     }
     
     public static int getOrientation(Activity activity){
