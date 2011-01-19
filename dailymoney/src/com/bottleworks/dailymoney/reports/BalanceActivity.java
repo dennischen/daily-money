@@ -513,7 +513,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             group.add(0,b);
             at = AccountType.find(((Account)b.target).getType());
         }
-        Intent intent = new BalancePieChart(this,GUIs.getDPRatio(this)).createIntent(at,group);
+        Intent intent = new BalancePieChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(at,group);
         startActivity(intent);
     }
 

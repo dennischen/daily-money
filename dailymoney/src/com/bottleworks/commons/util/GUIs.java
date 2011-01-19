@@ -325,4 +325,16 @@ public class GUIs {
         }
         return ratio;
     }
+    
+    public static int getOrientation(Activity activity){
+        return activity.getResources().getConfiguration().orientation;
+    }
+    
+    public static boolean isPortrait(Activity activity){
+        return activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
+    
+    public static boolean isLandscape(Activity activity){
+        return activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
 }

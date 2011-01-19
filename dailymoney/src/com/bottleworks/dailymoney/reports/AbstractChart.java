@@ -20,6 +20,8 @@ public abstract class AbstractChart {
 
     final protected I18N i18n;
     
+    final protected int orientation;
+    
     
 
     public static final int RED         = 0xEFFF0000;
@@ -41,10 +43,11 @@ public abstract class AbstractChart {
     public static final int[] colorPool = new int[]{GREEN,BLUE,RED,YELLOW,CYAN,MAGENTA,
         GREEN1,BLUE1,RED1,YELLOW1,CYAN1,MAGENTA1};
 
-    public AbstractChart(Context context, float dpRatio) {
+    public AbstractChart(Context context,int orientation, float dpRatio) {
         this.context = context;
         this.dpRatio = dpRatio;
         i18n = new I18N(context);
+        this.orientation = orientation;
     }
     
     public int[] createColor(int size){

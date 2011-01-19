@@ -45,9 +45,6 @@ public class TestsDesktop extends AbstractDesktop {
             public void run() {
                 Intent intent = null;
                 
-                BalancePieChart chart= new BalancePieChart(activity,GUIs.getDPRatio(activity));
-//                intent = chart.prepare();
-                activity.startActivityForResult(intent,999);
                 GUIs.shortToast(activity,"Call Chat");
             }}, "start chat",R.drawable.dtitem_test){
             public void onActivityResult(int requestCode, int resultCode, Intent data) {

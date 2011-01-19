@@ -9,31 +9,32 @@ import org.achartengine.renderer.DefaultRenderer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 
 import com.bottleworks.dailymoney.data.AccountType;
 
 public class BalancePieChart extends AbstractChart {
 
     DecimalFormat percentageFormat = new DecimalFormat("##0");
-    
-    public BalancePieChart(Context context, float dpRatio) {
-        super(context, dpRatio);
+
+    public BalancePieChart(Context context, int orientation, float dpRatio) {
+        super(context, orientation, dpRatio);
     }
 
-    public Intent createIntent(AccountType at,List<Balance> balances) {
+    public Intent createIntent(AccountType at, List<Balance> balances) {
         double total = 0;
-        for(Balance b : balances){
-            total += b.money<=0?0:b.money;
+        for (Balance b : balances) {
+            total += b.money <= 0 ? 0 : b.money;
         }
         CategorySeries series = new CategorySeries(at.getDisplay(i18n));
-        for(Balance b : balances){
-            if(b.money>0){
+        for (Balance b : balances) {
+            if (b.money > 0) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(b.getName());
-                double p = (b.money*100)/total;
-                if(p>=1){
+                double p = (b.money * 100) / total;
+                if (p >= 1) {
                     sb.append("(").append(percentageFormat.format(p)).append("%)");
-                    series.add(sb.toString(),b.money);
+                    series.add(sb.toString(), b.money);
                 }
             }
         }
@@ -41,6 +42,14 @@ public class BalancePieChart extends AbstractChart {
         DefaultRenderer renderer = buildCategoryRenderer(color);
         renderer.setLabelsTextSize(14 * dpRatio);
         renderer.setLegendTextSize(16 * dpRatio);
-        return ChartFactory.getPieChartIntent(context,series , renderer, series.getTitle());
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            renderer.setShowLabels(true);
+            renderer.setShowLegend(true);
+        } else {
+            renderer.setShowLabels(false);
+            renderer.setShowLegend(true);
+        }
+        renderer.setLegendTextSize(16 * dpRatio);
+        return ChartFactory.getPieChartIntent(context, series, renderer, series.getTitle());
     }
 }
