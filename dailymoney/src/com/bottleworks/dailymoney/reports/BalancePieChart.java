@@ -9,7 +9,6 @@ import org.achartengine.renderer.DefaultRenderer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 
 import com.bottleworks.dailymoney.data.AccountType;
 
@@ -41,14 +40,6 @@ public class BalancePieChart extends AbstractChart {
         int[] color = createColor(series.getItemCount());
         DefaultRenderer renderer = buildCategoryRenderer(color);
         renderer.setLabelsTextSize(14 * dpRatio);
-        renderer.setLegendTextSize(16 * dpRatio);
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            renderer.setShowLabels(true);
-            renderer.setShowLegend(true);
-        } else {
-            renderer.setShowLabels(false);
-            renderer.setShowLegend(true);
-        }
         renderer.setLegendTextSize(16 * dpRatio);
         return ChartFactory.getPieChartIntent(context, series, renderer, series.getTitle());
     }

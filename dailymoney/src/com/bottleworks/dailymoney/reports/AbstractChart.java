@@ -24,19 +24,19 @@ public abstract class AbstractChart {
     
     
 
-    public static final int RED         = 0xEFFF0000;
-    public static final int GREEN       = 0xEF00FF00;
-    public static final int BLUE        = 0xEF0000FF;
-    public static final int YELLOW      = 0xEFFFFF00;
-    public static final int CYAN        = 0xEF00FFFF;
-    public static final int MAGENTA     = 0xEFFF00FF;
+    public static final int RED         = 0xD0FF0000;
+    public static final int GREEN       = 0xD000FF00;
+    public static final int BLUE        = 0xD00000FF;
+    public static final int YELLOW      = 0xD0FFFF00;
+    public static final int CYAN        = 0xD000FFFF;
+    public static final int MAGENTA     = 0xD0FF00FF;
     
-    public static final int RED1         = 0xDFFF7777;
-    public static final int GREEN1       = 0xDF77FF77;
-    public static final int BLUE1        = 0xDF7777FF;
-    public static final int YELLOW1      = 0xDFFFFF77;
-    public static final int CYAN1        = 0xDF77FFFF;
-    public static final int MAGENTA1     = 0xDFFF77FF;
+    public static final int RED1         = 0xA0FF7777;
+    public static final int GREEN1       = 0xA077FF77;
+    public static final int BLUE1        = 0xA07777FF;
+    public static final int YELLOW1      = 0xA0FFFF77;
+    public static final int CYAN1        = 0xA077FFFF;
+    public static final int MAGENTA1     = 0xA0FF77FF;
     
     
     
