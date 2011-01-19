@@ -57,6 +57,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     private DesktopItem lastClickedItem;
     
     private static boolean protectionPassed = false;
+    private static boolean protectionInfront = false;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,8 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         initialApplicationInfo();
         initialDesktopItem();
         initialTab();
-        initialContent();initPasswordProtection();
+        initialContent();
+        initPasswordProtection();
         loadData();
     }
     
@@ -73,6 +75,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             protectionPassed = false;
+            protectionInfront = false;
         }
         return super.onKeyDown(keyCode, keyEvent);
     }
@@ -80,12 +83,13 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     private void initPasswordProtection() { 
         final String password = Contexts.uiInstance().getPrefPassword();
-        if("".equals(password)||protectionPassed){
+        if("".equals(password)||protectionPassed||protectionInfront){
             return;
         }
         Intent intent = null;
         intent = new Intent(this,PasswordProtectionActivity.class);
         startActivityForResult(intent,Constants.REQUEST_PASSWORD_PROTECTION_CODE);
+        protectionInfront = true;
     }
 
     private void initialApplicationInfo() {
@@ -217,6 +221,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         super.onActivityResult(requestCode, resultCode, data);
         
         if(requestCode == Constants.REQUEST_PASSWORD_PROTECTION_CODE){
+            protectionInfront = false;
             if(resultCode!=RESULT_OK){
                 finish();
                 protectionPassed = false;
