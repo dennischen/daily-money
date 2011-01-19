@@ -124,11 +124,11 @@
     
     <string name="msg_firsttime_use_hint">Welcome to Daily Money, click Add Detail to start</string>
     
-    <string name="label_balt_income">Total Income</string>
-    <string name="label_balt_expense">Total Expense</string>
-    <string name="label_balt_asset">Total Asset</string>
-    <string name="label_balt_liability">Total Liability</string>
-    <string name="label_balt_other">Total Other</string>
+    <string name="label_balance_tincome">Income balance</string>
+    <string name="label_balance_texpense">Expense balance</string>
+    <string name="label_balance_tasset">Asset balance</string>
+    <string name="label_balance_tliability">Liability balance</string>
+    <string name="label_balance_tother">Other balance</string>
     
     <string name="label_balance_mode_month">Balance in month %1$s</string>
     <string name="label_balance_mode_year">Balance in year %1$s</string>

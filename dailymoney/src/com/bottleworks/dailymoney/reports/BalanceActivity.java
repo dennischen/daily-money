@@ -310,21 +310,30 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
             @Override
             public void run() {
-                List<Balance> asset = calBalance(AccountType.ASSET,currentStartDate, currentEndDate, false);
-                asset = adjustTotalBalance(AccountType.ASSET, i18n.string(R.string.label_balt_asset), asset);
+                List<Balance> asset = calBalance(AccountType.ASSET, currentStartDate, currentEndDate, false);
+                asset = adjustTotalBalance(AccountType.ASSET, totalMode ? i18n.string(R.string.label_balance_tasset)
+                        : i18n.string(R.string.label_asset), asset);
 
-                List<Balance> income = calBalance(AccountType.INCOME, currentStartDate,currentEndDate, true);
-                income = adjustTotalBalance(AccountType.INCOME, i18n.string(R.string.label_balt_income), income);                
+                List<Balance> income = calBalance(AccountType.INCOME, currentStartDate, currentEndDate, true);
+                income = adjustTotalBalance(AccountType.INCOME, totalMode ? i18n.string(R.string.label_balance_tincome)
+                        : i18n.string(R.string.label_income), income);
 
-                List<Balance> expense = calBalance(AccountType.EXPENSE, currentStartDate,currentEndDate, false);
-                expense = adjustTotalBalance(AccountType.EXPENSE, i18n.string(R.string.label_balt_expense), expense);
+                List<Balance> expense = calBalance(AccountType.EXPENSE, currentStartDate, currentEndDate, false);
+                expense = adjustTotalBalance(
+                        AccountType.EXPENSE,
+                        totalMode ? i18n.string(R.string.label_balance_texpense) : i18n
+                                .string(R.string.label_expense), expense);
 
-                List<Balance> liability = calBalance(AccountType.LIABILITY, currentStartDate,currentEndDate, true);
-                liability = adjustTotalBalance(AccountType.LIABILITY, i18n.string(R.string.label_balt_liability),liability);
+                List<Balance> liability = calBalance(AccountType.LIABILITY, currentStartDate, currentEndDate, true);
+                liability = adjustTotalBalance(
+                        AccountType.LIABILITY,
+                        totalMode ? i18n.string(R.string.label_balance_tliability) : i18n
+                                .string(R.string.label_liability), liability);
 
-                List<Balance> other = calBalance(AccountType.OTHER, currentStartDate,currentEndDate, false);
-                other = adjustTotalBalance(AccountType.OTHER, i18n.string(R.string.label_balt_other), other);
-                
+                List<Balance> other = calBalance(AccountType.OTHER, currentStartDate, currentEndDate, false);
+                other = adjustTotalBalance(AccountType.OTHER, totalMode ? i18n.string(R.string.label_balance_tother)
+                        : i18n.string(R.string.label_other), other);
+
                 if(totalMode){
                     all.addAll(asset);
                     all.addAll(liability);
