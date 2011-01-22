@@ -185,6 +185,63 @@ public class CalendarHelper {
     }
     
     
+    public boolean isSameYear(Date d1,Date d2){
+        Calendar cal1 = calendar(d1);
+        Calendar cal2 = calendar(d2);
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
+    }
+    
+    public boolean isPastYear(Date base,Date d2){
+        return yearStartDate(base).after(d2);
+    }
+    
+    public boolean isFutureYear(Date base, Date d2){
+        return yearEndDate(base).before(d2);
+    }
+    
+    
+    public boolean isSameMonth(Date d1,Date d2){
+        Calendar cal1 = calendar(d1);
+        Calendar cal2 = calendar(d2);
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
+    }
+    
+    public boolean isPastMonth(Date base,Date d2){
+        return monthStartDate(base).after(d2);
+    }
+    
+    public boolean isFutureMonth(Date base, Date d2){
+        return monthEndDate(base).before(d2);
+    }
+    
+    public boolean isSameWeek(Date d1,Date d2){
+        Calendar cal1 = calendar(d1);
+        Calendar cal2 = calendar(d2);
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.WEEK_OF_YEAR) == cal2.get(Calendar.WEEK_OF_YEAR);
+    }
+    
+    public boolean isPastWeek(Date base,Date d2){
+        return weekStartDate(base).after(d2);
+    }
+    
+    public boolean isFutureWeek(Date base, Date d2){
+        return weekEndDate(base).before(d2);
+    }
+    
+    
+    public boolean isSameDay(Date d1,Date d2){
+        Calendar cal1 = calendar(d1);
+        Calendar cal2 = calendar(d2);
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+    }
+    
+    public boolean isPastDay(Date base,Date d2){
+        return toDayStart(base).after(d2);
+    }
+    
+    public boolean isFutureDay(Date base, Date d2){
+        return toDayEnd(base).before(d2);
+    }
     
     static SimpleDateFormat RFC1123 = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'",
             new DateFormatSymbols(Locale.ENGLISH));

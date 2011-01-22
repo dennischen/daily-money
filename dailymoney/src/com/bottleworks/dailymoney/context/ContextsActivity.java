@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney.context;
 
 
+import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.I18N;
 
 import android.app.Activity;
@@ -15,12 +16,14 @@ public class ContextsActivity extends Activity {
     
     
     protected I18N i18n;
+    protected CalendarHelper calHelper;
     
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         Contexts.uiInstance().initContext(this);
         i18n = new I18N(this);
+        calHelper = Contexts.uiInstance().getCalendarHelper();
     }
     
     @Override

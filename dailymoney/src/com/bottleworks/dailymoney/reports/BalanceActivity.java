@@ -69,8 +69,6 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     private Date currentEndDate;
 
     ImageButton modeBtn;
-
-    CalendarHelper calHelper;
     
     private static String[] bindingFrom = new String[] { "layout","name", "money"};
     
@@ -88,7 +86,6 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_balance);
-        calHelper = Contexts.uiInstance().getCalendarHelper();
         initialIntent();
         initialContent();
         GUIs.delayPost(new Runnable() {

@@ -103,7 +103,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         monthDateFormat = new SimpleDateFormat("yyyy/MM - MMM");
         yearDateFormat = new SimpleDateFormat("yyyy");
         
-        detailListHelper = new DetailListHelper(this, i18n,true, new DetailListHelper.OnDetailListener() {
+        detailListHelper = new DetailListHelper(this, i18n,calHelper,true, new DetailListHelper.OnDetailListener() {
             @Override
             public void onDetailDeleted(Detail detail) {
                 GUIs.shortToast(DetailListActivity.this, i18n.string(R.string.msg_detail_deleted));

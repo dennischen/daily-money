@@ -3,10 +3,14 @@
 	<string-array name="prefs_detlayout_val">
 		<item>1</item>
 		<item>2</item>
+		<item>3</item>
+		<item>4</item>
 	</string-array>
 	<string-array name="prefs_detlayout_label">
 		<item>@string/label_detlayout_type1</item>
 		<item>@string/label_detlayout_type2</item>
+		<item>@string/label_detlayout_type3</item>
+		<item>@string/label_detlayout_type4</item>
 	</string-array>
 	
 	<string-array name="prefs_firstday_week_val">

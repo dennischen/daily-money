@@ -155,8 +155,10 @@
     <string name="act_balance_account_yeartimechart">Account yearly time chart</string>
     <string name="act_balance_yeartimechart">Balance Yearly time chart</string>
     <string name="label_balance_account_yeartimechart">%1$s yearly time chart (%2$s)</string>
-    
+    <string name="label_detlayout_type3">Money - To</string>
+    <string name="label_detlayout_type4">Money - Note</string>    
 <!-- above are verified -->    
+
 
 
 </resources>

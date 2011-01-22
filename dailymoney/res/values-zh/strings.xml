@@ -153,6 +153,9 @@
     <string name="act_balance_account_yeartimechart">帳戶年度結算圖</string>
     <string name="act_balance_yeartimechart">年度結算圖</string>
     <string name="label_balance_account_yeartimechart">%1$s 年度(%2$s)結算</string>
+    
+    <string name="label_detlayout_type3">金錢-帳戶</string>
+    <string name="label_detlayout_type4">金錢-備註</string>
     <!-- above are verified -->
     
 

@@ -10,14 +10,24 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.dailymoney.context.Contexts;
@@ -34,9 +44,9 @@ import com.bottleworks.dailymoney.ui.NamedItem;
  */
 public class DetailListHelper implements OnItemClickListener{
     
-    private static String[] bindingFrom = new String[] { "layout","from", "to", "money" , "note", "date" };
+    private static String[] bindingFrom = new String[] { "layout","layout_inner","from", "to", "money" , "note", "date" };
     
-    private static int[] bindingTo = new int[] { R.id.detlist_item_layout,R.id.detlist_item_from, R.id.detlist_item_to, R.id.detlist_item_money,R.id.detlist_item_note,R.id.detlist_item_date };
+    private static int[] bindingTo = new int[] { R.id.detlist_item_layout,R.id.detlist_item_layout_inner,R.id.detlist_item_from, R.id.detlist_item_to, R.id.detlist_item_money,R.id.detlist_item_note,R.id.detlist_item_date };
     
     
     private List<Detail> listViewData = new ArrayList<Detail>();
@@ -53,13 +63,15 @@ public class DetailListHelper implements OnItemClickListener{
     
     private OnDetailListener listener;
     
-    Activity activity;
-    I18N i18n;
-    public DetailListHelper(Activity activity,I18N i18n,boolean clickeditable,OnDetailListener listener){
+    private Activity activity;
+    private I18N i18n;
+    private CalendarHelper calHelper;
+    public DetailListHelper(Activity activity,I18N i18n,CalendarHelper calHelper, boolean clickeditable,OnDetailListener listener){
         this.activity = activity;
         this.i18n = i18n;
         this.clickeditable = clickeditable;
         this.listener = listener;
+        this.calHelper = calHelper;
     }
     
     
@@ -70,6 +82,12 @@ public class DetailListHelper implements OnItemClickListener{
         switch(Contexts.uiInstance().getPrefDetailListLayout()){
         case 2:
             layout = R.layout.detlist_item2;
+            break;
+        case 3:
+            layout = R.layout.detlist_item3;
+            break;
+        case 4:
+            layout = R.layout.detlist_item4;
             break;
         default:
             layout = R.layout.detlist_item1;
@@ -121,11 +139,12 @@ public class DetailListHelper implements OnItemClickListener{
         String to = toAcc==null?det.getTo():(i18n.string(R.string.label_detlist_to,toAcc.getName(),AccountType.getDisplay(i18n, toAcc.getType())));
         String money = i18n.string(R.string.label_item_money,Formats.money2String(det.getMoney()));
         row.put(bindingFrom[0], new NamedItem(bindingFrom[0],det,bindingFrom[0]));
-        row.put(bindingFrom[1], new NamedItem(bindingFrom[1],det,from));
-        row.put(bindingFrom[2], new NamedItem(bindingFrom[2],det,to));
-        row.put(bindingFrom[3], new NamedItem(bindingFrom[3],det,money));
-        row.put(bindingFrom[4], new NamedItem(bindingFrom[4],det,det.getNote()));
-        row.put(bindingFrom[5], new NamedItem(bindingFrom[5],det,format.format(det.getDate())+" "+dayOfWeekFormat.format(det.getDate())+","));
+        row.put(bindingFrom[1], new NamedItem(bindingFrom[1],det,bindingFrom[1]));
+        row.put(bindingFrom[2], new NamedItem(bindingFrom[2],det,from));
+        row.put(bindingFrom[3], new NamedItem(bindingFrom[3],det,to));
+        row.put(bindingFrom[4], new NamedItem(bindingFrom[4],det,money));
+        row.put(bindingFrom[5], new NamedItem(bindingFrom[5],det,det.getNote()));
+        row.put(bindingFrom[6], new NamedItem(bindingFrom[6],det,format.format(det.getDate())+" "+dayOfWeekFormat.format(det.getDate())+","));
         
         return row;
     }
@@ -217,25 +236,43 @@ public class DetailListHelper implements OnItemClickListener{
                 }else{
                     lastFrom = AccountType.UNKONW;
                 }
+                int drawid;
                 if( (flag & 1) == 1){//expense
-                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_expense));
+                    drawid = R.drawable.selector_expense;
                     last = AccountType.EXPENSE;
                 }else if( (flag & 2) == 2){//income
-                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_income));
+                    drawid = R.drawable.selector_income;
                     last = AccountType.INCOME;
                 }else if( (flag & 4) == 4){
-                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_asset));
+                    drawid = R.drawable.selector_asset;
                     last = AccountType.ASSET;
                 }else if( (flag & 8) == 8){
-                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_liability));
+                    drawid = R.drawable.selector_liability;
                     last = AccountType.LIABILITY;
                 }else if( (flag & 16) == 16){
-                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_other));
+                    drawid = R.drawable.selector_other;
                     last = AccountType.OTHER;
                 }else{
-                    layout.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.selector_unknow));
+                    drawid = R.drawable.selector_unknow;
                     last = null;
                 }
+                Drawable draw = activity.getResources().getDrawable(drawid);
+                layout.setBackgroundDrawable(draw);
+                return true;
+            }
+            
+            
+            if("layout_inner".equals(name)){
+                //make it light
+                LinearLayout inner = (LinearLayout)view;
+                Date now = new Date();
+                Drawable draw = null;
+                if(calHelper.isSameDay(now, det.getDate())){
+                    draw = new ColorDrawable(0x33FFFFFF);
+                }else if(calHelper.isFutureDay(now, det.getDate())){
+                    draw = new ColorDrawable(0x66FFFFFF);
+                }
+                inner.setBackgroundDrawable(draw);
                 return true;
             }
             

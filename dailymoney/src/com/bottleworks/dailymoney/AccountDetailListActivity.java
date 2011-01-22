@@ -87,7 +87,7 @@ public class AccountDetailListActivity extends ContextsActivity {
 
     private void initialContent() {
         
-        detailListHelper = new DetailListHelper(this, i18n,true,new DetailListHelper.OnDetailListener() {
+        detailListHelper = new DetailListHelper(this, i18n,calHelper,true,new DetailListHelper.OnDetailListener() {
             @Override
             public void onDetailDeleted(Detail detail) {
                 GUIs.shortToast(AccountDetailListActivity.this, i18n.string(R.string.msg_detail_deleted));
