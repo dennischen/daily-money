@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.bottleworks.dailymoney.data.AccountType;
+import com.bottleworks.dailymoney.data.Balance;
 
 public class BalancePieChart extends AbstractChart {
 
@@ -23,17 +24,17 @@ public class BalancePieChart extends AbstractChart {
     public Intent createIntent(AccountType at, List<Balance> balances) {
         double total = 0;
         for (Balance b : balances) {
-            total += b.money <= 0 ? 0 : b.money;
+            total += b.getMoney() <= 0 ? 0 : b.getMoney();
         }
         CategorySeries series = new CategorySeries(at.getDisplay(i18n));
         for (Balance b : balances) {
-            if (b.money > 0) {
+            if (b.getMoney() > 0) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(b.getName());
-                double p = (b.money * 100) / total;
+                double p = (b.getMoney() * 100) / total;
                 if (p >= 1) {
                     sb.append("(").append(percentageFormat.format(p)).append("%)");
-                    series.add(sb.toString(), b.money);
+                    series.add(sb.toString(), b.getMoney());
                 }
             }
         }

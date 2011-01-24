@@ -271,6 +271,7 @@ public class SQLiteDataProvider implements IDataProvider {
         if(Contexts.DEBUG){
             Logger.d("new detail "+id+","+detail.getNote());
         }
+        first = null;
         detail.setId(id);
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -284,7 +285,7 @@ public class SQLiteDataProvider implements IDataProvider {
         if (det == null) {
             return false;
         }
-        
+        first = null;
         //set id, detail might have a dirty id from copy or zero
         detail.setId(id);
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -299,6 +300,7 @@ public class SQLiteDataProvider implements IDataProvider {
     @Override
     public boolean deleteDetail(int id) {
         SQLiteDatabase db = helper.getWritableDatabase();
+        first = null;
         int r = db.delete(TB_DET, COL_DET_ID+" = "+id, null);
         return r>0;
     }
@@ -703,10 +705,31 @@ public class SQLiteDataProvider implements IDataProvider {
         db.delete(TB_DET, null, null);
         detId = 0;
         detId_set = false;
+        first = null;
         return ;
         
         
         
+    }
+
+    
+    Detail first = null;
+    
+    @Override
+    public Detail getFirstDetail() {
+        if(first!=null) return first;
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = null;
+        StringBuilder where = new StringBuilder();
+        where.append(" 1=1 ");
+        
+        c = db.query(TB_DET,COL_DET_ALL,where.length()==0?null:where.toString(),null, null, null, COL_DET_DATE,Integer.toString(1));
+        first = null;
+        if(c.moveToNext()){
+            first = new Detail();
+            applyCursor(first,c);
+        }
+        return first;
     }
 
 }

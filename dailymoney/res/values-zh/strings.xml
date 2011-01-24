@@ -148,11 +148,13 @@
     <string name="title_pdprotection">密碼保護</string>
     <string name="msg_wrong_password">錯誤的密碼!</string>    
     
-    <string name="act_balance_piechart">結算圓餅圖</string>
+    
     <string name="act_balance_detlist">明細清單</string>
-    <string name="act_balance_account_yeartimechart">帳戶年度結算圖</string>
-    <string name="act_balance_yeartimechart">年度結算圖</string>
-    <string name="label_balance_account_yeartimechart">%1$s 年度(%2$s)結算</string>
+    <string name="act_balance_piechart">結算圓餅圖</string>
+    <string name="act_balance_yearly_timechart">每月結算年度圖</string>
+    <string name="act_balance_yearly_cumulative_timechart">每月結算年度圖(累加)</string>
+    <string name="label_balance_yearly_timechart">%1$s 在 %2$s</string>
+    <string name="label_balance_yearly_cumulative_timechart">%1$s 在 %2$s (累加)</string>
     
     <string name="label_detlayout_type3">金錢-帳戶</string>
     <string name="label_detlayout_type4">金錢-備註</string>

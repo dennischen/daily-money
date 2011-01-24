@@ -36,6 +36,8 @@ import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
+import com.bottleworks.dailymoney.data.Balance;
+import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.NamedItem;
 
@@ -151,37 +153,37 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 TextView tv = (TextView)view;
                 
                 if(at==AccountType.INCOME){
-                    if(b.indent==0){
+                    if(b.getIndent()==0){
                         tv.setTextColor(getResources().getColor(R.color.income_fgl));
                     }else{
                         tv.setTextColor(getResources().getColor(R.color.income_fgd));
                     }
                 }else if(at==AccountType.EXPENSE){
-                    if(b.indent==0){
+                    if(b.getIndent()==0){
                         tv.setTextColor(getResources().getColor(R.color.expense_fgl));
                     }else{
                         tv.setTextColor(getResources().getColor(R.color.expense_fgd));
                     }
                 }else if(at==AccountType.ASSET){
-                    if(b.indent==0){
+                    if(b.getIndent()==0){
                         tv.setTextColor(getResources().getColor(R.color.asset_fgl));
                     }else{
                         tv.setTextColor(getResources().getColor(R.color.asset_fgd));
                     }
                 }else if(at==AccountType.LIABILITY){
-                    if(b.indent==0){
+                    if(b.getIndent()==0){
                         tv.setTextColor(getResources().getColor(R.color.liability_fgl));
                     }else{
                         tv.setTextColor(getResources().getColor(R.color.liability_fgd));
                     }
                 }else if(at==AccountType.OTHER){
-                    if(b.indent==0){
+                    if(b.getIndent()==0){
                         tv.setTextColor(getResources().getColor(R.color.other_fgl));
                     }else{
                         tv.setTextColor(getResources().getColor(R.color.other_fgd));
                     }
                 }else{
-                    if(b.indent==0){
+                    if(b.getIndent()==0){
                         tv.setTextColor(getResources().getColor(R.color.unknow_fgl));
                     }else{
                         tv.setTextColor(getResources().getColor(R.color.unknow_fgd));
@@ -199,7 +201,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     }
 
     protected void adjustLayout(LinearLayout layout, Balance b) {
-        switch(b.indent){
+        switch(b.getIndent()){
         case 0:
             layout.setBackgroundDrawable((getResources().getDrawable(R.drawable.selector_balance_indent0)));
             break;
@@ -219,7 +221,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         int marginRight = 5;
         int paddingTB = 0;
         
-        switch(b.indent){
+        switch(b.getIndent()){
         case 0:
             ratio = 1F;
             paddingTB = 5;
@@ -246,10 +248,10 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     private void reloadToolbar() {
         switch (mode) {
         case MODE_YEAR:
-            modeBtn.setImageResource(R.drawable.btn_year);
+            modeBtn.setImageResource(R.drawable.btn_month);
             break;
         default:
-            modeBtn.setImageResource(R.drawable.btn_month);
+            modeBtn.setImageResource(R.drawable.btn_year);
             break;
         }
     }
@@ -263,7 +265,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         for (Balance b : items) {
             b.setIndent(1);
             b.setGroup(group);
-            total += b.money;
+            total += b.getMoney();
         }
         Balance bt = new Balance(totalName,type.getType(), total,type);
         bt.setIndent(0);
@@ -273,9 +275,19 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         return items;
     }
 
-    private List<Balance> calBalance(AccountType type,Date start,Date end,boolean calInit) {
+    private List<Balance> calBalance(AccountType type,Date start,Date end) {
         boolean nat = type==AccountType.INCOME||type==AccountType.LIABILITY;
         IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        boolean calInit = true;
+        if(start!=null){
+            calInit = false;
+        }else{
+            Detail first = idp.getFirstDetail();
+            //don't calculate init val if the first record date in after end data
+            if(first!=null && first.getDate().after(end)){
+                calInit = false;
+            }
+        }
         List<Account> accs = idp.listAccount(type);
         List<Balance> blist = new ArrayList<Balance>();
         for (Account acc : accs) {
@@ -290,11 +302,20 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         return blist;
     }
     
-    private Balance calBalance(Account acc, Date start, Date end, boolean calInit) {
+    private Balance calBalance(Account acc, Date start, Date end) {
         AccountType type = AccountType.find(acc.getType());
         boolean nat = type == AccountType.INCOME || type == AccountType.LIABILITY;
         IDataProvider idp = Contexts.uiInstance().getDataProvider();
-
+        boolean calInit = true;
+        if(start!=null){
+            calInit = false;
+        }else{
+            Detail first = idp.getFirstDetail();
+            //don't calculate init val if the first record date in after end data
+            if(first!=null && first.getDate().after(end)){
+                calInit = false;
+            }
+        }
         double from = idp.sumFrom(acc, start, end);
         double to = idp.sumTo(acc, start, end);
         double init = calInit ? acc.getInitialValue() : 0;
@@ -326,27 +347,27 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
             @Override
             public void run() {
-                List<Balance> asset = calBalance(AccountType.ASSET, currentStartDate, currentEndDate,totalMode);
+                List<Balance> asset = calBalance(AccountType.ASSET, currentStartDate, currentEndDate);
                 asset = adjustTotalBalance(AccountType.ASSET, totalMode ? i18n.string(R.string.label_balance_tasset)
                         : i18n.string(R.string.label_asset), asset);
 
-                List<Balance> income = calBalance(AccountType.INCOME, currentStartDate, currentEndDate,totalMode);
+                List<Balance> income = calBalance(AccountType.INCOME, currentStartDate, currentEndDate);
                 income = adjustTotalBalance(AccountType.INCOME, totalMode ? i18n.string(R.string.label_balance_tincome)
                         : i18n.string(R.string.label_income), income);
 
-                List<Balance> expense = calBalance(AccountType.EXPENSE, currentStartDate, currentEndDate,totalMode);
+                List<Balance> expense = calBalance(AccountType.EXPENSE, currentStartDate, currentEndDate);
                 expense = adjustTotalBalance(
                         AccountType.EXPENSE,
                         totalMode ? i18n.string(R.string.label_balance_texpense) : i18n
                                 .string(R.string.label_expense), expense);
 
-                List<Balance> liability = calBalance(AccountType.LIABILITY, currentStartDate, currentEndDate,totalMode);
+                List<Balance> liability = calBalance(AccountType.LIABILITY, currentStartDate, currentEndDate);
                 liability = adjustTotalBalance(
                         AccountType.LIABILITY,
                         totalMode ? i18n.string(R.string.label_balance_tliability) : i18n
                                 .string(R.string.label_liability), liability);
 
-                List<Balance> other = calBalance(AccountType.OTHER, currentStartDate, currentEndDate,totalMode);
+                List<Balance> other = calBalance(AccountType.OTHER, currentStartDate, currentEndDate);
                 other = adjustTotalBalance(AccountType.OTHER, totalMode ? i18n.string(R.string.label_balance_tother)
                         : i18n.string(R.string.label_other), other);
 
@@ -476,7 +497,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(parent == listView){
-            doBalancePieChart(position);
+            doPieChart(position);
         }
     }
     
@@ -525,10 +546,13 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
         case R.id.balance_menu_piechart:
-            doBalancePieChart(info.position);
+            doPieChart(info.position);
             return true;
-        case R.id.balance_menu_account_yeartimechart:
-            doBalanceYearTimeChart(info.position);
+        case R.id.balance_menu_yearly_timechart:
+            doYearlyTimeChart(info.position);
+            return true;
+        case R.id.balance_menu_yearly_cumulative_timechart:
+            doYearlyCumulativeTimeChart(info.position);
             return true;
         case R.id.balance_menu_detlist:
             doDetailList(info.position);
@@ -537,56 +561,95 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         return super.onContextItemSelected(item);
     }
     
-    private void doBalancePieChart(int pos){
+    private void doPieChart(int pos){
         Balance b = listViewData.get(pos);
         List<Balance> group = b.getGroup();
         AccountType at;
-        if(b.target instanceof AccountType){
-            at = (AccountType)b.target;
+        if(b.getTarget() instanceof AccountType){
+            at = (AccountType)b.getTarget();
         }else{
             //move selection to first
             group = new ArrayList<Balance>(group);
             group.remove(b);
             group.add(0,b);
-            at = AccountType.find(((Account)b.target).getType());
+            at = AccountType.find(((Account)b.getTarget()).getType());
         }
         Intent intent = new BalancePieChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(at,group);
         startActivity(intent);
     }
     
-    private void doBalanceYearTimeChart(int pos){
+    private void doYearlyTimeChart(int pos){
         Balance b = listViewData.get(pos);
         AccountType at;
         List<Balance> group = b.getGroup();
-        if(b.target instanceof AccountType){
-            at = (AccountType)b.target;
+        if(b.getTarget() instanceof AccountType){
+            at = (AccountType)b.getTarget();
         }else{
             group = new ArrayList<Balance>(group);
             group.remove(b);
             group.add(0,b);
-            at = AccountType.find(((Account)b.target).getType());
+            at = AccountType.find(((Account)b.getTarget()).getType());
         }
         
         List<List<Balance>> yearTimebalance = new ArrayList<List<Balance>>();
         
         
         for(Balance g:group){
-            if(!(g.target instanceof Account)){
+            if(!(g.getTarget() instanceof Account)){
                 continue;
             }
-            Account acc = (Account)g.target;
+            Account acc = (Account)g.getTarget();
             List<Balance> blist = new ArrayList<Balance>();
             yearTimebalance.add(blist);
             Date d = calHelper.yearStartDate(g.getDate());
             for(int i=0;i<12;i++){
-                Balance balance = calBalance(acc, calHelper.monthStartDate(d),calHelper.monthEndDate(d), false);
+                Balance balance = calBalance(acc, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
                 blist.add(balance);
                 d = calHelper.monthAfter(d,1);
             }
         }
         
-        Intent intent = new BalanceYearTimeChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(
-                i18n.string(R.string.label_balance_account_yeartimechart,at.getDisplay(i18n),yearDateFormat.format(currentDate)),yearTimebalance);
+        Intent intent = new BalanceTimeChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(
+                i18n.string(R.string.label_balance_yearly_timechart,at.getDisplay(i18n),yearDateFormat.format(currentDate)),yearTimebalance);
+        startActivity(intent);
+    }
+    
+    private void doYearlyCumulativeTimeChart(int pos){
+        Balance b = listViewData.get(pos);
+        AccountType at;
+        List<Balance> group = b.getGroup();
+        if(b.getTarget() instanceof AccountType){
+            at = (AccountType)b.getTarget();
+        }else{
+            group = new ArrayList<Balance>(group);
+            group.remove(b);
+            group.add(0,b);
+            at = AccountType.find(((Account)b.getTarget()).getType());
+        }
+        
+        List<List<Balance>> yearTimebalance = new ArrayList<List<Balance>>();
+        
+        
+        for(Balance g:group){
+            if(!(g.getTarget() instanceof Account)){
+                continue;
+            }
+            Account acc = (Account)g.getTarget();
+            List<Balance> blist = new ArrayList<Balance>();
+            yearTimebalance.add(blist);
+            Date d = calHelper.yearStartDate(g.getDate());
+            double total = 0;
+            for(int i=0;i<12;i++){
+                Balance balance = calBalance(acc, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                total += balance.getMoney();
+                balance.setMoney(total);
+                blist.add(balance);
+                d = calHelper.monthAfter(d,1);
+            }
+        }
+        
+        Intent intent = new BalanceTimeChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(
+                i18n.string(R.string.label_balance_yearly_cumulative_timechart,at.getDisplay(i18n),yearDateFormat.format(currentDate)),yearTimebalance);
         startActivity(intent);
     }
 

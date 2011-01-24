@@ -3,6 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
 <item android:id="@+id/balance_menu_detlist" android:title="@string/act_balance_detlist" ></item>
 <item android:id="@+id/balance_menu_piechart" android:title="@string/act_balance_piechart" ></item>
-<item android:id="@+id/balance_menu_account_yeartimechart" android:title="@string/act_balance_account_yeartimechart" ></item>
+<item android:id="@+id/balance_menu_yearly_timechart" android:title="@string/act_balance_yearly_timechart" ></item>
+<item android:id="@+id/balance_menu_yearly_cumulative_timechart" android:title="@string/act_balance_yearly_cumulative_timechart" ></item>
 
 </menu>

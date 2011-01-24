@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney.reports;
+package com.bottleworks.dailymoney.data;
 
 import java.io.Serializable;
 import java.util.Date;

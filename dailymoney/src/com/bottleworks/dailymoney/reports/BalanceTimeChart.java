@@ -1,19 +1,14 @@
 package com.bottleworks.dailymoney.reports;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.PointStyle;
-import org.achartengine.model.CategorySeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer.Orientation;
+import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,22 +16,26 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 
 import com.bottleworks.dailymoney.R;
-import com.bottleworks.dailymoney.data.AccountType;
+import com.bottleworks.dailymoney.data.Balance;
+/**
+ * 
+ * @author dennis
+ *
+ */
+public class BalanceTimeChart extends AbstractChart {
 
-public class BalanceYearTimeChart extends AbstractChart {
-
-    public BalanceYearTimeChart(Context context, int orientation, float dpRatio) {
+    public BalanceTimeChart(Context context, int orientation, float dpRatio) {
         super(context, orientation, dpRatio);
     }
 
-    public Intent createIntent(String title, List<List<Balance>> yearTimebalance) {
+    public Intent createIntent(String title, List<List<Balance>> balances) {
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-        int length = yearTimebalance.size();
+        int length = balances.size();
         int seriesLength = 0;
         double max = 0;
         double min = 0;
         for (int i = 0; i < length; i++) {
-            List<Balance> blist = yearTimebalance.get(i);
+            List<Balance> blist = balances.get(i);
             Balance b1 = blist.get(0);
             XYSeries series = new XYSeries(b1.getName());
             seriesLength = blist.size();            
@@ -78,8 +77,8 @@ public class BalanceYearTimeChart extends AbstractChart {
         renderer.setShowGrid(true);
         renderer.setXLabelsAngle(120);
 
-        setChartSettings(renderer, title, "", i18n.string(R.string.label_money), yearTimebalance.get(0).get(0).getDate().getTime(),
-                yearTimebalance.get(0).get(seriesLength-1).getDate().getTime(), min - (min/20), max+(max/20), Color.GRAY, Color.LTGRAY);
+        setChartSettings(renderer, title, "", i18n.string(R.string.label_money), balances.get(0).get(0).getDate().getTime(),
+                balances.get(0).get(seriesLength-1).getDate().getTime(), min - (min/20), max+(max/20), Color.GRAY, Color.LTGRAY);
         renderer.setYLabels(10);
         return ChartFactory.getTimeChartIntent(context,dataset ,renderer, "yyyy MMM");
     }
