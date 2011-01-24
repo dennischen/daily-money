@@ -6,11 +6,13 @@
         <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="3dp"
             android:orientation="horizontal">
             <TextView android:id="@+id/detlist_item_money" android:layout_width="wrap_content" android:layout_marginLeft="3dp"
-               android:textSize="16sp" android:layout_height="wrap_content" 
-               android:paddingLeft="5dp" android:paddingRight="5dp" android:gravity="left"  />
-               
-            <TextView android:id="@+id/detlist_item_to" android:layout_weight="1" android:singleLine="true" 
-                android:layout_width="wrap_content" android:gravity="right" android:layout_height="fill_parent"/>
+               android:textSize="16sp" android:layout_height="wrap_content" android:paddingRight="5dp"
+               android:gravity="left"  />
+            <LinearLayout android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="fill_parent" 
+            android:gravity="right">   
+	            <TextView android:id="@+id/detlist_item_to" android:singleLine="true" android:paddingLeft="5dp" android:paddingRight="5dp"
+	                android:layout_width="wrap_content" android:layout_height="fill_parent"/>
+            </LinearLayout>    
         </LinearLayout>    
         
         <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" 
@@ -18,9 +20,11 @@
             <TextView android:id="@+id/detlist_item_date" android:layout_width="wrap_content"
                 android:layout_height="fill_parent" android:textSize="11sp" android:gravity="left" android:layout_marginRight="3dp"
                 android:singleLine="true"/>
-            <TextView android:id="@+id/detlist_item_note" android:layout_weight="1"
-                android:layout_width="wrap_content" android:layout_height="fill_parent" android:textSize="11sp" android:gravity="left" 
-                android:singleLine="true"/>
+            <LinearLayout android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="fill_parent">
+                <TextView android:id="@+id/detlist_item_note" 
+                    android:layout_width="wrap_content" android:layout_height="fill_parent" android:textSize="11sp" android:gravity="left" 
+                    android:singleLine="true"/>
+            </LinearLayout>
             <TextView android:id="@+id/detlist_item_from" android:layout_width="wrap_content"
                 android:paddingLeft="5dp" android:paddingRight="5dp" 
                 android:layout_height="fill_parent" android:textSize="11sp" android:gravity="right"
