@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -275,7 +276,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         return items;
     }
 
-    private List<Balance> calBalance(AccountType type,Date start,Date end) {
+    private List<Balance> calBalanceList(AccountType type,Date start,Date end) {
         boolean nat = type==AccountType.INCOME||type==AccountType.LIABILITY;
         IDataProvider idp = Contexts.uiInstance().getDataProvider();
         boolean calInit = true;
@@ -300,6 +301,32 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             blist.add(balance);
         }
         return blist;
+    }
+    
+    private Balance calBalance(AccountType type,Date start,Date end) {
+        boolean nat = type==AccountType.INCOME||type==AccountType.LIABILITY;
+        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        boolean calInit = true;
+        if(start!=null){
+            calInit = false;
+        }else{
+            Detail first = idp.getFirstDetail();
+            //don't calculate init val if the first record date in after end data
+            if(first!=null && first.getDate().after(end)){
+                calInit = false;
+            }
+        }
+        
+        double from = idp.sumFrom(type, start, end);
+        double to = idp.sumTo(type, start, end);
+
+        double init = calInit ? idp.sumInitialValue(type) : 0;
+
+        double b = init + (nat ? (from - to) : (to - from));
+        Balance balance = new Balance(type.getDisplay(i18n), type.getType(), b, type);
+        balance.setDate(end);
+            
+        return balance;
     }
     
     private Balance calBalance(Account acc, Date start, Date end) {
@@ -347,27 +374,27 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
             @Override
             public void run() {
-                List<Balance> asset = calBalance(AccountType.ASSET, currentStartDate, currentEndDate);
+                List<Balance> asset = calBalanceList(AccountType.ASSET, currentStartDate, currentEndDate);
                 asset = adjustTotalBalance(AccountType.ASSET, totalMode ? i18n.string(R.string.label_balance_tasset)
                         : i18n.string(R.string.label_asset), asset);
 
-                List<Balance> income = calBalance(AccountType.INCOME, currentStartDate, currentEndDate);
+                List<Balance> income = calBalanceList(AccountType.INCOME, currentStartDate, currentEndDate);
                 income = adjustTotalBalance(AccountType.INCOME, totalMode ? i18n.string(R.string.label_balance_tincome)
                         : i18n.string(R.string.label_income), income);
 
-                List<Balance> expense = calBalance(AccountType.EXPENSE, currentStartDate, currentEndDate);
+                List<Balance> expense = calBalanceList(AccountType.EXPENSE, currentStartDate, currentEndDate);
                 expense = adjustTotalBalance(
                         AccountType.EXPENSE,
                         totalMode ? i18n.string(R.string.label_balance_texpense) : i18n
                                 .string(R.string.label_expense), expense);
 
-                List<Balance> liability = calBalance(AccountType.LIABILITY, currentStartDate, currentEndDate);
+                List<Balance> liability = calBalanceList(AccountType.LIABILITY, currentStartDate, currentEndDate);
                 liability = adjustTotalBalance(
                         AccountType.LIABILITY,
                         totalMode ? i18n.string(R.string.label_balance_tliability) : i18n
                                 .string(R.string.label_liability), liability);
 
-                List<Balance> other = calBalance(AccountType.OTHER, currentStartDate, currentEndDate);
+                List<Balance> other = calBalanceList(AccountType.OTHER, currentStartDate, currentEndDate);
                 other = adjustTotalBalance(AccountType.OTHER, totalMode ? i18n.string(R.string.label_balance_tother)
                         : i18n.string(R.string.label_other), other);
 
@@ -493,6 +520,23 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             break;
         }
     }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.balance_optmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.balance_menu_yearly_runchart:
+            doYearlyRunChart();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -554,6 +598,9 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         case R.id.balance_menu_yearly_cumulative_timechart:
             doYearlyCumulativeTimeChart(info.position);
             return true;
+        case R.id.balance_menu_yearly_runchart:
+            doYearlyRunChart();
+            return true;    
         case R.id.balance_menu_detlist:
             doDetailList(info.position);
             return true;
@@ -591,7 +638,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             at = AccountType.find(((Account)b.getTarget()).getType());
         }
         
-        List<List<Balance>> yearTimebalance = new ArrayList<List<Balance>>();
+        List<List<Balance>> balances = new ArrayList<List<Balance>>();
         
         
         for(Balance g:group){
@@ -600,7 +647,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             }
             Account acc = (Account)g.getTarget();
             List<Balance> blist = new ArrayList<Balance>();
-            yearTimebalance.add(blist);
+            balances.add(blist);
             Date d = calHelper.yearStartDate(g.getDate());
             for(int i=0;i<12;i++){
                 Balance balance = calBalance(acc, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
@@ -610,7 +657,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         }
         
         Intent intent = new BalanceTimeChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(
-                i18n.string(R.string.label_balance_yearly_timechart,at.getDisplay(i18n),yearDateFormat.format(currentDate)),yearTimebalance);
+                i18n.string(R.string.label_balance_yearly_timechart,at.getDisplay(i18n),yearDateFormat.format(currentDate)),balances);
         startActivity(intent);
     }
     
@@ -627,7 +674,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             at = AccountType.find(((Account)b.getTarget()).getType());
         }
         
-        List<List<Balance>> yearTimebalance = new ArrayList<List<Balance>>();
+        List<List<Balance>> balances = new ArrayList<List<Balance>>();
         
         
         for(Balance g:group){
@@ -636,7 +683,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             }
             Account acc = (Account)g.getTarget();
             List<Balance> blist = new ArrayList<Balance>();
-            yearTimebalance.add(blist);
+            balances.add(blist);
             Date d = calHelper.yearStartDate(g.getDate());
             double total = 0;
             for(int i=0;i<12;i++){
@@ -649,7 +696,42 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         }
         
         Intent intent = new BalanceTimeChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(
-                i18n.string(R.string.label_balance_yearly_cumulative_timechart,at.getDisplay(i18n),yearDateFormat.format(currentDate)),yearTimebalance);
+                i18n.string(R.string.label_balance_yearly_cumulative_timechart,at.getDisplay(i18n),yearDateFormat.format(currentDate)),balances);
+        startActivity(intent);
+    }
+    
+    
+    private void doYearlyRunChart(){
+//        Balance b = listViewData.get(pos);
+        boolean[] monthly = new boolean[]{false,false,true,true,false};
+        AccountType[] ats = new AccountType[]{AccountType.ASSET,AccountType.LIABILITY,AccountType.INCOME,AccountType.EXPENSE,AccountType.OTHER};
+        List<List<Balance>> balances = new ArrayList<List<Balance>>();
+        Date yearstart = calHelper.yearStartDate(currentDate); 
+        for(int j=0;j<ats.length;j++){
+            AccountType at = ats[j];
+            List<Balance> blist = new ArrayList<Balance>();
+            balances.add(blist);
+            Date d = yearstart;
+            if(monthly[j]){
+                for(int i=0;i<12;i++){
+                    Balance balance = calBalance(at, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                    blist.add(balance);
+                    d = calHelper.monthAfter(d,1);
+                }
+            }else{
+                double total = 0;
+                for(int i=0;i<12;i++){
+                    Balance balance = calBalance(at, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                    total += balance.getMoney();
+                    balance.setMoney(total);
+                    blist.add(balance);
+                    d = calHelper.monthAfter(d,1);
+                }
+            }
+        }
+        
+        Intent intent = new BalanceTimeChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(
+                i18n.string(R.string.label_balance_yearly_runchart,yearDateFormat.format(currentDate)),balances);
         startActivity(intent);
     }
 

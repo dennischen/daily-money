@@ -153,16 +153,18 @@
     
     <string name="act_balance_detlist">Detail list</string>
     <string name="act_balance_piechart">Pie chart</string>
-    <string name="act_balance_yearly_timechart">Yearly time chart</string>
-    <string name="act_balance_yearly_cumulative_timechart">Yearly cumulative time chart</string>
+    <string name="act_balance_yearly_timechart">Yearly chart</string>
+    <string name="act_balance_yearly_cumulative_timechart">Yearly chart(cumulative)</string>
     <string name="label_balance_yearly_timechart">%1$s in %2$s</string>
     <string name="label_balance_yearly_cumulative_timechart">%1$s in %2$s (cumulative)</string>
     
     <string name="label_detlayout_type3">Money - To</string>
-    <string name="label_detlayout_type4">Money - Note</string>    
+    <string name="label_detlayout_type4">Money - Note</string>
+    <string name="act_balance_yearly_runchart">Yearly Asset-Liability run chart</string>
+    <string name="label_balance_yearly_runchart">Asset-Liability(cumulative) in %1$s</string>    
 <!-- above are verified -->    
 
-
+    
 
 </resources>
 

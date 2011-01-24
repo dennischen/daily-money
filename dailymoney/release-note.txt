@@ -3,6 +3,8 @@
 === Features ===
  * 14:  Make today, future's detail more light in detail list
  * 15:  Add more detail layout to list
+ * 16:  Yearly cumulative time chart
+ * 17:  Needs asset-liability run chart 
 === Bugs ===
  * 
 === Other ===
@@ -14,9 +16,9 @@
 = History =
 == 0.9.3 ==
 === Features ===
- * 12   Needs detail list linking in balance report  
- * 11   Provide password protection
- * 13   Supports pie chart of balance
+ * 12:  Needs detail list linking in balance report  
+ * 11:  Provide password protection
+ * 13:  Supports pie chart of balance
 === Bugs ===
  * 
 === Other ===
@@ -24,21 +26,21 @@
 =============================================================================== 
 == 0.9.2 ==
 === Features ===
- * 7    Support back(share) CSV file by email
- * 4    Needs calculator when counting the money 
- * 10   Provide balance report
+ * 7:   Support back(share) CSV file by email
+ * 4:   Needs calculator when counting the money 
+ * 10:  Provide balance report
 === Bugs ===
  * 
 === Other ===
- * 8    Account and Detail editor should change to Activity
+ * 8:   Account and Detail editor should change to Activity
 ===============================================================================
 == 0.9.1 ==
 === Features ===
- * 3    Add new account type Liability and Other
- * 1    Import & export should have a option for All/Account only/Detail only
- * 6    Backup CSV when do export.
+ * 3:   Add new account type Liability and Other
+ * 1:   Import & export should have a option for All/Account only/Detail only
+ * 6:   Backup CSV when do export.
 === Bugs ===
- * 2    Wrong display in detail list if account not found
+ * 2:   Wrong display in detail list if account not found
 =============================================================================== 
 == 0.9.0 ==
 === Features ===

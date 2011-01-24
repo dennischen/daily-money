@@ -31,6 +31,8 @@ public abstract class AbstractChart {
     public static final int YELLOW = 0xD0FFFF00;
     public static final int CYAN = 0xD000FFFF;
     public static final int MAGENTA = 0xD0FF00FF;
+    public static final int ORANGE = 0xD0FF8C66;
+    
 
     public static final int RED1 = 0xA0FF7777;
     public static final int GREEN1 = 0xA077FF77;
@@ -38,8 +40,9 @@ public abstract class AbstractChart {
     public static final int YELLOW1 = 0xA0FFFF77;
     public static final int CYAN1 = 0xA077FFFF;
     public static final int MAGENTA1 = 0xA0FF77FF;
+    public static final int ORANGE1 = 0xD0FF8C66;
 
-    public static final int[] colorPool = new int[] { GREEN, BLUE, RED, YELLOW, CYAN, MAGENTA, GREEN1, BLUE1, RED1,
+    public static final int[] colorPool = new int[] { GREEN, ORANGE, BLUE, RED, YELLOW, CYAN, MAGENTA, GREEN1, ORANGE1, BLUE1, RED1,
             YELLOW1, CYAN1, MAGENTA1 };
 
     public static final PointStyle[] pointPool = new PointStyle[] { PointStyle.CIRCLE,PointStyle.DIAMOND,PointStyle.TRIANGLE,PointStyle.SQUARE,PointStyle.X};

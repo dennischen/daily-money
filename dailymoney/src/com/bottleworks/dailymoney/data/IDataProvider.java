@@ -83,6 +83,8 @@ public interface IDataProvider {
     double sumTo(Account account,Date start, Date end);
     
     
-    public Detail getFirstDetail();
+    Detail getFirstDetail();
+
+    double sumInitialValue(AccountType type);
     
 }

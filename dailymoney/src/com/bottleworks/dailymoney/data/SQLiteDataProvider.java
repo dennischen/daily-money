@@ -580,9 +580,7 @@ public class SQLiteDataProvider implements IDataProvider {
         }
         
         query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
-        query.append(" ORDER BY ").append(DET_ORDERBY);
-        
-        
+
         Cursor c = db.rawQuery(query.toString(),null);
         
         double r = 0D;
@@ -612,9 +610,7 @@ public class SQLiteDataProvider implements IDataProvider {
         }
         
         query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
-        query.append(" ORDER BY ").append(DET_ORDERBY);
-        
-        
+
         Cursor c = db.rawQuery(query.toString(),null);
         
         double r = 0D;
@@ -644,9 +640,7 @@ public class SQLiteDataProvider implements IDataProvider {
         }
         
         query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
-        query.append(" ORDER BY ").append(DET_ORDERBY);
-        
-        
+
         Cursor c = db.rawQuery(query.toString(),null);
         
         double r = 0D;
@@ -676,9 +670,7 @@ public class SQLiteDataProvider implements IDataProvider {
         }
         
         query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
-        query.append(" ORDER BY ").append(DET_ORDERBY);
-        
-        
+
         Cursor c = db.rawQuery(query.toString(),null);
         
         double r = 0D;
@@ -730,6 +722,28 @@ public class SQLiteDataProvider implements IDataProvider {
             applyCursor(first,c);
         }
         return first;
+    }
+
+    @Override
+    public double sumInitialValue(AccountType type) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        StringBuilder query =  new StringBuilder();
+
+        StringBuilder where = new StringBuilder();
+        where.append(" WHERE ").append(COL_ACC_TYPE).append(" = '").append(type.type).append("'");
+        
+        query.append("SELECT SUM(").append(COL_ACC_INITVAL).append(") FROM ").append(TB_ACC).append(where);
+
+        Cursor c = db.rawQuery(query.toString(),null);
+        
+        double r = 0D;
+        if(c.moveToNext()){
+            r = c.getDouble(0);
+        }
+        
+        c.close();
+        return r;
     }
 
 }

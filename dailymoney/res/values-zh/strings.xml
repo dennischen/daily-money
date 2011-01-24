@@ -158,9 +158,12 @@
     
     <string name="label_detlayout_type3">金錢-帳戶</string>
     <string name="label_detlayout_type4">金錢-備註</string>
+    
+    <string name="act_balance_yearly_runchart">資產債務趨勢圖</string>
+    <string name="label_balance_yearly_runchart">資產債務趨勢 在 %1$s</string>
     <!-- above are verified -->
     
-
+    
 
 </resources>
 
