@@ -5,6 +5,7 @@
  * 15:  Add more detail layout to list
  * 16:  Yearly cumulative time chart
  * 17:  Needs asset-liability run chart 
+ * 19:  Add google analytics and allow user to disable it
 === Bugs ===
  * 
 === Other ===

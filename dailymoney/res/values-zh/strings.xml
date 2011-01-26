@@ -161,6 +161,9 @@
     
     <string name="act_balance_yearly_runchart">資產債務趨勢圖</string>
     <string name="label_balance_yearly_runchart">資產債務趨勢 在 %1$s</string>
+    
+    <string name="label_prefs_allow_analytics">傳送功能點擊到Google</string>
+    <string name="label_prefs_allow_analytics_sum">[不會傳送任何其他資料]傳送功能點擊將協助我改善這個軟體</string>
     <!-- above are verified -->
     
     

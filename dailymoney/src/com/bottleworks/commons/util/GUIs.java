@@ -29,9 +29,6 @@ import com.bottleworks.dailymoney.R;
  *
  */
 public class GUIs {
-
-    private static final int HVGA_HEIGHT_PIXELS = 480;
-    private static final int HVGA_WIDTH_PIXELS  = 320;
     
     public static final int NO_ICON_RES=0x0;
     

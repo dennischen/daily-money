@@ -162,6 +162,9 @@
     <string name="label_detlayout_type4">Money - Note</string>
     <string name="act_balance_yearly_runchart">Yearly Asset-Liability run chart</string>
     <string name="label_balance_yearly_runchart">Asset-Liability(cumulative) in %1$s</string>    
+    
+    <string name="label_prefs_allow_analytics">Sending page hit to google</string>
+    <string name="label_prefs_allow_analytics_sum">[Will not send any other data]Sending page hit to help me improve application</string>
 <!-- above are verified -->    
 
     

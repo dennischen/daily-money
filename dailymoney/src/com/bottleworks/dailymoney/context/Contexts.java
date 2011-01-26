@@ -55,6 +55,7 @@ public class Contexts {
     String pref_workingFolder = "bwDailyMoney";
     boolean pref_backupCSV = true;
     String pref_password = "";
+    boolean pref_allowAnalytics = true;
     
     private CalendarHelper calendarHelper = new CalendarHelper();
     
@@ -259,6 +260,9 @@ public class Contexts {
         try{
             pref_backupCSV = prefs.getBoolean(Constants.PREFS_BACKUP_CSV, pref_backupCSV);
         }catch(Exception x){Logger.e(x.getMessage());}
+        try{
+            pref_allowAnalytics = prefs.getBoolean(Constants.PREFS_ALLOW_ANALYTICS, pref_allowAnalytics);
+        }catch(Exception x){Logger.e(x.getMessage());}
         if(DEBUG){
             Logger.d("preference : use inmemory "+pref_useImpPovider);
             Logger.d("preference : detail layout "+pref_detailListLayout);
@@ -273,6 +277,10 @@ public class Contexts {
     
     public String getPrefPassword(){
         return pref_password;
+    }
+    
+    public boolean isPrefAllowAnalytics(){
+        return pref_allowAnalytics;
     }
     
     public String getPrefWorkingFolder(){
