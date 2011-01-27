@@ -17,35 +17,58 @@ public class ContextsActivity extends Activity {
     protected I18N i18n;
     protected CalendarHelper calHelper;
     
+    private static Activity firstActivity;
+    
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        Contexts ins = Contexts.uiInstance();
-        ins.initContext(this);
-        i18n = new I18N(this);
-        calHelper = ins.getCalendarHelper();
         
-        ins.trackPageView("/activity/" + getClass().getName());
+        Contexts ins = Contexts.instance();
+        if(firstActivity==null){
+            firstActivity = this;
+            ins.initApplication(firstActivity, firstActivity);
+        }
+        
+        ins.initActivity(this);
+        i18n = ins.getI18n();
+        calHelper = ins.getCalendarHelper();
+        ins.trackPageView(getTrackerPath());
     }
-
-    
     
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(firstActivity==this){
+            Contexts.instance().destroyApplication(firstActivity);
+        }
     }
+
+    @SuppressWarnings("rawtypes")
+    private String getTrackerPath() {
+        Class clz = getClass();
+        String name = clz.getSimpleName();
+        String pkg = clz.getPackage()==null?"":clz.getPackage().getName();
+        StringBuilder sb = new StringBuilder("/a/");
+        int i;
+        if((i = pkg.lastIndexOf('.')) !=-1){
+            pkg = pkg.substring(i+1); 
+        }
+        sb.append(pkg).append(".").append(name);
+        return sb.toString();
+    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        Contexts.uiInstance().initContext(this);
+        Contexts.instance().initActivity(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Contexts.uiInstance().cleanContext(this);
+        Contexts.instance().cleanActivity(this);
     }
 
     Bundle fakeExtra;
@@ -61,5 +84,8 @@ public class ContextsActivity extends Activity {
         return fakeExtra;
     }
 
+    protected Contexts getContexts(){
+        return Contexts.instance();
+    }
 
 }

@@ -17,9 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.dailymoney.core.R;
-import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
@@ -71,7 +70,7 @@ public class AccountDetailListActivity extends ContextsActivity {
         info = b.getString(INTENT_TARGET_INFO);
         info = info==null?" ":info+" ";
         
-        DateFormat format = Contexts.uiInstance().getDateFormat();
+        DateFormat format = getContexts().getDateFormat();
         String fromStr = startDate==null?"":format.format(startDate);
         String toStr = endDate==null?"":format.format(endDate);
 
@@ -120,7 +119,7 @@ public class AccountDetailListActivity extends ContextsActivity {
     
     private void reloadData() {
         infoView.setText(info);
-        final IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        final IDataProvider idp = getContexts().getDataProvider();
 //        detailListHelper.reloadData(idp.listAllDetail());
         GUIs.doBusy(this,new GUIs.BusyAdapter() {
             @SuppressWarnings("unchecked")
@@ -129,10 +128,10 @@ public class AccountDetailListActivity extends ContextsActivity {
             @Override
             public void run() {
                 if(target instanceof Account){
-                    data = idp.listDetail((Account)target,IDataProvider.LIST_DETAIL_MODE_BOTH,startDate,endDate,Contexts.uiInstance().getPrefMaxRecords());
+                    data = idp.listDetail((Account)target,IDataProvider.LIST_DETAIL_MODE_BOTH,startDate,endDate,getContexts().getPrefMaxRecords());
                     count = idp.countDetail((Account)target,IDataProvider.LIST_DETAIL_MODE_BOTH,startDate, endDate);
                 }else if(target instanceof AccountType){
-                    data = idp.listDetail((AccountType)target,IDataProvider.LIST_DETAIL_MODE_BOTH,startDate,endDate,Contexts.uiInstance().getPrefMaxRecords());
+                    data = idp.listDetail((AccountType)target,IDataProvider.LIST_DETAIL_MODE_BOTH,startDate,endDate,getContexts().getPrefMaxRecords());
                     count = idp.countDetail((AccountType)target,IDataProvider.LIST_DETAIL_MODE_BOTH,startDate, endDate);
                 }
             }

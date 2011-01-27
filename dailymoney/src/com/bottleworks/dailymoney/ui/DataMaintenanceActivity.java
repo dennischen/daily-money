@@ -54,10 +54,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datamain);
-        workingFolder = Contexts.uiInstance().getPrefWorkingFolder();
-        backupcsv = Contexts.uiInstance().isPrefBackupCSV();
+        workingFolder = getContexts().getPrefWorkingFolder();
+        backupcsv = getContexts().isPrefBackupCSV();
         
-        vercode = Contexts.uiInstance().getApplicationVersionCode();
+        vercode = getContexts().getApplicationVersionCode();
         
         initialListener();
 
@@ -140,7 +140,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
 
             @Override
             public void run() {
-                IDataProvider idp = Contexts.uiInstance().getDataProvider();
+                IDataProvider idp = getContexts().getDataProvider();
                 new DataCreator(idp, i18n).createDefaultAccount();
             }
         };
@@ -306,7 +306,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 detail = true;
                 break;
         }
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        IDataProvider idp = getContexts().getDataProvider();
         if(account && detail){
             idp.reset();
         }else if(account){
@@ -336,7 +336,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 break;
             default :return -1;
         }
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        IDataProvider idp = getContexts().getDataProvider();
         StringWriter sw;
         CsvWriter csvw;
         int count = 0;
@@ -429,7 +429,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             default :return -1;
         }
         
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        IDataProvider idp = getContexts().getDataProvider();
         File details = getWorkingFile("details.csv");
         File accounts = getWorkingFile("accounts.csv");
         
@@ -547,8 +547,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         }
         
         if(count>0){
-            DateFormat df = Contexts.uiInstance().getDateFormat();
-            Contexts.uiInstance().shareTextContent(i18n.string(R.string.msg_share_csv_title,df.format(new Date())),i18n.string(R.string.msg_share_csv_content),files);
+            DateFormat df = getContexts().getDateFormat();
+            getContexts().shareTextContent(i18n.string(R.string.msg_share_csv_title,df.format(new Date())),i18n.string(R.string.msg_share_csv_content),files);
         }
         return count;
             

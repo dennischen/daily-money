@@ -23,7 +23,7 @@ public class TestsDesktop extends AbstractDesktop {
     
     @Override
     public boolean isAvailable(){
-        return Contexts.uiInstance().isPrefOpenTestsDesktop();
+        return Contexts.instance().isPrefOpenTestsDesktop();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class TestsDesktop extends AbstractDesktop {
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
-                Contexts.uiInstance().getDataProvider().reset();
+                Contexts.instance().getDataProvider().reset();
                 GUIs.shortToast(activity,"reset data provider");
             }}, "rest data provider",R.drawable.dtitem_test));
         addItem(new DesktopItem(new Runnable(){
@@ -100,7 +100,7 @@ public class TestsDesktop extends AbstractDesktop {
             }
             @Override
             public void run() {
-                IDataProvider idp = Contexts.uiInstance().getDataProvider();
+                IDataProvider idp = Contexts.instance().getDataProvider();
                 new DataCreator(idp,i18n).createTestData(loop);
             }});
         

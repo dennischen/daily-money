@@ -22,12 +22,10 @@ import android.widget.TextView;
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
-import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.calculator2.Calculator;
-import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
@@ -71,7 +69,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.deteditor);
-        format = Contexts.uiInstance().getDateFormat();
+        format = getContexts().getDateFormat();
         initIntent();
         initialEditor();
     }
@@ -203,9 +201,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
     }
 
     private void reloadSpinnerData() {
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
-         I18N i18n = Contexts.uiInstance().getI18n();
-
+        IDataProvider idp = getContexts().getDataProvider();
         // initial from
         AccountType[] avail = AccountType.getFromType();
         fromAccountList.clear();
@@ -299,7 +295,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
 
     @Override
     public void onClick(View v) {
-        CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
+        CalendarHelper cal = getContexts().getCalendarHelper();
         switch (v.getId()) {
         case R.id.deteditor_ok:
             doOk();
@@ -375,7 +371,6 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
     }
 
     private void doOk() {
-        I18N i18n = Contexts.uiInstance().getI18n();
         // verify
         int fromPos = fromEditor.getSelectedItemPosition();
         if (Spinner.INVALID_POSITION == fromPos) {
@@ -398,7 +393,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
 
         Date date = null;
         try {
-            date = Contexts.uiInstance().getDateFormat().parse(datestr);
+            date = getContexts().getDateFormat().parse(datestr);
         } catch (ParseException e) {
             Logger.e(e.getMessage(), e);
             GUIs.errorToast(this, e);
@@ -435,7 +430,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         workingDetail.setDate(date);
         workingDetail.setMoney(money);
         workingDetail.setNote(note.trim());
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        IDataProvider idp = getContexts().getDataProvider();
         if (modeCreate) {
             
             idp.newDetail(workingDetail);
@@ -448,7 +443,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             moneyEditor.requestFocus();
             noteEditor.setText("");
             counterCreate++;
-            okBtn.setText(Contexts.uiInstance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
+            okBtn.setText(i18n.string(R.string.cact_create) + "(" + counterCreate + ")");
             cancelBtn.setVisibility(Button.GONE);
             closeBtn.setVisibility(Button.VISIBLE);
         } else {

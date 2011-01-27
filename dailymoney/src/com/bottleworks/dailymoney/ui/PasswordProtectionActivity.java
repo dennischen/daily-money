@@ -6,9 +6,8 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.dailymoney.core.R;
-import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
+import com.bottleworks.dailymoney.core.R;
 
 /**
  * 
@@ -33,7 +32,7 @@ public class PasswordProtectionActivity extends ContextsActivity implements OnCl
     }
 
     private void doPasswordOk() {
-        String password = Contexts.uiInstance().getPrefPassword();
+        String password = getContexts().getPrefPassword();
         String pd = ((TextView)findViewById(R.id.pdprot_text)).getText().toString();
         if(password.equals(pd)){
            setResult(RESULT_OK);

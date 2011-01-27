@@ -39,7 +39,7 @@ public class DataCreator {
 
     public void createTestData(int loop) {
         //only for call from ui, so use uiInstance
-        CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
+        CalendarHelper cal = Contexts.instance().getCalendarHelper();
         
         Account income1 = createAccountNoThrow(i18n.string(R.string.defacc_salary), AccountType.INCOME, 0D);
         Account income2 = createAccountNoThrow(i18n.string(R.string.defacc_otherincome), AccountType.INCOME, 0D);

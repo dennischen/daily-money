@@ -26,9 +26,8 @@ import android.widget.TextView;
 
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.dailymoney.core.R;
-import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.IDataProvider;
@@ -162,7 +161,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     }
 
     private void reloadData() {
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        IDataProvider idp = getContexts().getDataProvider();
         listViewData = null;
 
         AccountType type = AccountType.find(currTab);
@@ -234,7 +233,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
         Account acc = (Account) listViewData.get(pos);
         String name = acc.getName();
 
-        Contexts.uiInstance().getDataProvider().deleteAccount(acc.getId());
+        getContexts().getDataProvider().deleteAccount(acc.getId());
         reloadData();
         GUIs.shortToast(this, i18n.string(R.string.msg_account_deleted, name));
 

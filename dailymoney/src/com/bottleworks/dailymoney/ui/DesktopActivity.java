@@ -26,9 +26,8 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.dailymoney.core.R;
-import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
 /**
@@ -78,7 +77,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
 
     private void initPasswordProtection() { 
-        final String password = Contexts.uiInstance().getPrefPassword();
+        final String password = getContexts().getPrefPassword();
         if("".equals(password)||protectionPassed||protectionInfront){
             return;
         }
@@ -90,11 +89,11 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     private void initialApplicationInfo() {
         appinfo = i18n.string(R.string.app_name);
-        String ver = Contexts.uiInstance().getApplicationVersionName();
+        String ver = getContexts().getApplicationVersionName();
         appinfo += " ver : "+ver;
         
-        if(Contexts.uiInstance().isFirstTime()){
-            IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        if(getContexts().isFirstTime()){
+            IDataProvider idp = getContexts().getDataProvider();
             if(idp.listAccount(null).size()==0){
                 //cause of this function is not ready in previous version, so i check the size for old user
                 new DataCreator(idp,i18n).createDefaultAccount();
@@ -153,7 +152,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     private void loadAppInfo(){
         Date now = new Date();
-        String date = Contexts.uiInstance().getDateFormat().format(now)+" "+dayOfWeekFormat.format(now)+" - ";
+        String date = getContexts().getDateFormat().format(now)+" "+dayOfWeekFormat.format(now)+" - ";
         ((TextView)findViewById(R.id.dt_info)).setText(date + appinfo);
     }
     
@@ -271,6 +270,6 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     }
     
-    
+
 
 }

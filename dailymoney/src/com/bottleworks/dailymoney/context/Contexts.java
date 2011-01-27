@@ -40,10 +40,11 @@ import com.google.android.apps.analytics.GoogleAnalyticsTracker;
  */
 public class Contexts {
 
-    private static Contexts uiContexts;
-//    private static Contexts serviceContexts;
+    private static Contexts instance;
     
-    private Context context;
+    private Object appInitialObject;
+    private Context appContext;
+    private Activity uiActivity;
     
     private IDataProvider dataProvider;
     private I18N i18n;
@@ -78,33 +79,64 @@ public class Contexts {
     }
     
     /** get a Contexts instance for activity use **/
-    static public Contexts uiInstance(){
-        if(uiContexts == null){
+    static public Contexts instance(){
+        if(instance == null){
             synchronized(Contexts.class){
-                if(uiContexts==null){
-                    uiContexts = new Contexts();
+                if(instance==null){
+                    instance = new Contexts();
                 }
             }
         }
-        return uiContexts;
+        return instance;
     }
-    
-    
-
 
     
-    Contexts initContext(Context context){
-        if(this.context != context){
-            this.context = context;
-            this.i18n = new I18N(context);
+    boolean initActivity(Activity activity){
+        initApplication(activity,activity);
+        if(this.uiActivity != activity){
+            Logger.i("initial activity "+activity);
+            this.uiActivity = activity;
             if(prefsDirty){
                 reloadPreference();
                 prefsDirty = false;
             }
-            initDataProvider(context);
-            initTracker(context);
+            initDataProvider(uiActivity);
+            return true;
         }
-        return this;
+        return false;
+    }
+    
+    boolean cleanActivity(Activity activity){
+        if(this.uiActivity == activity){
+            this.uiActivity = null;
+            cleanDataProvider(uiActivity);
+            Logger.i("cleanup activity "+activity);
+            return true;
+        }
+        return false;
+    }
+    
+    synchronized boolean initApplication(Object appInitialObject,Context context){
+        if(appContext==null){
+            Logger.i("initial application context by "+appInitialObject);
+            this.appInitialObject = appInitialObject;
+            appContext = context.getApplicationContext();
+            this.i18n = new I18N(appContext);
+            initTracker(appContext);
+            return true;
+        }
+        return false;
+    }
+    
+    synchronized boolean destroyApplication(Object appInitialObject){
+        if(this.appInitialObject!=null && this.appInitialObject.equals(appInitialObject)){
+            cleanTracker();
+            appContext = null;
+            appInitialObject = null;
+            Logger.i("destroy application context by "+appInitialObject);
+            return true;
+        }
+        return false;
     }
     
     private void initTracker(final Context context) {
@@ -112,6 +144,7 @@ public class Contexts {
             trackSingleExecutor.submit(new Runnable() {
                 public void run() {
                     try {
+                        Logger.d("initial google tracker");
                         tracker = GoogleAnalyticsTracker.getInstance();
                         tracker.setProductVersion(i18n.string(R.string.app_surface), getApplicationVersionName());
                         tracker.start(ANALYTICS_CDOE, ANALYTICS_DISPATH_DELAY, context);
@@ -121,6 +154,22 @@ public class Contexts {
                     }
                 }
             });
+        }
+    }
+
+    
+    private void cleanTracker() {
+     // Stop the tracker when it is no longer needed.
+        try {
+            if (tracker != null) {
+                //don't dispatch, let the queue do it next time to reduce network
+                tracker.dispatch();
+                tracker.stop();
+                tracker = null;
+                Logger.d("clean google tracker");
+            }
+        } catch (Throwable t) {
+            Logger.e(t.getMessage(), t);
         }
     }
     
@@ -174,10 +223,10 @@ public class Contexts {
 
     
     public boolean shareContent(String subject,String content,boolean htmlContent,List<File> attachments){
-        if(!(context instanceof Activity)){
+        if(uiActivity == null){
             return false;
         }
-        
+
         Intent intent;
         if(attachments == null || attachments.size()<=1){
             intent = new Intent(Intent.ACTION_SEND);
@@ -206,7 +255,7 @@ public class Contexts {
             intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, parcels);
         }
         try{
-            ((Activity)context).startActivity(Intent.createChooser(intent, i18n.string(R.string.clabel_share)));
+            uiActivity.startActivity(Intent.createChooser(intent, i18n.string(R.string.clabel_share)));
         }catch(Exception x){
             Logger.e(x.getMessage(),x);
             return false;
@@ -221,7 +270,7 @@ public class Contexts {
      */
     public boolean isFirstTime(){
         try{
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
             if(!prefs.contains("app_firsttime")){
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("app_firsttime",Formats.normalizeDate2String(new Date()));
@@ -238,7 +287,7 @@ public class Contexts {
     public boolean isFirstVersionTime(){
         int curr = getApplicationVersionCode();
         try{
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
             int last = prefs.getInt("app_lastver",-1);
             if(curr!=last){
                 SharedPreferences.Editor editor = prefs.edit();
@@ -255,8 +304,8 @@ public class Contexts {
      * @return
      */
     public String getApplicationVersionName(){
-        if(context instanceof Activity){
-            Application app = ((Activity)context).getApplication();
+        if(uiActivity!=null){
+            Application app = (uiActivity).getApplication();
             String name = app.getPackageName();
             PackageInfo pi;
             try {
@@ -273,8 +322,8 @@ public class Contexts {
      * @return
      */
     public int getApplicationVersionCode(){
-        if(context instanceof Activity){
-            Application app = ((Activity)context).getApplication();
+        if(uiActivity!=null){
+            Application app = (uiActivity).getApplication();
             String name = app.getPackageName();
             PackageInfo pi;
             try {
@@ -287,7 +336,7 @@ public class Contexts {
     }
     
     private void reloadPreference() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
         try{
             pref_useImpPovider = prefs.getBoolean(Constants.PREFS_USE_INMENORY_PROVIDER, pref_useImpPovider);
         }catch(Exception x){Logger.e(x.getMessage());}
@@ -373,30 +422,6 @@ public class Contexts {
         return calendarHelper;
     }
 
-    Contexts cleanContext(Context context){
-        if(this.context == context){
-            this.context = null;
-            this.i18n = null;
-            cleanDataProvider(context);
-            cleanTracker(context);
-        }
-        return this;
-    }
-    
-    
-    private void cleanTracker(Context context) {
-     // Stop the tracker when it is no longer needed.
-        try {
-            if (tracker != null) {
-                //don't dispatch, let the queue do it next time to reduce network
-                tracker.dispatch();
-                tracker.stop();
-                tracker = null;
-            }
-        } catch (Throwable t) {
-            Logger.e(t.getMessage(), t);
-        }
-    }
 
     public I18N getI18n() {
         return i18n;
@@ -426,13 +451,16 @@ public class Contexts {
     }
     
     public int getOrientation(){
-        if(context==null){
+        if(appContext==null){
             return Configuration.ORIENTATION_UNDEFINED;
         }
-        return context.getResources().getConfiguration().orientation;
+        return appContext.getResources().getConfiguration().orientation;
     }
     
     public IDataProvider getDataProvider(){
+        if(dataProvider==null){
+            throw new IllegalStateException("no available dataProvider, di you get data provider out of life cycle");
+        }
         return dataProvider;
     }
 
@@ -441,21 +469,21 @@ public class Contexts {
     }
     
     public DateFormat getDateFormat(){
-        return android.text.format.DateFormat.getDateFormat(context);
+        return android.text.format.DateFormat.getDateFormat(appContext);
     }
     
     public DateFormat getLongDateFormat(){
-        return android.text.format.DateFormat.getLongDateFormat(context);
+        return android.text.format.DateFormat.getLongDateFormat(appContext);
     }
     
     public DateFormat getMediumDateFormat(){
-        return android.text.format.DateFormat.getMediumDateFormat(context);
+        return android.text.format.DateFormat.getMediumDateFormat(appContext);
     }
     
     public DateFormat getTimeFormat(){
-        return android.text.format.DateFormat.getTimeFormat(context);
+        return android.text.format.DateFormat.getTimeFormat(appContext);
     }
     public Drawable getDrawable(int id){
-        return context.getResources().getDrawable(id);
+        return appContext.getResources().getDrawable(id);
     }
 }

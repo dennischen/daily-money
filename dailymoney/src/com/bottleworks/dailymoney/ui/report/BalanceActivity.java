@@ -13,10 +13,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -30,9 +30,8 @@ import android.widget.TextView;
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.dailymoney.core.R;
-import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Balance;
@@ -278,7 +277,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
     private List<Balance> calBalanceList(AccountType type,Date start,Date end) {
         boolean nat = type==AccountType.INCOME||type==AccountType.LIABILITY;
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        IDataProvider idp = getContexts().getDataProvider();
         boolean calInit = true;
         if(start!=null){
             calInit = false;
@@ -305,7 +304,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     
     private Balance calBalance(AccountType type,Date start,Date end) {
         boolean nat = type==AccountType.INCOME||type==AccountType.LIABILITY;
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        IDataProvider idp = getContexts().getDataProvider();
         boolean calInit = true;
         if(start!=null){
             calInit = false;
@@ -332,7 +331,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     private Balance calBalance(Account acc, Date start, Date end) {
         AccountType type = AccountType.find(acc.getType());
         boolean nat = type == AccountType.INCOME || type == AccountType.LIABILITY;
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        IDataProvider idp = getContexts().getDataProvider();
         boolean calInit = true;
         if(start!=null){
             calInit = false;
@@ -354,7 +353,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     }
 
     private void reloadData() {
-        final CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
+        final CalendarHelper cal = getContexts().getCalendarHelper();
         currentEndDate = null;
         currentStartDate = null;
         infoView.setText("");
@@ -484,7 +483,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     }
 
     private void onNext() {
-        CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
+        CalendarHelper cal = getContexts().getCalendarHelper();
         switch (mode) {
         case MODE_MONTH:
             currentDate = cal.monthAfter(currentDate, 1);
@@ -498,7 +497,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     }
 
     private void onPrev() {
-        CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
+        CalendarHelper cal = getContexts().getCalendarHelper();
         switch (mode) {
         case MODE_MONTH:
             currentDate = cal.monthBefore(currentDate, 1);

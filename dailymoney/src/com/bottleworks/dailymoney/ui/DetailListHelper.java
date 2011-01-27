@@ -73,7 +73,7 @@ public class DetailListHelper implements OnItemClickListener{
     public void setup(ListView listview){
         
         int layout = 0;
-        switch(Contexts.uiInstance().getPrefDetailListLayout()){
+        switch(Contexts.instance().getPrefDetailListLayout()){
         case 2:
             layout = R.layout.detlist_item2;
             break;
@@ -96,7 +96,7 @@ public class DetailListHelper implements OnItemClickListener{
             listView.setOnItemClickListener(this);
         }
         
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        IDataProvider idp = Contexts.instance().getDataProvider();
         for(Account acc:idp.listAccount(null)){
             accountCache.put(acc.getId(),acc);
         }
@@ -115,7 +115,7 @@ public class DetailListHelper implements OnItemClickListener{
     public void reloadData(List<Detail> data) {
         listViewData = data;;
         listViewMapList.clear();
-        DateFormat dateFormat = Contexts.uiInstance().getDateFormat();//for 2010/01/01
+        DateFormat dateFormat = Contexts.instance().getDateFormat();//for 2010/01/01
         for (Detail det : listViewData) {
             Map<String, Object> row = toDetailMap(det,dateFormat);
             listViewMapList.add(row);
@@ -165,7 +165,7 @@ public class DetailListHelper implements OnItemClickListener{
 
     public void doDeleteDetail(int pos) {
         Detail d = (Detail) listViewData.get(pos);
-        Contexts.uiInstance().getDataProvider().deleteDetail(d.getId());
+        Contexts.instance().getDataProvider().deleteDetail(d.getId());
         if(listener!=null){
             listener.onDetailDeleted(d);
         }else{

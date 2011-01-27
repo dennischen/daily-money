@@ -23,9 +23,8 @@ import android.widget.TextView;
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.dailymoney.core.R;
-import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
@@ -182,7 +181,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     
 
     private void reloadData() {
-        final CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
+        final CalendarHelper cal = getContexts().getCalendarHelper();
         final Date start;
         final Date end;
         infoView.setText("");
@@ -234,7 +233,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
 //            modeBtn.setImageResource(R.drawable.btn_month);
             break;
         }
-        final IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        final IDataProvider idp = getContexts().getDataProvider();
 //        detailListHelper.reloadData(idp.listAllDetail());
         GUIs.doBusy(this,new GUIs.BusyAdapter() {
             List<Detail> data = null;
@@ -248,7 +247,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
             
             @Override
             public void run() {
-                data = idp.listDetail(start,end,Contexts.uiInstance().getPrefMaxRecords());
+                data = idp.listDetail(start,end,getContexts().getPrefMaxRecords());
                 count = idp.countDetail(start, end);
                 income = idp.sumFrom(AccountType.INCOME,start,end);
                 expense = idp.sumTo(AccountType.EXPENSE,start,end);//nagivate
@@ -408,7 +407,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     }
 
     private void onNext() {
-        CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
+        CalendarHelper cal = getContexts().getCalendarHelper();
         switch(mode){
         case MODE_WEEK:
             currentDate = cal.dateAfter(currentDate,7);
@@ -426,7 +425,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     }
 
     private void onPrev() {
-        CalendarHelper cal = Contexts.uiInstance().getCalendarHelper();
+        CalendarHelper cal = getContexts().getCalendarHelper();
         switch(mode){
         case MODE_WEEK:
             currentDate = cal.dateBefore(currentDate,7);

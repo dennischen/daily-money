@@ -19,11 +19,9 @@ import android.widget.TextView;
 
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.commons.util.I18N;
-import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.calculator2.Calculator;
-import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.DuplicateKeyException;
@@ -100,7 +98,6 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         String type = workingAccount.getType();
         int selpos,i;
         selpos = i = -1;
-        I18N i18n = Contexts.uiInstance().getI18n();
         for (AccountType at : AccountType.getSupportedType()) {
             i++;
             Map<String, Object> row = new HashMap<String, Object>();
@@ -195,7 +192,6 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         }
     }
     private void doOk(){   
-        I18N i18n = Contexts.uiInstance().getI18n();
         //verify
         if(Spinner.INVALID_POSITION==typeEditor.getSelectedItemPosition()){
             GUIs.shortToast(this,i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_type)));
@@ -219,7 +215,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         workingAccount.setName(name);
         workingAccount.setInitialValue(Formats.string2Double(initval));
         
-        IDataProvider idp = Contexts.uiInstance().getDataProvider();
+        IDataProvider idp = getContexts().getDataProvider();
         
         Account namedAcc = idp.findAccount(type,name);
         if (modeCreate) {
@@ -243,7 +239,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
             nameEditor.setText("");
             nameEditor.requestFocus();
             counterCreate++;
-            okBtn.setText(Contexts.uiInstance().getI18n().string(R.string.cact_create) + "(" + counterCreate + ")");
+            okBtn.setText(i18n.string(R.string.cact_create) + "(" + counterCreate + ")");
             cancelBtn.setVisibility(Button.GONE);
             closeBtn.setVisibility(Button.VISIBLE);
             
