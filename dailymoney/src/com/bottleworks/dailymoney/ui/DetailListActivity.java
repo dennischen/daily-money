@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney;
+package com.bottleworks.dailymoney.ui;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.AccountType;

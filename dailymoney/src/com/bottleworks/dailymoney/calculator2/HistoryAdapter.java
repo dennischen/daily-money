@@ -30,7 +30,7 @@ import java.util.Vector;
 
 import org.javia.arity.SyntaxException;
 
-import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.core.R;
 
 class HistoryAdapter extends BaseAdapter {
     private Vector<HistoryEntry> mEntries;

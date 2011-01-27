@@ -14,14 +14,13 @@ import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Handler;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
-import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.core.R;
 
 /**
  * 

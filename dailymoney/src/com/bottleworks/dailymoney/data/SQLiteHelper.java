@@ -61,13 +61,15 @@ public class SQLiteHelper extends SQLiteOpenHelper{
             Logger.d("update db from "+oldVersion+" to "+newVersion);
             Logger.d("drop schema "+ACC_DROP_SQL);
         }
-        db.execSQL(ACC_DROP_SQL);
-        if(Contexts.DEBUG){
-            Logger.d("drop schema "+DET_DROP_SQL);
+        if(oldVersion<=0){
+            //drop and create.
+            db.execSQL(ACC_DROP_SQL);
+            if(Contexts.DEBUG){
+                Logger.d("drop schema "+DET_DROP_SQL);
+            }
+            db.execSQL(DET_DROP_SQL);
+            onCreate(db);
         }
-        db.execSQL(DET_DROP_SQL);
-        
-        onCreate(db);
     }
 
 }

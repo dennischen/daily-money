@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney.reports;
+package com.bottleworks.dailymoney.ui.report;
 
 import java.text.DecimalFormat;
 import java.util.List;

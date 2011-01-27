@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney.reports;
+package com.bottleworks.dailymoney.ui.report;
 
 import org.achartengine.chart.PointStyle;
 import org.achartengine.renderer.DefaultRenderer;

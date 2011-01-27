@@ -3,8 +3,8 @@ package com.bottleworks.dailymoney.ui;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.bottleworks.dailymoney.R;
-import com.bottleworks.dailymoney.reports.BalanceActivity;
+import com.bottleworks.dailymoney.core.R;
+import com.bottleworks.dailymoney.ui.report.BalanceActivity;
 /**
  * 
  * @author dennis
@@ -41,7 +41,7 @@ public class ReportsDesktop extends AbstractDesktop {
         intent.putExtra(BalanceActivity.INTENT_TOTAL_MODE, true);
         intent.putExtra(BalanceActivity.INTENT_MODE, BalanceActivity.MODE_MONTH);
         DesktopItem totalBalance = new DesktopItem(new IntentRun(activity, intent),
-                i18n.string(R.string.dtitem_report_total_balance), R.drawable.dtitem_balance_month);
+                i18n.string(R.string.dtitem_report_total_balance), R.drawable.dtitem_balance_cumulative_month);
         addItem(totalBalance);
     }
 

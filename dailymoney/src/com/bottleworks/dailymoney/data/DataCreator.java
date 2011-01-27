@@ -5,7 +5,7 @@ import java.util.Date;
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
-import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.context.Contexts;
 
 /**

@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney;
+package com.bottleworks.dailymoney.ui;
 /**
  * 
  * @author dennis

@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney;
+package com.bottleworks.dailymoney.ui;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,6 +6,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 

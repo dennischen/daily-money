@@ -19,7 +19,7 @@
  */
 package com.bottleworks.dailymoney.calculator2;
 
-import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.core.R;
 
 import android.content.Context;
 import android.graphics.Canvas;

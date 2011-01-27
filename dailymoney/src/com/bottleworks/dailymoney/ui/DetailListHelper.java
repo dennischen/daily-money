@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney;
+package com.bottleworks.dailymoney.ui;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,14 +10,8 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -30,12 +24,12 @@ import android.widget.TextView;
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.I18N;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.ui.NamedItem;
 
 /**
  * 

@@ -4,7 +4,7 @@
 package com.bottleworks.dailymoney.data;
 
 import com.bottleworks.commons.util.I18N;
-import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.core.R;
 
 
 /**

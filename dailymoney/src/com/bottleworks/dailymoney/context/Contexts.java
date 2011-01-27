@@ -5,6 +5,8 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.app.Activity;
 import android.app.Application;
@@ -24,11 +26,12 @@ import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
-import com.bottleworks.dailymoney.Constants;
-import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteHelper;
+import com.bottleworks.dailymoney.ui.Constants;
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
 /**
  * Helps me to do some quick access in context/ui thread
@@ -58,6 +61,14 @@ public class Contexts {
     boolean pref_allowAnalytics = true;
     
     private CalendarHelper calendarHelper = new CalendarHelper();
+    
+    private static final ExecutorService trackSingleExecutor = Executors.newSingleThreadExecutor();
+    
+    //analytics code
+    private static final String ANALYTICS_CDOE = "UA-20850113-1";
+    private static final int ANALYTICS_DISPATH_DELAY = 60;// dispatch queue at least 60s
+    
+    private GoogleAnalyticsTracker tracker;
     
     private boolean prefsDirty = true;
     
@@ -91,10 +102,61 @@ public class Contexts {
                 prefsDirty = false;
             }
             initDataProvider(context);
+            initTracker(context);
         }
         return this;
     }
     
+    private void initTracker(final Context context) {
+        if (isPrefAllowAnalytics()) {
+            trackSingleExecutor.submit(new Runnable() {
+                public void run() {
+                    try {
+                        tracker = GoogleAnalyticsTracker.getInstance();
+                        tracker.setProductVersion(i18n.string(R.string.app_surface), getApplicationVersionName());
+                        tracker.start(ANALYTICS_CDOE, ANALYTICS_DISPATH_DELAY, context);
+                        
+                    } catch (Throwable t) {
+                        Logger.e(t.getMessage(), t);
+                    }
+                }
+            });
+        }
+    }
+    
+    protected void trackEvent(final String category,final String action,final String label,final int value) {
+        if (tracker != null) {
+            trackSingleExecutor.submit(new Runnable() {
+                public void run() {
+                    try {
+                        if (tracker != null) {
+                            tracker.trackEvent(category, action, label, value);
+                        }
+                    } catch (Throwable t) {
+                        Logger.e(t.getMessage(), t);
+                    }
+                }
+            });
+        }
+    }
+
+    protected void trackPageView(final String path) {
+        if (tracker != null) {
+            trackSingleExecutor.submit(new Runnable() {
+                public void run() {
+                    try {
+                        if (tracker != null) {
+                            Logger.d("track "+path);
+                            tracker.trackPageView(path);
+                        }
+                    } catch (Throwable t) {
+                        Logger.e(t.getMessage(), t);
+                    }
+                }
+            });
+        }
+    }
+
     public boolean shareHtmlContent(String subject,String html){
         return shareHtmlContent(subject,html,null);
     }
@@ -316,11 +378,26 @@ public class Contexts {
             this.context = null;
             this.i18n = null;
             cleanDataProvider(context);
+            cleanTracker(context);
         }
         return this;
     }
     
     
+    private void cleanTracker(Context context) {
+     // Stop the tracker when it is no longer needed.
+        try {
+            if (tracker != null) {
+                //don't dispatch, let the queue do it next time to reduce network
+                tracker.dispatch();
+                tracker.stop();
+                tracker = null;
+            }
+        } catch (Throwable t) {
+            Logger.e(t.getMessage(), t);
+        }
+    }
+
     public I18N getI18n() {
         return i18n;
     }
@@ -330,7 +407,6 @@ public class Contexts {
 //            dataProvider = new InMemoryDataProvider();
             dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"),calendarHelper);
         }else{
-//            dataProvider = new InMemoryDataProvider();
             dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"),calendarHelper);
         }
         

@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney;
+package com.bottleworks.dailymoney.ui;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,15 +26,11 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
-import com.bottleworks.dailymoney.ui.Desktop;
-import com.bottleworks.dailymoney.ui.Desktop.DesktopItem;
-import com.bottleworks.dailymoney.ui.MainDesktop;
-import com.bottleworks.dailymoney.ui.ReportsDesktop;
-import com.bottleworks.dailymoney.ui.TestsDesktop;
 /**
  * 
  * @author dennis

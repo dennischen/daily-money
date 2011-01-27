@@ -1,13 +1,14 @@
-package com.bottleworks.dailymoney;
+package com.bottleworks.dailymoney.ui;
 
-
-import com.bottleworks.dailymoney.context.Contexts;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+
+import com.bottleworks.dailymoney.core.R;
+import com.bottleworks.dailymoney.context.Contexts;
 /**
  * 
  * @author dennis

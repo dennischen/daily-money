@@ -5,13 +5,7 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.bottleworks.dailymoney.AccountMgntActivity;
-import com.bottleworks.dailymoney.Constants;
-import com.bottleworks.dailymoney.DataMaintenanceActivity;
-import com.bottleworks.dailymoney.DetailEditorActivity;
-import com.bottleworks.dailymoney.DetailListActivity;
-import com.bottleworks.dailymoney.PrefsActivity;
-import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Detail;
 /**
  * 

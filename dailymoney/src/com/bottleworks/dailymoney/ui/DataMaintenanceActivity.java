@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney;
+package com.bottleworks.dailymoney.ui;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +22,7 @@ import com.bottleworks.commons.util.Files;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.data.Account;

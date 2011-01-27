@@ -30,7 +30,7 @@ import org.javia.arity.Symbols;
 import org.javia.arity.SyntaxException;
 import org.javia.arity.Util;
 
-import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.calculator2.CalculatorDisplay.Scroll;
 
 class Logic {

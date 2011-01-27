@@ -1,4 +1,4 @@
-package com.bottleworks.dailymoney.reports;
+package com.bottleworks.dailymoney.ui.report;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 
-import com.bottleworks.dailymoney.R;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Balance;
 /**
  * 
