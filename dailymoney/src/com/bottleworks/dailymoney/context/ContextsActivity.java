@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.I18N;
+import com.bottleworks.commons.util.Logger;
 
 /**
  * provide life cycle and easy access to contexts
@@ -22,7 +23,7 @@ public class ContextsActivity extends Activity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        
+        Logger.d("activity created:"+this);
         Contexts ins = Contexts.instance();
         if(firstActivity==null){
             firstActivity = this;
@@ -42,6 +43,7 @@ public class ContextsActivity extends Activity {
         if(firstActivity==this){
             Contexts.instance().destroyApplication(firstActivity);
         }
+        Logger.d("activity destroyed:"+this);
     }
 
     @SuppressWarnings("rawtypes")

@@ -92,9 +92,11 @@ public class Contexts {
 
     
     boolean initActivity(Activity activity){
-        initApplication(activity,activity);
+        if(appContext==null){
+            initApplication(activity,activity);
+        }
         if(this.uiActivity != activity){
-            Logger.i("initial activity "+activity);
+            Logger.d(">>>initial activity "+activity);
             this.uiActivity = activity;
             if(prefsDirty){
                 reloadPreference();
@@ -110,7 +112,7 @@ public class Contexts {
         if(this.uiActivity == activity){
             this.uiActivity = null;
             cleanDataProvider(uiActivity);
-            Logger.i("cleanup activity "+activity);
+            Logger.d(">>>cleanup activity "+activity);
             return true;
         }
         return false;
@@ -118,12 +120,14 @@ public class Contexts {
     
     synchronized boolean initApplication(Object appInitialObject,Context context){
         if(appContext==null){
-            Logger.i("initial application context by "+appInitialObject);
+            Logger.d(">>initialial application context with:"+appInitialObject);
             this.appInitialObject = appInitialObject;
             appContext = context.getApplicationContext();
             this.i18n = new I18N(appContext);
             initTracker(appContext);
             return true;
+        }else{
+            Logger.w("application context was initialized :"+appInitialObject);
         }
         return false;
     }
@@ -131,9 +135,9 @@ public class Contexts {
     synchronized boolean destroyApplication(Object appInitialObject){
         if(this.appInitialObject!=null && this.appInitialObject.equals(appInitialObject)){
             cleanTracker();
+            Logger.d(">>destroyed application context :"+appInitialObject);
             appContext = null;
             appInitialObject = null;
-            Logger.i("destroy application context by "+appInitialObject);
             return true;
         }
         return false;

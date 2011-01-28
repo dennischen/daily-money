@@ -245,6 +245,7 @@ public class SQLiteDataProvider implements IDataProvider {
                 detId = c.getInt(0);
             }
             detId_set = true;
+            c.close();
         }
         return ++detId;
     }
@@ -354,7 +355,6 @@ public class SQLiteDataProvider implements IDataProvider {
     @Override
     public List<Detail> listDetail(Account account, int mode, Date start, Date end,int max) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor c = null;
         StringBuilder where = new StringBuilder();
         where.append(" 1=1 ");
         if(mode ==LIST_DETAIL_MODE_FROM){
@@ -378,7 +378,7 @@ public class SQLiteDataProvider implements IDataProvider {
             where.append(COL_DET_DATE + "<=" +end.getTime());
         }
         
-        
+        Cursor c = null;
         c = db.query(TB_DET,COL_DET_ALL,where.length()==0?null:where.toString(),null, null, null, DET_ORDERBY,max>0?Integer.toString(max):null);
         List<Detail> result = new ArrayList<Detail>();
         Detail det;
@@ -394,7 +394,7 @@ public class SQLiteDataProvider implements IDataProvider {
     @Override
     public List<Detail> listDetail(AccountType type, int mode,Date start, Date end, int max) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor c = null;
+
         StringBuilder where = new StringBuilder();
         where.append(" 1=1 ");
         if(mode ==LIST_DETAIL_MODE_FROM){
@@ -418,7 +418,7 @@ public class SQLiteDataProvider implements IDataProvider {
             where.append(COL_DET_DATE + "<=" +end.getTime());
         }
         
-        
+        Cursor c = null;
         c = db.query(TB_DET,COL_DET_ALL,where.length()==0?null:where.toString(),null, null, null, DET_ORDERBY,max>0?Integer.toString(max):null);
         List<Detail> result = new ArrayList<Detail>();
         Detail det;
@@ -711,16 +711,16 @@ public class SQLiteDataProvider implements IDataProvider {
     public Detail getFirstDetail() {
         if(first!=null) return first;
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor c = null;
         StringBuilder where = new StringBuilder();
         where.append(" 1=1 ");
-        
+        Cursor c = null;
         c = db.query(TB_DET,COL_DET_ALL,where.length()==0?null:where.toString(),null, null, null, COL_DET_DATE,Integer.toString(1));
         first = null;
         if(c.moveToNext()){
             first = new Detail();
             applyCursor(first,c);
         }
+        c.close();
         return first;
     }
 

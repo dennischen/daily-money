@@ -14,8 +14,9 @@ import static com.bottleworks.dailymoney.data.SQLiteMeta.*;
  *
  */
 public class SQLiteHelper extends SQLiteOpenHelper{
+    /** maintain this field carefully*/
+    private static final int VERSION = 4;//0.9.1-0.9.3
     
-    private static final int VERSION = 4;
     private static final String ACC_CREATE_SQL = "CREATE TABLE " + TB_ACC + " (" 
             + COL_ACC_ID + " TEXT PRIMARY KEY, "
             + COL_ACC_NAME +" TEXT NOT NULL, "
@@ -69,6 +70,16 @@ public class SQLiteHelper extends SQLiteOpenHelper{
             }
             db.execSQL(DET_DROP_SQL);
             onCreate(db);
+            return;
+        }
+        if(oldVersion==4){//schema before 0.9.4
+            //upgrade to 0.9.4
+            //TODO
+        }
+        oldVersion++;
+        //keep going check next id
+        if(oldVersion==4){//schema before ?
+          //upgrade to ?
         }
     }
 

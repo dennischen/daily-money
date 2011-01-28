@@ -58,7 +58,9 @@ public class MainDesktop extends AbstractDesktop {
         DesktopItem prefdt = new DesktopItem(new ActivityRun(activity, PrefsActivity.class),
                 i18n.string(R.string.dtitem_prefs), R.drawable.dtitem_prefs);
         
-
+        DesktopItem aboutdt = new DesktopItem(new ActivityRun(activity, AboutActivity.class),
+                i18n.string(R.string.dtitem_about), R.drawable.dtitem_about);
+        
         addItem(adddetdt);
         addItem(weeklist);
         addItem(monthlist);
@@ -66,6 +68,7 @@ public class MainDesktop extends AbstractDesktop {
         addItem(accmgntdt);
         addItem(datamaindt);
         addItem(prefdt);
+        addItem(aboutdt);
     }
 
 }
