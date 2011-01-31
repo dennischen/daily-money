@@ -25,9 +25,14 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
+import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.core.R;
+import com.bottleworks.dailymoney.data.Account;
+import com.bottleworks.dailymoney.data.AccountType;
+import com.bottleworks.dailymoney.data.BalanceHelper;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
 /**
@@ -54,6 +59,10 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     private static boolean protectionPassed = false;
     private static boolean protectionInfront = false;
     
+    private TextView weeklyExpense;
+    private TextView monthlyExpense;
+    private TextView cumulativeCash;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +72,15 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         initialTab();
         initialContent();
         initPasswordProtection();
-        loadData();
+        loadDesktop();
+        loadInfo();
+    }
+    
+    @Override
+    protected void onResume(){
+        super.onResume();
+        loadInfo();
+        
     }
     
     @Override
@@ -141,7 +158,9 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     }
 
     private void initialContent() {
-
+        weeklyExpense = (TextView)findViewById(R.id.dt_info_weekly_expense);
+        monthlyExpense = (TextView)findViewById(R.id.dt_info_monthly_expense);
+        cumulativeCash = (TextView)findViewById(R.id.dt_info_cumulative_cash);
         gridViewAdapter = new DesktopItemAdapter();
         gridView = (GridView) findViewById(R.id.dt_grid);
         gridView.setAdapter(gridViewAdapter);
@@ -149,29 +168,48 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         // registerForContextMenu(gridView);
 
     }
-
-    private void loadAppInfo(){
-        Date now = new Date();
-        String date = getContexts().getDateFormat().format(now)+" "+dayOfWeekFormat.format(now)+" - ";
-        ((TextView)findViewById(R.id.dt_info)).setText(date + appinfo);
-    }
     
-    private void loadData() {
-        loadAppInfo();
+    private void loadDesktop() {
         for(Desktop d:desktops){
             if(d.getLabel().equals(currTab)){
                 d.refresh();
                 break;
             }
         }
-        
         gridViewAdapter.notifyDataSetChanged();
+    }
+    
+    private void loadInfo(){
+        Date now = new Date();
+        Date start = calHelper.weekStartDate(now);
+        Date end = calHelper.weekEndDate(now);
+        AccountType type = AccountType.EXPENSE;
+
+        double b = BalanceHelper.calculateBalance(type, start, end).getMoney();
+        weeklyExpense.setText(i18n.string(R.string.label_weekly_expense,Formats.money2String(b)));
+        
+        start = calHelper.monthStartDate(now);
+        end = calHelper.monthEndDate(now);
+        b = BalanceHelper.calculateBalance(type, start, end).getMoney();
+        monthlyExpense.setText(i18n.string(R.string.label_monthly_expense,Formats.money2String(b)));
+        
+        
+        
+        IDataProvider idp = Contexts.instance().getDataProvider();
+        List<Account> acl =idp.listAccount(AccountType.ASSET);
+        b = 0;
+        for(Account ac:acl){
+            if(ac.isCashAccount()){
+                b += BalanceHelper.calculateBalance(ac,null, calHelper.toDayEnd(now)).getMoney();
+            }
+        }
+        cumulativeCash.setText(i18n.string(R.string.label_cumulative_cash,Formats.money2String(b)));
     }
 
     @Override
     public void onTabChanged(String tabId) {
         currTab = tabId;
-        loadData();
+        loadDesktop();
     }
 
     @Override

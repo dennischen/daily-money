@@ -349,7 +349,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 count++;
                 csvw.writeRecord(new String[] { Integer.toString(d.getId()), d.getFrom(), d.getTo(),
                         Formats.normalizeDate2String(d.getDate()), Formats.normalizeDouble2String(d.getMoney()),
-                        d.getNote(),Boolean.toString(d.isArchived())});
+                        d.getNote(),d.isArchived()?"1":"0"});
             }
             csvw.close();
             String csv = sw.toString();
@@ -371,10 +371,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         if(account){
             sw = new StringWriter();
             csvw = new CsvWriter(sw, ',');
-            csvw.writeRecord(new String[]{"id","type","name","init",APPVER+vercode});
+            csvw.writeRecord(new String[]{"id","type","name","init","cash",APPVER+vercode});
             for (Account a : idp.listAccount(null)) {
                 count++;
-                csvw.writeRecord(new String[]{a.getId(),a.getType(),a.getName(),Formats.normalizeDouble2String(a.getInitialValue())});
+                csvw.writeRecord(new String[]{a.getId(),a.getType(),a.getName(),Formats.normalizeDouble2String(a.getInitialValue()),a.isCashAccount()?"1":"0"});
             }
             csvw.close();
             String csv = sw.toString();
@@ -466,7 +466,15 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 idp.deleteAllDetail();
                 while(detailReader.readRecord()){
                     Detail det = new Detail(detailReader.get("from"),detailReader.get("to"),Formats.normalizeString2Date(detailReader.get("date")),Formats.normalizeString2Double(detailReader.get("value")),detailReader.get("note"));
-                    det.setArchived(Boolean.parseBoolean(detailReader.get("archived")));
+                    String archived = detailReader.get("archived");
+                    if("1".equals(archived)){
+                        det.setArchived(true);
+                    }else if("0".equals(archived)){
+                        det.setArchived(false);
+                    }else{
+                        det.setArchived(Boolean.parseBoolean(archived));
+                    }
+                    
                     idp.newDetailNoCheck(Integer.parseInt(detailReader.get("id")),det);
                     count ++;
                 }
@@ -483,6 +491,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 idp.deleteAllAccount();
                 while(accountReader.readRecord()){
                     Account acc = new Account(accountReader.get("type"),accountReader.get("name"),Formats.normalizeString2Double(accountReader.get("init")));
+                    String cash = accountReader.get("cash");
+                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>"+cash);
+                    acc.setCashAccount("1".equals(cash)?true:false);
+                    
                     idp.newAccountNoCheck(accountReader.get("id"),acc);
                     count ++;
                 }

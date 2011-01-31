@@ -21,6 +21,9 @@ public class Account implements Serializable{
     
     private double initialValue;
     
+    //is cash account;
+    private boolean cashAccount;
+    
     Account(){}
     
     public Account(String type, String name, Double initialValue){
@@ -59,6 +62,13 @@ public class Account implements Serializable{
     }
 
 
+    public boolean isCashAccount() {
+        return cashAccount;
+    }
+
+    public void setCashAccount(boolean cashAccount) {
+        this.cashAccount = cashAccount;
+    }
 
     public double getInitialValue() {
         return initialValue;

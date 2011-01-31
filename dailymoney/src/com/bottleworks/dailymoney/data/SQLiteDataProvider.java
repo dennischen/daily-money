@@ -73,7 +73,10 @@ public class SQLiteDataProvider implements IDataProvider {
                 acc.setName(c.getString(i));
             } else if (n.equals(COL_ACC_TYPE)) {
                 acc.setType(c.getString(i));
-            } else if (n.equals(COL_ACC_INITVAL)) {
+            } else if (n.equals(COL_ACC_CASHACCOUNT)) {
+                //nullable
+                acc.setCashAccount(c.getInt(i) == 1);
+            }else if (n.equals(COL_ACC_INITVAL)) {
                 acc.setInitialValue(c.getDouble(i));
             }
             i++;
@@ -84,6 +87,7 @@ public class SQLiteDataProvider implements IDataProvider {
         values.put(COL_ACC_ID, acc.getId());
         values.put(COL_ACC_NAME, acc.getName());
         values.put(COL_ACC_TYPE, acc.getType());
+        values.put(COL_ACC_CASHACCOUNT, acc.isCashAccount()?1:0);
         values.put(COL_ACC_INITVAL, acc.getInitialValue());
     }
 
@@ -201,7 +205,7 @@ public class SQLiteDataProvider implements IDataProvider {
             } else if (n.equals(COL_DET_MONEY)) {
                 det.setMoney(c.getDouble(i));
             } else if (n.equals(COL_DET_ARCHIVED)) {
-                det.setArchived((c.getInt(i) != 0));
+                det.setArchived((c.getInt(i) == 1));
             } else if (n.equals(COL_DET_NOTE)) {
                 det.setNote(c.getString(i));
             }

@@ -24,12 +24,11 @@
     <string name="label_detlayout_type1">To - Money</string>
     <string name="label_detlayout_type2">Note - Money</string>
     <string name="label_detlist_from">&lt; %1$s</string>
-    <string name="label_item_money">$%1$s</string>
-    <string name="label_detlist_sum_income">Income $%1$s</string>
-    <string name="label_detlist_sum_expense">Expense $%1$s</string>
-    <string name="label_detlist_sum_asset">Asset $%1$s </string>
-    <string name="label_detlist_sum_liability">Liability $%1$s</string>
-    <string name="label_detlist_sum_other">Other $%1$s</string>
+    <string name="label_detlist_sum_income">Income %1$s</string>
+    <string name="label_detlist_sum_expense">Expense %1$s</string>
+    <string name="label_detlist_sum_asset">Asset %1$s </string>
+    <string name="label_detlist_sum_liability">Liability %1$s</string>
+    <string name="label_detlist_sum_other">Other %1$s</string>
     <string name="label_detlist_to">%1$s</string>
     <string name="label_expense">Expense</string>
     <string name="label_firstday_mon">Monday</string>
@@ -139,7 +138,7 @@
     
     <string name="dtitem_report_monthly_balance">Monthly balance</string>
     <string name="dtitem_report_yearly_balance">Yearly balance</string>
-    <string name="dtitem_report_total_balance">Balance</string>
+    <string name="dtitem_report_cumulative_balance">Cumulative Balance</string>
     
     <string name="label_count">(%1$s)</string>
     <string name="label_accdetlist_dateinfo">%1$s to %2$s</string> 
@@ -171,9 +170,13 @@
     
     <string name="path_about_app">about.html</string>
     <string name="path_what_is_new">whatsnew.html</string>
-<!-- above are verified -->    
-
+    <string name="label_weekly_expense">Weekly : %1$s</string>
+    <string name="label_monthly_expense">Monthly : %1$s</string>
+    <string name="label_cumulative_cash">Cash : %1$s</string>
+    <string name="label_cash_account">Cash account</string> 
     
+<!-- above are verified -->    
+   
 
 </resources>
 

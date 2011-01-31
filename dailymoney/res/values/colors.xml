@@ -62,8 +62,7 @@
     <color name="unknow_fgd">#FF555555</color>
     <color name="unknow_fg">#FF000000</color>
     
-    <color name="dt_info_bg">#FF7A95FF</color>
-    <color name="dt_info_fg">#FF000000</color>
+    <color name="dt_info_bg">#FF383838</color>
 
     <color name="accdetlist_info_bg">#FF303030</color>
     <color name="accdetlist_info_fg">#FFF5B800</color>

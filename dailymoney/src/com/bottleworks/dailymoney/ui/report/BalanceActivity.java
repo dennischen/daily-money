@@ -35,6 +35,7 @@ import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Balance;
+import com.bottleworks.dailymoney.data.BalanceHelper;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.AccountDetailListActivity;
@@ -256,101 +257,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         }
     }
 
-    private List<Balance> adjustTotalBalance(AccountType type, String totalName, List<Balance> items) {
-        if(items.size()==0){
-            return items;
-        }
-        List<Balance> group = new ArrayList<Balance>(items);
-        double total = 0;
-        for (Balance b : items) {
-            b.setIndent(1);
-            b.setGroup(group);
-            total += b.getMoney();
-        }
-        Balance bt = new Balance(totalName,type.getType(), total,type);
-        bt.setIndent(0);
-        bt.setGroup(group);
-        bt.setDate(items.get(0).getDate());
-        items.add(0, bt);
-        return items;
-    }
-
-    private List<Balance> calBalanceList(AccountType type,Date start,Date end) {
-        boolean nat = type==AccountType.INCOME||type==AccountType.LIABILITY;
-        IDataProvider idp = getContexts().getDataProvider();
-        boolean calInit = true;
-        if(start!=null){
-            calInit = false;
-        }else{
-            Detail first = idp.getFirstDetail();
-            //don't calculate init val if the first record date in after end data
-            if(first!=null && first.getDate().after(end)){
-                calInit = false;
-            }
-        }
-        List<Account> accs = idp.listAccount(type);
-        List<Balance> blist = new ArrayList<Balance>();
-        for (Account acc : accs) {
-            double from = idp.sumFrom(acc, start, end);
-            double to = idp.sumTo(acc, start, end);
-            double init = calInit?acc.getInitialValue():0;
-            double b = init + (nat?(from - to):(to - from));
-            Balance balance = new Balance(acc.getName(),type.getType(), b,acc);
-            balance.setDate(end);
-            blist.add(balance);
-        }
-        return blist;
-    }
-    
-    private Balance calBalance(AccountType type,Date start,Date end) {
-        boolean nat = type==AccountType.INCOME||type==AccountType.LIABILITY;
-        IDataProvider idp = getContexts().getDataProvider();
-        boolean calInit = true;
-        if(start!=null){
-            calInit = false;
-        }else{
-            Detail first = idp.getFirstDetail();
-            //don't calculate init val if the first record date in after end data
-            if(first!=null && first.getDate().after(end)){
-                calInit = false;
-            }
-        }
-        
-        double from = idp.sumFrom(type, start, end);
-        double to = idp.sumTo(type, start, end);
-
-        double init = calInit ? idp.sumInitialValue(type) : 0;
-
-        double b = init + (nat ? (from - to) : (to - from));
-        Balance balance = new Balance(type.getDisplay(i18n), type.getType(), b, type);
-        balance.setDate(end);
-            
-        return balance;
-    }
-    
-    private Balance calBalance(Account acc, Date start, Date end) {
-        AccountType type = AccountType.find(acc.getType());
-        boolean nat = type == AccountType.INCOME || type == AccountType.LIABILITY;
-        IDataProvider idp = getContexts().getDataProvider();
-        boolean calInit = true;
-        if(start!=null){
-            calInit = false;
-        }else{
-            Detail first = idp.getFirstDetail();
-            //don't calculate init val if the first record date in after end data
-            if(first!=null && first.getDate().after(end)){
-                calInit = false;
-            }
-        }
-        double from = idp.sumFrom(acc, start, end);
-        double to = idp.sumTo(acc, start, end);
-        double init = calInit ? acc.getInitialValue() : 0;
-        double b = init + (nat ? (from - to) : (to - from));
-        Balance balance = new Balance(acc.getName(), type.getType(), b, acc);
-        balance.setDate(end);
-
-        return balance;
-    }
+   
 
     private void reloadData() {
         final CalendarHelper cal = getContexts().getCalendarHelper();
@@ -373,28 +280,28 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
             @Override
             public void run() {
-                List<Balance> asset = calBalanceList(AccountType.ASSET, currentStartDate, currentEndDate);
-                asset = adjustTotalBalance(AccountType.ASSET, totalMode ? i18n.string(R.string.label_balance_tasset)
+                List<Balance> asset = BalanceHelper.calculateBalanceList(AccountType.ASSET, currentStartDate, currentEndDate);
+                asset = BalanceHelper.adjustTotalBalance(AccountType.ASSET, totalMode ? i18n.string(R.string.label_balance_tasset)
                         : i18n.string(R.string.label_asset), asset);
 
-                List<Balance> income = calBalanceList(AccountType.INCOME, currentStartDate, currentEndDate);
-                income = adjustTotalBalance(AccountType.INCOME, totalMode ? i18n.string(R.string.label_balance_tincome)
+                List<Balance> income = BalanceHelper.calculateBalanceList(AccountType.INCOME, currentStartDate, currentEndDate);
+                income = BalanceHelper.adjustTotalBalance(AccountType.INCOME, totalMode ? i18n.string(R.string.label_balance_tincome)
                         : i18n.string(R.string.label_income), income);
 
-                List<Balance> expense = calBalanceList(AccountType.EXPENSE, currentStartDate, currentEndDate);
-                expense = adjustTotalBalance(
+                List<Balance> expense = BalanceHelper.calculateBalanceList(AccountType.EXPENSE, currentStartDate, currentEndDate);
+                expense = BalanceHelper.adjustTotalBalance(
                         AccountType.EXPENSE,
                         totalMode ? i18n.string(R.string.label_balance_texpense) : i18n
                                 .string(R.string.label_expense), expense);
 
-                List<Balance> liability = calBalanceList(AccountType.LIABILITY, currentStartDate, currentEndDate);
-                liability = adjustTotalBalance(
+                List<Balance> liability = BalanceHelper.calculateBalanceList(AccountType.LIABILITY, currentStartDate, currentEndDate);
+                liability = BalanceHelper.adjustTotalBalance(
                         AccountType.LIABILITY,
                         totalMode ? i18n.string(R.string.label_balance_tliability) : i18n
                                 .string(R.string.label_liability), liability);
 
-                List<Balance> other = calBalanceList(AccountType.OTHER, currentStartDate, currentEndDate);
-                other = adjustTotalBalance(AccountType.OTHER, totalMode ? i18n.string(R.string.label_balance_tother)
+                List<Balance> other = BalanceHelper.calculateBalanceList(AccountType.OTHER, currentStartDate, currentEndDate);
+                other = BalanceHelper.adjustTotalBalance(AccountType.OTHER, totalMode ? i18n.string(R.string.label_balance_tother)
                         : i18n.string(R.string.label_other), other);
 
                 if(totalMode){
@@ -421,7 +328,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 for (Balance b : listViewData) {
                     Map<String, Object> row = new HashMap<String, Object>();
                     listViewMapList.add(row);
-                    String money = i18n.string(R.string.label_item_money,Formats.money2String(b.getMoney()));
+                    String money = Formats.money2String(b.getMoney());
                     row.put(bindingFrom[0], new NamedItem(bindingFrom[0],b,""));//layout
                     row.put(bindingFrom[1], new NamedItem(bindingFrom[1],b,b.getName()));
                     row.put(bindingFrom[2], new NamedItem(bindingFrom[2],b,money));
@@ -649,7 +556,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             balances.add(blist);
             Date d = calHelper.yearStartDate(g.getDate());
             for(int i=0;i<12;i++){
-                Balance balance = calBalance(acc, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                Balance balance = BalanceHelper.calculateBalance(acc, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
                 blist.add(balance);
                 d = calHelper.monthAfter(d,1);
             }
@@ -686,7 +593,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             Date d = calHelper.yearStartDate(g.getDate());
             double total = 0;
             for(int i=0;i<12;i++){
-                Balance balance = calBalance(acc, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                Balance balance = BalanceHelper.calculateBalance(acc, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
                 total += balance.getMoney();
                 balance.setMoney(total);
                 blist.add(balance);
@@ -713,14 +620,14 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             Date d = yearstart;
             if(monthly[j]){
                 for(int i=0;i<12;i++){
-                    Balance balance = calBalance(at, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                    Balance balance = BalanceHelper.calculateBalance(at, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
                     blist.add(balance);
                     d = calHelper.monthAfter(d,1);
                 }
             }else{
                 double total = 0;
                 for(int i=0;i<12;i++){
-                    Balance balance = calBalance(at, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                    Balance balance = BalanceHelper.calculateBalance(at, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
                     total += balance.getMoney();
                     balance.setMoney(total);
                     blist.add(balance);

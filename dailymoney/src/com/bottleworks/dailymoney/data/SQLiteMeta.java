@@ -12,9 +12,10 @@ public class SQLiteMeta {
     public static final String COL_ACC_ID = "id_";
     public static final String COL_ACC_NAME = "nm_";
     public static final String COL_ACC_TYPE = "tp_";
+    public static final String COL_ACC_CASHACCOUNT = "ca_";
     public static final String COL_ACC_INITVAL = "iv_";
 
-    public static final String[] COL_ACC_ALL = new String[] { COL_ACC_ID, COL_ACC_NAME, COL_ACC_TYPE, COL_ACC_INITVAL };
+    public static final String[] COL_ACC_ALL = new String[] { COL_ACC_ID, COL_ACC_NAME, COL_ACC_TYPE, COL_ACC_CASHACCOUNT,COL_ACC_INITVAL };
 
     public static final String TB_DET = "dm_det";
 

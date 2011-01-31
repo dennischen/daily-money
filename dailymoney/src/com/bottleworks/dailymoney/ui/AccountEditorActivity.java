@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
@@ -49,7 +50,9 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
     
     /** clone account without id **/
     private Account clone(Account account){
-        return new Account(account.getType(),account.getName(),account.getInitialValue());
+        Account acc = new Account(account.getType(),account.getName(),account.getInitialValue());
+        acc.setCashAccount(account.isCashAccount());
+        return acc;
     }
     
     @Override
@@ -79,7 +82,8 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
     
     EditText nameEditor;
     EditText initvalEditor;
-    Spinner typeEditor; 
+    Spinner typeEditor;
+    CheckBox cashAccountEditor;
     
     Button okBtn;
     Button cancelBtn;
@@ -128,7 +132,8 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         });
         
         
-        
+        cashAccountEditor = (CheckBox)findViewById(R.id.acceditor_cash_account);
+        cashAccountEditor.setChecked(workingAccount.isCashAccount());
         
         okBtn = (Button)findViewById(R.id.acceditor_ok); 
         if(modeCreate){
@@ -214,6 +219,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         workingAccount.setType(type);
         workingAccount.setName(name);
         workingAccount.setInitialValue(Formats.string2Double(initval));
+        workingAccount.setCashAccount(cashAccountEditor.isChecked());
         
         IDataProvider idp = getContexts().getDataProvider();
         

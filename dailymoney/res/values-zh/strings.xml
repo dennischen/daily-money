@@ -23,7 +23,6 @@
     <string name="label_detlayout_type1">帳戶-金錢</string>
     <string name="label_detlayout_type2">備註-金錢</string>
     <string name="label_detlist_from">&lt; %1$s</string>
-    <string name="label_item_money">$%1$s</string>
     <string name="label_detlist_sum_income">收入$%1$s</string>
     <string name="label_detlist_sum_expense">支出$%1$s</string>
     <string name="label_detlist_sum_asset">資產$%1$s</string>
@@ -136,7 +135,7 @@
     
     <string name="dtitem_report_monthly_balance">單月份結算</string>
     <string name="dtitem_report_yearly_balance">單年結算</string>
-    <string name="dtitem_report_total_balance">總結算</string>
+    <string name="dtitem_report_cumulative_balance">累計結算</string>
     
     <string name="label_count">(%1$s)</string>
     <string name="label_accdetlist_dateinfo">%1$s 到 %2$s</string> 
@@ -152,9 +151,9 @@
     <string name="act_balance_detlist">明細清單</string>
     <string name="act_balance_piechart">結算圓餅圖</string>
     <string name="act_balance_yearly_timechart">每月結算年度圖</string>
-    <string name="act_balance_yearly_cumulative_timechart">每月結算年度圖(累加)</string>
+    <string name="act_balance_yearly_cumulative_timechart">每月結算累計年度圖</string>
     <string name="label_balance_yearly_timechart">%1$s 在 %2$s</string>
-    <string name="label_balance_yearly_cumulative_timechart">%1$s 在 %2$s (累加)</string>
+    <string name="label_balance_yearly_cumulative_timechart">%1$s 在 %2$s (累計)</string>
     
     <string name="label_detlayout_type3">金錢-帳戶</string>
     <string name="label_detlayout_type4">金錢-備註</string>
@@ -168,6 +167,11 @@
     <string name="dtitem_about">關於我</string>
     <string name="path_about_app">about_zh.html</string>
     <string name="path_what_is_new">whatsnew_zh.html</string>
+    
+    <string name="label_weekly_expense">本周支出 : %1$s</string>
+    <string name="label_monthly_expense">本月支出 : %1$s</string>
+    <string name="label_cumulative_cash">現金 : %1$s</string>
+    <string name="label_cash_account">現金帳戶</string> 
     <!-- above are verified -->
     
     

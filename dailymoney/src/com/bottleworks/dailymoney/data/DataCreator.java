@@ -24,36 +24,36 @@ public class DataCreator {
     }
 
     public void createDefaultAccount() {
-        createAccountNoThrow(i18n.string(R.string.defacc_salary), AccountType.INCOME, 0D);
-        createAccountNoThrow(i18n.string(R.string.defacc_otherincome), AccountType.INCOME, 0D);
+        createAccountNoThrow(i18n.string(R.string.defacc_salary), AccountType.INCOME, 0D,false);
+        createAccountNoThrow(i18n.string(R.string.defacc_otherincome), AccountType.INCOME, 0D,false);
 
-        createAccountNoThrow(i18n.string(R.string.defacc_food), AccountType.EXPENSE, 0D);
-        createAccountNoThrow(i18n.string(R.string.defacc_entertainment), AccountType.EXPENSE, 0D);
-        createAccountNoThrow(i18n.string(R.string.defacc_otherexpense), AccountType.EXPENSE, 0D);
+        createAccountNoThrow(i18n.string(R.string.defacc_food), AccountType.EXPENSE, 0D,false);
+        createAccountNoThrow(i18n.string(R.string.defacc_entertainment), AccountType.EXPENSE, 0D,false);
+        createAccountNoThrow(i18n.string(R.string.defacc_otherexpense), AccountType.EXPENSE, 0D,false);
 
-        createAccountNoThrow(i18n.string(R.string.defacc_cash), AccountType.ASSET, 0D);
-        createAccountNoThrow(i18n.string(R.string.defacc_bank), AccountType.ASSET, 0D);
+        createAccountNoThrow(i18n.string(R.string.defacc_cash), AccountType.ASSET, 0D,true);
+        createAccountNoThrow(i18n.string(R.string.defacc_bank), AccountType.ASSET, 0D,false);
         
-        createAccountNoThrow(i18n.string(R.string.defacc_creditcard), AccountType.LIABILITY, 0D);
+        createAccountNoThrow(i18n.string(R.string.defacc_creditcard), AccountType.LIABILITY, 0D,false);
     }
 
     public void createTestData(int loop) {
         //only for call from ui, so use uiInstance
         CalendarHelper cal = Contexts.instance().getCalendarHelper();
         
-        Account income1 = createAccountNoThrow(i18n.string(R.string.defacc_salary), AccountType.INCOME, 0D);
-        Account income2 = createAccountNoThrow(i18n.string(R.string.defacc_otherincome), AccountType.INCOME, 0D);
+        Account income1 = createAccountNoThrow(i18n.string(R.string.defacc_salary), AccountType.INCOME, 0D,false);
+        Account income2 = createAccountNoThrow(i18n.string(R.string.defacc_otherincome), AccountType.INCOME, 0D,false);
 
-        Account expense1 = createAccountNoThrow(i18n.string(R.string.defacc_food), AccountType.EXPENSE, 0D);
-        Account expense2 = createAccountNoThrow(i18n.string(R.string.defacc_entertainment), AccountType.EXPENSE, 0D);
-        Account expense3 = createAccountNoThrow(i18n.string(R.string.defacc_otherexpense), AccountType.EXPENSE, 0D);
+        Account expense1 = createAccountNoThrow(i18n.string(R.string.defacc_food), AccountType.EXPENSE, 0D,false);
+        Account expense2 = createAccountNoThrow(i18n.string(R.string.defacc_entertainment), AccountType.EXPENSE, 0D,false);
+        Account expense3 = createAccountNoThrow(i18n.string(R.string.defacc_otherexpense), AccountType.EXPENSE, 0D,false);
 
-        Account asset1 = createAccountNoThrow(i18n.string(R.string.defacc_cash), AccountType.ASSET, 5000D);
-        Account asset2 = createAccountNoThrow(i18n.string(R.string.defacc_bank), AccountType.ASSET, 100000D);
+        Account asset1 = createAccountNoThrow(i18n.string(R.string.defacc_cash), AccountType.ASSET, 5000D,true);
+        Account asset2 = createAccountNoThrow(i18n.string(R.string.defacc_bank), AccountType.ASSET, 100000D,false);
         
-        Account liability1 = createAccountNoThrow(i18n.string(R.string.defacc_creditcard), AccountType.LIABILITY, 0D);
+        Account liability1 = createAccountNoThrow(i18n.string(R.string.defacc_creditcard), AccountType.LIABILITY, 0D,false);
         
-        Account other1 = createAccountNoThrow("Other", AccountType.OTHER, 0D);
+        Account other1 = createAccountNoThrow("Other", AccountType.OTHER, 0D,false);
 
         Date today = new Date();
         
@@ -87,7 +87,7 @@ public class DataCreator {
         return det;
     }
 
-    private Account createAccountNoThrow(String name, AccountType type, double initval) {
+    private Account createAccountNoThrow(String name, AccountType type,double initval, boolean cashAccount) {
         try {
             Account account = null;
             if ((account = idp.findAccount(type.getType(), name)) == null) {
@@ -95,6 +95,7 @@ public class DataCreator {
                     Logger.d("createDefaultAccount : " + name);
                 }
                 account = new Account(type.getType(), name, initval);
+                account.setCashAccount(cashAccount);
                 idp.newAccount(account);
             }
             return account;
