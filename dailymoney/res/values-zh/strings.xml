@@ -166,6 +166,8 @@
     <string name="label_prefs_allow_analytics_sum">[不會傳送任何其他資料]傳送使用狀況將協助我改善這個軟體</string>
     
     <string name="dtitem_about">關於我</string>
+    <string name="path_about_app">about_zh.html</string>
+    <string name="path_what_is_new">whatsnew_zh.html</string>
     <!-- above are verified -->
     
     

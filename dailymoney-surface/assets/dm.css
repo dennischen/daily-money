@@ -1,0 +1,13 @@
+body {
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    margin: 0px;
+    padding: 5px;
+}
+.vote{
+    color: #FF7640;
+}
+a:visited,a:hover,a:link {
+    color: yellow;
+}

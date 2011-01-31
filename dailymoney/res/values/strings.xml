@@ -168,6 +168,9 @@
     <string name="label_prefs_allow_analytics_sum">[Will not send any other data]Sending usage to help me improve application</string>
     
     <string name="dtitem_about">About</string>
+    
+    <string name="path_about_app">about.html</string>
+    <string name="path_what_is_new">whatsnew.html</string>
 <!-- above are verified -->    
 
     

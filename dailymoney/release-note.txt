@@ -6,6 +6,7 @@
  * 16:  Yearly cumulative time chart
  * 17:  Needs asset-liability run chart 
  * 19:  Add google analytics and allow user to disable it
+ * 5:   A what is new dialog
 === Bugs ===
  * 
 === Other ===
