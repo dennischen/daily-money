@@ -163,7 +163,7 @@
     <string name="act_balance_yearly_runchart">Yearly Asset-Liability run chart</string>
     <string name="label_balance_yearly_runchart">Asset-Liability(cumulative) in %1$s</string>    
     
-    <string name="label_prefs_allow_analytics">Sending usage</string>
+    <string name="label_prefs_allow_analytics">Send google analytics</string>
     <string name="label_prefs_allow_analytics_sum">[Will not send any other data]Sending usage to help me improve application</string>
     
     <string name="dtitem_about">About</string>

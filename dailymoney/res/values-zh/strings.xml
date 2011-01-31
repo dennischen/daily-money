@@ -162,7 +162,7 @@
     <string name="label_balance_yearly_runchart">資產債務趨勢 在 %1$s</string>
     
     <string name="label_prefs_allow_analytics">傳送使用狀況</string>
-    <string name="label_prefs_allow_analytics_sum">[不會傳送任何其他資料]傳送使用狀況將協助我改善這個軟體</string>
+    <string name="label_prefs_allow_analytics_sum">[不會傳送任何其他資料]傳送使用狀況將協助改善這個軟體</string>
     
     <string name="dtitem_about">關於我</string>
     <string name="path_about_app">about_zh.html</string>
