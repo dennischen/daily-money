@@ -13,9 +13,9 @@ import java.util.TimeZone;
  */
 public class CalendarHelper {
 
-    int firstDayOfWeek = 1;//1 SUN, 2 MON..etc
+    private int firstDayOfWeek = 1;//1 SUN, 2 MON..etc
     
-    TimeZone timeZone;
+    private TimeZone timeZone;
 
     public CalendarHelper() {
     }
@@ -173,7 +173,13 @@ public class CalendarHelper {
     public Date weekStartDate(Date d) {
         Calendar cal = calendar(d);
         cal.set(Calendar.DAY_OF_WEEK, firstDayOfWeek);
-        return toDayStart(cal);
+        //in android or java?, there is a bug in day of week(or my bug?), this is a workaround.
+        Date fd = toDayStart(cal);
+        if(fd.after(d)){
+            return dateBefore(fd,7);
+        }else{
+            return fd;
+        }
     }
 
     public Date weekEndDate(Date d) {

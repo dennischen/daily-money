@@ -31,9 +31,13 @@ public class ContextsActivity extends Activity {
         }
         
         ins.initActivity(this);
+        refreshUtil(ins);
+        ins.trackPageView(getTrackerPath());
+    }
+    
+    private void refreshUtil(Contexts ins){
         i18n = ins.getI18n();
         calHelper = ins.getCalendarHelper();
-        ins.trackPageView(getTrackerPath());
     }
     
 
@@ -64,7 +68,9 @@ public class ContextsActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Contexts.instance().initActivity(this);
+        Contexts ins = Contexts.instance();
+        ins.initActivity(this);
+        refreshUtil(ins);
     }
 
     @Override

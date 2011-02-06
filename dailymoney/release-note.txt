@@ -1,4 +1,19 @@
 = Last =
+= History =
+== 0.9.5 ==
+=== Features ===
+ * 
+=== Bugs ===
+ * 24:     In main desktop, the weekly expense get zero randomly, especially on Sunday. 
+=== Other ===
+ *
+
+
+
+
+
+<hr/>
+ 
 == 0.9.4 ==
 === Features ===
  * 14:  Make today, future's detail more light in detail list
@@ -12,11 +27,6 @@
  * 
 === Other ===
  * 
-
-
-
-<hr/>
-= History =
 == 0.9.3 ==
 === Features ===
  * 12:  Needs detail list linking in balance report  

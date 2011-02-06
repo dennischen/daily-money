@@ -52,7 +52,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     
     private String appinfo;
 
-    private DateFormat dayOfWeekFormat = new SimpleDateFormat("EEEE"); 
+//    private DateFormat dayOfWeekFormat = new SimpleDateFormat("EEEE"); 
     
     private DesktopItem lastClickedItem;
     
@@ -184,7 +184,6 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         Date start = calHelper.weekStartDate(now);
         Date end = calHelper.weekEndDate(now);
         AccountType type = AccountType.EXPENSE;
-
         double b = BalanceHelper.calculateBalance(type, start, end).getMoney();
         weeklyExpense.setText(i18n.string(R.string.label_weekly_expense,Formats.money2String(b)));
         

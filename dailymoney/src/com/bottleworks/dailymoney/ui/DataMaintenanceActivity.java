@@ -492,7 +492,6 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 while(accountReader.readRecord()){
                     Account acc = new Account(accountReader.get("type"),accountReader.get("name"),Formats.normalizeString2Double(accountReader.get("init")));
                     String cash = accountReader.get("cash");
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>"+cash);
                     acc.setCashAccount("1".equals(cash)?true:false);
                     
                     idp.newAccountNoCheck(accountReader.get("id"),acc);

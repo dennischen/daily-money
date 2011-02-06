@@ -1,9 +1,11 @@
 package com.bottleworks.dailymoney.ui;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Activity;
 
+import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.context.Contexts;
@@ -40,9 +42,10 @@ public class TestsDesktop extends AbstractDesktop {
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
-                testChart();
-            }}, "start chart",R.drawable.dtitem_test){
+                testFirstDayOfWeek();
+            }}, "first day of week",R.drawable.dtitem_test){
         });
+        
         
         addItem(new DesktopItem(new Runnable(){
             @Override
@@ -92,6 +95,26 @@ public class TestsDesktop extends AbstractDesktop {
         addItem(padding);
     }
     
+    protected void testFirstDayOfWeek() {
+        CalendarHelper calHelper = Contexts.instance().getCalendarHelper();
+        for(int i=0;i<100;i++){
+            Date now = new Date();
+            Date start = calHelper.weekStartDate(now);
+            Date end = calHelper.weekEndDate(now);
+//            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>");
+//            System.out.println("1>>>>>>>>>>> "+now);
+            System.out.println("2>>>>>>>>>>> "+start);
+//            System.out.println("3>>>>>>>>>>> "+end);
+//            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void testCreateTestdata(final int loop) {
         GUIs.doBusy(activity,new GUIs.BusyAdapter(){
             @Override
@@ -105,19 +128,19 @@ public class TestsDesktop extends AbstractDesktop {
             }});
         
     }
-    
-    protected void testChart(){
-//        Intent intent = new AverageTemperatureChart().execute(activity,GUIs.getDPRatio(activity));
-//        
-//        GUIs.shortToast(activity,"Call Chart");
-//        activity.startActivity(intent);
-    }
+
 
     protected void testJust() {
-        Calendar.getInstance().setFirstDayOfWeek(Calendar.SUNDAY);
+        CalendarHelper calHelper = Contexts.instance().getCalendarHelper();
+        Date now = new Date();
+        Date start = calHelper.weekStartDate(now);
+        Date end = calHelper.weekEndDate(now);
+        System.out.println(">>>>>>>>>>>>>>> "+now);
+        System.out.println("1>>>>>>>>>>> "+now);
+        System.out.println("2>>>>>>>>>>> "+start);
+        System.out.println("3>>>>>>>>>>> "+end);
+        System.out.println(">>>>>>>>>>>>>> "+now);
         
-        System.out.println(">>>>>>>>>>>>."+Calendar.getInstance().getFirstDayOfWeek());
-//        System.out.println(">>>>>>>>>>>>."+);
     }
 
 }
