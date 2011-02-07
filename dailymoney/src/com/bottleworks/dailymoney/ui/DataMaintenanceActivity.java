@@ -38,7 +38,7 @@ import com.csvreader.CsvWriter;
  */
 public class DataMaintenanceActivity extends ContextsActivity implements OnClickListener {
 
-    String CSV_ENCODEING = "utf8";
+    String csvEncoding;
     
     String workingFolder;
     
@@ -58,7 +58,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         backupcsv = getContexts().isPrefBackupCSV();
         
         vercode = getContexts().getApplicationVersionCode();
-        
+        csvEncoding = getContexts().getPrefCSVEncoding();
         initialListener();
 
     }
@@ -362,7 +362,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 file.createNewFile();
             }
                 
-            Files.saveString(csv, file, CSV_ENCODEING);
+            Files.saveString(csv, file, csvEncoding);
             if(Contexts.DEBUG){
                 Logger.d("export to details.csv");
             }
@@ -387,7 +387,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 file.createNewFile();
             }
                
-            Files.saveString(csv, file, CSV_ENCODEING);
+            Files.saveString(csv, file, csvEncoding);
             if(Contexts.DEBUG){
                 Logger.d("export to accounts.csv");
             }
@@ -444,10 +444,10 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         try{
             int count = 0;
             if(account){
-                accountReader = new CsvReader(new InputStreamReader(new FileInputStream(accounts),CSV_ENCODEING));
+                accountReader = new CsvReader(new InputStreamReader(new FileInputStream(accounts),csvEncoding));
             }
             if(detail){
-                detailReader = new CsvReader(new InputStreamReader(new FileInputStream(details),CSV_ENCODEING));
+                detailReader = new CsvReader(new InputStreamReader(new FileInputStream(details),csvEncoding));
             }
             
             if((accountReader!=null && !accountReader.readHeaders())){

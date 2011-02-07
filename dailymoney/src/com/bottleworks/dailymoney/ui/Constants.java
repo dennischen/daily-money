@@ -18,6 +18,8 @@ public class Constants {
     
     static final public String PREFS_ALLOW_ANALYTICS = "allow_analytics";
     
+    static final public String PREFS_CSV_ENCODING = "csv_encoding";
+    
     
     public static final int REQUEST_CALCULATOR_CODE = 1;
     public static final int REQUEST_DETAIL_EDITOR_CODE = 2;

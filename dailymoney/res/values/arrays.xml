@@ -27,4 +27,18 @@
         <item>@string/label_account_only</item>
         <item>@string/label_detail_only</item>
     </string-array>
+    
+    <string-array name="prefs_csv_encoding_val">
+        <item>ASCII</item>
+        <item>BIG5</item>
+        <item>EUC_JP</item>
+        <item>EUC_KR</item>
+        <item>GB2312</item>
+        <item>GBK</item>
+        <item>ISO8859_1</item>
+        <item>SJIS</item>
+        <item>UTF16</item>
+        <item>UTF8</item>
+    </string-array>
+    
 </resources>

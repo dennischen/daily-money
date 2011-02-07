@@ -78,7 +78,7 @@
     <string name="dt_reports">報表桌面</string>
     <string name="dt_tests">測試桌面</string>
     <string name="label_prefs_testsdekstop">測試桌面</string>
-    <string name="label_prefs_testsdekstop_sum">啟用測試桌面, 必重新啟動才能套用變更</string>
+    <string name="label_prefs_testsdekstop_sum">啟用測試桌面, 僅供開發者使用</string>
     
     <string name="label_export_csv">匯出 CSV</string>
     <string name="label_import_csv">匯入 CSV</string>
@@ -172,6 +172,10 @@
     <string name="label_monthly_expense">本月支出 : %1$s</string>
     <string name="label_cumulative_cash">現金 : %1$s</string>
     <string name="label_cash_account">現金帳戶</string> 
+    <string name="label_prefs_csv_encoding">CSV 編碼</string>
+    <string name="label_prefs_csv_encoding_sum">勿任意更改,將影響匯入匯出CSV</string>
+    <string name="label_prefcat_csv">CSV</string>
+    <string name="label_prefcat_others">其他</string>
     <!-- above are verified -->
     
     

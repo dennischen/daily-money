@@ -20,15 +20,24 @@
 	<EditTextPreference android:key="max_records" android:title="@string/label_prefs_maxrecords" 
 	    android:numeric="signed"
         android:summary="@string/label_prefs_maxrecords_sum" android:defaultValue="-1"  />
+
+
+    <PreferenceCategory android:title="@string/label_prefcat_csv">
+	    <EditTextPreference android:key="working_folder" android:title="@string/label_prefs_workingfolder" 
+	        android:summary="@string/label_prefs_workingfolder_sum" android:defaultValue="bwDailyMoney"  />
+	    <ListPreference android:key="csv_encoding" android:title="@string/label_prefs_csv_encoding"
+	        android:summary="@string/label_prefs_csv_encoding_sum" android:defaultValue="UTF8" android:entries="@array/prefs_csv_encoding_val"
+	        android:entryValues="@array/prefs_csv_encoding_val" />
+	    <CheckBoxPreference android:key="backup_csv" android:title="@string/label_prefs_backupcsv"
+	        android:summary="@string/label_prefs_backupcsv_sum" android:defaultValue="true" />
+    </PreferenceCategory>
     
-    <EditTextPreference android:key="working_folder" android:title="@string/label_prefs_workingfolder" 
-        android:summary="@string/label_prefs_workingfolder_sum" android:defaultValue="bwDailyMoney"  />
-    <CheckBoxPreference android:key="backup_csv" android:title="@string/label_prefs_backupcsv"
-        android:summary="@string/label_prefs_backupcsv_sum" android:defaultValue="true" />
-               
-    <CheckBoxPreference android:key="allow_analytics" android:title="@string/label_prefs_allow_analytics"
-        android:summary="@string/label_prefs_allow_analytics_sum" android:defaultValue="true" />    
-    <!-- at the bottom -->
-    <CheckBoxPreference android:key="open_testsdekstop" android:title="@string/label_prefs_testsdekstop"
-        android:summary="@string/label_prefs_testsdekstop_sum" android:defaultValue="false" />    
+    
+    <PreferenceCategory android:title="@string/label_prefcat_others">    
+	    <CheckBoxPreference android:key="allow_analytics" android:title="@string/label_prefs_allow_analytics"
+	        android:summary="@string/label_prefs_allow_analytics_sum" android:defaultValue="true" />    
+	    <!-- at the bottom -->
+	    <CheckBoxPreference android:key="open_testsdekstop" android:title="@string/label_prefs_testsdekstop"
+	        android:summary="@string/label_prefs_testsdekstop_sum" android:defaultValue="false" />    
+    </PreferenceCategory>
 </PreferenceScreen>

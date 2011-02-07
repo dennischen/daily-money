@@ -60,6 +60,7 @@ public class Contexts {
     boolean pref_backupCSV = true;
     String pref_password = "";
     boolean pref_allowAnalytics = true;
+    String pref_csvEncoding = "UTF8";
     
     private CalendarHelper calendarHelper = new CalendarHelper();
     
@@ -378,14 +379,19 @@ public class Contexts {
         try{
             pref_allowAnalytics = prefs.getBoolean(Constants.PREFS_ALLOW_ANALYTICS, pref_allowAnalytics);
         }catch(Exception x){Logger.e(x.getMessage());}
+        try{
+            pref_csvEncoding = prefs.getString(Constants.PREFS_CSV_ENCODING, pref_csvEncoding);
+        }catch(Exception x){Logger.e(x.getMessage());}
+        
+        
         if(DEBUG){
-            Logger.d("preference : use inmemory "+pref_useImpPovider);
             Logger.d("preference : detail layout "+pref_detailListLayout);
             Logger.d("preference : firstday of week "+pref_firstdayWeek);
             Logger.d("preference : max records "+pref_maxRecords);
             Logger.d("preference : open tests desktop "+pref_openTestsDesktop);
-            Logger.d("preference : open working_folder"+pref_workingFolder);
-            Logger.d("preference : backup csv"+pref_backupCSV);
+            Logger.d("preference : open working_folder "+pref_workingFolder);
+            Logger.d("preference : backup csv "+pref_backupCSV);
+            Logger.d("preference : csv encoding "+pref_csvEncoding);
         }
         calendarHelper.setFirstDayOfWeek(pref_firstdayWeek);
     }
@@ -396,6 +402,10 @@ public class Contexts {
     
     public boolean isPrefAllowAnalytics(){
         return pref_allowAnalytics;
+    }
+    
+    public String getPrefCSVEncoding(){
+        return pref_csvEncoding;
     }
     
     public String getPrefWorkingFolder(){

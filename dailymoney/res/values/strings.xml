@@ -79,7 +79,7 @@
     <string name="dt_reports">Reports</string>
     <string name="dt_tests">Tests</string>
     <string name="label_prefs_testsdekstop">Open tests desktop</string>
-    <string name="label_prefs_testsdekstop_sum">open the tests desktop, you have to restart the application to access tests</string>
+    <string name="label_prefs_testsdekstop_sum">open the tests desktop, for developer only</string>
     
     <string name="label_export_csv">Export CSV</string>
     <string name="label_import_csv">Import CSV</string>
@@ -174,7 +174,10 @@
     <string name="label_monthly_expense">Monthly : %1$s</string>
     <string name="label_cumulative_cash">Cash : %1$s</string>
     <string name="label_cash_account">Cash account</string> 
-    
+    <string name="label_prefs_csv_encoding">CSV Encoding</string>
+    <string name="label_prefs_csv_encoding_sum">Do not change this if you have no idea what this is</string>
+    <string name="label_prefcat_csv">CSV</string>
+    <string name="label_prefcat_others">Others</string>   
 <!-- above are verified -->    
    
 
