@@ -447,7 +447,8 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(parent == listView){
-            doPieChart(position);
+            doDetailList(position);
+//            doPieChart(position);
         }
     }
     

@@ -62,6 +62,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     private TextView weeklyExpense;
     private TextView monthlyExpense;
     private TextView cumulativeCash;
+    private TabHost tabs;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,10 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(!desktops.get(0).getLabel().equals(currTab)){
+                tabs.setCurrentTab(0);
+                return true;
+            }
             protectionPassed = false;
             protectionInfront = false;
         }
@@ -133,7 +138,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     }
 
     private void initialTab() {
-        TabHost tabs = (TabHost) findViewById(R.id.dt_tabs);
+        tabs = (TabHost) findViewById(R.id.dt_tabs);
         tabs.setup();
 
         

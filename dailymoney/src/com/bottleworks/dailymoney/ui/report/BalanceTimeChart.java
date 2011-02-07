@@ -73,7 +73,7 @@ public class BalanceTimeChart extends AbstractChart {
         renderer.setYLabelsAlign(Align.RIGHT);
         renderer.setXLabelsAlign(Align.LEFT);
         
-        renderer.setXLabels(12);
+        renderer.setXLabels(Math.min(12,seriesLength));
         renderer.setYLabels(16);
         renderer.setShowGrid(true);
         renderer.setXLabelsAngle(120);
