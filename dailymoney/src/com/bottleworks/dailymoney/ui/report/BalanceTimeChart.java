@@ -58,9 +58,10 @@ public class BalanceTimeChart extends AbstractChart {
         renderer.setLegendTextSize(14*dpRatio);
         renderer.setOrientation(Orientation.HORIZONTAL);//has bug in vertical
         renderer.setZoomEnabled(false, true);
+        renderer.setPanEnabled(false, true);
         
         int top = (int)(renderer.getChartTitleTextSize()+3*dpRatio);
-        int left = (int)(renderer.getAxisTitleTextSize()+ 55*dpRatio);
+        int left = (int)(renderer.getAxisTitleTextSize()+ 60*dpRatio);
         int bottom = (int)(renderer.getAxisTitleTextSize()+45*dpRatio);
         int right = 1;
         
