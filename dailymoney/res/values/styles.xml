@@ -4,17 +4,6 @@
     <!-- 
     refer to /core/res/res/values/ themes.xml
      -->
-	<style name="theme" parent="android:Theme">
+	<style name="Theme.Password" parent="@android:style/Theme.Dialog">
 	</style>
-
-	<style name="acceidtor.title" parent="android:style/DialogWindowTitle">
-	   <!-- 
-	   <item name="android:background">@android:drawable/title_bar</item>
-	    -->
-	</style>
-    <!-- 
-	<style name="theme.acceidtor" parent="android:style/Theme.Dialog">
-        <item name="android:windowTitleStyle">@style/acceidtor.title</item>
-	</style>
-     -->
 </resources>

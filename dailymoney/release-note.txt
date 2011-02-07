@@ -1,19 +1,15 @@
 = Last =
-= History =
 == 0.9.5 ==
 === Features ===
  * 
 === Bugs ===
- * 24:     In main desktop, the weekly expense get zero randomly, especially on Sunday. 
+ * 24:  In main desktop, the weekly expense get zero randomly, especially on Sunday. 
+ * 26:  Desktop is still visible when password protection popped up
 === Other ===
  * Upgrade to achartengine 0.6.0
 
-
-
-
-
-<hr/>
- 
+===============================================================================
+= History = 
 == 0.9.4 ==
 === Features ===
  * 14:  Make today, future's detail more light in detail list
@@ -27,6 +23,7 @@
  * 
 === Other ===
  * 
+ 
 == 0.9.3 ==
 === Features ===
  * 12:  Needs detail list linking in balance report  
@@ -36,7 +33,7 @@
  * 
 === Other ===
  * 
-=============================================================================== 
+
 == 0.9.2 ==
 === Features ===
  * 7:   Support back(share) CSV file by email
@@ -46,7 +43,7 @@
  * 
 === Other ===
  * 8:   Account and Detail editor should change to Activity
-===============================================================================
+
 == 0.9.1 ==
 === Features ===
  * 3:   Add new account type Liability and Other
@@ -54,7 +51,7 @@
  * 6:   Backup CSV when do export.
 === Bugs ===
  * 2:   Wrong display in detail list if account not found
-=============================================================================== 
+
 == 0.9.0 ==
 === Features ===
  * Edit/Update account

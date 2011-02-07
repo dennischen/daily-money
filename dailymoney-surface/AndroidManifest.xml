@@ -17,7 +17,7 @@
         <activity android:name=".ui.AccountDetailListActivity" android:theme="@android:style/Theme.NoTitleBar"/>        
         <activity android:name=".ui.PrefsActivity" android:label="@string/title_prefs" android:theme="@android:style/Theme.NoTitleBar"/>
         <activity android:name=".ui.DataMaintenanceActivity" android:label="@string/title_datamain" android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".ui.PasswordProtectionActivity" android:theme="@android:style/Theme.Dialog" android:label="@string/title_pdprotection"/>
+        <activity android:name=".ui.PasswordProtectionActivity" android:theme="@style/Theme.Password" android:label="@string/title_pdprotection"/>
         <activity android:name=".ui.report.BalanceActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity android:name=".ui.AboutActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
         

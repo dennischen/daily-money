@@ -63,11 +63,13 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     private TextView monthlyExpense;
     private TextView cumulativeCash;
     private TabHost tabs;
+    private View dtLayout;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.desktop);
+        dtLayout = findViewById(R.id.dt_layout);
         initialApplicationInfo();
         initialDesktopItem();
         initialTab();
@@ -99,8 +101,13 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
 
     private void initPasswordProtection() { 
+        dtLayout.setVisibility(View.INVISIBLE);
         final String password = getContexts().getPrefPassword();
-        if("".equals(password)||protectionPassed||protectionInfront){
+        if("".equals(password)||protectionPassed){
+            dtLayout.setVisibility(View.VISIBLE);
+            return;
+        }
+        if(protectionInfront){
             return;
         }
         Intent intent = null;
@@ -264,6 +271,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
                 protectionPassed = false;
             }else{
                 protectionPassed = true;
+                dtLayout.setVisibility(View.VISIBLE);
             }
         }else{
             if(lastClickedItem!=null){
