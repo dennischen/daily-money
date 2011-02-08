@@ -151,11 +151,11 @@ public class GUIs {
         guiHandler.post(new NothrowRunnable(r));
     }
     
-    static public void doBusy(Context context,IBusyListener r){
+    static public void doBusy(Context context,IBusyRunnable r){
         doBusy(context,(Runnable)r);
     }
     
-    static public void doBusy(Context context,String msg,IBusyListener r){
+    static public void doBusy(Context context,String msg,IBusyRunnable r){
         doBusy(context,(Runnable)r);
     }
     static public void doBusy(Context context,Runnable r){
@@ -238,11 +238,11 @@ public class GUIs {
                     }
                     finish = true;
                 }
-                if(run instanceof IBusyListener){
+                if(run instanceof IBusyRunnable){
                    post(new Runnable(){
                         @Override
                         public void run() {
-                            ((IBusyListener)run).onBusyFinish();                        
+                            ((IBusyRunnable)run).onBusyFinish();                        
                         }});
                 }
             }catch(final Throwable x){
@@ -253,11 +253,11 @@ public class GUIs {
                     }
                     finish = true;
                 }
-                if(run instanceof IBusyListener){
+                if(run instanceof IBusyRunnable){
                     post(new Runnable(){
                         @Override
                         public void run() {
-                            ((IBusyListener)run).onBusyError(x);                        
+                            ((IBusyRunnable)run).onBusyError(x);                        
                         }});
                 }
             }
@@ -274,17 +274,18 @@ public class GUIs {
     /**
      * on busy event will be invoke in gui thread.
      */
-    public static interface IBusyListener extends Runnable{
+    public static interface IBusyRunnable extends Runnable{
         void onBusyFinish();
         void onBusyError(Throwable t);
     }
     
-    public static abstract class BusyAdapter implements IBusyListener{
+    public static abstract class BusyAdapter implements IBusyRunnable{
         @Override
         public void onBusyFinish() {
         }
         @Override
         public void onBusyError(Throwable t) {
+            Logger.e(t.getMessage(),t);
         }
     }
 

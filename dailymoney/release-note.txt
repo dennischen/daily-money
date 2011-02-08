@@ -6,6 +6,7 @@
 === Bugs ===
  * 24:  In main desktop, the weekly expense get zero randomly, especially on Sunday. 
  * 26:  Desktop is still visible when password protection popped up
+ * 28:  exception from market report
 === Other ===
  * Upgrade to achartengine 0.6.0
 

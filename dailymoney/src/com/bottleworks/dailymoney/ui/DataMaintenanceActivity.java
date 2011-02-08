@@ -97,7 +97,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     }
 
     private void doClearFolder() {
-        final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+        final GUIs.IBusyRunnable job = new GUIs.BusyAdapter() {
             @Override
             public void onBusyFinish() {
                 GUIs.alert(DataMaintenanceActivity.this, i18n.string(R.string.msg_folder_cleared,workingFolder));
@@ -132,7 +132,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
 
     private void doCreateDefault() {
 
-        final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+        final GUIs.IBusyRunnable job = new GUIs.BusyAdapter() {
             @Override
             public void onBusyFinish() {
                 GUIs.alert(DataMaintenanceActivity.this, R.string.msg_default_created);
@@ -164,7 +164,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         .setItems(R.array.csv_type_options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, final int which) {
-                final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+                final GUIs.IBusyRunnable job = new GUIs.BusyAdapter() {
                     public void onBusyError(Throwable t) {
                         GUIs.error(DataMaintenanceActivity.this, t);
                     }
@@ -187,7 +187,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 .setItems(R.array.csv_type_options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, final int which) {
-                        final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+                        final GUIs.IBusyRunnable job = new GUIs.BusyAdapter() {
                             int count = -1;
                             public void onBusyError(Throwable t) {
                                 GUIs.error(DataMaintenanceActivity.this, t);
@@ -220,7 +220,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 .setItems(R.array.csv_type_options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, final int which) {
-                        final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+                        final GUIs.IBusyRunnable job = new GUIs.BusyAdapter() {
                             int count = -1;
                             public void onBusyError(Throwable t) {
                                 GUIs.error(DataMaintenanceActivity.this, t);
@@ -252,7 +252,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 .setItems(R.array.csv_type_options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, final int which) {
-                        final GUIs.IBusyListener job = new GUIs.BusyAdapter() {
+                        final GUIs.IBusyRunnable job = new GUIs.BusyAdapter() {
                             int count = -1;
                             public void onBusyError(Throwable t) {
                                 GUIs.error(DataMaintenanceActivity.this, t);

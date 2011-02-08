@@ -532,114 +532,129 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         startActivity(intent);
     }
     
-    private void doYearlyTimeChart(int pos){
-        Balance b = listViewData.get(pos);
-        AccountType at;
-        List<Balance> group = b.getGroup();
-        if(b.getTarget() instanceof AccountType){
-            at = (AccountType)b.getTarget();
-        }else{
-            group = new ArrayList<Balance>(group);
-            group.remove(b);
-            group.add(0,b);
-            at = AccountType.find(((Account)b.getTarget()).getType());
-        }
-        
-        List<List<Balance>> balances = new ArrayList<List<Balance>>();
-        
-        
-        for(Balance g:group){
-            if(!(g.getTarget() instanceof Account)){
-                continue;
+    private void doYearlyTimeChart(final int pos){
+        GUIs.doBusy(this, new GUIs.BusyAdapter() {
+            @Override
+            public void run() {
+                Balance b = listViewData.get(pos);
+                AccountType at;
+                List<Balance> group = b.getGroup();
+                if(b.getTarget() instanceof AccountType){
+                    at = (AccountType)b.getTarget();
+                }else{
+                    group = new ArrayList<Balance>(group);
+                    group.remove(b);
+                    group.add(0,b);
+                    at = AccountType.find(((Account)b.getTarget()).getType());
+                }
+                
+                List<List<Balance>> balances = new ArrayList<List<Balance>>();
+                
+                
+                for(Balance g:group){
+                    if(!(g.getTarget() instanceof Account)){
+                        continue;
+                    }
+                    Account acc = (Account)g.getTarget();
+                    List<Balance> blist = new ArrayList<Balance>();
+                    balances.add(blist);
+                    Date d = calHelper.yearStartDate(g.getDate());
+                    for(int i=0;i<12;i++){
+                        Balance balance = BalanceHelper.calculateBalance(acc, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                        blist.add(balance);
+                        d = calHelper.monthAfter(d,1);
+                    }
+                }
+                
+                Intent intent = new BalanceTimeChart(BalanceActivity.this,GUIs.getOrientation(BalanceActivity.this),GUIs.getDPRatio(BalanceActivity.this)).createIntent(
+                        i18n.string(R.string.label_balance_yearly_timechart,at.getDisplay(i18n),yearDateFormat.format(currentDate)),balances);
+                startActivity(intent);
             }
-            Account acc = (Account)g.getTarget();
-            List<Balance> blist = new ArrayList<Balance>();
-            balances.add(blist);
-            Date d = calHelper.yearStartDate(g.getDate());
-            for(int i=0;i<12;i++){
-                Balance balance = BalanceHelper.calculateBalance(acc, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
-                blist.add(balance);
-                d = calHelper.monthAfter(d,1);
-            }
-        }
-        
-        Intent intent = new BalanceTimeChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(
-                i18n.string(R.string.label_balance_yearly_timechart,at.getDisplay(i18n),yearDateFormat.format(currentDate)),balances);
-        startActivity(intent);
+        });
     }
     
-    private void doYearlyCumulativeTimeChart(int pos){
-        Balance b = listViewData.get(pos);
-        AccountType at;
-        List<Balance> group = b.getGroup();
-        if(b.getTarget() instanceof AccountType){
-            at = (AccountType)b.getTarget();
-        }else{
-            group = new ArrayList<Balance>(group);
-            group.remove(b);
-            group.add(0,b);
-            at = AccountType.find(((Account)b.getTarget()).getType());
-        }
-        
-        List<List<Balance>> balances = new ArrayList<List<Balance>>();
-        
-        
-        for(Balance g:group){
-            if(!(g.getTarget() instanceof Account)){
-                continue;
+    private void doYearlyCumulativeTimeChart(final int pos){
+        GUIs.doBusy(this, new GUIs.BusyAdapter() {
+            @Override
+            public void run() {
+                
+                Balance b = listViewData.get(pos);
+                AccountType at;
+                List<Balance> group = b.getGroup();
+                if(b.getTarget() instanceof AccountType){
+                    at = (AccountType)b.getTarget();
+                }else{
+                    group = new ArrayList<Balance>(group);
+                    group.remove(b);
+                    group.add(0,b);
+                    at = AccountType.find(((Account)b.getTarget()).getType());
+                }
+                
+                List<List<Balance>> balances = new ArrayList<List<Balance>>();
+                
+                
+                for(Balance g:group){
+                    if(!(g.getTarget() instanceof Account)){
+                        continue;
+                    }
+                    Account acc = (Account)g.getTarget();
+                    List<Balance> blist = new ArrayList<Balance>();
+                    balances.add(blist);
+                    Date d = calHelper.yearStartDate(g.getDate());
+                    double total = 0;
+                    for(int i=0;i<12;i++){
+                        Balance balance = BalanceHelper.calculateBalance(acc, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                        total += balance.getMoney();
+                        balance.setMoney(total);
+                        blist.add(balance);
+                        d = calHelper.monthAfter(d,1);
+                    }
+                }
+                
+                Intent intent = new BalanceTimeChart(BalanceActivity.this,GUIs.getOrientation(BalanceActivity.this),GUIs.getDPRatio(BalanceActivity.this)).createIntent(
+                        i18n.string(R.string.label_balance_yearly_cumulative_timechart,at.getDisplay(i18n),yearDateFormat.format(currentDate)),balances);
+                startActivity(intent);
             }
-            Account acc = (Account)g.getTarget();
-            List<Balance> blist = new ArrayList<Balance>();
-            balances.add(blist);
-            Date d = calHelper.yearStartDate(g.getDate());
-            double total = 0;
-            for(int i=0;i<12;i++){
-                Balance balance = BalanceHelper.calculateBalance(acc, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
-                total += balance.getMoney();
-                balance.setMoney(total);
-                blist.add(balance);
-                d = calHelper.monthAfter(d,1);
-            }
-        }
-        
-        Intent intent = new BalanceTimeChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(
-                i18n.string(R.string.label_balance_yearly_cumulative_timechart,at.getDisplay(i18n),yearDateFormat.format(currentDate)),balances);
-        startActivity(intent);
+        });
     }
     
     
     private void doYearlyRunChart(){
-//        Balance b = listViewData.get(pos);
-        boolean[] monthly = new boolean[]{false,false,true,true,false};
-        AccountType[] ats = new AccountType[]{AccountType.ASSET,AccountType.LIABILITY,AccountType.INCOME,AccountType.EXPENSE,AccountType.OTHER};
-        List<List<Balance>> balances = new ArrayList<List<Balance>>();
-        Date yearstart = calHelper.yearStartDate(currentDate); 
-        for(int j=0;j<ats.length;j++){
-            AccountType at = ats[j];
-            List<Balance> blist = new ArrayList<Balance>();
-            balances.add(blist);
-            Date d = yearstart;
-            if(monthly[j]){
-                for(int i=0;i<12;i++){
-                    Balance balance = BalanceHelper.calculateBalance(at, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
-                    blist.add(balance);
-                    d = calHelper.monthAfter(d,1);
+        GUIs.doBusy(this, new GUIs.BusyAdapter() {
+            @Override
+            public void run() {
+                boolean[] monthly = new boolean[]{false,false,true,true,false};
+                AccountType[] ats = new AccountType[]{AccountType.ASSET,AccountType.LIABILITY,AccountType.INCOME,AccountType.EXPENSE,AccountType.OTHER};
+                List<List<Balance>> balances = new ArrayList<List<Balance>>();
+                Date yearstart = calHelper.yearStartDate(currentDate); 
+                for(int j=0;j<ats.length;j++){
+                    AccountType at = ats[j];
+                    List<Balance> blist = new ArrayList<Balance>();
+                    balances.add(blist);
+                    Date d = yearstart;
+                    if(monthly[j]){
+                        for(int i=0;i<12;i++){
+                            Balance balance = BalanceHelper.calculateBalance(at, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                            blist.add(balance);
+                            d = calHelper.monthAfter(d,1);
+                        }
+                    }else{
+                        double total = 0;
+                        for(int i=0;i<12;i++){
+                            Balance balance = BalanceHelper.calculateBalance(at, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                            total += balance.getMoney();
+                            balance.setMoney(total);
+                            blist.add(balance);
+                            d = calHelper.monthAfter(d,1);
+                        }
+                    }
                 }
-            }else{
-                double total = 0;
-                for(int i=0;i<12;i++){
-                    Balance balance = BalanceHelper.calculateBalance(at, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
-                    total += balance.getMoney();
-                    balance.setMoney(total);
-                    blist.add(balance);
-                    d = calHelper.monthAfter(d,1);
-                }
+                
+                Intent intent = new BalanceTimeChart(BalanceActivity.this,GUIs.getOrientation(BalanceActivity.this),GUIs.getDPRatio(BalanceActivity.this)).createIntent(
+                        i18n.string(R.string.label_balance_yearly_runchart,yearDateFormat.format(currentDate)),balances);
+                startActivity(intent);
             }
-        }
-        
-        Intent intent = new BalanceTimeChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(
-                i18n.string(R.string.label_balance_yearly_runchart,yearDateFormat.format(currentDate)),balances);
-        startActivity(intent);
+        });
     }
 
 }
