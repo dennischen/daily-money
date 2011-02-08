@@ -515,21 +515,37 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         return super.onContextItemSelected(item);
     }
     
-    private void doPieChart(int pos){
-        Balance b = listViewData.get(pos);
-        List<Balance> group = b.getGroup();
-        AccountType at;
-        if(b.getTarget() instanceof AccountType){
-            at = (AccountType)b.getTarget();
-        }else{
-            //move selection to first
-            group = new ArrayList<Balance>(group);
-            group.remove(b);
-            group.add(0,b);
-            at = AccountType.find(((Account)b.getTarget()).getType());
-        }
-        Intent intent = new BalancePieChart(this,GUIs.getOrientation(this),GUIs.getDPRatio(this)).createIntent(at,group);
-        startActivity(intent);
+    private void doPieChart(final int pos){
+        
+        
+        
+        GUIs.doBusy(this, new GUIs.BusyAdapter() {
+            @Override
+            public void run() {
+                Balance b = listViewData.get(pos);
+                AccountType at;
+                List<Balance> group = b.getGroup();
+                if(b.getTarget() instanceof AccountType){
+                    at = (AccountType)b.getTarget();
+                }else{
+                    group = new ArrayList<Balance>(group);
+                    group.remove(b);
+                    group.add(0,b);
+                    at = AccountType.find(((Account)b.getTarget()).getType());
+                }
+                List<Balance> list = new ArrayList<Balance>();
+                for(Balance g:group){
+                    if(!(g.getTarget() instanceof Account)){
+                        continue;
+                    }
+                    Account acc = (Account)g.getTarget();
+                    Balance balance = BalanceHelper.calculateBalance(acc, currentStartDate,currentEndDate);
+                    list.add(balance);
+                }
+                Intent intent = new BalancePieChart(BalanceActivity.this,GUIs.getOrientation(BalanceActivity.this),GUIs.getDPRatio(BalanceActivity.this)).createIntent(at,list);
+                startActivity(intent);
+            }
+        });
     }
     
     private void doYearlyTimeChart(final int pos){
