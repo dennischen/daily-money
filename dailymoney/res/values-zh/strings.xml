@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">每日記帳本</string>
-    <string name="defacc_bank">銀行</string>
+    <string name="defacc_bank1">銀行.台灣</string>
+    <string name="defacc_bank2">銀行.HSBC</string>
     <string name="defacc_cash">現金</string>
     <string name="defacc_entertainment">娛樂</string>
-    <string name="defacc_food">食物</string>
+    <string name="defacc_food1">食.個人</string>
+    <string name="defacc_food2">食.聚餐</string>
     <string name="defacc_interest">利息</string>
     <string name="defacc_otherexpense">其他花費</string>
     <string name="defacc_otherincome">其他收入</string>

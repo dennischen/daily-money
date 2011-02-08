@@ -2,10 +2,12 @@
 <resources>
 	<string name="app_name">Daily Money</string>
 	<string name="app_surface">daily-money-core</string>
-    <string name="defacc_bank">Bank</string>
+    <string name="defacc_bank1">Bank.A</string>
+    <string name="defacc_bank2">Bank.B</string>
     <string name="defacc_cash">Cash</string>
     <string name="defacc_entertainment">Entertainment</string>
-    <string name="defacc_food">Food</string>
+    <string name="defacc_food1">Food.Personal</string>
+    <string name="defacc_food2">Food.Party</string>
     <string name="defacc_interest">Interest</string>
     <string name="defacc_otherexpense">Other expense</string>
     <string name="defacc_otherincome">Other income</string>

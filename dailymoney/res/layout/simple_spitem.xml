@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent" android:orientation="horizontal">
 	<TextView
 		android:id="@+id/simple_spitem_display"
 		android:layout_width="fill_parent"
@@ -10,4 +10,10 @@
 		android:textColor="@color/simple_spdd"
 		android:ellipsize="end"
 		/>
-</RelativeLayout>
+	<TextView
+        android:id="@+id/simple_spdditem_display"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />	
+</LinearLayout>

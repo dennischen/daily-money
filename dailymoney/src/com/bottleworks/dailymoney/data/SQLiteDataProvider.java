@@ -46,7 +46,7 @@ public class SQLiteDataProvider implements IDataProvider {
     @Override
     public void reset() {
         SQLiteDatabase db = helper.getWritableDatabase();
-        helper.onUpgrade(db, 0, db.getVersion());
+        helper.onUpgrade(db, -1, db.getVersion());
         detId = 0;
         detId_set = false;
     }

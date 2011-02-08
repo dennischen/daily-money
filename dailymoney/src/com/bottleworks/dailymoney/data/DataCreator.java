@@ -27,12 +27,14 @@ public class DataCreator {
         createAccountNoThrow(i18n.string(R.string.defacc_salary), AccountType.INCOME, 0D,false);
         createAccountNoThrow(i18n.string(R.string.defacc_otherincome), AccountType.INCOME, 0D,false);
 
-        createAccountNoThrow(i18n.string(R.string.defacc_food), AccountType.EXPENSE, 0D,false);
+        createAccountNoThrow(i18n.string(R.string.defacc_food1), AccountType.EXPENSE, 0D,false);
+        createAccountNoThrow(i18n.string(R.string.defacc_food2), AccountType.EXPENSE, 0D,false);
         createAccountNoThrow(i18n.string(R.string.defacc_entertainment), AccountType.EXPENSE, 0D,false);
         createAccountNoThrow(i18n.string(R.string.defacc_otherexpense), AccountType.EXPENSE, 0D,false);
 
         createAccountNoThrow(i18n.string(R.string.defacc_cash), AccountType.ASSET, 0D,true);
-        createAccountNoThrow(i18n.string(R.string.defacc_bank), AccountType.ASSET, 0D,false);
+        createAccountNoThrow(i18n.string(R.string.defacc_bank1), AccountType.ASSET, 0D,false);
+        createAccountNoThrow(i18n.string(R.string.defacc_bank2), AccountType.ASSET, 0D,false);
         
         createAccountNoThrow(i18n.string(R.string.defacc_creditcard), AccountType.LIABILITY, 0D,false);
     }
@@ -44,12 +46,12 @@ public class DataCreator {
         Account income1 = createAccountNoThrow(i18n.string(R.string.defacc_salary), AccountType.INCOME, 0D,false);
         Account income2 = createAccountNoThrow(i18n.string(R.string.defacc_otherincome), AccountType.INCOME, 0D,false);
 
-        Account expense1 = createAccountNoThrow(i18n.string(R.string.defacc_food), AccountType.EXPENSE, 0D,false);
+        Account expense1 = createAccountNoThrow(i18n.string(R.string.defacc_food1), AccountType.EXPENSE, 0D,false);
         Account expense2 = createAccountNoThrow(i18n.string(R.string.defacc_entertainment), AccountType.EXPENSE, 0D,false);
         Account expense3 = createAccountNoThrow(i18n.string(R.string.defacc_otherexpense), AccountType.EXPENSE, 0D,false);
 
         Account asset1 = createAccountNoThrow(i18n.string(R.string.defacc_cash), AccountType.ASSET, 5000D,true);
-        Account asset2 = createAccountNoThrow(i18n.string(R.string.defacc_bank), AccountType.ASSET, 100000D,false);
+        Account asset2 = createAccountNoThrow(i18n.string(R.string.defacc_bank1), AccountType.ASSET, 100000D,false);
         
         Account liability1 = createAccountNoThrow(i18n.string(R.string.defacc_creditcard), AccountType.LIABILITY, 0D,false);
         

@@ -16,7 +16,7 @@ import static com.bottleworks.dailymoney.data.SQLiteMeta.*;
 public class SQLiteHelper extends SQLiteOpenHelper{
     /** maintain this field carefully*/
 //    private static final int VERSION = 4;//0.9.1-0.9.3
-    private static final int VERSION = 5;//0.9.4
+    private static final int VERSION = 5;//0.9.4-0.9.5
     
     private static final String ACC_CREATE_SQL = "CREATE TABLE " + TB_ACC + " (" 
             + COL_ACC_ID + " TEXT PRIMARY KEY, "
@@ -63,15 +63,13 @@ public class SQLiteHelper extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if(Contexts.DEBUG){
             Logger.d("update db from "+oldVersion+" to "+newVersion);
-            Logger.d("drop schema "+ACC_DROP_SQL);
         }
-        if(oldVersion<=0){
+        if(oldVersion<0){
             Logger.i("reset schema");
             //drop and create.
+            Logger.i("drop schema "+ACC_DROP_SQL);
             db.execSQL(ACC_DROP_SQL);
-            if(Contexts.DEBUG){
-                Logger.d("drop schema "+DET_DROP_SQL);
-            }
+            Logger.i("drop schema "+DET_DROP_SQL);
             db.execSQL(DET_DROP_SQL);
             onCreate(db);
             return;
@@ -80,12 +78,13 @@ public class SQLiteHelper extends SQLiteOpenHelper{
             //upgrade to 0.9.4
             Logger.i("upgrade schem from "+oldVersion+" to "+newVersion);
             db.execSQL("ALTER TABLE "+TB_ACC+" ADD "+COL_ACC_CASHACCOUNT+" INTEGER NULL ");
+            oldVersion++;
         }
-        oldVersion++;
+        
         //keep going check next id
         if(oldVersion==5){//schema before ?
           //upgrade to ?
-            Logger.i("upgrade schem from "+oldVersion+" to "+newVersion);
+//            Logger.i("upgrade schem from "+oldVersion+" to "+newVersion);
         }
     }
 
