@@ -259,12 +259,21 @@ public class DetailListHelper implements OnItemClickListener{
             if("layout_inner".equals(name)){
                 //make it light
                 LinearLayout inner = (LinearLayout)view;
+                Date ddate = det.getDate();
                 Date now = new Date();
+                Date day3 = calHelper.dateBefore(now, 3);
+                Date day7 = calHelper.dateBefore(now, 7);
                 Drawable draw = null;
-                if(calHelper.isSameDay(now, det.getDate())){
-                    draw = new ColorDrawable(0x33FFFFFF);
-                }else if(calHelper.isFutureDay(now, det.getDate())){
-                    draw = new ColorDrawable(0x66FFFFFF);
+                if(calHelper.isFutureDay(now, ddate)){
+                    //future
+                    draw = new ColorDrawable(0x4FFFFFFF);
+                }else if(calHelper.isSameDay(now, ddate)){
+                    //today
+                    draw = new ColorDrawable(0x3FFFFFFF);
+                }else if(calHelper.isFutureDay(day3, ddate)){
+                    draw = new ColorDrawable(0x1fFFFFFF);
+                }else if(calHelper.isFutureDay(day7, ddate)){
+                    draw = new ColorDrawable(0x0FFFFFFF);
                 }
                 inner.setBackgroundDrawable(draw);
                 return true;
