@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney.ui;
 
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 
 import com.bottleworks.commons.util.GUIs;
@@ -16,6 +17,8 @@ public class AboutActivity extends ContextsActivity {
     WebView whatsnew;
     WebView aboutapp;
     
+    private static String LOCALURL = "file:///android_asset/";
+    
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -26,21 +29,22 @@ public class AboutActivity extends ContextsActivity {
         
         whatsnew.getSettings().setAllowFileAccess(true);
         whatsnew.getSettings().setJavaScriptEnabled(true);
-        whatsnew.addJavascriptInterface(new JSCallHandler(),"aboutView");
+        whatsnew.addJavascriptInterface(new JSCallHandler(),"dmctrl");
         whatsnew.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY); 
         
         aboutapp.getSettings().setAllowFileAccess(true);
         aboutapp.getSettings().setJavaScriptEnabled(true);
-        aboutapp.addJavascriptInterface(new JSCallHandler(),"aboutView");
+        aboutapp.addJavascriptInterface(new JSCallHandler(),"dmctrl");
         aboutapp.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY); 
         
         
-        whatsnew.loadUrl("file:///android_asset/"+i18n.string(R.string.path_what_is_new));
-        aboutapp.loadUrl("file:///android_asset/"+i18n.string(R.string.path_about_app));
+        whatsnew.loadUrl(LOCALURL+i18n.string(R.string.path_what_is_new));
+        aboutapp.loadUrl(LOCALURL+i18n.string(R.string.path_about_app));
     }
     
-    private void onLinkClicked(String path){
-        GUIs.shortToast(this,path);
+    private void onLinkClicked(final String path){
+       whatsnew.setVisibility(View.GONE);
+       aboutapp.loadUrl(LOCALURL+path);
     }
     
     class JSCallHandler {

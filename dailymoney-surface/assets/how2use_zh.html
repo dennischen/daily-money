@@ -1,0 +1,92 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="dm.css" type="text/css" rel="stylesheet">
+</head>
+<body class="doc">
+<h2>概念</h2>
+<blockquote>
+    <img src="how2use1.png"  style="float: right; margin: 10px;margin-right:20px" />
+    每日記帳本的主要概念很簡單, 只有兩個
+    <ol>
+    <li>各種不同的帳戶(依你的需要而定).</li>
+    <li>錢在在不同帳戶之間的轉換(你必需為每一次的交易,花費作記錄).</li>
+    </ol> 
+</blockquote>
+<h2>帳戶</h2>
+
+<blockquote>
+    <p style="min-height: 82px"> 
+    <img src="how2use2.png"  style="float: left; margin: 10px;margin-right:20px" />    
+    共有五種不同型態的帳戶, 你可以在帳戶管理的頁面新增/編輯或刪除
+    </p>
+    <ol>
+    <li class="income"><i>收入</i> : 薪水..等</li>
+    <li class="expense"><i>支出</i> : 食物,娛樂..等</li>
+    <li class="asset"><i>資產</i> : 現金, 銀行..等</li>
+    <li class="liability"><i >債務</i> : 信用戶, 貸款..等</li>
+    <li class="other"><i>其他</i> : ...</li>
+    </ol>  
+    * 帳戶的排序是依型態及名字的順序,你可以在帳戶名字上加上1或A等前置字來排序你的帳號.<br/>
+    * 帳戶名字可以用.(點)來分隔(例如 食.早餐,食.午餐), 明細編輯時, 將會提供較佳的階層式選擇.<br/>
+</blockquote>
+<h2>轉換明細</h2>
+<blockquote>
+    <p style="min-height: 82px"> 
+    <img src="how2use3.png"  style="float: left; margin: 10px" />
+    當你的錢發生了轉換(例如你花了139元去賣當老吃飯), 你使用主桌面的新增明細上的功能來建立一筆新的資料
+    </p>
+    <ol>
+    <li class="asset">選擇來源帳戶 : 現金</li>
+    <li class="expense">選擇目地帳戶 : 食物</li>
+    <li>選擇日期 : 今天</li>
+    <li>輸入金額 : 139</li>
+    <li>輸入描述 : 賣當老午餐</li>
+    <li>點選<i>建立</i>，然後點選<i>關閉</i>(如果只需建立一筆)</li>
+    </ol> 
+    上面只是一個非常簡單的例子, 想像一下, 如果你的薪水是直接匯入銀行 或是你在Y拍上用信用卡買東西，本日記帳幫都可以幫您作記錄。你可以在上面的五種型態的帳戶類型中，任意建立你需要的帳戶.
+</blockquote>
+
+<h2>使用範例</h2>
+<blockquote>
+<h3>薪水直接到銀行</h3>
+<blockquote>
+    <span class="income"><b>從帳戶</b> : 薪水</span><br/>
+    <span class="asset"><b>到帳戶</b> : 銀行</span><br/>
+</blockquote>
+<h3>從銀行領錢</h3>
+<blockquote>
+    <span class="asset"><b>從帳戶</b> : 銀行</span><br/>
+    <span class="asset"><b>到帳戶</b> : 現金</span><br/>
+</blockquote>
+<h3>用信用卡買東西</h3>
+<blockquote>
+    <span class="liability"><b>從帳戶</b> : 信用卡</span><br/>
+    <span class="expense"><b>到帳戶</b> : 貴參參的手機</span><br/>
+</blockquote>
+<h3>現金付信用戶帳單</h3>
+<blockquote>
+    <span class="asset"><b>從帳戶</b> : 現金</span><br/>
+    <span class="liability"><b>到帳戶</b> : 信用卡</span><br/>
+</blockquote>
+</blockquote>
+<h2>結算報告</h2>
+<img src="how2use4.png"  style="float: right; margin: 10px" />
+<blockquote>
+<h3>時間區間的結算報告</h3>
+<blockquote>
+    結算報告是使用你建立的資料來統計計算出來的，並依本周,本月,本年來呈現。你可以點選報告的上方按鈕來改變時間的位置
+</blockquote>
+<h3>累加的結算報告</h3>
+<blockquote>
+    當你想知道你目前有多少現金, 目前有多少資產, 而不是這個月花多少的時候，你會需要使用累加的結算報告。要讓累加的結果報告正確計算，
+    你必需設定每個帳號的初始金額(通常只有 <i class="asset">資產</i> 跟 <i class="liability">債務</i> 會有初始值. <i class="income">收入</i> 跟 <i class="expense">支出</i> 是不會有初始值的)<br/>
+    如果你沒有設定初始值的話，有一個簡單的方法可以算出你的初始值。例如：你現在的現金有333, 但是累加結算報告顯示你的現金是-100)
+    <ol>
+    <li>編輯現金帳戶</li>
+    <li>設定初始值為433, 由(333 - (-100))算出</li>
+    </ol>  
+</blockquote>
+</blockquote>
+</body>
+</html>

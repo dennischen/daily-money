@@ -5,9 +5,51 @@ body {
     margin: 0px;
     padding: 5px;
 }
+
 .vote{
     color: #FF7640;
 }
+
 a:visited,a:hover,a:link {
     color: yellow;
+}
+
+body.doc h2{
+     font-size: 16px;
+}
+body.doc h3{
+	font-size: 14px;
+}
+body.doc blockquote {
+    border-left: 5px solid #DDDDDD;
+    margin: 0;
+    padding: 0 5px;	
+    color:#DDDDDD;
+}
+
+body.doc blockquote h3 {
+	padding: 0 2px
+    font-size: 14px;
+}
+body.doc blockquote blockquote{
+    border-left: 2px solid #DDDDDD;
+    margin: 0;
+    padding: 0 2px;    
+    color:#DDDDDD;
+}
+
+.income{
+	color: #7AFFA2;
+}
+.expense{
+	color: #FF9AB5;
+}
+.asset{
+	color: #F6D174;
+}
+.liability{
+	color: #7A95FF;
+}
+.other{
+	color: #61D0FF;
 }

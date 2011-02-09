@@ -1,0 +1,96 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="dm.css" type="text/css" rel="stylesheet">
+</head>
+<body class="doc">
+<h2>Concept</h2>
+<blockquote>
+    <img src="how2use1.png"  style="float: right; margin: 10px;margin-right:20px" />
+    The concept of daily money is very simple
+    <ol>
+    <li>Different accounts (you create accounts depends on your case)</li>
+    <li>Money transaction between accounts. (you record detail for each transaction)</li>
+    </ol> 
+</blockquote>
+<h2>Accounts</h2>
+
+<blockquote>
+    <p style="min-height: 82px"> 
+    <img src="how2use2.png"  style="float: left; margin: 10px;margin-right:20px" />    
+    There are 5 types account, you can create/edit/delete it in Account Manager page.
+    </p>
+    <ol>
+    <li class="income"><i>Income</i> : salary etc..</li>
+    <li class="expense"><i>Expense</i> : food, entertainment etc.</li>
+    <li class="asset"><i>Asset</i> : cash, bank</li>
+    <li class="liability"><i>Liability</i> : credit card, loan.</li>
+    <li class="other"><i>Other</i> : ...like a asset but is not asset.</li>
+    </ol>  
+    * To sort your account, you just add 1,2,.. or A.B,.. as the prefix of name of account.<br/>
+    * Account name could have a hierarchical by naming with .(dot), Ex: Food.lunch, Food.dinner . When editing transaction detail, it provides better selecting of account.<br/>
+</blockquote>
+<h2>The transaction detail</h2>
+<blockquote>
+    <p style="min-height: 82px"> 
+    <img src="how2use3.png"  style="float: left; margin: 10px" />
+    When you spent money then you can click the Add Detail on the Main page to create a new record. for example you spent $10 bought a meal, in Detail Editor page, you
+    </p>
+    <ol>
+    <li class="asset">Select from account : Cash</li>
+    <li class="expense">Select to account : Food</li>
+    <li>Select date : today</li>
+    <li>Input money by calculator : 10</li>
+    <li>Input description : hot dog, coke.</li>
+    <li>click <i>Create</i> then click <i>Close</i> if no more transaction needs to be created.</li>
+    </ol> 
+
+    this is a just very common use case of daily-money, but, what if your salary is deposit to bank directly, you use credit card buy books on internet? 
+    daily-money provide different type of account s, and you could create various accounts against 5 account type.
+</blockquote>
+
+<h2>Use cases</h2>
+<blockquote>
+<h3>Salary to Bank</h3>
+<blockquote>
+    <span class="income"><b>From</b> : Salary</span><br/>
+    <span class="asset"><b>To</b> : Bank</span><br/>
+</blockquote>
+<h3>Bank to Cash</h3>
+<blockquote>
+    <span class="asset"><b>From</b> : Bank</span><br/>
+    <span class="asset"><b>To</b> : Cash</span><br/>
+</blockquote>
+<h3>Buy stuff by credit card</h3>
+<blockquote>
+    <span class="liability"><b>From</b> : Credit card</span><br/>
+    <span class="expense"><b>To</b> : Expensive PDA</span><br/>
+</blockquote>
+<h3>Pay credit card bill by Cash</h3>
+<blockquote>
+    <span class="asset"><b>From</b> : Cash</span><br/>
+    <span class="liability"><b>To</b> : Credit card</span><br/>
+</blockquote>
+</blockquote>
+<h2>Balance Reports</h2>
+<img src="how2use4.png"  style="float: right; margin: 10px" />
+<blockquote>
+<h3>Ranged Balance</h3>
+<blockquote>
+    In ranged balance reports, I count balance of all the details that you created. The balance is calculated in a time range (current week, current month, current year, or you can change to other range by click the arrow button)
+</blockquote>
+<h3>Cumulated Balance</h3>
+<blockquote>
+    To calculate cumulated balance (ex, how much cash I have now, how much liability I have now. not how much I spent this week), 
+    you have to set a initial value to a account(generally <i class="asset">Asset</i> or <i  class="liability">Liability</i> type accounts have non-zero initial value. 
+    <i  class="income">Income</i> and <i  class="expense">Expense</i> type account should have no initial value).<br/>
+    If you forgot to set initial value of an account, there is a simple way to adjust it. for example ,
+    "I have cash 333, but cumulated balance reports shows I have cash -100)
+    <ol>
+    <li>Edit cash account</li>
+    <li>Set initial value of cash to 433, result of (333 - (-100))</li>
+    </ol>  
+</blockquote>
+</blockquote>
+</body>
+</html>
