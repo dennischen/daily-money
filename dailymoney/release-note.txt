@@ -7,6 +7,7 @@
  * 24:  In main desktop, the weekly expense get zero randomly, especially on Sunday. 
  * 26:  Desktop is still visible when password protection popped up
  * 28:  exception from market report
+ * 30:  SQL encoding error
 === Other ===
  * Upgrade to achartengine 0.6.0
 

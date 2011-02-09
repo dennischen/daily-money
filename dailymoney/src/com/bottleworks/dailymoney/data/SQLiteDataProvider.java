@@ -360,17 +360,23 @@ public class SQLiteDataProvider implements IDataProvider {
     public List<Detail> listDetail(Account account, int mode, Date start, Date end,int max) {
         SQLiteDatabase db = helper.getReadableDatabase();
         StringBuilder where = new StringBuilder();
+        List<String> args = new ArrayList<String>();
         where.append(" 1=1 ");
         if(mode ==LIST_DETAIL_MODE_FROM){
             where.append(" AND ");
-            where.append(COL_DET_FROM + "= '" + account.getId()+"'");
+            where.append(COL_DET_FROM + "= ?");
+            args.add(account.getId());
         }else if(mode==LIST_DETAIL_MODE_TO){
             where.append(" AND ");
-            where.append(COL_DET_TO + "= '" + account.getId()+"'");
+            where.append(COL_DET_TO + "= ?");
+            args.add(account.getId());
         }else if(mode==LIST_DETAIL_MODE_BOTH){
             where.append(" AND (");
-            where.append(COL_DET_FROM + "= '" + account.getId()+"' OR ");
-            where.append(COL_DET_TO + "= '" + account.getId()+"')");
+            where.append(COL_DET_FROM + "= ? OR ");
+            where.append(COL_DET_TO + "= ?");
+            where.append(")");
+            args.add(account.getId());
+            args.add(account.getId());
         }
         
         if(start!=null){
@@ -381,9 +387,12 @@ public class SQLiteDataProvider implements IDataProvider {
             where.append(" AND ");
             where.append(COL_DET_DATE + "<=" +end.getTime());
         }
-        
+        String[] wherearg = null;
+        if(args.size()>0){
+            wherearg = args.toArray(wherearg = new String[args.size()]);
+        }
         Cursor c = null;
-        c = db.query(TB_DET,COL_DET_ALL,where.length()==0?null:where.toString(),null, null, null, DET_ORDERBY,max>0?Integer.toString(max):null);
+        c = db.query(TB_DET,COL_DET_ALL,where.length()==0?null:where.toString(),wherearg, null, null, DET_ORDERBY,max>0?Integer.toString(max):null);
         List<Detail> result = new ArrayList<Detail>();
         Detail det;
         while(c.moveToNext()){
@@ -475,19 +484,24 @@ public class SQLiteDataProvider implements IDataProvider {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         StringBuilder query =  new StringBuilder();
-
+        List<String> args = new ArrayList<String>();
         StringBuilder where = new StringBuilder();
         where.append(" 1=1 ");
         if(mode ==LIST_DETAIL_MODE_FROM){
             where.append(" AND ");
-            where.append(COL_DET_FROM + "= '" + account.getId()+"'");
+            where.append(COL_DET_FROM + "= ?");
+            args.add(account.getId());
         }else if(mode==LIST_DETAIL_MODE_TO){
             where.append(" AND ");
-            where.append(COL_DET_TO + "= '" + account.getId()+"'");
+            where.append(COL_DET_TO + "= ?");
+            args.add(account.getId());
         }else if(mode==LIST_DETAIL_MODE_BOTH){
             where.append(" AND (");
-            where.append(COL_DET_FROM + "= '" + account.getId()+"' OR ");
-            where.append(COL_DET_TO + "= '" + account.getId()+"')");
+            where.append(COL_DET_FROM + "= ? OR ");
+            where.append(COL_DET_TO + "= ?");
+            where.append(")");
+            args.add(account.getId());
+            args.add(account.getId());
         }
         
         
@@ -506,8 +520,12 @@ public class SQLiteDataProvider implements IDataProvider {
             query.append(" WHERE ").append(where);
         }
         
+        String[] wherearg = null;
+        if(args.size()>0){
+            wherearg = args.toArray(wherearg = new String[args.size()]);
+        }
         
-        Cursor c = db.rawQuery(query.toString(),null);
+        Cursor c = db.rawQuery(query.toString(),wherearg);
         
         int i = 0;
         if(c.moveToNext()){
@@ -601,9 +619,10 @@ public class SQLiteDataProvider implements IDataProvider {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         StringBuilder query =  new StringBuilder();
-
+        List<String> args = new ArrayList<String>();
         StringBuilder where = new StringBuilder();
-        where.append(" WHERE ").append(COL_DET_FROM).append(" = '").append(acc.getId()).append("'");
+        where.append(" WHERE ").append(COL_DET_FROM).append(" = ? ");
+        args.add(acc.getId());
         if(start!=null){
             where.append(" AND ");
             where.append(COL_DET_DATE + ">=" + start.getTime());
@@ -615,7 +634,12 @@ public class SQLiteDataProvider implements IDataProvider {
         
         query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
 
-        Cursor c = db.rawQuery(query.toString(),null);
+        String[] wherearg = null;
+        if(args.size()>0){
+            wherearg = args.toArray(wherearg = new String[args.size()]);
+        }
+        
+        Cursor c = db.rawQuery(query.toString(),wherearg);
         
         double r = 0D;
         if(c.moveToNext()){
@@ -661,9 +685,10 @@ public class SQLiteDataProvider implements IDataProvider {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         StringBuilder query =  new StringBuilder();
-
+        List<String> args = new ArrayList<String>();
         StringBuilder where = new StringBuilder();
-        where.append(" WHERE ").append(COL_DET_TO).append(" = '").append(acc.getId()).append("'");
+        where.append(" WHERE ").append(COL_DET_TO).append(" = ?");
+        args.add(acc.getId());
         if(start!=null){
             where.append(" AND ");
             where.append(COL_DET_DATE + ">=" + start.getTime());
@@ -674,8 +699,12 @@ public class SQLiteDataProvider implements IDataProvider {
         }
         
         query.append("SELECT SUM(").append(COL_DET_MONEY).append(") FROM ").append(TB_DET).append(where);
+        String[] wherearg = null;
+        if(args.size()>0){
+            wherearg = args.toArray(wherearg = new String[args.size()]);
+        }
 
-        Cursor c = db.rawQuery(query.toString(),null);
+        Cursor c = db.rawQuery(query.toString(),wherearg);
         
         double r = 0D;
         if(c.moveToNext()){

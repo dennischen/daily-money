@@ -639,7 +639,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         GUIs.doBusy(this, new GUIs.BusyAdapter() {
             @Override
             public void run() {
-                boolean[] monthly = new boolean[]{false,false,true,true,false};
+                boolean[] yearly = new boolean[]{false,false,true,true,false};
                 AccountType[] ats = new AccountType[]{AccountType.ASSET,AccountType.LIABILITY,AccountType.INCOME,AccountType.EXPENSE,AccountType.OTHER};
                 List<List<Balance>> balances = new ArrayList<List<Balance>>();
                 Date yearstart = calHelper.yearStartDate(currentDate); 
@@ -648,9 +648,9 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                     List<Balance> blist = new ArrayList<Balance>();
                     balances.add(blist);
                     Date d = yearstart;
-                    if(monthly[j]){
+                    if(yearly[j]){
                         for(int i=0;i<12;i++){
-                            Balance balance = BalanceHelper.calculateBalance(at, calHelper.monthStartDate(d),calHelper.monthEndDate(d));
+                            Balance balance = BalanceHelper.calculateBalance(at, yearstart,calHelper.monthEndDate(d));
                             blist.add(balance);
                             d = calHelper.monthAfter(d,1);
                         }
