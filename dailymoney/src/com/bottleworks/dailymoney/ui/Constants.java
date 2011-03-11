@@ -28,5 +28,7 @@ public class Constants {
     public static final int REQUEST_PASSWORD_PROTECTION_CODE=5;
     
     
+    public static final String DISPLAY = "display";
+    
     
 }

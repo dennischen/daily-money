@@ -76,9 +76,9 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         }
     }
     
-    
-    private static String[] spfrom = new String[] { "display"};
-    private static int[] spto = new int[] { R.id.simple_spitem_display};
+    /** need to mapping twice to do different mapping in spitem and spdropdown item*/
+    private static String[] spfrom = new String[] { Constants.DISPLAY,Constants.DISPLAY};
+    private static int[] spto = new int[] { R.id.simple_spitem_display, R.id.simple_spdditem_display};
     
     EditText nameEditor;
     EditText initvalEditor;
@@ -296,7 +296,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
             if(!(view instanceof TextView)){
                return false;
             }
-            if("display".equals(name)){
+            if(Constants.DISPLAY.equals(name)){
                 if(AccountType.INCOME == at){
                    ((TextView)view).setTextColor(getResources().getColor(R.color.income_fgd));
                 }else if(AccountType.ASSET == at){

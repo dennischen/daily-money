@@ -96,7 +96,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         }
     }
 
-    private static String[] spfrom = new String[] { "item-display","dd-display" };
+    private static String[] spfrom = new String[] { Constants.DISPLAY,Constants.DISPLAY };
     private static int[] spto = new int[] { R.id.simple_spitem_display,R.id.simple_spdditem_display };
 
     Spinner fromEditor;
@@ -589,7 +589,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
                 ddSelected.setAlpha(192);
             }
             
-            if(name.endsWith("-display")){
+            if(Constants.DISPLAY.equals(name)){
                 int tcolor;
                 tv.setBackgroundDrawable(null);
                 if(AccountType.INCOME == at){
