@@ -14,6 +14,7 @@
     <string name="dtitem_accmgnt">帳戶管理</string>
     <string name="dtitem_adddetail">新增明細</string>
     <string name="dtitem_detlist_month">月明細列表</string>
+    <string name="dtitem_detlist_day">日明細列表</string>
     <string name="dtitem_detlist_week">周明細列表</string>
     <string name="dtitem_detlist_year">年明細列表</string>
     <string name="dtitem_detlist">明細列表</string>
@@ -39,6 +40,7 @@
     <string name="label_initial_value">初始值</string>
     <string name="label_money">金錢</string>
     <string name="label_month_details">%1$s (%2$s筆)</string>
+    <string name="label_day_details">%1$s (%2$s筆)</string>
     <string name="label_note">備註</string>
     <string name="label_other">其他</string>
     <string name="label_prefs_detlayout_sum">選擇不同的明細排版</string>

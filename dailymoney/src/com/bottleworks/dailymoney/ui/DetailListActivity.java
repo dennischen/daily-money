@@ -36,10 +36,11 @@ import com.bottleworks.dailymoney.data.IDataProvider;
  */
 public class DetailListActivity extends ContextsActivity implements OnClickListener {
     
-    public static final int MODE_WEEK = 0;
-    public static final int MODE_MONTH = 1;
-    public static final int MODE_YEAR = 2;
-    public static final int MODE_ALL = 3;
+    public static final int MODE_DAY = 0;
+    public static final int MODE_WEEK = 1;
+    public static final int MODE_MONTH = 2;
+    public static final int MODE_YEAR = 3;
+    public static final int MODE_ALL = 4;
     
     public static final String INTENT_MODE = "mode";
     public static final String INTENT_TARGET_DATE = "target";
@@ -62,6 +63,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     private int mode = MODE_WEEK;
     private boolean allowYearSwitch = true;
     
+    private DateFormat dayDateFormat;
     private DateFormat weekDateFormat;
     private DateFormat monthDateFormat;
     private DateFormat yearDateFormat;
@@ -98,7 +100,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
 
 
     private void initialContent() {
-        
+        dayDateFormat = new SimpleDateFormat("yyyy/MM/dd");
         weekDateFormat = new SimpleDateFormat("MM/dd");
         monthDateFormat = new SimpleDateFormat("yyyy/MM - MMM");
         yearDateFormat = new SimpleDateFormat("yyyy");
@@ -159,9 +161,14 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
             if(allowYearSwitch){
                 modeBtn.setImageResource(R.drawable.btn_year);
             }else{
-                modeBtn.setImageResource(R.drawable.btn_week);
+                modeBtn.setImageResource(R.drawable.btn_day);
             }
             break;
+        case MODE_DAY:
+            toolbarView.setVisibility(TextView.VISIBLE);
+            modeBtn.setVisibility(ImageButton.VISIBLE);
+            modeBtn.setImageResource(R.drawable.btn_week);
+            break;    
         case MODE_YEAR:
             toolbarView.setVisibility(TextView.VISIBLE);
             if(allowYearSwitch){
@@ -211,6 +218,10 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
 //            }else{
 //                modeBtn.setImageResource(R.drawable.btn_week);
 //            }
+            break;
+        case MODE_DAY:
+            start = cal.toDayStart(currentDate);
+            end = cal.toDayEnd(currentDate);
             break;
         case MODE_YEAR:
             start = cal.yearStartDate(currentDate);
@@ -301,6 +312,9 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
                     break;
                 case MODE_MONTH:
                     infoView.setText(i18n.string(R.string.label_month_details,monthDateFormat.format(currentDate),Integer.toString(count)));
+                    break;
+                case MODE_DAY:
+                    infoView.setText(i18n.string(R.string.label_day_details,dayDateFormat.format(currentDate),Integer.toString(count)));
                     break;
                 case MODE_YEAR:
                     infoView.setText(i18n.string(R.string.label_year_details,yearDateFormat.format(currentDate),Integer.toString(count)));
@@ -394,12 +408,16 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
             mode = MODE_MONTH;
             reloadData();
             break;
+        case MODE_DAY:
+            mode = MODE_WEEK;
+            reloadData();
+            break;    
         case MODE_MONTH:
-            mode = allowYearSwitch?MODE_YEAR:MODE_WEEK;
+            mode = allowYearSwitch?MODE_YEAR:MODE_DAY;
             reloadData();
             break;
         case MODE_YEAR:
-            mode = allowYearSwitch?MODE_WEEK:MODE_YEAR;
+            mode = allowYearSwitch?MODE_DAY:MODE_YEAR;
             reloadData();
             break;
         }
@@ -409,6 +427,10 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     private void onNext() {
         CalendarHelper cal = getContexts().getCalendarHelper();
         switch(mode){
+        case MODE_DAY:
+            currentDate = cal.dateAfter(currentDate,1);
+            reloadData();
+            break;
         case MODE_WEEK:
             currentDate = cal.dateAfter(currentDate,7);
             reloadData();
@@ -427,6 +449,10 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     private void onPrev() {
         CalendarHelper cal = getContexts().getCalendarHelper();
         switch(mode){
+        case MODE_DAY:
+            currentDate = cal.dateBefore(currentDate,1);
+            reloadData();
+            break;
         case MODE_WEEK:
             currentDate = cal.dateBefore(currentDate,7);
             reloadData();
@@ -446,6 +472,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         switch(mode){
         case MODE_WEEK:
         case MODE_MONTH:
+        case MODE_DAY:
         case MODE_YEAR:
             currentDate = targetDate;
             reloadData();

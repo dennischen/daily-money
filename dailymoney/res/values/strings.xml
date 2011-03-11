@@ -16,6 +16,7 @@
     <string name="dtitem_adddetail">Add Detail</string>
     <string name="dtitem_detlist">Details</string>
     <string name="dtitem_detlist_month">Monthly list</string>
+    <string name="dtitem_detlist_day">Daily list</string>
     <string name="dtitem_detlist_week">Weekly list</string>
     <string name="dtitem_detlist_year">Yearly list</string>
     <string name="dtitem_prefs">Preferences</string>
@@ -40,6 +41,7 @@
     <string name="label_initial_value">Initial</string>
     <string name="label_money">Money</string>
     <string name="label_month_details">%1$s (%2$s records)</string>
+    <string name="label_day_details">%1$s (%2$s records)</string>
     <string name="label_note">Note</string>
     <string name="label_other">Other</string>
     <string name="label_prefs_detlayout">Detail layout</string>

@@ -1,9 +1,9 @@
 = Last =
 == 0.9.6 ==
 === Features ===
- * 
+ * 35: Daily List
 === Bugs ===
- * 
+ * 34: Color issues when editing account
 === Other ===
  * 
 
