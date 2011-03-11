@@ -1,4 +1,14 @@
 = Last =
+== 0.9.6 ==
+=== Features ===
+ * 
+=== Bugs ===
+ * 
+=== Other ===
+ * 
+
+===============================================================================
+= History = 
 == 0.9.5 ==
 === Features ===
  * 25:  Allow custom CSV Encoding
@@ -10,9 +20,8 @@
  * 30:  SQL encoding error
 === Other ===
  * Upgrade to achartengine 0.6.0
-
-===============================================================================
-= History = 
+ 
+ 
 == 0.9.4 ==
 === Features ===
  * 14:  Make today, future's detail more light in detail list
