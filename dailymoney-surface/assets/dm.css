@@ -38,6 +38,11 @@ body.doc blockquote blockquote{
     color:#DDDDDD;
 }
 
+.howto{
+    font-size:16px;
+    font-weight: bold;
+}
+
 .income{
 	color: #7AFFA2;
 }

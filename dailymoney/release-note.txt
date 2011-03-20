@@ -2,6 +2,7 @@
 == 0.9.6 ==
 === Features ===
  * 35: Daily List
+ * 21: Allow to store application in SD card
 === Bugs ===
  * 34: Color issues when editing account
 === Other ===
