@@ -3,8 +3,13 @@
 === Features ===
  * 35: Daily List
  * 21: Allow to store application in SD card
+ -- not released version
+ * 52: allow to add, copy detail in detail list in report activity 
+ * 38: i18n, zh_rCN
 === Bugs ===
  * 34: Color issues when editing account
+ -- not released version
+  
 === Other ===
  * 
 
