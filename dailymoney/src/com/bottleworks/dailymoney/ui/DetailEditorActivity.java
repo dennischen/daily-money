@@ -131,7 +131,6 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         moneyEditor = (EditText) findViewById(R.id.deteditor_money);
         moneyEditor.setText(workingDetail.getMoney()<=0?"":Formats.double2String(workingDetail.getMoney()));
         moneyEditor.setEnabled(!archived);
-        moneyEditor.requestFocus();
 
         noteEditor = (EditText) findViewById(R.id.deteditor_note);
         noteEditor.setText(workingDetail.getNote());
@@ -151,6 +150,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         } else {
             okBtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.btn_update, 0, 0, 0);
             okBtn.setText(R.string.cact_update);
+            moneyEditor.requestFocus();
         }
         okBtn.setOnClickListener(this);
 
