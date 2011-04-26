@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -144,6 +145,23 @@ public class AccountDetailListActivity extends ContextsActivity {
     }
     
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.accdetlist_optmenu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.accdetlist_menu_new:
+            detailListHelper.doNewDetail();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         if (v.getId() == R.id.accdetlist_list) {
@@ -161,6 +179,9 @@ public class AccountDetailListActivity extends ContextsActivity {
             return true;
         case R.id.accdetlist_menu_delete:
             detailListHelper.doDeleteDetail(info.position);
+            return true;
+        case R.id.accdetlist_menu_copy:
+            detailListHelper.doCopyDetail(info.position);
             return true;
         }
         return super.onContextItemSelected(item);
