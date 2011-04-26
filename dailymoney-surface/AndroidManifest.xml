@@ -13,7 +13,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.DetailListActivity" android:label="@string/title_detlist" android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".ui.DetailEditorActivity"/>
+        <activity android:name=".ui.DetailEditorActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.AccountMgntActivity" android:label="@string/title_accmgnt" android:theme="@android:style/Theme.NoTitleBar"/>
         <activity android:name=".ui.AccountEditorActivity"/>
         <activity android:name=".ui.AccountDetailListActivity" android:theme="@android:style/Theme.NoTitleBar"/>        

@@ -87,6 +87,12 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         Bundle bundle = getIntentExtras();
         modeCreate = bundle.getBoolean(INTENT_MODE_CREATE,true);
         detail = (Detail)bundle.get(INTENT_DETAIL);
+        
+        //issue 51, for direct call from outside action, 
+        if(detail==null){
+            detail = new Detail("", "", new Date(), 0D, "");
+        }
+        
         workingDetail = clone(detail);
         
         if(modeCreate){
@@ -125,6 +131,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         moneyEditor = (EditText) findViewById(R.id.deteditor_money);
         moneyEditor.setText(workingDetail.getMoney()<=0?"":Formats.double2String(workingDetail.getMoney()));
         moneyEditor.setEnabled(!archived);
+        moneyEditor.requestFocus();
 
         noteEditor = (EditText) findViewById(R.id.deteditor_note);
         noteEditor.setText(workingDetail.getNote());
