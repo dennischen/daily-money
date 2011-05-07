@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Daily Money</string>
+	<string name="app_surface">daily-money-core</string>
+    <string name="defacc_bank1">Банк.A</string>
+    <string name="defacc_bank2">Банк.B</string>
+    <string name="defacc_cash">Наличные</string>
+    <string name="defacc_entertainment">Развлечения</string>
+    <string name="defacc_food1">Еда.Личная</string>
+    <string name="defacc_food2">Еда.Вечеринка</string>
+    <string name="defacc_interest">Интерес</string>
+    <string name="defacc_otherexpense">Другие расходы</string>
+    <string name="defacc_otherincome">Другие доходы</string>
+    <string name="defacc_salary">Зарплата</string>
+    <string name="dtitem_accmgnt">Счета</string>
+    <string name="dtitem_adddetail">Добавить детали</string>
+    <string name="dtitem_detlist">Детали</string>
+    <string name="dtitem_detlist_month">Ежемесячный список</string>
+    <string name="dtitem_detlist_day">Ежедневный список</string>
+    <string name="dtitem_detlist_week">Еженедельный список</string>
+    <string name="dtitem_detlist_year">Ежегодный список</string>
+    <string name="dtitem_prefs">Настройки</string>
+    <string name="label_all_details">Все подробности (%1$s записей)</string>
+    <string name="label_Активы">Активы</string>
+    <string name="label_date">Дата</string>
+    <string name="label_liability">Обязательство</string>
+    <string name="label_detlayout_type1">К - деньги</string>
+    <string name="label_detlayout_type2">Примечание - Деньги</string>
+    <string name="label_detlist_from">&lt; %1$s</string>
+    <string name="label_detlist_sum_income">Доход %1$s</string>
+    <string name="label_detlist_sum_expense">Счет %1$s</string>
+    <string name="label_detlist_sum_Активы">Активы %1$s </string>
+    <string name="label_detlist_sum_liability">Обязательство %1$s</string>
+    <string name="label_detlist_sum_other">Другие %1$s</string>
+    <string name="label_detlist_to">%1$s</string>
+    <string name="label_expense">Expense</string>
+    <string name="label_firstday_mon">Понедельник</string>
+    <string name="label_firstday_sun">Воскресенье</string>
+    <string name="label_from_account">Со счета</string>
+    <string name="label_income">Доход</string>
+    <string name="label_initial_value">Изначально</string>
+    <string name="label_money">Деньги</string>
+    <string name="label_month_details">%1$s (%2$s записей)</string>
+    <string name="label_day_details">%1$s (%2$s записей)</string>
+    <string name="label_note">Примечание</string>
+    <string name="label_other">Другие</string>
+    <string name="label_prefs_detlayout">Подробный план</string>
+    <string name="label_prefs_detlayout_sum">Выберите другой тип для деталей макета списка</string>
+    <string name="label_prefs_firstday_week">Первый день недели</string>
+    <string name="label_prefs_firstday_week_sum">Установите первый день недели</string>
+    <string name="label_prefs_improvider">In-memory-provider</string>
+    <string name="label_prefs_improvider_sum">Для выполнения этого приложения, данные в этом режиме не будет сохранены</string>
+    <string name="label_prefs_maxrecords">Макс. записей</string>
+    <string name="label_prefs_maxrecords_sum">Установить количество макс записи подробно список, -1 без ограничений</string>
+    <string name="label_reports">Отчеты</string>
+    <string name="label_to_account">К</string>
+    <string name="label_week_details">%5$s %1$s к %2$s - Неделя %3$s/%4$s (%6$s)</string>
+    <string name="label_year_details">%1$s (%2$s записей)</string>
+    <string name="msg_account_created">Счет %1$s был создан типа %2$s</string>
+    <string name="msg_account_deleted">Счет %1$s был удален</string>
+    <string name="msg_account_existed">%1$s уже существует в типе %2$s</string>
+    <string name="msg_account_updated">Счет %1$s был обнавлен в типе %2$s</string>
+    <string name="msg_created_account">Создано %1$s счетов</string>
+    <string name="msg_created_detail">Создано %1$s описаний</string>
+    <string name="msg_detail_created">Описание создано</string>
+    <string name="msg_detail_deleted">Описание удалено</string>
+    <string name="msg_detail_updated">Описание обновлено</string>
+    <string name="msg_same_from_to">От и До, одно и тоже</string>
+    <string name="title_acceditor">Редактор счета</string>
+    <string name="title_acceditor_create">Создать счет</string>
+    <string name="title_acceditor_update">Обновить счет</string>
+    <string name="title_accmgnt">Account Manager</string>
+    <string name="title_desktop">Десктоп</string>
+    <string name="title_deteditor_create">Создать описание</string>
+    <string name="title_deteditor">Редактор описаний</string>
+    <string name="title_deteditor_update">Обновить описание</string>
+    <string name="title_detlist">Список описаний</string>
+    <string name="title_detmgnt">Менеджер описаний</string>
+    <string name="title_prefs">Настройки</string> 
+    
+        
+    <string name="dt_main">Главная</string>
+    <string name="dt_reports">Отчеты</string>
+    <string name="dt_tests">Тесты</string>
+    <string name="label_prefs_testsdekstop">Открыть экран тестирования</string>
+    <string name="label_prefs_testsdekstop_sum">открытые испытания рабочего стола, только для разработчиков</string>
+    
+    <string name="label_export_csv">Экспорт в CSV</string>
+    <string name="label_import_csv">Импорт в CSV</string>
+    <string name="label_reset">Сброс данных</string>
+    <string name="label_create_default">Создание данных по умолчанию (счет)</string>
+    
+    
+    <string name="msg_csv_exported">Данные (%1$s) были экспортированы в %2$s, </string>
+    <string name="msg_csv_imported">Данные были импортированы из %2$s (%1$s)</string>
+    <string name="msg_rested">Дата была сброшена</string>
+    <string name="msg_default_created">По умолчанию дата была создана</string>
+    <string name="title_datamain">О ведении данных</string>
+    
+    <string name="qmsg_export_csv">Вы хотите экспортировать CSV и заменить его?</string>
+    <string name="qmsg_import_csv">Вы хотите импортировать CSV и заменить данные?</string>
+    <string name="qmsg_reset">Вы действительно хотите сбросить все данные?</string>
+    <string name="qmsg_create_default">Вы хотите создать данные по умолчанию?</string>
+    <string name="dtitem_datamain">Данные</string>
+    
+    
+    <string name="msg_no_csv">Нет CSV-файлов</string>
+    <string name="label_clear_folder">Очистить рабочий каталог</string>
+    <string name="msg_folder_cleared">Рабочий каталог %1$s был очищен</string>
+    
+    <string name="label_prefs_workingfolder">Рабочий каталог</string>
+    <string name="label_prefs_workingfolder_sum">Укажите название каталога на sdcard для экспорта данных</string>
+    <string name="label_prefs_backupcsv">Резервная копия CSV</string>
+    <string name="label_prefs_backupcsv_sum">Резервная копия старых CSV при экспорте</string>
+    
+    <string name="qmsg_clear_folder">Вы действительно хотите очистить каталог %1$s? все CSV будут удалены</string>
+    <string name="defacc_creditcard">Кредитная карта</string>
+    
+    <string name="label_account">Счет</string>
+    <string name="label_detail">Описание</string>
+    <string name="label_account_only">Только счета</string>
+    <string name="label_detail_only">Только подробности</string>
+    
+    <string name="label_share_csv">Доступ к CSV</string>
+    <string name="msg_share_csv_title">Daily Money %1$s</string>
+    <string name="msg_share_csv_content">Daily Money CSV Файлы</string>
+    <string name="qmsg_share_csv">Каким файлам CSV дать доступ?</string>
+    
+    <string name="msg_firsttime_use_hint">Добро пожаловать в программу Daily Money, нажмите Добавить Описание чтобы продолжить</string>
+    
+    <string name="label_balance_tincome">Баланс доходов</string>
+    <string name="label_balance_texpense">Расходы баланса</string>
+    <string name="label_balance_tАктивы">Активы баланса</string>
+    <string name="label_balance_tliability">Обязательство баланса</string>
+    <string name="label_balance_tother">Другое в балансе</string>
+    
+    <string name="label_balance_mode_month">Баланс за месяц %1$s</string>
+    <string name="label_balance_mode_year">Баланс за год %1$s</string>
+    
+    <string name="label_balance_mode_month_total">Баланс до %1$s месяца</string>
+    <string name="label_balance_mode_year_total">Баланс до %1$s года</string>
+    
+    <string name="dtitem_report_monthly_balance">Ежемесячный баланс</string>
+    <string name="dtitem_report_yearly_balance">Ежегодный баланс</string>
+    <string name="dtitem_report_cumulative_balance">Совокупный баланс</string>
+    
+    <string name="label_count">(%1$s)</string>
+    <string name="label_accdetlist_dateinfo">%1$s к %2$s</string> 
+    
+    <string name="label_prefs_password">Защита паролем-1</string>
+    <string name="label_prefs_password_sum">Установите пароль приложения, пусто - защита выключена</string>
+    <string name="label_prefs_passwordvd">Защита паролем-2</string>
+    <string name="label_prefs_passwordvd_sum">Установите тот же пароль еще раз, чтобы включить защиту</string>
+    <string name="title_pdprotection">Защита паролем</string>
+    <string name="msg_wrong_password">Пароль неверный!</string>
+    
+    
+    <string name="act_balance_detlist">Список описаний</string>
+    <string name="act_balance_piechart">Круговая диаграмма</string>
+    <string name="act_balance_yearly_timechart">Годовая диаграмма</string>
+    <string name="act_balance_yearly_cumulative_timechart">Годовая диаграмма(совокупно)</string>
+    <string name="label_balance_yearly_timechart">%1$s в %2$s</string>
+    <string name="label_balance_yearly_cumulative_timechart">%1$s в %2$s (совокупно)</string>
+    
+    <string name="label_detlayout_type3">Деньги - К</string>
+    <string name="label_detlayout_type4">Деньги - Примечание</string>
+    <string name="act_balance_yearly_runchart">Годовые Активы-Обязательство запустить диаграмму</string>
+    <string name="label_balance_yearly_runchart">Активы-Обязательство(совокупн) в %1$s</string>    
+    
+    <string name="label_prefs_allow_analytics">Отправлять google analytics</string>
+    <string name="label_prefs_allow_analytics_sum">[не посылать любые другие данные] Отправка использования, чтобы помочь мне улучшить применение</string>
+    
+    <string name="dtitem_about">О программе</string>
+    
+    <string name="path_about_app">about.html</string>
+    <string name="path_what_is_new">whatsnew.html</string>
+    <string name="label_weekly_expense">Еженедельно : %1$s</string>
+    <string name="label_monthly_expense">Ежемесячно : %1$s</string>
+    <string name="label_cumulative_cash">Деньги : %1$s</string>
+    <string name="label_cash_account">Денежные счета</string> 
+    <string name="label_prefs_csv_encoding">CSV Кодировка</string>
+    <string name="label_prefs_csv_encoding_sum">Не изменяйте это, если вы не знаете что это такое</string>
+    <string name="label_prefcat_csv">CSV</string>
+    <string name="label_prefcat_others">Другие</string>   
+<!-- above are verified -->    
+   
+
+</resources>
+

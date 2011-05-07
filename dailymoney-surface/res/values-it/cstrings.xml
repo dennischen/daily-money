@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="cact_cancel">Annulla</string>
+    <string name="cact_close">Chiudi</string>
+    <string name="cact_copy">Copia</string>
+    <string name="cact_create">Crea</string>
+    <string name="cact_delete">Elimina</string>
+    <string name="cact_edit">Modifica</string>
+    <string name="cact_new">Nuovo</string>
+    <string name="cact_ok">OK</string>
+    <string name="cact_stop">Ferma</string>
+    <string name="cact_update">Aggiorna</string>
+    <string name="clabel_alert">Attenzione</string>
+    <string name="clabel_share">Condividi</string>
+    <string name="clabel_busy">Occupato</string>
+    <string name="clabel_error">Errore</string>
+    <string name="clabel_info">Informazione</string>
+    <string name="clabel_name">Nome</string>
+    <string name="clabel_type">Tipo</string>
+    <string name="clabel_unknow">Sconosciuto</string>
+    <string name="clabel_warn">Avviso</string>
+    <string name="cmsg_busy">Applicazione occupata, attendere qualche secondo...</string>
+    <string name="cmsg_error">Errore : %1$s</string>
+    <string name="cmsg_field_empty">%1$s è vuoto</string>  
+    <string name="cmsg_field_zero">%1$s è zero</string> 
+     <string name="clabel_all">Tutti</string>
+    <!-- above are verified --> 
+
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2007 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<!-- 
+ the source is come from andorid - 2.1 calculator2
+-->
+<resources>
+    <string name="cact_cancel">取消</string>
+    <string name="cact_close">关闭</string>
+    <string name="cact_copy">复制</string>
+    <string name="cact_create">建立</string>
+    <string name="cact_delete">刪除</string>
+    <string name="cact_edit">编辑</string>
+    <string name="cact_new">新增</string>
+    <string name="cact_ok">确定</string>
+    <string name="cact_stop">停止</string>
+    <string name="cact_update">更新</string>
+    <string name="clabel_alert">警告</string>
+    <string name="clabel_share">分享</string>
+    <string name="clabel_busy">忙碌</string>
+    <string name="clabel_error">错误</string>
+    <string name="clabel_info">资讯</string>
+    <string name="clabel_name">名称</string>
+    <string name="clabel_type">形态</string>
+    <string name="clabel_unknow">末知</string>
+    <string name="clabel_warn">警告</string>
+    <string name="cmsg_busy">忙碌中，请稍候...</string>
+    <string name="cmsg_error">错误 : %1$s</string>
+    <string name="cmsg_field_empty">%1$s 不能为空</string>  
+    <string name="cmsg_field_zero">%1$s 不能为零</string>  
+    <string name="clabel_all">全部</string>
+	 <!-- above are verified -->
+</resources>

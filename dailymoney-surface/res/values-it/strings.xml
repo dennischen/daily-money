@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Daily Money</string>
+	<string name="app_surface">daily-money-core</string>
+    <string name="defacc_bank1">Banca.A</string>
+    <string name="defacc_bank2">Banca.B</string>
+    <string name="defacc_cash">Contanti</string>
+    <string name="defacc_entertainment">Divertimento</string>
+    <string name="defacc_food1">Cibo.Personale</string>
+    <string name="defacc_food2">Cibo.Festa</string>
+    <string name="defacc_interest">Interessi</string>
+    <string name="defacc_otherexpense">Altre spese</string>
+    <string name="defacc_otherincome">Altre entrate</string>
+    <string name="defacc_salary">Stipendio</string>
+    <string name="dtitem_accmgnt">Conti</string>
+    <string name="dtitem_adddetail">Aggiungi dettagli</string>
+    <string name="dtitem_detlist">Dettagli</string>
+    <string name="dtitem_detlist_month">Lista mensile</string>
+    <string name="dtitem_detlist_day">Lista giornaliera</string>
+    <string name="dtitem_detlist_week">Lista settimanale</string>
+    <string name="dtitem_detlist_year">Lista annuale</string>
+    <string name="dtitem_prefs">Preferenze</string>
+    <string name="label_all_details">Tutti i dettagli (%1$s records)</string>
+    <string name="label_asset">Conto</string>
+    <string name="label_date">Data</string>
+    <string name="label_liability">Debiti</string>
+    <string name="label_detlayout_type1">A - Soldi</string>
+    <string name="label_detlayout_type2">Note - Soldi</string>
+    <string name="label_detlist_from">&lt; %1$s</string>
+    <string name="label_detlist_sum_income">Entrata %1$s</string>
+    <string name="label_detlist_sum_expense">Spesa %1$s</string>
+    <string name="label_detlist_sum_asset">Conto %1$s </string>
+    <string name="label_detlist_sum_liability">Debito %1$s</string>
+    <string name="label_detlist_sum_other">Altro %1$s</string>
+    <string name="label_detlist_to">%1$s</string>
+    <string name="label_expense">Spesa</string>
+    <string name="label_firstday_mon">Lunedì</string>
+    <string name="label_firstday_sun">Domenica</string>
+    <string name="label_from_account">Da</string>
+    <string name="label_income">Entrata</string>
+    <string name="label_initial_value">Iniziale</string>
+    <string name="label_money">Soldi</string>
+    <string name="label_month_details">%1$s (%2$s record)</string>
+    <string name="label_day_details">%1$s (%2$s record)</string>
+    <string name="label_note">Note</string>
+    <string name="label_other">Altro</string>
+    <string name="label_prefs_detlayout">Schema dei dettagli</string>
+    <string name="label_prefs_detlayout_sum">Scegli schemi differenti per la lista dei dettagli</string>
+    <string name="label_prefs_firstday_week">Primo giorno della settimana</string>
+    <string name="label_prefs_firstday_week_sum">Scegli il primo giorno della settimana</string>
+    <string name="label_prefs_improvider">In-memory-provider</string>
+    <string name="label_prefs_improvider_sum">Modalità di prova; i dati inseriti non saranno persistenti</string>
+    <string name="label_prefs_maxrecords">Numero massimo di record</string>
+    <string name="label_prefs_maxrecords_sum">Scegli il numero massimo di record nella lista dei dettagli, -1 per non avere un limite</string>
+    <string name="label_reports">Rapporti</string>
+    <string name="label_to_account">A</string>
+    <string name="label_week_details">%5$s %1$s a %2$s - Settimana %3$s/%4$s (%6$s)</string>
+    <string name="label_year_details">%1$s (%2$s records)</string>
+    <string name="msg_account_created">Il conto %1$s di tipo %2$s è stato creato</string>
+    <string name="msg_account_deleted">Il conto %1$s è stato eliminato</string>
+    <string name="msg_account_existed">%1$s di tipo %2$s è già presente</string>
+    <string name="msg_account_updated">Il conto %1$s di tipo %2$s è stato aggiornato</string>
+    <string name="msg_created_account">Creati %1$s conti</string>
+    <string name="msg_created_detail">Creati %1$s dettagli</string>
+    <string name="msg_detail_created">Dettaglio creato</string>
+    <string name="msg_detail_deleted">Dettaglio eliminato</string>
+    <string name="msg_detail_updated">Dettaglio aggiornato</string>
+    <string name="msg_same_from_to">Da e A sono lo stesso conto</string>
+    <string name="title_acceditor">Modifica Conti</string>
+    <string name="title_acceditor_create">Crea Conto</string>
+    <string name="title_acceditor_update">Aggiorna Conto</string>
+    <string name="title_accmgnt">Gestione Conti</string>
+    <string name="title_desktop">Scrivania</string>
+    <string name="title_deteditor_create">Crea Dettaglio</string>
+    <string name="title_deteditor">Modifica Dettagli</string>
+    <string name="title_deteditor_update">Aggiorna Dettagli</string>
+    <string name="title_detlist">Lista Dettagli</string>
+    <string name="title_detmgnt">Gestione Dettagli</string>
+    <string name="title_prefs">Preferenze</string> 
+    
+        
+    <string name="dt_main">Principale</string>
+    <string name="dt_reports">Rapporti</string>
+    <string name="dt_tests">Prove</string>
+    <string name="label_prefs_testsdekstop">Apri scrivania prove</string>
+    <string name="label_prefs_testsdekstop_sum">Apre la scrivania delle prove, solo per gli sviluppatori</string>
+    
+    <string name="label_export_csv">Esporta CSV</string>
+    <string name="label_import_csv">Importa CSV</string>
+    <string name="label_reset">Reimposta dati</string>
+    <string name="label_create_default">Crea conti di default</string>
+    
+    
+    <string name="msg_csv_exported">I dati (%1$s) sono stati esportati a %2$s, </string>
+    <string name="msg_csv_imported">I dati (%1$s) sono stati importati da %2$s </string>
+    <string name="msg_rested">Dati reimpostati</string>
+    <string name="msg_default_created">Dati di default ricreati</string>
+    <string name="title_datamain">Gestione dei dati</string>
+    
+    <string name="qmsg_export_csv">Vuoi esportate il CSV e sostituire quello esistente?</string>
+    <string name="qmsg_import_csv">Vuoi importare il CSV e sostituire i dati esistenti?</string>
+    <string name="qmsg_reset">Vuoi reimpostare i dati?</string>
+    <string name="qmsg_create_default">Vuoi creare i dati di default?</string>
+    <string name="dtitem_datamain">Dati</string>
+    
+    
+    <string name="msg_no_csv">File CSV non trovato</string>
+    <string name="label_clear_folder">Pulisci cartella di lavoro</string>
+    <string name="msg_folder_cleared">Cartella di lavoro %1$s creata</string>
+    
+    <string name="label_prefs_workingfolder">Cartella di lavoro</string>
+    <string name="label_prefs_workingfolder_sum">Scegli il nome della cartella nella scheda SD per l&#8217;esportazione dei dati</string>
+    <string name="label_prefs_backupcsv">Salva CSV</string>
+    <string name="label_prefs_backupcsv_sum">Salva il vecchio CSV durante l&#8217;esportazione dei nuovi dati</string>
+    
+    <string name="qmsg_clear_folder">Vuoi pulire la cartella di lavoro %1$s? Tutti i CSV saranno rimossi</string>
+    <string name="defacc_creditcard">Carta di Credito</string>
+    
+    <string name="label_account">Conti</string>
+    <string name="label_detail">Dettagli</string>
+    <string name="label_account_only">Solo Conti</string>
+    <string name="label_detail_only">Solo Dettagli</string>
+    
+    <string name="label_share_csv">Condividi CSV</string>
+    <string name="msg_share_csv_title">Daily Money %1$s</string>
+    <string name="msg_share_csv_content">Daily Money CSV Files</string>
+    <string name="qmsg_share_csv">Quale CSV vuoi condividere?</string>
+    
+    <string name="msg_firsttime_use_hint">Benvenuto in Daily Money, clicca su Aggiungi Dettaglio per iniziare</string>
+    
+    <string name="label_balance_tincome">Bilancio Entrate</string>
+    <string name="label_balance_texpense">Bilancio Spese</string>
+    <string name="label_balance_tasset">Bilancio Conti</string>
+    <string name="label_balance_tliability">Bilancio Debiti</string>
+    <string name="label_balance_tother">Bilancio Altro</string>
+    
+    <string name="label_balance_mode_month">Bilancio mese %1$s</string>
+    <string name="label_balance_mode_year">Bilancio anno %1$s</string>
+    
+    <string name="label_balance_mode_month_total">Bilancio fino al mese %1$s</string>
+    <string name="label_balance_mode_year_total">Bilancio fino all&#8217;anno %1$s</string>
+    
+    <string name="dtitem_report_monthly_balance">Bilancio mensile</string>
+    <string name="dtitem_report_yearly_balance">Bilancio annuale</string>
+    <string name="dtitem_report_cumulative_balance">Bilancio cumulativo</string>
+    
+    <string name="label_count">(%1$s)</string>
+    <string name="label_accdetlist_dateinfo">%1$s a %2$s</string> 
+    
+    <string name="label_prefs_password">Password di protezione-1</string>
+    <string name="label_prefs_password_sum">Imposta una password di protezione per l&#8217;applicazione, lasciare vuota per non avere protezione</string>
+    <string name="label_prefs_passwordvd">Password di protezione-2</string>
+    <string name="label_prefs_passwordvd_sum">Reinserisci la stessa password per attivare la protezione</string>
+    <string name="title_pdprotection">Inserire Password</string>
+    <string name="msg_wrong_password">Password Errata!</string>
+    
+    
+    <string name="act_balance_detlist">Lista Dettagli</string>
+    <string name="act_balance_piechart">Grafico a torta</string>
+    <string name="act_balance_yearly_timechart">Grafico annulae</string>
+    <string name="act_balance_yearly_cumulative_timechart">Grafico annuale (cumulativo)</string>
+    <string name="label_balance_yearly_timechart">%1$s in %2$s</string>
+    <string name="label_balance_yearly_cumulative_timechart">%1$s in %2$s (cumulativo)</string>
+    
+    <string name="label_detlayout_type3">Soldi - A</string>
+    <string name="label_detlayout_type4">Soldi - Note</string>
+    <string name="act_balance_yearly_runchart">Grafico Patrimonio annuale - Debiti</string>
+    <string name="label_balance_yearly_runchart">Patrimonio - Debiti (cumulativo) in %1$s</string>    
+    
+    <string name="label_prefs_allow_analytics">Invia dati a Google Analytics</string>
+    <string name="label_prefs_allow_analytics_sum">L&#8217;invio dei dati di utilizzo aiuta a migliorare l&#8217;applicazione [Non verranno inviati altri dati] </string>
+    
+    <string name="dtitem_about">Informazioni</string>
+    
+    <string name="path_about_app">about.html</string>
+    <string name="path_what_is_new">whatsnew.html</string>
+    <string name="label_weekly_expense">Settimanali : %1$s</string>
+    <string name="label_monthly_expense">Mensili : %1$s</string>
+    <string name="label_cumulative_cash">Contanti : %1$s</string>
+    <string name="label_cash_account">Conto in Contanti</string> 
+    <string name="label_prefs_csv_encoding">Codifica del CSV</string>
+    <string name="label_prefs_csv_encoding_sum">Da non cambiare se non si ha idea di cosa questo sia</string>
+    <string name="label_prefcat_csv">CSV</string>
+    <string name="label_prefcat_others">Altri</string>   
+<!-- above are verified -->    
+   
+
+</resources>
+
