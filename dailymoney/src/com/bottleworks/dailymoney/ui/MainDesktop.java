@@ -32,7 +32,7 @@ public class MainDesktop extends AbstractDesktop {
                 intent.putExtra(DetailEditorActivity.INTENT_DETAIL,d);
                 activity.startActivityForResult(intent,Constants.REQUEST_DETAIL_EDITOR_CODE);
             }
-        }, i18n.string(R.string.dtitem_adddetail), R.drawable.dtitem_adddetail);
+        }, i18n.string(R.string.dtitem_adddetail), R.drawable.dtitem_adddetail,true);
 
         Intent intent = new Intent(activity, DetailListActivity.class);
         intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_DAY);
@@ -64,7 +64,7 @@ public class MainDesktop extends AbstractDesktop {
                 i18n.string(R.string.dtitem_prefs), R.drawable.dtitem_prefs);
         
         DesktopItem aboutdt = new DesktopItem(new ActivityRun(activity, AboutActivity.class),
-                i18n.string(R.string.dtitem_about), R.drawable.dtitem_about);
+                i18n.string(R.string.dtitem_about), R.drawable.dtitem_about,true);
         
         addItem(adddetdt);
         addItem(daylist);

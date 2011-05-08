@@ -3,6 +3,7 @@ package com.bottleworks.dailymoney.ui;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -49,8 +51,6 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     private List<Desktop> desktops = new ArrayList<Desktop>();
     
     private String appinfo;
-
-//    private DateFormat dayOfWeekFormat = new SimpleDateFormat("EEEE"); 
     
     private DesktopItem lastClickedItem;
     
@@ -62,6 +62,8 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     private TextView cumulativeCash;
     private TabHost tabs;
     private View dtLayout;
+    
+    private HashMap<Object, DesktopItem> dtHashMap = new HashMap<Object, DesktopItem>();
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -220,11 +222,20 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         currTab = tabId;
         loadDesktop();
     }
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
         // getMenuInflater().inflate(R.menu.accmgnt_optmenu, menu);
+        super.onCreateOptionsMenu(menu);
+        for(Desktop d:desktops){
+            for (DesktopItem item : d.getItems()) {
+                if(item.isImportant()){
+                    MenuItem mi = menu.add(item.getLabel());
+                    mi.setOnMenuItemClickListener(new DesktopItemClickListener(item));
+                }
+            }
+        }
         return true;
     }
 
@@ -240,18 +251,23 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+        
+        //item clicked in grid view
          if(parent == gridView){
-             lastClickedItem = getCurrentDesktopItems().get(pos);
-             lastClickedItem.run();
+             DesktopItem di = dtHashMap.get(view);
+             if(di!=null){
+                 lastClickedItem = di;
+                 lastClickedItem.run();
+             }
          }
     }
     
     
     @SuppressWarnings("unchecked")
-    List<DesktopItem> getCurrentDesktopItems(){
+    List<DesktopItem> getCurrentVisibleDesktopItems(){
         for(Desktop d:desktops){
             if(d.getLabel().equals(currTab)){
-                return d.getItems();
+                return d.getVisibleItems();
             }
         }
         return Collections.EMPTY_LIST;
@@ -278,11 +294,27 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         }
     }
 
+    public class DesktopItemClickListener implements OnMenuItemClickListener{
+
+        DesktopItem dtitem;
+        
+        public DesktopItemClickListener(DesktopItem dtitem){
+            this.dtitem = dtitem;
+        }
+        
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            lastClickedItem = dtitem;
+            lastClickedItem.run();
+            return true;
+        }
+        
+    }
     
     public class DesktopItemAdapter extends BaseAdapter {
 
         public int getCount() {
-            return getCurrentDesktopItems().size();
+            return getCurrentVisibleDesktopItems().size();
         }
 
         public Object getItem(int position) {
@@ -310,9 +342,10 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
             iv = (ImageView)view.findViewById(R.id.dt_icon);
             tv = (TextView)view.findViewById(R.id.dt_label);
             
-            DesktopItem item = getCurrentDesktopItems().get(position);
+            DesktopItem item = getCurrentVisibleDesktopItems().get(position);
             iv.setImageResource(item.getIcon());
             tv.setText(item.getLabel());
+            dtHashMap.put(view, item);
             return view;
         }
 

@@ -55,6 +55,16 @@ public class Desktop {
     public List<DesktopItem> getItems() {
         return Collections.unmodifiableList(items);
     }
+    
+    public List<DesktopItem> getVisibleItems(){
+        ArrayList<DesktopItem> list = new ArrayList<DesktopItem>();
+        for(DesktopItem di:items){
+            if(!di.isHidden()){
+                list.add(di);
+            }
+        }
+        return list;
+    }
 
     public static class IntentRun implements Runnable {
         Intent intent;
