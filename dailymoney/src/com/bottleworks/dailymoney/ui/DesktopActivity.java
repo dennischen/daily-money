@@ -2,6 +2,7 @@ package com.bottleworks.dailymoney.ui;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -228,14 +229,25 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     public boolean onCreateOptionsMenu(Menu menu) {
         // getMenuInflater().inflate(R.menu.accmgnt_optmenu, menu);
         super.onCreateOptionsMenu(menu);
+        List<DesktopItem> importants = new ArrayList<DesktopItem>();
         for(Desktop d:desktops){
             for (DesktopItem item : d.getItems()) {
-                if(item.isImportant()){
-                    MenuItem mi = menu.add(item.getLabel());
-                    mi.setOnMenuItemClickListener(new DesktopItemClickListener(item));
+                if(item.getImportant()>=0){
+                    importants.add(item);
                 }
             }
         }
+        //sort
+        Collections.sort(importants, new Comparator<DesktopItem>() {
+            public int compare(DesktopItem item1, DesktopItem item2) {
+                return Integer.valueOf(item2.getImportant()).compareTo(Integer.valueOf(item1.getImportant()));
+            }
+        });
+        for(DesktopItem item:importants){
+            MenuItem mi = menu.add(item.getLabel());
+            mi.setOnMenuItemClickListener(new DesktopItemClickListener(item));
+        }
+        
         return true;
     }
 

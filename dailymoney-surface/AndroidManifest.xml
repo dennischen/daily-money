@@ -26,6 +26,7 @@
         <activity android:name=".ui.PasswordProtectionActivity" android:theme="@style/Theme.Password" android:label="@string/title_pdprotection"/>
         <activity android:name=".ui.report.BalanceActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity android:name=".ui.AboutActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity android:name=".ui.LocalWebViewActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
         
         <activity android:name=".calculator2.Calculator" android:theme="@android:style/Theme.Black.NoTitleBar"/>
 

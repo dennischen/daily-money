@@ -16,21 +16,21 @@ public class DesktopItem {
     protected String label;
     Runnable run;
     
-    //a important item, will show to menu
-    boolean important;
+    //a important item(>=0), will show to menu (the larger number will put to front of menu)
+    int important;
     
-    //a hidden item, show not show to desktop, but still show to menu if it is importnat
+    //a hidden item, show not show to desktop, but still show to menu if it is important
     boolean hidden;
 
     public DesktopItem(Runnable run, String label) {
-        this(run, label, R.drawable.dtitem,false);
+        this(run, label, R.drawable.dtitem,-1);
     }
 
     public DesktopItem(Runnable run, String label, int icon) {
-        this(run, label, icon,false);
+        this(run, label, icon,-1);
     }
     
-    public DesktopItem(Runnable run, String label, int icon, boolean important) {
+    public DesktopItem(Runnable run, String label, int icon, int important) {
         this.run = run;
         this.label = label;
         this.icon = icon;
@@ -53,11 +53,11 @@ public class DesktopItem {
         
     }
 
-    public boolean isImportant() {
+    public int getImportant() {
         return important;
     }
 
-    public void setImportant(boolean important) {
+    public void setImportant(int important) {
         this.important = important;
     }
 

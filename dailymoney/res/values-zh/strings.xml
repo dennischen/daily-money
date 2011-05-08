@@ -182,7 +182,9 @@
     <string name="label_prefcat_others">其他</string>
     <!-- above are verified -->
     
-    
+    <!-- start from 20110508 -->
+    <string name="path_how2use">how2use_zh.html</string>
+    <string name="dtitem_how2use">如何使用</string>
 
 </resources>
 

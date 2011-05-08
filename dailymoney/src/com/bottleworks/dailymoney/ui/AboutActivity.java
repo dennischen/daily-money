@@ -17,8 +17,6 @@ public class AboutActivity extends ContextsActivity {
     WebView whatsnew;
     WebView aboutapp;
     
-    private static String LOCALURL = "file:///android_asset/";
-    
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -38,13 +36,13 @@ public class AboutActivity extends ContextsActivity {
         aboutapp.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY); 
         
         
-        whatsnew.loadUrl(LOCALURL+i18n.string(R.string.path_what_is_new));
-        aboutapp.loadUrl(LOCALURL+i18n.string(R.string.path_about_app));
+        whatsnew.loadUrl(Constants.LOCAL_URL_PREFIX+i18n.string(R.string.path_what_is_new));
+        aboutapp.loadUrl(Constants.LOCAL_URL_PREFIX+i18n.string(R.string.path_about_app));
     }
     
     private void onLinkClicked(final String path){
        whatsnew.setVisibility(View.GONE);
-       aboutapp.loadUrl(LOCALURL+path);
+       aboutapp.loadUrl(Constants.LOCAL_URL_PREFIX+path);
     }
     
     class JSCallHandler {

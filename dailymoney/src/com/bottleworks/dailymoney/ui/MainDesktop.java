@@ -32,7 +32,7 @@ public class MainDesktop extends AbstractDesktop {
                 intent.putExtra(DetailEditorActivity.INTENT_DETAIL,d);
                 activity.startActivityForResult(intent,Constants.REQUEST_DETAIL_EDITOR_CODE);
             }
-        }, i18n.string(R.string.dtitem_adddetail), R.drawable.dtitem_adddetail,true);
+        }, i18n.string(R.string.dtitem_adddetail), R.drawable.dtitem_adddetail,999);
 
         Intent intent = new Intent(activity, DetailListActivity.class);
         intent.putExtra(DetailListActivity.INTENT_MODE, DetailListActivity.MODE_DAY);
@@ -63,8 +63,14 @@ public class MainDesktop extends AbstractDesktop {
         DesktopItem prefdt = new DesktopItem(new ActivityRun(activity, PrefsActivity.class),
                 i18n.string(R.string.dtitem_prefs), R.drawable.dtitem_prefs);
         
+        intent = new Intent(activity, LocalWebViewActivity.class);
+        intent.putExtra(LocalWebViewActivity.INTENT_URI_ID, R.string.path_how2use);
+        DesktopItem how2use = new DesktopItem(new IntentRun(activity, intent),
+                i18n.string(R.string.dtitem_how2use),-1,0);
+        how2use.setHidden(true);
+        
         DesktopItem aboutdt = new DesktopItem(new ActivityRun(activity, AboutActivity.class),
-                i18n.string(R.string.dtitem_about), R.drawable.dtitem_about,true);
+                i18n.string(R.string.dtitem_about), R.drawable.dtitem_about,0);
         
         addItem(adddetdt);
         addItem(daylist);
@@ -74,6 +80,9 @@ public class MainDesktop extends AbstractDesktop {
         addItem(accmgntdt);
         addItem(datamaindt);
         addItem(prefdt);
+        
+        addItem(how2use);
+        
         addItem(aboutdt);
     }
 
