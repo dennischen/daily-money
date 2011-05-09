@@ -78,6 +78,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         initPasswordProtection();
         loadDesktop();
         loadInfo();
+        loadWhatisNew();
     }
     
     @Override
@@ -192,6 +193,15 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         gridViewAdapter.notifyDataSetChanged();
     }
     
+    private void loadWhatisNew(){
+        if(protectionInfront) return;
+        if(getContexts().isFirstVersionTime()){
+            Intent intent = new Intent(this, LocalWebViewDlg.class);
+            intent.putExtra(LocalWebViewDlg.INTENT_URI_ID, R.string.path_what_is_new);
+            startActivity(intent);
+        }
+    }
+    
     private void loadInfo(){
         Date now = new Date();
         Date start = calHelper.weekStartDate(now);
@@ -297,7 +307,13 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
                 protectionPassed = false;
             }else{
                 protectionPassed = true;
-                dtLayout.setVisibility(View.VISIBLE);
+                GUIs.delayPost(new Runnable(){
+                    @Override
+                    public void run() {
+                        dtLayout.setVisibility(View.VISIBLE);
+                        loadWhatisNew();
+                    }});
+               
             }
         }else{
             if(lastClickedItem!=null){

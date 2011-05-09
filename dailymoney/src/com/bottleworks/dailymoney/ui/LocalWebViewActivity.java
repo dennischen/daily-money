@@ -20,24 +20,23 @@ public class LocalWebViewActivity extends ContextsActivity {
     WebView webView;
     
     
-    
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.webview);
-        
+        initWebView();
+        initInit();
+    }
+
+    private void initWebView() {
         webView = (WebView)findViewById(R.id.webview);
         
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(new JSCallHandler(),"dmctrl");
         webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY); 
-        
-        initInit();
-        
-        
     }
-    
+
     private void initInit() {
         Bundle bundle = getIntentExtras();
         String uri = null;
@@ -51,6 +50,8 @@ public class LocalWebViewActivity extends ContextsActivity {
         String title = bundle.getString(INTENT_TITLE);
         if(title!=null){
             this.setTitle(title);
+            //to late to set here?
+//            this.setTheme(android.R.style.Theme_Dialog);
         }
         
         webView.loadUrl(Constants.LOCAL_URL_PREFIX+uri);
