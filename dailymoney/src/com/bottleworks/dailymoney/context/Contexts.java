@@ -55,6 +55,7 @@ public class Contexts {
     int pref_detailListLayout = 2;
     int pref_maxRecords = -1;//-1 is no limit
     int pref_firstdayWeek = 1;//sunday
+    int pref_startdayMonth = 1;//
     boolean pref_openTestsDesktop = false;
     String pref_workingFolder = "bwDailyMoney";
     boolean pref_backupCSV = true;
@@ -364,6 +365,9 @@ public class Contexts {
             pref_firstdayWeek = Integer.parseInt(prefs.getString(Constants.PREFS_FIRSTDAY_WEEK,  String.valueOf(pref_firstdayWeek)));
         }catch(Exception x){Logger.e(x.getMessage());}
         try{
+            pref_startdayMonth = Integer.parseInt(prefs.getString(Constants.PREFS_STARTDAY_MONTH,  String.valueOf(pref_startdayMonth)));
+        }catch(Exception x){Logger.e(x.getMessage());}
+        try{
             pref_maxRecords = Integer.parseInt(prefs.getString(Constants.PREFS_MAX_RECORDS,String.valueOf(pref_maxRecords)));
         }catch(Exception x){Logger.e(x.getMessage());}
         try{
@@ -387,13 +391,15 @@ public class Contexts {
         if(DEBUG){
             Logger.d("preference : detail layout "+pref_detailListLayout);
             Logger.d("preference : firstday of week "+pref_firstdayWeek);
+            Logger.d("preference : startday of month "+pref_startdayMonth);
             Logger.d("preference : max records "+pref_maxRecords);
             Logger.d("preference : open tests desktop "+pref_openTestsDesktop);
             Logger.d("preference : open working_folder "+pref_workingFolder);
             Logger.d("preference : backup csv "+pref_backupCSV);
             Logger.d("preference : csv encoding "+pref_csvEncoding);
         }
-        calendarHelper.setFirstDayOfWeek(pref_firstdayWeek);
+        calendarHelper.setFirstDayOfWeek(getPrefFirstdayWeek());
+        calendarHelper.setStartDayOfMonth(getPrefStartdayMonth());
     }
     
     public String getPrefPassword(){
@@ -426,6 +432,9 @@ public class Contexts {
     
     public int getPrefFirstdayWeek(){
         return pref_firstdayWeek;
+    }
+    public int getPrefStartdayMonth(){
+        return pref_startdayMonth>28?28:(pref_startdayMonth<1?1:pref_startdayMonth);
     }
     
     public boolean isPrefOpenTestsDesktop(){

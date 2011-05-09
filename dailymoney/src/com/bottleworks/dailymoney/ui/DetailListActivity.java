@@ -269,6 +269,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
             }
             @Override
             public void onBusyFinish() {
+                final CalendarHelper cal = getContexts().getCalendarHelper();
                 sumUnknowView.setVisibility(TextView.GONE);
               //update data
                 detailListHelper.reloadData(data);
@@ -311,7 +312,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
                     infoView.setText(i18n.string(R.string.label_all_details,Integer.toString(count)));
                     break;
                 case MODE_MONTH:
-                    infoView.setText(i18n.string(R.string.label_month_details,monthDateFormat.format(currentDate),Integer.toString(count)));
+                    infoView.setText(i18n.string(R.string.label_month_details,monthDateFormat.format(cal.monthStartDate(currentDate)),Integer.toString(count)));
                     break;
                 case MODE_DAY:
                     infoView.setText(i18n.string(R.string.label_day_details,dayDateFormat.format(currentDate),Integer.toString(count)));

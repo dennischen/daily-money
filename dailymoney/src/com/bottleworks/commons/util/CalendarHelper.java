@@ -14,6 +14,7 @@ import java.util.TimeZone;
 public class CalendarHelper {
 
     private int firstDayOfWeek = 1;//1 SUN, 2 MON..etc
+    private int startDayOfMonth = 1;//between 1-28
     
     private TimeZone timeZone;
 
@@ -26,6 +27,17 @@ public class CalendarHelper {
 
     public void setFirstDayOfWeek(int firstDayOfWeek) {
         this.firstDayOfWeek = firstDayOfWeek;
+    }
+    
+    public int getStartDayOfMonth() {
+        return startDayOfMonth;
+    }
+
+    public void setStartDayOfMonth(int startDayOfMonth) {
+        if(startDayOfMonth<1||startDayOfMonth>28){
+            throw new IllegalArgumentException("the value of startDayOfMonth must between 1-28");
+        }
+        this.startDayOfMonth = startDayOfMonth;
     }
 
     public TimeZone getTimeZone() {
@@ -143,14 +155,42 @@ public class CalendarHelper {
         Calendar cal = calendar(d);
         return cal.get(Calendar.WEEK_OF_YEAR);
     }
-
+    
     public Date monthStartDate(Date d) {
+        if(startDayOfMonth==1){
+            return absMonthStartDate(d);
+        }
+        
         Calendar cal = calendar(d);
-        cal.set(Calendar.DAY_OF_MONTH, 1);
+        int cd = cal.get(Calendar.DAY_OF_MONTH);
+        if(cd<startDayOfMonth){
+            cal.add(Calendar.MONTH, -1);
+        }
+        cal.set(Calendar.DAY_OF_MONTH, startDayOfMonth);
+        
+        
         return toDayStart(cal);
     }
 
     public Date monthEndDate(Date d) {
+        if(startDayOfMonth==1){
+            return absMonthEndDate(d);
+        }
+        d = monthStartDate(d);
+        Calendar cal = calendar(d);
+
+        cal.add(Calendar.MONTH, 1);//add 1 month
+        cal.add(Calendar.DAY_OF_MONTH, -1);//minus 1 day
+        return toDayEnd(cal);
+    }
+
+    public Date absMonthStartDate(Date d) {
+        Calendar cal = calendar(d);
+        cal.set(Calendar.DAY_OF_MONTH, startDayOfMonth);
+        return toDayStart(cal);
+    }
+
+    public Date absMonthEndDate(Date d) {
         Calendar cal = calendar(d);
         int last = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         cal.set(Calendar.DAY_OF_MONTH, last);
@@ -213,11 +253,11 @@ public class CalendarHelper {
     }
     
     public boolean isPastMonth(Date base,Date d2){
-        return monthStartDate(base).after(d2);
+        return absMonthStartDate(base).after(d2);
     }
     
     public boolean isFutureMonth(Date base, Date d2){
-        return monthEndDate(base).before(d2);
+        return absMonthEndDate(base).before(d2);
     }
     
     public boolean isSameWeek(Date d1,Date d2){

@@ -8,6 +8,8 @@
  * 38: i18n, zh_rCN
  * 49: Russian translation
  * 51: Allow ADW-Launcher to directly open DetailEditorActivity
+ *   : Italian translation.
+ * 45: Able to set start day of month
 === Bugs ===
  * 34: Color issues when editing account
  -- not released version

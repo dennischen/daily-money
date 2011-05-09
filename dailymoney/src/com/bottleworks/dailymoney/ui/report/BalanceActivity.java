@@ -321,6 +321,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
             @Override
             public void onBusyFinish() {
+                final CalendarHelper cal = getContexts().getCalendarHelper();
                 listViewData.clear();
                 listViewData.addAll(all);
                 listViewMapList.clear();
@@ -340,13 +341,13 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 // update info
                 if(totalMode){
                     if(mode==MODE_MONTH){
-                        infoView.setText(i18n.string(R.string.label_balance_mode_month_total, monthDateFormat.format(currentDate)));
+                        infoView.setText(i18n.string(R.string.label_balance_mode_month_total, monthDateFormat.format(cal.monthStartDate(currentDate))));
                     }else if(mode==MODE_YEAR){
                         infoView.setText(i18n.string(R.string.label_balance_mode_year_total, yearDateFormat.format(currentDate)));
                     }
                 }else{
                     if(mode==MODE_MONTH){
-                        infoView.setText(i18n.string(R.string.label_balance_mode_month,monthDateFormat.format(currentDate)));
+                        infoView.setText(i18n.string(R.string.label_balance_mode_month,monthDateFormat.format(cal.monthStartDate(currentDate))));
                     }else if(mode==MODE_YEAR){
                         infoView.setText(i18n.string(R.string.label_balance_mode_year,yearDateFormat.format(currentDate)));
                     }

@@ -186,5 +186,7 @@
     <string name="path_how2use">how2use_zh.html</string>
     <string name="dtitem_how2use">如何使用</string>
     <string name="label_what_is_new">有什麼新功能</string>
+    <string name="label_prefs_startday_month">月的第一天</string>
+    <string name="label_prefs_startday_month_sum">設定每個月的第一天(數值在1 - 28)中間</string>
 </resources>
 
