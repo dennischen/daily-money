@@ -134,10 +134,10 @@
     <string name="label_balance_tliability">Bilancio Debiti</string>
     <string name="label_balance_tother">Bilancio Altro</string>
     
-    <string name="label_balance_mode_month">Bilancio mese %1$s</string>
+    <string name="label_balance_mode_month">%1$s (%2$s-%3$s)</string>
     <string name="label_balance_mode_year">Bilancio anno %1$s</string>
     
-    <string name="label_balance_mode_month_total">Bilancio fino al mese %1$s</string>
+    <string name="label_balance_mode_month_total">fino al %1$s (%2$s)</string>
     <string name="label_balance_mode_year_total">Bilancio fino all&#8217;anno %1$s</string>
     
     <string name="dtitem_report_monthly_balance">Bilancio mensile</string>

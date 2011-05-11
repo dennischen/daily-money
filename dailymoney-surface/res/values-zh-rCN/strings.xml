@@ -129,11 +129,11 @@
     <string name="label_balance_tliability">债务总计</string>
     <string name="label_balance_tother">其他总计</string>
     
-    <string name="label_balance_mode_month">%1$s - 月结算</string>
+    <string name="label_balance_mode_month">%1$s - (%2$s-%3$s)</string>
     <string name="label_balance_mode_year">%1$s - 年结算</string>
     
-    <string name="label_balance_mode_month_total">到%1$s月底</string>
-    <string name="label_balance_mode_year_total">到%1$s年底</string>
+    <string name="label_balance_mode_month_total">到 %1$s(%2$s)</string>
+    <string name="label_balance_mode_year_total">到 %1$s年底</string>
     
     <string name="dtitem_report_monthly_balance">月份结算</string>
     <string name="dtitem_report_yearly_balance">年结算</string>

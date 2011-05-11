@@ -65,6 +65,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     private int mode = MODE_MONTH;
     private boolean totalMode = false;
 
+    private DateFormat monthDayDateFormat;
     private DateFormat monthDateFormat;
     private DateFormat yearDateFormat;
     
@@ -113,7 +114,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     }
 
     private void initialContent() {
-
+        monthDayDateFormat = new SimpleDateFormat("MM/dd");
         monthDateFormat = new SimpleDateFormat("yyyy/MM");
         yearDateFormat = new SimpleDateFormat("yyyy");
 
@@ -341,13 +342,15 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 // update info
                 if(totalMode){
                     if(mode==MODE_MONTH){
-                        infoView.setText(i18n.string(R.string.label_balance_mode_month_total, monthDateFormat.format(cal.monthStartDate(currentDate))));
+                        infoView.setText(i18n.string(R.string.label_balance_mode_month_total, monthDateFormat.format(cal.monthStartDate(currentDate)),
+                                monthDayDateFormat.format(cal.monthEndDate(currentDate))));
                     }else if(mode==MODE_YEAR){
                         infoView.setText(i18n.string(R.string.label_balance_mode_year_total, yearDateFormat.format(currentDate)));
                     }
                 }else{
                     if(mode==MODE_MONTH){
-                        infoView.setText(i18n.string(R.string.label_balance_mode_month,monthDateFormat.format(cal.monthStartDate(currentDate))));
+                        infoView.setText(i18n.string(R.string.label_balance_mode_month,monthDateFormat.format(cal.monthStartDate(currentDate)),
+                                monthDayDateFormat.format(cal.monthStartDate(currentDate)),monthDayDateFormat.format(cal.monthEndDate(currentDate))));
                     }else if(mode==MODE_YEAR){
                         infoView.setText(i18n.string(R.string.label_balance_mode_year,yearDateFormat.format(currentDate)));
                     }

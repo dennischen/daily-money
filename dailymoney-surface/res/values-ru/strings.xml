@@ -134,10 +134,10 @@
     <string name="label_balance_tliability">Обязательство баланса</string>
     <string name="label_balance_tother">Другое в балансе</string>
     
-    <string name="label_balance_mode_month">Баланс за месяц %1$s</string>
+    <string name="label_balance_mode_month">за %1$s (%2$s-%3$s)</string>
     <string name="label_balance_mode_year">Баланс за год %1$s</string>
     
-    <string name="label_balance_mode_month_total">Баланс до %1$s месяца</string>
+    <string name="label_balance_mode_month_total">до %1$s (%2$s)</string>
     <string name="label_balance_mode_year_total">Баланс до %1$s года</string>
     
     <string name="dtitem_report_monthly_balance">Ежемесячный баланс</string>

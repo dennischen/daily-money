@@ -134,10 +134,10 @@
     <string name="label_balance_tliability">Liability balance</string>
     <string name="label_balance_tother">Other balance</string>
     
-    <string name="label_balance_mode_month">Balance in month %1$s</string>
+    <string name="label_balance_mode_month">In %1$s (%2$s-%3$s)</string>
     <string name="label_balance_mode_year">Balance in year %1$s</string>
     
-    <string name="label_balance_mode_month_total">Balance until month %1$s</string>
+    <string name="label_balance_mode_month_total">Until %1$s (-%2$s)</string>
     <string name="label_balance_mode_year_total">Balance until year %1$s</string>
     
     <string name="dtitem_report_monthly_balance">Monthly balance</string>
