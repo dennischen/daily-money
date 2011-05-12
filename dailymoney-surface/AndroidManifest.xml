@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.bottleworks.dailymoney"
-      android:versionCode="110050802" android:versionName="0.9.6-0508-freshly"
+      android:versionCode="11050802" android:versionName="0.9.6-0508-freshly"
       android:installLocation="auto"
       >
     <application android:icon="@drawable/app_icon" android:label="@string/app_name">
