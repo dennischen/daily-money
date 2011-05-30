@@ -42,4 +42,7 @@
     <string name="cmsg_field_zero">%1$s 是零</string>  
     <string name="clabel_all">全部</string>
 	 <!-- above are verified -->
+	 
+	  <!-- start from 20110530 -->
+    <string name="clabel_default">預設</string>
 </resources>

@@ -11,7 +11,7 @@ import com.bottleworks.dailymoney.context.Contexts;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import static com.bottleworks.dailymoney.data.SQLiteMeta.*;
+import static com.bottleworks.dailymoney.data.DataMeta.*;
 
 /**
  * 
@@ -20,10 +20,10 @@ import static com.bottleworks.dailymoney.data.SQLiteMeta.*;
  */
 public class SQLiteDataProvider implements IDataProvider {
 
-    SQLiteHelper helper;
+    SQLiteDataHelper helper;
     CalendarHelper calHelper;
 
-    public SQLiteDataProvider(SQLiteHelper helper,CalendarHelper calHelper) {
+    public SQLiteDataProvider(SQLiteDataHelper helper,CalendarHelper calHelper) {
         this.helper = helper;
         this.calHelper = calHelper;
     }
@@ -244,7 +244,7 @@ public class SQLiteDataProvider implements IDataProvider {
     public synchronized int nextDetailId(){
         if(!detId_set){
             SQLiteDatabase db = helper.getReadableDatabase();
-            Cursor c = db.rawQuery("SELECT MAX("+SQLiteMeta.COL_DET_ID+") FROM "+SQLiteMeta.TB_DET,null);
+            Cursor c = db.rawQuery("SELECT MAX("+DataMeta.COL_DET_ID+") FROM "+DataMeta.TB_DET,null);
             if(c.moveToNext()){
                 detId = c.getInt(0);
             }

@@ -5,7 +5,7 @@ package com.bottleworks.dailymoney.data;
  * @author dennis
  * 
  */
-public class SQLiteMeta {
+public class DataMeta {
 
     public static final String TB_ACC = "dm_acc";
 

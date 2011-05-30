@@ -25,5 +25,10 @@
     <string name="cmsg_field_zero">%1$s is zero</string> 
      <string name="clabel_all">All</string>
     <!-- above are verified --> 
-
+    
+    <!-- start from 20110530 -->
+    <string name="clabel_default">Default</string>
+    
+    
+    
 </resources>

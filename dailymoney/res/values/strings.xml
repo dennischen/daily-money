@@ -190,5 +190,15 @@
     <string name="label_what_is_new">What is new</string>
     <string name="label_prefs_startday_month">Start day of month</string>
     <string name="label_prefs_startday_month_sum">Set the start day of month(between 1 - 28)</string>
+    
+    <!-- start from 20110530 -->
+    <string name="label_default_book_symbol">$</string>
+    <string name="label_symbol">Symbol</string>
+    <string name="label_symbol_infront">In front</string>
+    <string name="title_bookeditor_create">Create Book</string>
+    <string name="title_bookeditor_update">Update Book</string>
+    <string name="msg_book_created">Book %1$s was created</string>
+    <string name="msg_book_updated">Book %1$s was updated</string>
+    
 </resources>
 

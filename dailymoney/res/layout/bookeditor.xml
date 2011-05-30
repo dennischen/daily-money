@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="6">
+	   <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
+			<TextView android:text="@string/clabel_name" android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:layout_marginLeft="5dp" />
+			<EditText android:id="@+id/bookeditor_name" android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:inputType="text" android:layout_marginLeft="20dp" android:layout_marginRight="20dp" />
+
+            <TextView android:text="@string/label_symbol" android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
+            <EditText android:id="@+id/bookeditor_symbol" android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:inputType="text" android:layout_marginLeft="20dp" android:layout_marginRight="20dp" />
+			
+            <CheckBox android:id="@+id/bookeditor_symbol_infront" android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:text="@string/label_symbol_infront" android:layout_marginLeft="20dp" android:layout_marginRight="20dp" />
+		     
+		    <TextView android:text="@string/label_note" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
+            <EditText android:id="@+id/bookeditor_note" android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:maxLines="2" android:layout_marginLeft="20dp" android:layout_marginRight="20dp" /> 
+        </LinearLayout>
+    </ScrollView>
+	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"  android:layout_weight="1"
+		android:layout_marginTop="10dp">
+		<Button android:id="@+id/btn_ok" android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_weight="1" android:text="@string/cact_ok"/>
+		<Button android:id="@+id/btn_cancel" android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_weight="1" android:text="@string/cact_cancel"  android:drawableLeft="@drawable/btn_cancel" />
+	</LinearLayout>
+</LinearLayout>

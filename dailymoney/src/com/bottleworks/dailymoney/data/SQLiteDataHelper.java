@@ -6,14 +6,14 @@ import com.bottleworks.dailymoney.context.Contexts;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import static com.bottleworks.dailymoney.data.SQLiteMeta.*;
+import static com.bottleworks.dailymoney.data.DataMeta.*;
 
 /**
  * 
  * @author dennis
  *
  */
-public class SQLiteHelper extends SQLiteOpenHelper{
+public class SQLiteDataHelper extends SQLiteOpenHelper{
     /** maintain this field carefully*/
 //    private static final int VERSION = 4;//0.9.1-0.9.3
     private static final int VERSION = 5;//0.9.4-0.9.5
@@ -41,7 +41,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
     private static final String DET_DROP_SQL = "DROP TABLE IF EXISTS "+TB_DET;
     
     
-    public SQLiteHelper(Context context,String dbname) {
+    public SQLiteDataHelper(Context context,String dbname) {
         super(context, dbname, null, VERSION);
     }
 

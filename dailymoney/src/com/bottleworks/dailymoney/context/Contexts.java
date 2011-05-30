@@ -27,9 +27,13 @@ import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.core.R;
+import com.bottleworks.dailymoney.data.Book;
 import com.bottleworks.dailymoney.data.IDataProvider;
+import com.bottleworks.dailymoney.data.IMasterDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteDataProvider;
-import com.bottleworks.dailymoney.data.SQLiteHelper;
+import com.bottleworks.dailymoney.data.SQLiteDataHelper;
+import com.bottleworks.dailymoney.data.SQLiteMasterDataHelper;
+import com.bottleworks.dailymoney.data.SQLiteMasterDataProvider;
 import com.bottleworks.dailymoney.ui.Constants;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
@@ -47,11 +51,10 @@ public class Contexts {
     private Activity uiActivity;
     
     private IDataProvider dataProvider;
+    private IMasterDataProvider masterDataProvider;
     private I18N i18n;
     
-    @Deprecated
-    boolean pref_useImpPovider = false;
-    
+    int pref_selectedBookId = 0;//the book user selected
     int pref_detailListLayout = 2;
     int pref_maxRecords = -1;//-1 is no limit
     int pref_firstdayWeek = 1;//sunday
@@ -72,6 +75,8 @@ public class Contexts {
     private static final int ANALYTICS_DISPATH_DELAY = 60;// dispatch queue at least 60s
     
     private GoogleAnalyticsTracker tracker;
+    
+    private String currencySymbol = "$";
     
     private boolean prefsDirty = true;
     
@@ -104,6 +109,7 @@ public class Contexts {
                 reloadPreference();
                 prefsDirty = false;
             }
+            initMasterDataProvider(uiActivity);
             initDataProvider(uiActivity);
             return true;
         }
@@ -114,6 +120,7 @@ public class Contexts {
         if(this.uiActivity == activity){
             this.uiActivity = null;
             cleanDataProvider(uiActivity);
+            cleanMasterDataProvider(uiActivity);
             Logger.d(">>>cleanup activity "+activity);
             return true;
         }
@@ -225,6 +232,10 @@ public class Contexts {
     }
     public boolean shareTextContent(String subject,String text,List<File> attachments){
         return shareContent(subject,text,false,attachments);
+    }
+    
+    public String getCurrencySymbol(){
+        return currencySymbol;
     }
 
     
@@ -343,8 +354,9 @@ public class Contexts {
     
     private void reloadPreference() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        
         try{
-            pref_useImpPovider = prefs.getBoolean(Constants.PREFS_USE_INMENORY_PROVIDER, pref_useImpPovider);
+            pref_selectedBookId = Integer.parseInt(prefs.getString(Constants.PREFS_SELECTED_BOOK_ID, String.valueOf(pref_selectedBookId)));
         }catch(Exception x){Logger.e(x.getMessage());}
         
         try{
@@ -402,6 +414,10 @@ public class Contexts {
         calendarHelper.setStartDayOfMonth(getPrefStartdayMonth());
     }
     
+    public int getSelectedBookId(){
+        return pref_selectedBookId;
+    }
+    
     public String getPrefPassword(){
         return pref_password;
     }
@@ -451,13 +467,11 @@ public class Contexts {
     }
 
     private void initDataProvider(Context context) {
-        if(pref_useImpPovider){
-//            dataProvider = new InMemoryDataProvider();
-            dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"),calendarHelper);
-        }else{
-            dataProvider = new SQLiteDataProvider(new SQLiteHelper(context,"dm.db"),calendarHelper);
+        String dbname = "dm.db";
+        if(pref_selectedBookId>0){
+            dbname = "db"+pref_selectedBookId+".db";
         }
-        
+        dataProvider = new SQLiteDataProvider(new SQLiteDataHelper(context,dbname),calendarHelper);
         dataProvider.init();
         if(DEBUG){
             Logger.d("initDataProvider :"+dataProvider);
@@ -473,6 +487,31 @@ public class Contexts {
         }
     }
     
+    private void initMasterDataProvider(Context context) {
+        String dbname = "dm-master.db";
+        masterDataProvider = new SQLiteMasterDataProvider(new SQLiteMasterDataHelper(context,dbname),calendarHelper);
+        masterDataProvider.init();
+        if(DEBUG){
+            Logger.d("masterDataProvider :"+masterDataProvider);
+        }
+        //create selected book if not exist;
+        Book book = masterDataProvider.findBook(getSelectedBookId());
+        if(book==null){
+            book = new Book(i18n.string(R.string.clabel_default),i18n.string(R.string.label_default_book_symbol),true,"default book");
+            masterDataProvider.newBookNoCheck(getSelectedBookId(), book);
+        }
+        currencySymbol = book.getSymbol();
+    }
+    public void cleanMasterDataProvider(Context context){
+        if(masterDataProvider!=null){
+            if(DEBUG){
+                Logger.d("cleanmasterDataProvider :"+masterDataProvider);
+            }
+            masterDataProvider.destroyed();
+            masterDataProvider = null;
+        }
+    }
+    
     public int getOrientation(){
         if(appContext==null){
             return Configuration.ORIENTATION_UNDEFINED;
@@ -485,6 +524,13 @@ public class Contexts {
             throw new IllegalStateException("no available dataProvider, di you get data provider out of life cycle");
         }
         return dataProvider;
+    }
+    
+    public IMasterDataProvider getMasterDataProvider(){
+        if(masterDataProvider==null){
+            throw new IllegalStateException("no available dataProvider, di you get data provider out of life cycle");
+        }
+        return masterDataProvider;
     }
 
     public void setPreferenceDirty() {

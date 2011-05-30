@@ -4,12 +4,15 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.context.Contexts;
+import com.bottleworks.dailymoney.data.Book;
 import com.bottleworks.dailymoney.data.DataCreator;
+import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
 /**
  * 
@@ -32,6 +35,36 @@ public class TestsDesktop extends AbstractDesktop {
     protected void init() {
         label = i18n.string(R.string.dt_tests);
         icon = R.drawable.tab_tests;
+        
+        
+        DesktopItem dt = new DesktopItem(new Runnable() {
+            public void run() {
+                Contexts ctx = Contexts.instance(); 
+                Book book = ctx.getMasterDataProvider().findBook(ctx.getSelectedBookId());
+                
+                Intent intent = null;
+                intent = new Intent(activity,BookEditorActivity.class);
+                intent.putExtra(BookEditorActivity.INTENT_MODE_CREATE,false);
+                intent.putExtra(BookEditorActivity.INTENT_BOOK,book);
+                activity.startActivityForResult(intent,Constants.REQUEST_BOOK_EDITOR_CODE);
+            }
+        }, "Edit selected book", R.drawable.dtitem_test);
+        
+        addItem(dt);
+        
+        dt = new DesktopItem(new Runnable() {
+            public void run() {
+                Book book = new Book("test","$",false,"");
+                Intent intent = null;
+                intent = new Intent(activity,BookEditorActivity.class);
+                intent.putExtra(BookEditorActivity.INTENT_MODE_CREATE,true);
+                intent.putExtra(BookEditorActivity.INTENT_BOOK,book);
+                activity.startActivityForResult(intent,Constants.REQUEST_BOOK_EDITOR_CODE);
+            }
+        }, "Add book", R.drawable.dtitem_test);
+        
+        addItem(dt);
+        
         
         addItem(new DesktopItem(new Runnable(){
             @Override
