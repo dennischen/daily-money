@@ -20,8 +20,8 @@ public class SQLiteMasterDataHelper extends SQLiteOpenHelper{
     private static final String BOOK_CREATE_SQL = "CREATE TABLE " + TB_BOOK + " (" 
             + COL_BOOK_ID + " TEXT PRIMARY KEY, "
             + COL_BOOK_NAME +" TEXT NOT NULL, "
-            + COL_BOOK_SYMBOL+" TEXT NOT NULL, "
-            + COL_BOOK_SYMBOL_INFRONT+" INTEGER NULL, "
+            + COL_BOOK_SYMBOL+" TEXT NULL, "
+            + COL_BOOK_SYMBOL_POSITION+" INTEGER NOT NULL, "
             + COL_BOOK_NOTE+" TEXT)";
     private static final String BOOK_DROP_SQL = "DROP TABLE IF EXISTS "+TB_BOOK;
     

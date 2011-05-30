@@ -9,15 +9,18 @@ public class Book implements Serializable {
     int id = 0;
     String name = "Default";
     String symbol = "$";
-    boolean symboInFront = true;
+    /**
+     * 0: none, 1, infront, 2 after
+     */
+    SymbolPosition symbolPosition = SymbolPosition.NONE;
     String note = "";
 
     Book(){}
 
-    public Book(String name,String symbol,boolean symboInFront,String note) {
+    public Book(String name,String symbol,SymbolPosition symbolPosition,String note) {
         this.name = name;
         this.symbol = symbol;
-        this.symboInFront = symboInFront;
+        this.symbolPosition = symbolPosition;
         this.note = note;
     }
 
@@ -45,12 +48,12 @@ public class Book implements Serializable {
         this.symbol = symbol;
     }
 
-    public boolean isSymboInFront() {
-        return symboInFront;
+    public SymbolPosition getSymbolPosition() {
+        return symbolPosition;
     }
 
-    public void setSymboInFront(boolean symboInFront) {
-        this.symboInFront = symboInFront;
+    public void setSymbolPosition(SymbolPosition symbolPosition) {
+        this.symbolPosition = symbolPosition;
     }
 
     public String getNote() {

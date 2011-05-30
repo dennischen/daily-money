@@ -13,9 +13,11 @@
             <EditText android:id="@+id/bookeditor_symbol" android:layout_width="fill_parent" android:layout_height="wrap_content"
                 android:inputType="text" android:layout_marginLeft="20dp" android:layout_marginRight="20dp" />
 			
-            <CheckBox android:id="@+id/bookeditor_symbol_infront" android:layout_width="fill_parent" android:layout_height="wrap_content"
-                android:text="@string/label_symbol_infront" android:layout_marginLeft="20dp" android:layout_marginRight="20dp" />
-		     
+            <TextView android:text="@string/label_symbol_position" android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
+            <Spinner android:id="@+id/bookeditor_symbol_position" android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp" android:layout_marginRight="20dp" />
+                
 		    <TextView android:text="@string/label_note" android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp" />
             <EditText android:id="@+id/bookeditor_note" android:layout_width="fill_parent" android:layout_height="wrap_content"

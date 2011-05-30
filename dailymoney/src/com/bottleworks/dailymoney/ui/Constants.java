@@ -5,7 +5,7 @@ package com.bottleworks.dailymoney.ui;
  *
  */
 public class Constants {
-    static final public String PREFS_SELECTED_BOOK_ID = "selected_book_id";
+    static final public String PREFS_WORKING_BOOK_ID = "selected_book_id";
     static final public String PREFS_PASSWORD = "password";
     static final public String PREFS_PASSWORDVD = "passwordvd";
     static final public String PREFS_USE_INMENORY_PROVIDER = "use_improvider"; 

@@ -5,6 +5,8 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.bottleworks.dailymoney.data.SymbolPosition;
 /**
  * 
  * @author dennis
@@ -67,11 +69,19 @@ public class Formats {
         return norDatetimeFormat.parse(date);
     }
 
-    public static String money2String(Double money) {
-        return money2String(money==null?0D:money.doubleValue());
+    public static String money2String(Double money,String symbol,SymbolPosition pos) {
+        return money2String(money==null?0D:money.doubleValue(),symbol,pos);
     }
     
-    public static String money2String(double money) {
-        return moneyFormat.format(money);
+    public static String money2String(double money,String symbol,SymbolPosition pos) {
+        StringBuilder sb = new StringBuilder();
+        if(SymbolPosition.FRONT.equals(pos) && symbol!=null){
+            sb.append(symbol);
+        }
+        sb.append(moneyFormat.format(money));
+        if(SymbolPosition.AFTER.equals(pos) && symbol!=null){
+            sb.append(symbol);
+        }
+        return sb.toString();
     }
 }

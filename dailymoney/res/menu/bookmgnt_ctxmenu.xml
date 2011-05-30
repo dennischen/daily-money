@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/bookmgnt_menu_set_working" android:title="@string/cat_set_working_book" android:icon="@drawable/btn_edit"></item>  
+<item android:id="@+id/bookmgnt_menu_edit" android:title="@string/cact_edit" android:icon="@drawable/btn_edit"></item>
+<item android:id="@+id/bookmgnt_menu_delete" android:title="@string/cact_delete" android:icon="@drawable/btn_delete"></item>
+</menu>

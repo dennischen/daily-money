@@ -275,27 +275,27 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
                 detailListHelper.reloadData(data);
                 int showcount = 0;
                 if(income!=0){
-                    sumIncomeView.setText(i18n.string(R.string.label_detlist_sum_income,Formats.money2String(income)));
+                    sumIncomeView.setText(i18n.string(R.string.label_detlist_sum_income,getContexts().toFormattedMoneyString((income))));
                     sumIncomeView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
                 if(expense!=0){
-                    sumExpenseView.setText(i18n.string(R.string.label_detlist_sum_expense,Formats.money2String(expense)));
+                    sumExpenseView.setText(i18n.string(R.string.label_detlist_sum_expense,getContexts().toFormattedMoneyString((expense))));
                     sumExpenseView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
                 if(asset!=0){
-                    sumAssetView.setText(i18n.string(R.string.label_detlist_sum_asset,Formats.money2String(asset)));
+                    sumAssetView.setText(i18n.string(R.string.label_detlist_sum_asset,getContexts().toFormattedMoneyString((asset))));
                     sumAssetView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
                 if(liability!=0){
-                    sumLiabilityView.setText(i18n.string(R.string.label_detlist_sum_liability,Formats.money2String(liability)));
+                    sumLiabilityView.setText(i18n.string(R.string.label_detlist_sum_liability,getContexts().toFormattedMoneyString((liability))));
                     sumLiabilityView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
                 if(other!=0){
-                    sumOtherView.setText(i18n.string(R.string.label_detlist_sum_other,Formats.money2String(other)));
+                    sumOtherView.setText(i18n.string(R.string.label_detlist_sum_other,getContexts().toFormattedMoneyString((other))));
                     sumOtherView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }

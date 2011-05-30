@@ -14,6 +14,7 @@ import com.bottleworks.dailymoney.data.Book;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
+import com.bottleworks.dailymoney.data.SymbolPosition;
 /**
  * 
  * @author dennis
@@ -36,11 +37,32 @@ public class TestsDesktop extends AbstractDesktop {
         label = i18n.string(R.string.dt_tests);
         icon = R.drawable.tab_tests;
         
-        
-        DesktopItem dt = new DesktopItem(new Runnable() {
+        DesktopItem dt = null;
+        dt = new DesktopItem(new Runnable() {
             public void run() {
                 Contexts ctx = Contexts.instance(); 
-                Book book = ctx.getMasterDataProvider().findBook(ctx.getSelectedBookId());
+                ctx.getMasterDataProvider().reset();
+            }
+        }, "Reset Master Dataprovider", R.drawable.dtitem_test);
+        
+        addItem(dt);
+        
+        dt = new DesktopItem(new Runnable() {
+            public void run() {
+                Contexts ctx = Contexts.instance(); 
+                Intent intent = null;
+                intent = new Intent(activity,BookMgntActivity.class);
+                activity.startActivityForResult(intent,0);
+            }
+        }, "Book Management", R.drawable.dtitem_test);
+        
+        addItem(dt);
+        
+        
+        dt = new DesktopItem(new Runnable() {
+            public void run() {
+                Contexts ctx = Contexts.instance(); 
+                Book book = ctx.getMasterDataProvider().findBook(ctx.getWorkingBookId());
                 
                 Intent intent = null;
                 intent = new Intent(activity,BookEditorActivity.class);
@@ -54,7 +76,7 @@ public class TestsDesktop extends AbstractDesktop {
         
         dt = new DesktopItem(new Runnable() {
             public void run() {
-                Book book = new Book("test","$",false,"");
+                Book book = new Book("test","$",SymbolPosition.AFTER,"");
                 Intent intent = null;
                 intent = new Intent(activity,BookEditorActivity.class);
                 intent.putExtra(BookEditorActivity.INTENT_MODE_CREATE,true);

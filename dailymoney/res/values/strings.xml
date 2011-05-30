@@ -194,11 +194,23 @@
     <!-- start from 20110530 -->
     <string name="label_default_book_symbol">$</string>
     <string name="label_symbol">Symbol</string>
-    <string name="label_symbol_infront">In front</string>
+    <string name="title_book">Book</string>
     <string name="title_bookeditor_create">Create Book</string>
     <string name="title_bookeditor_update">Update Book</string>
     <string name="msg_book_created">Book %1$s was created</string>
     <string name="msg_book_updated">Book %1$s was updated</string>
+    <string name="msg_book_deleted">Book %1$s was deleted</string>
+    <string name="msg_cannot_delete_default_book">Cannot delete default book</string>
+    <string name="msg_cannot_delete_working_book">Cannot delete working book</string>
+    <string name="cat_set_working_book">Set as working book</string>
+    <string name="title_bookmgnt">Book Management</string>
+    
+    <string name="label_position_none">No Display</string>
+    <string name="label_position_front">Front</string>
+    <string name="label_position_after">After</string>
+    <string name="label_symbol_position">Symbol Position</string>
+    <string name="dtitem_books">Books</string>
+    
     
 </resources>
 

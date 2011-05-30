@@ -131,7 +131,7 @@ public class DetailListHelper implements OnItemClickListener{
         
         String from = fromAcc==null?det.getFrom():(i18n.string(R.string.label_detlist_from,fromAcc.getName(),AccountType.getDisplay(i18n, fromAcc.getType())));
         String to = toAcc==null?det.getTo():(i18n.string(R.string.label_detlist_to,toAcc.getName(),AccountType.getDisplay(i18n, toAcc.getType())));
-        String money = Formats.money2String(det.getMoney());
+        String money = Contexts.instance().toFormattedMoneyString(det.getMoney());
         row.put(bindingFrom[0], new NamedItem(bindingFrom[0],det,bindingFrom[0]));
         row.put(bindingFrom[1], new NamedItem(bindingFrom[1],det,bindingFrom[1]));
         row.put(bindingFrom[2], new NamedItem(bindingFrom[2],det,from));

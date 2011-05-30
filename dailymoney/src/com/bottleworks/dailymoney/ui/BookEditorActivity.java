@@ -9,24 +9,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.dailymoney.calculator2.Calculator;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Book;
-import com.bottleworks.dailymoney.data.DuplicateKeyException;
-import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.data.IMasterDataProvider;
+import com.bottleworks.dailymoney.data.SymbolPosition;
 
 /**
  * Edit or create a book
@@ -47,7 +41,7 @@ public class BookEditorActivity extends ContextsActivity implements android.view
     
     /** clone book without id **/
     private Book clone(Book book){
-        Book b = new Book(book.getName(),book.getSymbol(),book.isSymboInFront(),book.getNote());
+        Book b = new Book(book.getName(),book.getSymbol(),book.getSymbolPosition(),book.getNote());
         return b;
     }
     
@@ -72,11 +66,14 @@ public class BookEditorActivity extends ContextsActivity implements android.view
         }
     }
 
+    /** need to mapping twice to do different mapping in spitem and spdropdown item*/
+    private static String[] spfrom = new String[] { Constants.DISPLAY,Constants.DISPLAY};
+    private static int[] spto = new int[] { R.id.simple_spitem_display, R.id.simple_spdditem_display};
     
     EditText nameEditor;
     EditText symbolEditor;
-    CheckBox symbolInfrontEditor;
     EditText noteEditor;
+    Spinner positionEditor;
     
     
     Button okBtn;
@@ -89,8 +86,29 @@ public class BookEditorActivity extends ContextsActivity implements android.view
         symbolEditor = (EditText)findViewById(R.id.bookeditor_symbol);
         symbolEditor.setText(workingBook.getSymbol());
         
-        symbolInfrontEditor = (CheckBox)findViewById(R.id.bookeditor_symbol_infront);
-        symbolInfrontEditor.setChecked(workingBook.isSymboInFront());
+      //initial spinner
+        positionEditor = (Spinner) findViewById(R.id.bookeditor_symbol_position);
+        List<Map<String, Object>> data = new  ArrayList<Map<String, Object>>();
+        SymbolPosition symbolPos = workingBook.getSymbolPosition();
+        int selpos,i;
+        selpos = i = -1;
+        for (SymbolPosition sp : SymbolPosition.getAvailable()) {
+            i++;
+            Map<String, Object> row = new HashMap<String, Object>();
+            data.add(row);
+            row.put(spfrom[0], new NamedItem(spfrom[0],sp,sp.getDisplay(i18n)));
+            
+            if(sp.equals(symbolPos)){
+                selpos = i;
+            }
+        }
+        SimpleAdapter adapter = new SimpleAdapter(this, data, R.layout.simple_spitem, spfrom, spto);
+        adapter.setDropDownViewResource(R.layout.simple_spdd);
+        adapter.setViewBinder(new SymbolPositionViewBinder());
+        positionEditor.setAdapter(adapter);
+        if(selpos>-1){
+            positionEditor.setSelection(selpos);
+        }
         
         noteEditor = (EditText)findViewById(R.id.bookeditor_note);
         noteEditor.setText(workingBook.getNote());
@@ -131,25 +149,26 @@ public class BookEditorActivity extends ContextsActivity implements android.view
     }
     private void doOk(){   
         //verify
+      //verify
+        if(Spinner.INVALID_POSITION==positionEditor.getSelectedItemPosition()){
+            GUIs.shortToast(this,i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.label_symbol_position)));
+            return;
+        }
+        
         String name = nameEditor.getText().toString().trim();
         if("".equals(name)){
             nameEditor.requestFocus();
             GUIs.alert(this,i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.clabel_name)));
             return;
         }
-        
-        String symbol = symbolEditor.getText().toString().trim();
-        if("".equals(name)){
-            symbolEditor.requestFocus();
-            GUIs.alert(this,i18n.string(R.string.cmsg_field_empty,i18n.string(R.string.label_symbol)));
-            return;
-        }
 
+        SymbolPosition pos = SymbolPosition.getAvailable()[positionEditor.getSelectedItemPosition()];
+        
         //assign
         workingBook.setName(name);
-        workingBook.setSymbol(symbol);
+        workingBook.setSymbol(symbolEditor.getText().toString().trim());
         workingBook.setNote(noteEditor.getText().toString().trim());
-        workingBook.setSymboInFront(symbolInfrontEditor.isChecked());
+        workingBook.setSymbolPosition(pos);
         
         IMasterDataProvider idp = getContexts().getMasterDataProvider();
 
@@ -170,5 +189,22 @@ public class BookEditorActivity extends ContextsActivity implements android.view
     private void doCancel() {
         setResult(RESULT_CANCELED);
         finish();
+    }
+    
+    class SymbolPositionViewBinder implements SimpleAdapter.ViewBinder{
+        @Override
+        public boolean setViewValue(View view, Object data, String text) {
+            
+            NamedItem item = (NamedItem)data;
+            String name = item.getName();
+            if(!(view instanceof TextView)){
+               return false;
+            }
+            if(Constants.DISPLAY.equals(name)){
+                ((TextView)view).setText(item.getToString());
+                return true;
+            }
+            return false;
+        }
     }
 }

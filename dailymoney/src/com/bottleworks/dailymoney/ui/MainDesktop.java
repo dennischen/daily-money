@@ -57,6 +57,9 @@ public class MainDesktop extends AbstractDesktop {
         DesktopItem accmgntdt = new DesktopItem(new ActivityRun(activity, AccountMgntActivity.class),
                 i18n.string(R.string.dtitem_accmgnt), R.drawable.dtitem_account);
         
+        DesktopItem bookmgntdt = new DesktopItem(new ActivityRun(activity, BookMgntActivity.class),
+                i18n.string(R.string.dtitem_books), R.drawable.dtitem_books);
+        
         DesktopItem datamaindt = new DesktopItem(new ActivityRun(activity, DataMaintenanceActivity.class),
                 i18n.string(R.string.dtitem_datamain), R.drawable.dtitem_datamain);
         
@@ -78,6 +81,7 @@ public class MainDesktop extends AbstractDesktop {
         addItem(monthlist);
         addItem(yearlist);
         addItem(accmgntdt);
+        addItem(bookmgntdt);
         addItem(datamaindt);
         addItem(prefdt);
         

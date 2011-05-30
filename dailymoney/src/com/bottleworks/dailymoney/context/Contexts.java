@@ -34,6 +34,7 @@ import com.bottleworks.dailymoney.data.SQLiteDataProvider;
 import com.bottleworks.dailymoney.data.SQLiteDataHelper;
 import com.bottleworks.dailymoney.data.SQLiteMasterDataHelper;
 import com.bottleworks.dailymoney.data.SQLiteMasterDataProvider;
+import com.bottleworks.dailymoney.data.SymbolPosition;
 import com.bottleworks.dailymoney.ui.Constants;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
@@ -54,7 +55,7 @@ public class Contexts {
     private IMasterDataProvider masterDataProvider;
     private I18N i18n;
     
-    int pref_selectedBookId = 0;//the book user selected
+    int pref_workingBookId = 0;//the book user selected
     int pref_detailListLayout = 2;
     int pref_maxRecords = -1;//-1 is no limit
     int pref_firstdayWeek = 1;//sunday
@@ -356,8 +357,11 @@ public class Contexts {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
         
         try{
-            pref_selectedBookId = Integer.parseInt(prefs.getString(Constants.PREFS_SELECTED_BOOK_ID, String.valueOf(pref_selectedBookId)));
+            pref_workingBookId = Integer.parseInt(prefs.getString(Constants.PREFS_WORKING_BOOK_ID, String.valueOf(pref_workingBookId)));
         }catch(Exception x){Logger.e(x.getMessage());}
+        if(pref_workingBookId<0){
+            pref_workingBookId = 0;
+        }
         
         try{
             String pd1  = prefs.getString(Constants.PREFS_PASSWORD, pref_password);
@@ -401,6 +405,7 @@ public class Contexts {
         
         
         if(DEBUG){
+            Logger.d("preference : working book "+pref_workingBookId);
             Logger.d("preference : detail layout "+pref_detailListLayout);
             Logger.d("preference : firstday of week "+pref_firstdayWeek);
             Logger.d("preference : startday of month "+pref_startdayMonth);
@@ -414,8 +419,19 @@ public class Contexts {
         calendarHelper.setStartDayOfMonth(getPrefStartdayMonth());
     }
     
-    public int getSelectedBookId(){
-        return pref_selectedBookId;
+    public int getWorkingBookId(){
+        return pref_workingBookId;
+    }
+    
+    public void setWorkingBookId(int id){
+        if(id<0){
+            id = 0;
+        }
+        pref_workingBookId = id;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(Constants.PREFS_WORKING_BOOK_ID,id);
+        editor.commit();
     }
     
     public String getPrefPassword(){
@@ -468,8 +484,8 @@ public class Contexts {
 
     private void initDataProvider(Context context) {
         String dbname = "dm.db";
-        if(pref_selectedBookId>0){
-            dbname = "db"+pref_selectedBookId+".db";
+        if(pref_workingBookId>0){
+            dbname = "db"+pref_workingBookId+".db";
         }
         dataProvider = new SQLiteDataProvider(new SQLiteDataHelper(context,dbname),calendarHelper);
         dataProvider.init();
@@ -495,10 +511,12 @@ public class Contexts {
             Logger.d("masterDataProvider :"+masterDataProvider);
         }
         //create selected book if not exist;
-        Book book = masterDataProvider.findBook(getSelectedBookId());
+        int sbid = getWorkingBookId();
+        Book book = masterDataProvider.findBook(sbid);
         if(book==null){
-            book = new Book(i18n.string(R.string.clabel_default),i18n.string(R.string.label_default_book_symbol),true,"default book");
-            masterDataProvider.newBookNoCheck(getSelectedBookId(), book);
+            String name = i18n.string(R.string.title_book)+sbid;
+            book = new Book(name,i18n.string(R.string.label_default_book_symbol),SymbolPosition.FRONT,"");
+            masterDataProvider.newBookNoCheck(getWorkingBookId(), book);
         }
         currencySymbol = book.getSymbol();
     }
@@ -554,5 +572,11 @@ public class Contexts {
     }
     public Drawable getDrawable(int id){
         return appContext.getResources().getDrawable(id);
+    }
+    
+    public String toFormattedMoneyString(double money){
+        IMasterDataProvider imdp = getMasterDataProvider();
+        Book book = imdp.findBook(getWorkingBookId());
+        return Formats.money2String(money, book.getSymbol(), book.getSymbolPosition());
     }
 }

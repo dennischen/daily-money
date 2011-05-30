@@ -1,12 +1,6 @@
 package com.bottleworks.dailymoney.data;
 
-import static com.bottleworks.dailymoney.data.MasterDataMeta.COL_BOOK_ALL;
-import static com.bottleworks.dailymoney.data.MasterDataMeta.COL_BOOK_ID;
-import static com.bottleworks.dailymoney.data.MasterDataMeta.COL_BOOK_NAME;
-import static com.bottleworks.dailymoney.data.MasterDataMeta.COL_BOOK_NOTE;
-import static com.bottleworks.dailymoney.data.MasterDataMeta.COL_BOOK_SYMBOL;
-import static com.bottleworks.dailymoney.data.MasterDataMeta.COL_BOOK_SYMBOL_INFRONT;
-import static com.bottleworks.dailymoney.data.MasterDataMeta.TB_BOOK;
+import static com.bottleworks.dailymoney.data.MasterDataMeta.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +61,8 @@ public class SQLiteMasterDataProvider implements IMasterDataProvider {
                 book.setName(c.getString(i));
             } else if (n.equals(COL_BOOK_SYMBOL)) {
                 book.setSymbol(c.getString(i));
-            } else if (n.equals(COL_BOOK_SYMBOL_INFRONT)) {
-                book.setSymboInFront(c.getInt(i)==0?false:true);
+            } else if (n.equals(COL_BOOK_SYMBOL_POSITION)) {
+                book.setSymbolPosition(SymbolPosition.find(c.getInt(i)));
             } else if (n.equals(COL_BOOK_NOTE)) {
                 book.setNote(c.getString(i));
             }
@@ -80,7 +74,7 @@ public class SQLiteMasterDataProvider implements IMasterDataProvider {
         values.put(COL_BOOK_ID, book.getId());
         values.put(COL_BOOK_NAME, book.getName());
         values.put(COL_BOOK_SYMBOL, book.getSymbol());
-        values.put(COL_BOOK_SYMBOL_INFRONT, book.isSymboInFront()?1:0);
+        values.put(COL_BOOK_SYMBOL_POSITION, book.getSymbolPosition().getType());
         values.put(COL_BOOK_NOTE, book.getNote());
     }
 
@@ -133,7 +127,7 @@ public class SQLiteMasterDataProvider implements IMasterDataProvider {
     @Override
     public void newBookNoCheck(int id,Book book){
         if(Contexts.DEBUG){
-            Logger.d("new book "+id+","+book.getNote());
+            Logger.d("new book "+id+","+book.getName());
         }
         book.setId(id);
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -182,6 +176,6 @@ public class SQLiteMasterDataProvider implements IMasterDataProvider {
         return result;
     }
 
-    static final String BOOK_ORDERBY = COL_BOOK_ID+" DESC";
+    static final String BOOK_ORDERBY = COL_BOOK_ID+" ASC";
 
 }

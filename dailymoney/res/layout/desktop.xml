@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:id="@+id/dt_layout"
 	android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="@color/dt_bg">
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"  android:background="@color/dt_info_bg"
+       android:paddingTop="2dp" android:paddingBottom="2dp">
+       <TextView android:id="@+id/dt_info_book"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="14sp" 
+            android:gravity="center" android:layout_weight="1"/>   
+    </LinearLayout> 	
 	<TabHost android:id="@+id/dt_tabs" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1">
 		<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
 			<TabWidget android:id="@android:id/tabs" android:layout_width="fill_parent" android:layout_height="wrap_content" />

@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.bottleworks.commons.util.CalendarHelper;
+import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
+import com.bottleworks.dailymoney.data.Book;
+import com.bottleworks.dailymoney.data.IMasterDataProvider;
 
 /**
  * provide life cycle and easy access to contexts
@@ -95,5 +98,7 @@ public class ContextsActivity extends Activity {
     protected Contexts getContexts(){
         return Contexts.instance();
     }
+    
+
 
 }

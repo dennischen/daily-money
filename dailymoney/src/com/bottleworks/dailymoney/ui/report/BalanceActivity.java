@@ -330,7 +330,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 for (Balance b : listViewData) {
                     Map<String, Object> row = new HashMap<String, Object>();
                     listViewMapList.add(row);
-                    String money = Formats.money2String(b.getMoney());
+                    String money = getContexts().toFormattedMoneyString(b.getMoney());
                     row.put(bindingFrom[0], new NamedItem(bindingFrom[0],b,""));//layout
                     row.put(bindingFrom[1], new NamedItem(bindingFrom[1],b,b.getName()));
                     row.put(bindingFrom[2], new NamedItem(bindingFrom[2],b,money));
