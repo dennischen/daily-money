@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
@@ -485,7 +486,7 @@ public class Contexts {
     private void initDataProvider(Context context) {
         String dbname = "dm.db";
         if(pref_workingBookId>0){
-            dbname = "db"+pref_workingBookId+".db";
+            dbname = "dm_"+pref_workingBookId+".db";
         }
         dataProvider = new SQLiteDataProvider(new SQLiteDataHelper(context,dbname),calendarHelper);
         dataProvider.init();
@@ -493,6 +494,18 @@ public class Contexts {
             Logger.d("initDataProvider :"+dataProvider);
         }
     }
+    
+    /** to reset a deat provider for a book **/
+    public boolean deleteData(Book book){
+        if(book.getId()==0 || book.getId()==pref_workingBookId){
+            return false;
+        }
+        String dbname = "dm_"+book.getId()+".db";
+        boolean r = appContext.deleteDatabase(dbname);
+        return r;
+    }
+    
+    
     public void cleanDataProvider(Context context){
         if(dataProvider!=null){
             if(DEBUG){
@@ -504,7 +517,7 @@ public class Contexts {
     }
     
     private void initMasterDataProvider(Context context) {
-        String dbname = "dm-master.db";
+        String dbname = "dm_master.db";
         masterDataProvider = new SQLiteMasterDataProvider(new SQLiteMasterDataHelper(context,dbname),calendarHelper);
         masterDataProvider.init();
         if(DEBUG){

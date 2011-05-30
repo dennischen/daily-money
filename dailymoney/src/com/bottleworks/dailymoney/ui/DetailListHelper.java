@@ -165,13 +165,15 @@ public class DetailListHelper implements OnItemClickListener{
 
     public void doDeleteDetail(int pos) {
         Detail d = (Detail) listViewData.get(pos);
-        Contexts.instance().getDataProvider().deleteDetail(d.getId());
-        if(listener!=null){
-            listener.onDetailDeleted(d);
-        }else{
-            listViewData.remove(pos);
-            listViewMapList.remove(pos);
-            listViewAdapter.notifyDataSetChanged();
+        boolean r = Contexts.instance().getDataProvider().deleteDetail(d.getId());
+        if(r){
+            if(listener!=null){
+                listener.onDetailDeleted(d);
+            }else{
+                listViewData.remove(pos);
+                listViewMapList.remove(pos);
+                listViewAdapter.notifyDataSetChanged();
+            }
         }
     }
 

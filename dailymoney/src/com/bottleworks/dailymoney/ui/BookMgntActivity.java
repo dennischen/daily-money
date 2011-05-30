@@ -1,34 +1,22 @@
 package com.bottleworks.dailymoney.ui;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.bottleworks.commons.util.CalendarHelper;
-import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.core.R;
-import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Book;
-import com.bottleworks.dailymoney.data.Detail;
-import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.data.IMasterDataProvider;
 
 /**
@@ -139,7 +127,7 @@ public class BookMgntActivity extends ContextsActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
         case R.id.bookmgnt_menu_edit:
             bookListHelper.doEditBook(info.position);
@@ -149,6 +137,7 @@ public class BookMgntActivity extends ContextsActivity {
             return true;
         case R.id.bookmgnt_menu_set_working:
             bookListHelper.doSetWorkingBook(info.position);
+            finish();
             return true;
         }
         return super.onContextItemSelected(item);

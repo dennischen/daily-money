@@ -131,27 +131,35 @@ public class BookListHelper implements OnItemClickListener{
         activity.startActivityForResult(intent,Constants.REQUEST_BOOK_EDITOR_CODE);
     }
 
-    public void doDeleteBook(int pos) {
-        Book d = (Book) listViewData.get(pos);
-        
-        if(d.getId()==0){
+    public void doDeleteBook(final int pos) {
+        final Book book = (Book) listViewData.get(pos);
+        if(book.getId()==0){
             //default book
             GUIs.shortToast(activity, R.string.msg_cannot_delete_default_book);
             return;
-        }else if(Contexts.instance().getWorkingBookId()==d.getId()){
+        }else if(Contexts.instance().getWorkingBookId()==book.getId()){
             //
             GUIs.shortToast(activity, R.string.msg_cannot_delete_working_book);
             return;
         }
-        
-        Contexts.instance().getMasterDataProvider().deleteBook(d.getId());
-        if(listener!=null){
-            listener.onBookDeleted(d);
-        }else{
-            listViewData.remove(pos);
-            listViewMapList.remove(pos);
-            listViewAdapter.notifyDataSetChanged();
-        }
+        GUIs.confirm(activity, i18n.string(R.string.qmsg_delete_book,book.getName()), new GUIs.OnFinishListener() {
+            public boolean onFinish(Object data) {
+                if (((Integer) data).intValue() == GUIs.OK_BUTTON) {
+                    boolean r = Contexts.instance().getMasterDataProvider().deleteBook(book.getId());
+                    if(r){
+                        if(listener!=null){
+                            listener.onBookDeleted(book);
+                        }else{
+                            listViewData.remove(pos);
+                            listViewMapList.remove(pos);
+                            listViewAdapter.notifyDataSetChanged();
+                        }
+                        Contexts.instance().deleteData(book);
+                    }
+                }
+                return true;
+            }
+        });
     }
     
     public void doSetWorkingBook(int pos){
@@ -174,8 +182,6 @@ public class BookListHelper implements OnItemClickListener{
         public boolean setViewValue(View view, Object data, String text) {
             NamedItem item = (NamedItem)data;
             String name = item.getName();
-           
-            System.out.println(">>>>"+name+", data "+data+", view "+view);
             if("working_book".equals(name)){
                 ImageView layout = (ImageView)view;
                 Boolean selected = (Boolean)item.getValue();

@@ -156,8 +156,8 @@ public class SQLiteMasterDataProvider implements IMasterDataProvider {
     @Override
     public boolean deleteBook(int id) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        int r = db.delete(TB_BOOK, COL_BOOK_ID+" = "+id, null);
-        return r>0;
+        boolean r = db.delete(TB_BOOK, COL_BOOK_ID+" = "+id, null) >0 ;
+        return r;
     }
 
     @Override
