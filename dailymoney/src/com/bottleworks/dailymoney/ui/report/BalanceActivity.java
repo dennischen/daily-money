@@ -28,7 +28,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.bottleworks.commons.util.CalendarHelper;
-import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.core.R;
@@ -36,8 +35,6 @@ import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Balance;
 import com.bottleworks.dailymoney.data.BalanceHelper;
-import com.bottleworks.dailymoney.data.Detail;
-import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.AccountDetailListActivity;
 import com.bottleworks.dailymoney.ui.Constants;
 import com.bottleworks.dailymoney.ui.NamedItem;

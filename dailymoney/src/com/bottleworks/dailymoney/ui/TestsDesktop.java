@@ -1,6 +1,5 @@
 package com.bottleworks.dailymoney.ui;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
@@ -8,11 +7,10 @@ import android.content.Intent;
 
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.GUIs;
-import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.context.Contexts;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Book;
 import com.bottleworks.dailymoney.data.DataCreator;
-import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.data.SymbolPosition;
 /**

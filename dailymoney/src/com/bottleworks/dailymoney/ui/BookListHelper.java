@@ -18,7 +18,6 @@ import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.core.R;
-import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.Book;
 import com.bottleworks.dailymoney.data.SymbolPosition;
 
@@ -42,8 +41,6 @@ public class BookListHelper implements OnItemClickListener{
     private ListView listView;
     
     private SimpleAdapter listViewAdapter;
-    
-    private Map<String,Account> accountCache = new HashMap<String,Account>();
     
     private boolean clickeditable;
     
