@@ -10,6 +10,8 @@
  * 51: Allow ADW-Launcher to directly open DetailEditorActivity
  *   : Italian translation.
  * 45: Able to set start day of month
+ * 36: Support multiple DB instance
+ * 43: Able to set currency symbol for display.
 === Bugs ===
  * 34: Color issues when editing account
  -- not released version

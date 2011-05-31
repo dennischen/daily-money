@@ -192,9 +192,26 @@
     
     <!-- start from 20110530 -->
     <string name="label_default_book_symbol">$</string>
+    <string name="label_symbol">符號</string>
+    <string name="title_book">帳本</string>
+    <string name="title_bookeditor_create">建立帳本</string>
+    <string name="title_bookeditor_update">更新帳本</string>
+    <string name="msg_book_created">帳本 %1$s 已經被建立</string>
+    <string name="msg_book_updated">帳本 %1$s 已經被更新</string>
+    <string name="msg_book_deleted">帳本 %1$s 已經被刪除</string>
+    <string name="msg_cannot_delete_default_book">不允許刪除預設帳本</string>
+    <string name="msg_cannot_delete_working_book">不允許刪除使用中的帳本</string>
+    <string name="cat_set_working_book">設定為使用中的帳本</string>
+    <string name="title_bookmgnt">帳本管理</string>
     
-    
-    
-    
+    <string name="label_position_none">不呈現</string>
+    <string name="label_position_front">在前面</string>
+    <string name="label_position_after">在後面</string>
+    <string name="label_symbol_position">符號位置</string>
+    <string name="dtitem_books">帳本管理</string>
+    <string name="qmsg_delete_book">你想要刪除帳本 %1$s 及其包含的帳戶及明細資料嗎?</string>
+    <string name="label_shared_all">共享的-全部</string>
+    <string name="label_shared_account_only">共享的-只有帳戶</string>
+    <string name="label_shared_detail_only">共享的-只有明細</string>
 </resources>
 

@@ -224,6 +224,8 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
             infoBook.setText(book.getName()+" ( "+symbol+" )");
         }
         
+        infoBook.setVisibility(imdp.listAllBook().size()<=1?TextView.GONE:TextView.VISIBLE);
+        
         Date now = new Date();
         Date start = calHelper.weekStartDate(now);
         Date end = calHelper.weekEndDate(now);

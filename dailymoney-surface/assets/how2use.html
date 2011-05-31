@@ -92,5 +92,25 @@
     </ol>  
 </blockquote>
 </blockquote>
+<h2>Multiple Books</h2>
+
+<blockquote>
+<p > 
+    You can create multiple-books and active one book as the 'Working-Book'.
+    You can define a currency symbol (ex, '$','¥'..etc) and the position of the symbol of a book.
+    After you created a book, application will allocate another database to store accounts and details,
+    data between books are not able to be transfer since they are isolated.
+</p>
+<p>    
+    When exporting current data to CSV, it will export two files, details.csv and accounts.csv, which are sharing 
+    between all books, and another two files,details-'id'.cvs and accounts-'id'.csv, 'id' is the book id),for
+    working book only, 
+    When importing data from CSV, you can choose to import from shared or non-shared file.
+</p>
+<p>     
+    If you delete a book, the database of that book will also be delete (included accounts and details), 
+    the default book(id = 0) and current working book are not delete-able, 
+</p>
+</blockquote>
 </body>
 </html>
