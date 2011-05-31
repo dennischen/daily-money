@@ -81,9 +81,9 @@ public class MainDesktop extends AbstractDesktop {
         addItem(monthlist);
         addItem(yearlist);
         addItem(accmgntdt);
-        addItem(bookmgntdt);
         addItem(datamaindt);
         addItem(prefdt);
+        addItem(bookmgntdt);
         
         addItem(how2use);
         

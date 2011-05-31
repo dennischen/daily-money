@@ -182,7 +182,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         }).show();
     }
 
-    private void doExportCSV() {        
+    private void doExportCSV() {
+        final int workingBookId = getContexts().getWorkingBookId(); 
         new AlertDialog.Builder(this).setTitle(i18n.string(R.string.qmsg_export_csv))
                 .setItems(R.array.csv_type_options, new DialogInterface.OnClickListener() {
                     @Override
@@ -203,7 +204,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                             @Override
                             public void run() {
                                 try {
-                                    count = _exportToCSV(which);
+                                    count = _exportToCSV(which,workingBookId);
                                 } catch (Exception e) {
                                     throw new RuntimeException(e.getMessage(),e);
                                 }
@@ -215,7 +216,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     }
 
     private void doImportCSV() {
-        
+        final int workingBookId = getContexts().getWorkingBookId(); 
         new AlertDialog.Builder(this).setTitle(i18n.string(R.string.qmsg_import_csv))
                 .setItems(R.array.csv_type_options, new DialogInterface.OnClickListener() {
                     @Override
@@ -236,7 +237,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                             @Override
                             public void run() {
                                 try {
-                                    count = _importFromCSV(which);
+                                    count = _importFromCSV(which,workingBookId);
                                 } catch (Exception e) {
                                     throw new RuntimeException(e.getMessage(),e);
                                 }
@@ -318,7 +319,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     }
 
     /** running in thread **/
-    private int _exportToCSV(int mode) throws IOException {
+    private int _exportToCSV(int mode, int workingBookId) throws IOException {
         if(Contexts.DEBUG){
             Logger.d("export to csv "+mode);
         }
@@ -353,19 +354,11 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             }
             csvw.close();
             String csv = sw.toString();
-            File file = getWorkingFile("details.csv");
-            if(file.exists()){
-                if(backupcsv){
-                    Files.copyFileTo(file,new File(file.getParentFile(),"details."+backupstamp+".csv"));
-                }
-            }else{
-                file.createNewFile();
-            }
-                
-            Files.saveString(csv, file, csvEncoding);
-            if(Contexts.DEBUG){
-                Logger.d("export to details.csv");
-            }
+            File file0 = getWorkingFile("details.csv");
+            File file1 = getWorkingFile("details-"+workingBookId+".csv");
+            
+            saveFile(file0,csv,backupstamp);
+            saveFile(file1,csv,backupstamp);
         }
 
         if(account){
@@ -378,24 +371,34 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             }
             csvw.close();
             String csv = sw.toString();
-            File file = getWorkingFile("accounts.csv");
-            if(file.exists()){
-                if(backupcsv){
-                    Files.copyFileTo(file,new File(file.getParentFile(),"accounts."+backupstamp+".csv"));
-                }
-            }else{
-                file.createNewFile();
-            }
-               
-            Files.saveString(csv, file, csvEncoding);
-            if(Contexts.DEBUG){
-                Logger.d("export to accounts.csv");
-            }
+            File file0 = getWorkingFile("accounts.csv");
+            File file1 = getWorkingFile("accounts-"+workingBookId+".csv");
+            
+            saveFile(file0,csv,backupstamp);
+            saveFile(file1,csv,backupstamp);
         }
         
         return count;
     }
     
+    private void saveFile(File file0, String csv, String backupstamp) throws IOException {
+        if(file0.exists()){
+            if(backupcsv){
+                String fn = file0.getName();
+                String ext = Files.getExtension(fn);
+                String main = Files.getMain(fn);
+                Files.copyFileTo(file0,new File(file0.getParentFile(),main+"."+backupstamp+"."+ext));
+            }
+        }else{
+            file0.createNewFile();
+        }
+            
+        Files.saveString(csv, file0, csvEncoding);
+        if(Contexts.DEBUG){
+            Logger.d("export to "+file0.toString());
+        }
+    }
+
     private int getAppver(String str){
         if(str!=null && str.startsWith(APPVER)){
             try{
@@ -409,8 +412,9 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         return 0;
     }
     
-    /** running in thread **/
-    private int _importFromCSV(int mode) throws Exception{
+    /** running in thread 
+     * @param workingBookId **/
+    private int _importFromCSV(int mode, int workingBookId) throws Exception{
         if(Contexts.DEBUG){
             Logger.d("import from csv "+mode);
         }
@@ -430,8 +434,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         }
         
         IDataProvider idp = getContexts().getDataProvider();
-        File details = getWorkingFile("details.csv");
-        File accounts = getWorkingFile("accounts.csv");
+        File details = getWorkingFile("details-"+workingBookId+".csv");
+        File accounts = getWorkingFile("accounts-"+workingBookId+".csv");
         
         if((detail && (!details.exists() || !details.canRead())) || 
                 (account && (!accounts.exists() || !accounts.canRead())) ){
