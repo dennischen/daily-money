@@ -22,11 +22,20 @@
         <item>@string/label_firstday_mon</item>
     </string-array>
     
+    <string-array name="csv_type_import_options">
+        <item>@string/clabel_all</item>
+        <item>@string/label_account_only</item>
+        <item>@string/label_detail_only</item>
+        <item>@string/label_shared_all</item>
+        <item>@string/label_shared_account_only</item>
+        <item>@string/label_shared_detail_only</item>
+    </string-array>
+    
     <string-array name="csv_type_options">
         <item>@string/clabel_all</item>
         <item>@string/label_account_only</item>
         <item>@string/label_detail_only</item>
-    </string-array>
+    </string-array>    
     
     <string-array name="prefs_csv_encoding_val">
         <item>ASCII</item>

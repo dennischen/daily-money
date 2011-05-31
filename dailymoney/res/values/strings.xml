@@ -211,6 +211,8 @@
     <string name="label_symbol_position">Symbol Position</string>
     <string name="dtitem_books">Books</string>
     <string name="qmsg_delete_book">Do you want to delete book %1$s and all it\'s data?</string>
-    
+    <string name="label_shared_all">Shared-All</string>
+    <string name="label_shared_account_only">Shared-Account only</string>
+    <string name="label_shared_detail_only">Shared-Detail only</string>
 </resources>
 

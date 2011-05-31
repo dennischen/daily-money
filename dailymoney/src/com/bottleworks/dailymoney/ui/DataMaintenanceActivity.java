@@ -218,7 +218,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     private void doImportCSV() {
         final int workingBookId = getContexts().getWorkingBookId(); 
         new AlertDialog.Builder(this).setTitle(i18n.string(R.string.qmsg_import_csv))
-                .setItems(R.array.csv_type_options, new DialogInterface.OnClickListener() {
+                .setItems(R.array.csv_type_import_options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, final int which) {
                         final GUIs.IBusyRunnable job = new GUIs.BusyAdapter() {
@@ -420,6 +420,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         }
         boolean account = false;
         boolean detail = false;
+        boolean shared = mode>=3;
+        if(shared) mode = mode-3;
         switch(mode){
             case 0:
                 account = detail = true;
@@ -429,22 +431,21 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 break;
             case 2:
                 detail = true;
-                break;
+                break; 
             default :return -1;
         }
         
         IDataProvider idp = getContexts().getDataProvider();
-        File details = getWorkingFile("details-"+workingBookId+".csv");
-        File accounts = getWorkingFile("accounts-"+workingBookId+".csv");
+        File details = getWorkingFile(shared?"details.csv":"details-"+workingBookId+".csv");
+        File accounts = getWorkingFile(shared?"accounts.csv":"accounts-"+workingBookId+".csv");
         
         if((detail && (!details.exists() || !details.canRead())) || 
-                (account && (!accounts.exists() || !accounts.canRead())) ){
+                (account && (!accounts.exists() || !accounts.canRead()))){
             return -1;
         }
         
         CsvReader accountReader=null;
         CsvReader detailReader=null;
-        
         try{
             int count = 0;
             if(account){
@@ -485,7 +486,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 detailReader.close();
                 detailReader = null;
                 if(Contexts.DEBUG){
-                    Logger.d("import to details.csv ver:"+appver);
+                    Logger.d("import from "+details+" ver:"+appver);
                 }
             }
             
@@ -504,7 +505,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 accountReader.close();
                 accountReader = null;
                 if(Contexts.DEBUG){
-                    Logger.d("import to accounts.csv ver:"+appver);
+                    Logger.d("import from "+accounts+" ver:"+appver);
                 }
             }
             return count;

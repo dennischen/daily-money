@@ -358,7 +358,7 @@ public class Contexts {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
         
         try{
-            pref_workingBookId = Integer.parseInt(prefs.getString(Constants.PREFS_WORKING_BOOK_ID, String.valueOf(pref_workingBookId)));
+            pref_workingBookId = prefs.getInt(Constants.PREFS_WORKING_BOOK_ID, pref_workingBookId);
         }catch(Exception x){Logger.e(x.getMessage());}
         if(pref_workingBookId<0){
             pref_workingBookId = 0;
