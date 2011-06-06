@@ -25,11 +25,11 @@
     <string name="label_detlayout_type1">账户-金钱</string>
     <string name="label_detlayout_type2">备注-金钱</string>
     <string name="label_detlist_from">&lt; %1$s</string>
-    <string name="label_detlist_sum_income">收入$%1$s</string>
-    <string name="label_detlist_sum_expense">支出$%1$s</string>
-    <string name="label_detlist_sum_asset">资产$%1$s</string>
-    <string name="label_detlist_sum_liability">债务$%1$s</string>
-    <string name="label_detlist_sum_other">其他$%1$s</string>
+    <string name="label_detlist_sum_income">收入%1$s</string>
+    <string name="label_detlist_sum_expense">支出%1$s</string>
+    <string name="label_detlist_sum_asset">资产%1$s</string>
+    <string name="label_detlist_sum_liability">债务%1$s</string>
+    <string name="label_detlist_sum_other">其他%1$s</string>
     <string name="label_detlist_to">%1$s</string>
     <string name="label_expense">消费</string>
     <string name="label_firstday_mon">星期一</string>
