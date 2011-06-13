@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import com.bottleworks.dailymoney.data.SymbolPosition;
 /**
@@ -18,8 +19,10 @@ public class Formats {
     private static DecimalFormat moneyFormat = new DecimalFormat("###,###,###,##0.###");
     
     /** format should not be changed if i start a export/import function **/
-    private static DateFormat norDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private static DateFormat norDatetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static DateFormat norDateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
+    private static DateFormat norDateFormatOld = new SimpleDateFormat("yyyy-MM-dd");
+    private static DateFormat norDatetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.US);
+    private static DateFormat norDatetimeFormatOld = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static DecimalFormat norDoubleFormat = new DecimalFormat("#0.###");
     
     
@@ -58,7 +61,11 @@ public class Formats {
     }
     
     public static Date normalizeString2Date(String date) throws ParseException {
-        return norDateFormat.parse(date);
+        try{
+            return norDateFormat.parse(date);
+        }catch(ParseException x){
+            return norDateFormatOld.parse(date);
+        }
     }
     
     public static String normalizeDatetime2String(Date date) {
@@ -66,7 +73,11 @@ public class Formats {
     }
     
     public static Date normalizeString2Datetime(String date) throws ParseException {
-        return norDatetimeFormat.parse(date);
+        try{
+            return norDatetimeFormat.parse(date);
+        }catch(ParseException x){
+            return norDatetimeFormatOld.parse(date);
+        }
     }
 
     public static String money2String(Double money,String symbol,SymbolPosition pos) {
