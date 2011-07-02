@@ -79,6 +79,7 @@ public class AccountDetailListActivity extends ContextsActivity {
         
         if(target instanceof AccountType){
         }else if(target instanceof Account){
+        }else if(target instanceof String){
         }else{
             throw new IllegalStateException("unknow target type "+target);
         }
@@ -134,6 +135,9 @@ public class AccountDetailListActivity extends ContextsActivity {
                 }else if(target instanceof AccountType){
                     data = idp.listDetail((AccountType)target,IDataProvider.LIST_DETAIL_MODE_BOTH,startDate,endDate,getContexts().getPrefMaxRecords());
                     count = idp.countDetail((AccountType)target,IDataProvider.LIST_DETAIL_MODE_BOTH,startDate, endDate);
+                }else if(target instanceof String){
+                    data = idp.listDetail((String)target,IDataProvider.LIST_DETAIL_MODE_BOTH,startDate,endDate,getContexts().getPrefMaxRecords());
+                    count = idp.countDetail((String)target,IDataProvider.LIST_DETAIL_MODE_BOTH,startDate, endDate);
                 }
             }
             @Override

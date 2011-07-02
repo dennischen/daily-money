@@ -33,6 +33,8 @@ public interface IDataProvider {
     
     Account findAccount(String type,String name);
     
+    String toAccountId(Account account);
+    
     void newAccount(Account account) throws DuplicateKeyException;
     void newAccount(String id,Account account) throws DuplicateKeyException;
     void newAccountNoCheck(String id,Account account);
@@ -67,6 +69,7 @@ public interface IDataProvider {
      */
     int countDetail(AccountType type,int mode,Date start, Date end);
     int countDetail(Account account,int mode,Date start, Date end);
+    int countDetail(String accountId,int mode,Date start, Date end);
     
     List<Detail> listDetail(Date start, Date end, int max);
     /**
@@ -74,6 +77,7 @@ public interface IDataProvider {
      */
     List<Detail> listDetail(AccountType type,int mode,Date start, Date end, int max);
     List<Detail> listDetail(Account account,int mode,Date start, Date end, int max);
+    List<Detail> listDetail(String accountId,int mode,Date start, Date end, int max);
 
     double sumFrom(AccountType type,Date start, Date end);
     double sumFrom(Account account,Date start, Date end);

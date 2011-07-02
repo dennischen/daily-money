@@ -2,9 +2,13 @@ package com.bottleworks.dailymoney.data;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.bottleworks.dailymoney.context.Contexts;
+import com.bottleworks.dailymoney.ui.AccountUtil;
+import com.bottleworks.dailymoney.ui.AccountUtil.IndentNode;
 
 public class BalanceHelper {
     
@@ -24,13 +28,65 @@ public class BalanceHelper {
             b.setGroup(group);
             total += b.getMoney();
         }
-        Balance bt = new Balance(totalName,type.getType(), total,type);
+        Balance bt = new Balance(totalName,type.getType(), total,null);
         bt.setIndent(0);
         bt.setGroup(group);
         bt.setDate(items.get(0).getDate());
         items.add(0, bt);
         return items;
     }
+    
+    public static List<Balance> adjustNestedTotalBalance(AccountType type, String totalName, List<Balance> items) {
+        if(items.size()==0){
+            return items;
+        }
+        
+        List<Balance> group = new ArrayList<Balance>(items);
+        
+        IDataProvider idp = contexts().getDataProvider();
+        List<Account> accs = idp.listAccount(type);
+        List<IndentNode> inodes = AccountUtil.toIndentNode(accs);
+        
+        List<Balance> nested = new ArrayList<Balance>();
+        
+        double total = 0;
+        for (Balance ib : items) {
+            total += ib.getMoney();
+        }
+        Date date = items.get(0).getDate();
+        
+        //the nested nodes
+        for(IndentNode node:inodes){
+            String fullpath = node.getFullPath();
+            Balance b = new Balance(node.getName(),type.getType(),0,null);
+            nested.add(b);
+            b.setGroup(group);
+            b.setIndent(node.getIndent()+1);
+            double sum =0;
+            for (Balance ib : items) {
+                String in = ib.getName();
+                if(in.equals(fullpath)){
+                    sum += ib.getMoney();
+                    b.setTarget(ib.getTarget());
+                }else if(in.startsWith(fullpath+".")){
+                    sum += ib.getMoney();
+                    //for search detail
+                    b.setTarget(idp.toAccountId(new Account(type.getType(),fullpath,0D)));
+                }
+                
+            }
+            b.setDate(date);
+            b.setMoney(sum);
+        }
+        
+        Balance top = new Balance(totalName,type.getType(), total,type);
+        top.setIndent(0);
+        top.setGroup(group);
+        top.setDate(date);
+        
+        nested.add(0, top);
+        return nested;
+    }    
 
     public static List<Balance> calculateBalanceList(AccountType type,Date start,Date end) {
         boolean nat = type==AccountType.INCOME||type==AccountType.LIABILITY;

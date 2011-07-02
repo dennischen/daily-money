@@ -213,5 +213,9 @@
     <string name="label_shared_all">共享的-全部</string>
     <string name="label_shared_account_only">共享的-只有帳戶</string>
     <string name="label_shared_detail_only">共享的-只有明細</string>
+    
+    <!-- from 20110702 -->
+    <string name="act_toggle_hierarchical_report">切換階層式報表</string>
+    
 </resources>
 

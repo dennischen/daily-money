@@ -21,6 +21,8 @@ public class Constants {
     
     static final public String PREFS_ALLOW_ANALYTICS = "allow_analytics";
     
+    static final public String PREFS_HIERARCHICAL_REPORT = "hierarchical_report";
+    
     static final public String PREFS_CSV_ENCODING = "csv_encoding";
     
     

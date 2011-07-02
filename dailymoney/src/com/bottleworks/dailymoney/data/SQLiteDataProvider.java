@@ -124,6 +124,11 @@ public class SQLiteDataProvider implements IDataProvider {
         newAccount(id,account);
     }
     
+    public  String toAccountId(Account account){
+        String id = normalizeAccountId(account.getType(), account.getName());
+        return id;
+    }
+    
     public synchronized void newAccount(String id, Account account) throws DuplicateKeyException {
         if (findAccount(id) != null) {
             throw new DuplicateKeyException("duplicate account id " + id);
@@ -355,28 +360,42 @@ public class SQLiteDataProvider implements IDataProvider {
         c.close();
         return result;
     }
-    
     @Override
     public List<Detail> listDetail(Account account, int mode, Date start, Date end,int max) {
+        return listDetail(account.getId(),mode,start,end,max);
+    }
+    @Override
+    public List<Detail> listDetail(String accountId, int mode, Date start, Date end,int max) {
         SQLiteDatabase db = helper.getReadableDatabase();
         StringBuilder where = new StringBuilder();
         List<String> args = new ArrayList<String>();
+        String nestedId = accountId+".%";
         where.append(" 1=1 ");
         if(mode ==LIST_DETAIL_MODE_FROM){
-            where.append(" AND ");
-            where.append(COL_DET_FROM + "= ?");
-            args.add(account.getId());
+            where.append(" AND (");
+            where.append(COL_DET_FROM + " = ? OR ");
+            where.append(COL_DET_FROM + " LIKE ? ");
+            where.append(")");
+            args.add(accountId);
+            args.add(nestedId);
         }else if(mode==LIST_DETAIL_MODE_TO){
-            where.append(" AND ");
-            where.append(COL_DET_TO + "= ?");
-            args.add(account.getId());
+            where.append(" AND (");
+            where.append(COL_DET_TO + " = ? OR ");
+            where.append(COL_DET_TO + " LIKE ? ");
+            where.append(")");
+            args.add(accountId);
+            args.add(nestedId);
         }else if(mode==LIST_DETAIL_MODE_BOTH){
             where.append(" AND (");
-            where.append(COL_DET_FROM + "= ? OR ");
-            where.append(COL_DET_TO + "= ?");
+            where.append(COL_DET_FROM + " = ? OR ");
+            where.append(COL_DET_FROM + " LIKE ? OR ");
+            where.append(COL_DET_TO + " = ? OR ");
+            where.append(COL_DET_TO + " LIKE ? ");
             where.append(")");
-            args.add(account.getId());
-            args.add(account.getId());
+            args.add(accountId);
+            args.add(nestedId);
+            args.add(accountId);
+            args.add(nestedId);
         }
         
         if(start!=null){
@@ -478,30 +497,43 @@ public class SQLiteDataProvider implements IDataProvider {
         c.close();
         return i;
     }
-    
     @Override
     public int countDetail(Account account, int mode,Date start, Date end){
+        return countDetail(account.getId(),mode,start,end);
+    }
+    @Override
+    public int countDetail(String accountId, int mode,Date start, Date end){
         SQLiteDatabase db = helper.getReadableDatabase();
-
+        String nestedId = accountId+".%";
         StringBuilder query =  new StringBuilder();
         List<String> args = new ArrayList<String>();
         StringBuilder where = new StringBuilder();
         where.append(" 1=1 ");
         if(mode ==LIST_DETAIL_MODE_FROM){
-            where.append(" AND ");
-            where.append(COL_DET_FROM + "= ?");
-            args.add(account.getId());
+            where.append(" AND (");
+            where.append(COL_DET_FROM + " = ? OR ");
+            where.append(COL_DET_FROM + " LIKE ? ");
+            where.append(")");
+            args.add(accountId);
+            args.add(nestedId);
         }else if(mode==LIST_DETAIL_MODE_TO){
-            where.append(" AND ");
-            where.append(COL_DET_TO + "= ?");
-            args.add(account.getId());
+            where.append(" AND (");
+            where.append(COL_DET_TO + " = ? OR ");
+            where.append(COL_DET_TO + " LIKE ? ");
+            where.append(")");
+            args.add(accountId);
+            args.add(nestedId);
         }else if(mode==LIST_DETAIL_MODE_BOTH){
             where.append(" AND (");
-            where.append(COL_DET_FROM + "= ? OR ");
-            where.append(COL_DET_TO + "= ?");
+            where.append(COL_DET_FROM + " = ? OR ");
+            where.append(COL_DET_FROM + " LIKE ? OR ");
+            where.append(COL_DET_TO + " = ? OR ");
+            where.append(COL_DET_TO + " LIKE ? ");
             where.append(")");
-            args.add(account.getId());
-            args.add(account.getId());
+            args.add(accountId);
+            args.add(nestedId);
+            args.add(accountId);
+            args.add(nestedId);
         }
         
         

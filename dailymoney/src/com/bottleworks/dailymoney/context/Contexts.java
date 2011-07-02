@@ -66,6 +66,7 @@ public class Contexts {
     String pref_password = "";
     boolean pref_allowAnalytics = true;
     String pref_csvEncoding = "UTF8";
+    boolean pref_hierarachicalReport = true;
     
     private CalendarHelper calendarHelper = new CalendarHelper();
     
@@ -403,6 +404,9 @@ public class Contexts {
             pref_csvEncoding = prefs.getString(Constants.PREFS_CSV_ENCODING, pref_csvEncoding);
         }catch(Exception x){Logger.e(x.getMessage());}
         
+        try{
+            pref_hierarachicalReport = prefs.getBoolean(Constants.PREFS_HIERARCHICAL_REPORT, pref_hierarachicalReport);
+        }catch(Exception x){Logger.e(x.getMessage());}
         
         if(DEBUG){
             Logger.d("preference : working book "+pref_workingBookId);
@@ -452,6 +456,18 @@ public class Contexts {
     
     public boolean isPrefBackupCSV(){
         return pref_backupCSV;
+    }
+    
+    public boolean isHierarachicalReport(){
+        return pref_hierarachicalReport;
+    }
+    
+    public void setHierarachicalReport(boolean hierarachicalReport){
+        pref_hierarachicalReport = hierarachicalReport;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(Constants.PREFS_HIERARCHICAL_REPORT,pref_hierarachicalReport);
+        editor.commit();
     }
     
     public int getPrefDetailListLayout(){

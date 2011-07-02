@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +32,7 @@ import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
 import com.bottleworks.dailymoney.data.IDataProvider;
+import com.bottleworks.dailymoney.ui.AccountUtil.IndentNode;
 
 /**
  * Edit or create a detail
@@ -55,8 +55,8 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
 
     boolean archived = false;
 
-    private List<TreeNode> fromAccountList;
-    private List<TreeNode> toAccountList;
+    private List<IndentNode> fromAccountList;
+    private List<IndentNode> toAccountList;
 
     List<Map<String, Object>> fromAccountMapList;
     List<Map<String, Object>> toAccountMapList;
@@ -163,7 +163,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
 
     private void initialSpinner() {
         fromEditor = (Spinner) findViewById(R.id.deteditor_from);
-        fromAccountList = new ArrayList<TreeNode>();
+        fromAccountList = new ArrayList<IndentNode>();
         fromAccountMapList = new ArrayList<Map<String, Object>>();
         fromAccountAdapter = new SimpleAdapterEx(this, fromAccountMapList, R.layout.simple_spitem, spfrom, spto);
         fromAccountAdapter.setDropDownViewResource(R.layout.simple_spdd);
@@ -171,7 +171,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             public Account getSelectedAccount(){
                 int pos = fromEditor.getSelectedItemPosition();
                 if(pos>=0){
-                    return fromAccountList.get(pos).account;
+                    return fromAccountList.get(pos).getAccount();
                 }
                 return null;
             }
@@ -180,7 +180,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         
 
         toEditor = (Spinner) findViewById(R.id.deteditor_to);
-        toAccountList = new ArrayList<TreeNode>();
+        toAccountList = new ArrayList<IndentNode>();
         toAccountMapList = new ArrayList<Map<String, Object>>();
         toAccountAdapter = new SimpleAdapterEx(this, toAccountMapList, R.layout.simple_spitem, spfrom, spto);
         toAccountAdapter.setDropDownViewResource(R.layout.simple_spdd);
@@ -188,7 +188,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             public Account getSelectedAccount(){
                 int pos = toEditor.getSelectedItemPosition();
                 if(pos>=0){
-                    return toAccountList.get(pos).account;
+                    return toAccountList.get(pos).getAccount();
                 }
                 return null;
             }
@@ -200,9 +200,9 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         fromEditor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                TreeNode tn = fromAccountList.get(pos);
-                if(tn.account!=null){
-                    onFromChanged(tn.account);
+                IndentNode tn = fromAccountList.get(pos);
+                if(tn.getAccount()!=null){
+                    onFromChanged(tn.getAccount());
                 }
             }
 
@@ -214,9 +214,9 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         toEditor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                TreeNode tn = toAccountList.get(pos);
-                if(tn.account!=null){
-                    onToChanged(tn.account);
+                IndentNode tn = toAccountList.get(pos);
+                if(tn.getAccount()!=null){
+                    onToChanged(tn.getAccount());
                 }
             }
 
@@ -235,26 +235,26 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         fromAccountMapList.clear();
         for (AccountType at : avail) {
             List<Account> accl = idp.listAccount(at);
-            fromAccountList.addAll(adjustTreeAccountList(accl));
+            fromAccountList.addAll(AccountUtil.toIndentNode(accl));
         }
         String fromAccount = workingDetail.getFrom();
         int fromsel,firstfromsel, i;
         fromsel = firstfromsel = i = -1;
         String fromType = null;
-        for (TreeNode pn : fromAccountList) {
+        for (IndentNode pn : fromAccountList) {
             i++;
             Map<String, Object> row = new HashMap<String, Object>();
             fromAccountMapList.add(row);
 
             row.put(spfrom[0], new NamedItem(spfrom[0],pn,""));
             row.put(spfrom[1], new NamedItem(spfrom[1],pn,""));
-            if(pn.account!=null){
+            if(pn.getAccount()!=null){
                 if(firstfromsel==-1){
                     firstfromsel = i;
                 }
-                if(fromsel==-1 && pn.account.getId().equals(fromAccount)){
+                if(fromsel==-1 && pn.getAccount().getId().equals(fromAccount)){
                     fromsel = i;
-                    fromType = pn.account.getType();
+                    fromType = pn.getAccount().getType();
                 }
                 
             }
@@ -266,24 +266,24 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         toAccountMapList.clear();
         for (AccountType at : avail) {
             List<Account> accl = idp.listAccount(at);
-            toAccountList.addAll(adjustTreeAccountList(accl));
+            toAccountList.addAll(AccountUtil.toIndentNode(accl));
         }
         String toAccount = workingDetail.getTo();
         int tosel,firsttosel;
         tosel = firsttosel = i = -1;
         // String toType = null;
-        for (TreeNode pn : toAccountList) {
+        for (IndentNode pn : toAccountList) {
             i++;
             Map<String, Object> row = new HashMap<String, Object>();
             toAccountMapList.add(row);
 
             row.put(spfrom[0], new NamedItem(spfrom[0],pn,""));
             row.put(spfrom[1], new NamedItem(spfrom[1],pn,""));
-            if(pn.account!=null){
+            if(pn.getAccount()!=null){
                 if(firsttosel==-1){
                     firsttosel = i;
                 }
-                if(tosel==-1 && pn.account.getId().equals(toAccount)){
+                if(tosel==-1 && pn.getAccount().getId().equals(toAccount)){
                     tosel = i;
                 }
                 
@@ -294,7 +294,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             fromEditor.setSelection(fromsel);
         }else if(firstfromsel>-1){
             fromEditor.setSelection(firstfromsel);
-            workingDetail.setFrom(fromAccountList.get(firstfromsel).account.getId());
+            workingDetail.setFrom(fromAccountList.get(firstfromsel).getAccount().getId());
         }else {
             workingDetail.setFrom("");
         }
@@ -303,7 +303,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             toEditor.setSelection(tosel);
         }else if(firsttosel>-1){
             toEditor.setSelection(firsttosel);
-            workingDetail.setTo(toAccountList.get(firsttosel).account.getId());
+            workingDetail.setTo(toAccountList.get(firsttosel).getAccount().getId());
         }else {
             workingDetail.setTo("");
         }
@@ -312,46 +312,6 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         toAccountAdapter.notifyDataSetChanged();
     }
 
-    private List<TreeNode> adjustTreeAccountList(List<Account> accl) {
-        List<TreeNode> better = new ArrayList<TreeNode>();
-        Map<String,TreeNode> tree = new LinkedHashMap<String,TreeNode>();
-        for(Account acc:accl){
-            String name = acc.getName();
-            StringBuilder path = new StringBuilder();
-            TreeNode node = null;
-            String pp = null;
-            String np = null;
-            AccountType type = AccountType.find(acc.getType());
-            int indent=0;
-            for(String t:name.split("\\.")){
-                if(t.length()==0){
-                    continue;
-                }
-                pp = path.toString();
-                if(path.length()!=0){
-                    path.append(".");
-                }
-                np = path.append(t).toString();
-                if((node = tree.get(np))!=null){
-                    indent++;
-                    continue;
-                }
-                node = new TreeNode(pp,t,indent,type,null);
-                indent++;
-                tree.put(np, node);
-            }
-            if(node!=null){
-                node.account = acc;
-            }
-        }
-        
-        for(String key:tree.keySet()){
-            TreeNode tn = tree.get(key);
-            better.add(tn);
-        }
-        
-        return better;
-    }
 
     private void onFromChanged(Account acc) {
         workingDetail.setFrom(acc.getId());
@@ -446,13 +406,13 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
     private void doOk() {
         // verify
         int fromPos = fromEditor.getSelectedItemPosition();
-        if (Spinner.INVALID_POSITION == fromPos || fromAccountList.get(fromPos).account==null) {
+        if (Spinner.INVALID_POSITION == fromPos || fromAccountList.get(fromPos).getAccount()==null) {
             GUIs.alert(this,
                     i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_from_account)));
             return;
         }
         int toPos = toEditor.getSelectedItemPosition();
-        if (Spinner.INVALID_POSITION == toPos || toAccountList.get(toPos).account==null) {
+        if (Spinner.INVALID_POSITION == toPos || toAccountList.get(toPos).getAccount()==null) {
             GUIs.alert(this,
                     i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_to_account)));
             return;
@@ -487,8 +447,8 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         
         String note = noteEditor.getText().toString();
 
-        Account fromAcc = fromAccountList.get(fromPos).account;
-        Account toAcc =  toAccountList.get(toPos).account;
+        Account fromAcc = fromAccountList.get(fromPos).getAccount();
+        Account toAcc =  toAccountList.get(toPos).getAccount();
 
         if (fromAcc.getId().equals(toAcc.getId())) {
             GUIs.alert(this, i18n.string(R.string.msg_same_from_to));
@@ -579,12 +539,12 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             
             NamedItem item = (NamedItem)data;
             String name = item.getName();
-            TreeNode tn = (TreeNode)item.getValue();
+            IndentNode tn = (IndentNode)item.getValue();
             
             if(!(view instanceof TextView)){
                return false;
             }
-            AccountType at = tn.type;
+            AccountType at = tn.getType();
             TextView tv = (TextView)view;
             if(!ddPaddingBase_set){
                 ddPaddingBase_set = true;
@@ -615,28 +575,28 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
                 tv.setTextColor(tcolor);
                 StringBuilder display = new StringBuilder();
                 if(tv.getId()==R.id.simple_spdditem_display){
-                    tv.setPadding((int)(ddPaddingLeftBase+tn.indent*ddPaddingIntentBase), tv.getPaddingTop(), tv.getPaddingRight(),tv.getPaddingBottom());
-                    if(tn.account==null){
+                    tv.setPadding((int)(ddPaddingLeftBase+tn.getIndent()*ddPaddingIntentBase), tv.getPaddingTop(), tv.getPaddingRight(),tv.getPaddingBottom());
+                    if(tn.getAccount()==null){
 //                        tv.setBackgroundDrawable(ddDisabled);
                         tv.setTextColor(tcolor&0x6FFFFFFF);
-                    }else if(tn.account == getSelectedAccount()){
+                    }else if(tn.getAccount() == getSelectedAccount()){
                         tv.setBackgroundDrawable(ddSelected);
                     }else{
                         tv.setBackgroundDrawable(null);
                     }
                     
-                    if(tn.indent==0){
-                        display.append(tn.type.getDisplay(i18n));
+                    if(tn.getIndent()==0){
+                        display.append(tn.getType().getDisplay(i18n));
                         display.append(" - ");
                     }
-                    display.append(tn.name);
+                    display.append(tn.getName());
                 }else{
-                    if(tn.account==null){
+                    if(tn.getAccount()==null){
                         display.append("");
                     }else{
-                        display.append(tn.type.getDisplay(i18n));
+                        display.append(tn.getType().getDisplay(i18n));
                         display.append("-");
-                        display.append(tn.account.getName());
+                        display.append(tn.getAccount().getName());
                     }
                 }
                 tv.setText(display.toString());
@@ -645,22 +605,4 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             return false;
         }
     }
-    
-    
-    private static class TreeNode{
-        String path;
-        String name;
-        AccountType type;
-        Account account;
-        int indent;
-        
-        public TreeNode(String path,String name,int indent,AccountType type,Account account){
-            this.path = path;
-            this.name = name;
-            this.indent = indent;
-            this.type = type;
-            this.account = account;
-        }
-    }
-
 }

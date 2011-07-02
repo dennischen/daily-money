@@ -220,23 +220,19 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         int marginRight = 5;
         int paddingTB = 0;
         
-        switch(b.getIndent()){
-        case 0:
+        
+        int indent = b.getIndent();
+        
+        if(indent<=0){
             ratio = 1F;
             paddingTB = 5;
             marginLeft = 5;
-            break;
-        case 1:
+        }else{
             ratio = 0.85F;
             paddingTB = 3;
-            marginLeft = 15;
-            break;
-        default:
-            ratio = 0.75F;
-            paddingTB = 1;
-            marginLeft = 25;
-            break;    
+            marginLeft = 5+10*indent;
         }
+
         tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontPixelSize*ratio);
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)tv.getLayoutParams();
         lp.setMargins((int)(marginLeft*dp), lp.topMargin, (int)(marginRight*dp), lp.bottomMargin);
@@ -278,29 +274,48 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
             @Override
             public void run() {
+                boolean hierarchical = getContexts().isHierarachicalReport();
+                
                 List<Balance> asset = BalanceHelper.calculateBalanceList(AccountType.ASSET, currentStartDate, currentEndDate);
-                asset = BalanceHelper.adjustTotalBalance(AccountType.ASSET, totalMode ? i18n.string(R.string.label_balance_tasset)
-                        : i18n.string(R.string.label_asset), asset);
-
                 List<Balance> income = BalanceHelper.calculateBalanceList(AccountType.INCOME, currentStartDate, currentEndDate);
-                income = BalanceHelper.adjustTotalBalance(AccountType.INCOME, totalMode ? i18n.string(R.string.label_balance_tincome)
-                        : i18n.string(R.string.label_income), income);
-
                 List<Balance> expense = BalanceHelper.calculateBalanceList(AccountType.EXPENSE, currentStartDate, currentEndDate);
-                expense = BalanceHelper.adjustTotalBalance(
-                        AccountType.EXPENSE,
-                        totalMode ? i18n.string(R.string.label_balance_texpense) : i18n
-                                .string(R.string.label_expense), expense);
-
                 List<Balance> liability = BalanceHelper.calculateBalanceList(AccountType.LIABILITY, currentStartDate, currentEndDate);
-                liability = BalanceHelper.adjustTotalBalance(
-                        AccountType.LIABILITY,
-                        totalMode ? i18n.string(R.string.label_balance_tliability) : i18n
-                                .string(R.string.label_liability), liability);
-
                 List<Balance> other = BalanceHelper.calculateBalanceList(AccountType.OTHER, currentStartDate, currentEndDate);
-                other = BalanceHelper.adjustTotalBalance(AccountType.OTHER, totalMode ? i18n.string(R.string.label_balance_tother)
-                        : i18n.string(R.string.label_other), other);
+                
+                
+                if(hierarchical){
+                    asset = BalanceHelper.adjustNestedTotalBalance(AccountType.ASSET, totalMode ? i18n.string(R.string.label_balance_tasset)
+                            : i18n.string(R.string.label_asset), asset);
+                    income = BalanceHelper.adjustNestedTotalBalance(AccountType.INCOME, totalMode ? i18n.string(R.string.label_balance_tincome)
+                            : i18n.string(R.string.label_income), income);
+                    expense = BalanceHelper.adjustNestedTotalBalance(
+                            AccountType.EXPENSE,
+                            totalMode ? i18n.string(R.string.label_balance_texpense) : i18n
+                                    .string(R.string.label_expense), expense);
+                    liability = BalanceHelper.adjustNestedTotalBalance(
+                            AccountType.LIABILITY,
+                            totalMode ? i18n.string(R.string.label_balance_tliability) : i18n
+                                    .string(R.string.label_liability), liability);
+                    other = BalanceHelper.adjustNestedTotalBalance(AccountType.OTHER, totalMode ? i18n.string(R.string.label_balance_tother)
+                            : i18n.string(R.string.label_other), other);
+                    
+                 }else{
+                     asset = BalanceHelper.adjustTotalBalance(AccountType.ASSET, totalMode ? i18n.string(R.string.label_balance_tasset)
+                             : i18n.string(R.string.label_asset), asset);
+                     income = BalanceHelper.adjustTotalBalance(AccountType.INCOME, totalMode ? i18n.string(R.string.label_balance_tincome)
+                             : i18n.string(R.string.label_income), income);
+                     expense = BalanceHelper.adjustTotalBalance(
+                             AccountType.EXPENSE,
+                             totalMode ? i18n.string(R.string.label_balance_texpense) : i18n
+                                     .string(R.string.label_expense), expense);
+                     liability = BalanceHelper.adjustTotalBalance(
+                             AccountType.LIABILITY,
+                             totalMode ? i18n.string(R.string.label_balance_tliability) : i18n
+                                     .string(R.string.label_liability), liability);
+                     other = BalanceHelper.adjustTotalBalance(AccountType.OTHER, totalMode ? i18n.string(R.string.label_balance_tother)
+                             : i18n.string(R.string.label_other), other);
+                     
+                 }
 
                 if(totalMode){
                     all.addAll(asset);
@@ -441,6 +456,14 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
         case R.id.balance_menu_yearly_runchart:
             doYearlyRunChart();
             return true;
+        case R.id.toggle_hierarchical_report:
+            getContexts().setHierarachicalReport(!getContexts().isHierarachicalReport());
+            GUIs.delayPost(new Runnable(){
+                @Override
+                public void run() {
+                    reloadData();
+                }});
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -455,6 +478,10 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     
     private void doDetailList(int position) {
         Balance b = listViewData.get(position);
+        if(b.getTarget()==null){
+        	//TODO some message
+            return;
+        }
         
         Intent intent = null;
         intent = new Intent(this,AccountDetailListActivity.class);
@@ -526,13 +553,13 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 Balance b = listViewData.get(pos);
                 AccountType at;
                 List<Balance> group = b.getGroup();
-                if(b.getTarget() instanceof AccountType){
-                    at = (AccountType)b.getTarget();
-                }else{
+                if(b.getTarget() instanceof Account){
                     group = new ArrayList<Balance>(group);
                     group.remove(b);
                     group.add(0,b);
                     at = AccountType.find(((Account)b.getTarget()).getType());
+                }else{
+                    at = AccountType.find(b.getType());
                 }
                 List<Balance> list = new ArrayList<Balance>();
                 for(Balance g:group){
@@ -556,13 +583,13 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 Balance b = listViewData.get(pos);
                 AccountType at;
                 List<Balance> group = b.getGroup();
-                if(b.getTarget() instanceof AccountType){
-                    at = (AccountType)b.getTarget();
-                }else{
+                if(b.getTarget() instanceof Account){
                     group = new ArrayList<Balance>(group);
                     group.remove(b);
                     group.add(0,b);
                     at = AccountType.find(((Account)b.getTarget()).getType());
+                }else{
+                    at = AccountType.find(b.getType());
                 }
                 
                 List<List<Balance>> balances = new ArrayList<List<Balance>>();
@@ -598,13 +625,13 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                 Balance b = listViewData.get(pos);
                 AccountType at;
                 List<Balance> group = b.getGroup();
-                if(b.getTarget() instanceof AccountType){
-                    at = (AccountType)b.getTarget();
-                }else{
+                if(b.getTarget() instanceof Account){
                     group = new ArrayList<Balance>(group);
                     group.remove(b);
                     group.add(0,b);
                     at = AccountType.find(((Account)b.getTarget()).getType());
+                }else{
+                    at = AccountType.find(b.getType());
                 }
                 
                 List<List<Balance>> balances = new ArrayList<List<Balance>>();

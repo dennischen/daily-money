@@ -214,5 +214,8 @@
     <string name="label_shared_all">Shared-All</string>
     <string name="label_shared_account_only">Shared-Account only</string>
     <string name="label_shared_detail_only">Shared-Detail only</string>
+    
+    <!-- from 20110702 -->
+    <string name="act_toggle_hierarchical_report">Toggle Hierarchical</string>
 </resources>
 

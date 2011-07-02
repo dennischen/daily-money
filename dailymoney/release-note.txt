@@ -1,4 +1,13 @@
 = Last =
+== 0.9.7 ==
+=== Features ===
+ * 67: Please consider to change the report display format
+=== Bugs ===
+ 
+
+
+===============================================================================
+= History = 
 == 0.9.6 ==
 === Features ===
  * 35: Daily List
@@ -14,13 +23,7 @@
  * 43: Able to set currency symbol for display.
 === Bugs ===
  * 34: Color issues when editing account
- -- not released version
-  
-=== Other ===
- * 
-
-===============================================================================
-= History = 
+ 
 == 0.9.5 ==
 === Features ===
  * 25:  Allow custom CSV Encoding
