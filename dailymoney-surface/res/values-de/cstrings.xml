@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="cact_cancel">Abbrechen</string>
+    <string name="cact_close">Schließen</string>
+    <string name="cact_copy">Kopieren</string>
+    <string name="cact_create">Erstellen</string>
+    <string name="cact_delete">Löschen</string>
+    <string name="cact_edit">Bearbeiten</string>
+    <string name="cact_new">Neu</string>
+    <string name="cact_ok">OK</string>
+    <string name="cact_stop">Stop</string>
+    <string name="cact_update">Aktualisieren</string>
+    <string name="clabel_alert">Benachrichtigung</string>
+    <string name="clabel_share">Teilen</string>
+    <string name="clabel_busy">beschäftigt</string>
+    <string name="clabel_error">Fehler</string>
+    <string name="clabel_info">Information</string>
+    <string name="clabel_name">Name</string>
+    <string name="clabel_type">Typ</string>
+    <string name="clabel_unknow">Unbekannt</string>
+    <string name="clabel_warn">Warnung</string>
+    <string name="cmsg_busy">Die Anwendung arbeitet gerade, bitte warte einen Moment...</string>
+    <string name="cmsg_error">Fehler : %1$s</string>
+    <string name="cmsg_field_empty">%1$s ist leer</string>  
+    <string name="cmsg_field_zero">%1$s ist Null</string> 
+     <string name="clabel_all">Alles</string>
+    <!-- above are verified --> 
+    
+    <!-- start from 20110530 -->
+    <string name="clabel_default">Standard</string>
+    
+    
+</resources>
