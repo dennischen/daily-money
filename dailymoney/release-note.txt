@@ -3,6 +3,7 @@
 === Features ===
  * 67: Please consider to change the report display format
  *   : German translation. 
+ * 59: Add Saturday as beginning of the week
 === Bugs ===
  
 

@@ -216,6 +216,7 @@
     
     <!-- from 20110702 -->
     <string name="act_toggle_hierarchical_report">切換階層式報表</string>
+    <string name="label_firstday_sat">星期六</string>
     
 </resources>
 

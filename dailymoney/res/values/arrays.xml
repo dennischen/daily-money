@@ -16,10 +16,12 @@
 	<string-array name="prefs_firstday_week_val">
         <item>1</item>
         <item>2</item>
+        <item>7</item>
     </string-array>
     <string-array name="prefs_firstday_week_label">
         <item>@string/label_firstday_sun</item>
         <item>@string/label_firstday_mon</item>
+        <item>@string/label_firstday_sat</item>
     </string-array>
     
     <string-array name="csv_type_import_options">

@@ -458,11 +458,11 @@ public class Contexts {
         return pref_backupCSV;
     }
     
-    public boolean isHierarachicalReport(){
+    public boolean isPrefHierarachicalReport(){
         return pref_hierarachicalReport;
     }
     
-    public void setHierarachicalReport(boolean hierarachicalReport){
+    public void setPrefHierarachicalReport(boolean hierarachicalReport){
         pref_hierarachicalReport = hierarachicalReport;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
         SharedPreferences.Editor editor = prefs.edit();

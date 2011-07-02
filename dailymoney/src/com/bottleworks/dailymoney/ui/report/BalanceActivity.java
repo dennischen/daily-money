@@ -274,7 +274,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
             @Override
             public void run() {
-                boolean hierarchical = getContexts().isHierarachicalReport();
+                boolean hierarchical = getContexts().isPrefHierarachicalReport();
                 
                 List<Balance> asset = BalanceHelper.calculateBalanceList(AccountType.ASSET, currentStartDate, currentEndDate);
                 List<Balance> income = BalanceHelper.calculateBalanceList(AccountType.INCOME, currentStartDate, currentEndDate);
@@ -457,7 +457,7 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
             doYearlyRunChart();
             return true;
         case R.id.toggle_hierarchical_report:
-            getContexts().setHierarachicalReport(!getContexts().isHierarachicalReport());
+            getContexts().setPrefHierarachicalReport(!getContexts().isPrefHierarachicalReport());
             GUIs.delayPost(new Runnable(){
                 @Override
                 public void run() {
