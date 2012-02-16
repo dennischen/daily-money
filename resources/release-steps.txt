@@ -1,0 +1,7 @@
+1.change the version and version name(dailymoney-surface/AndroidManifest.xml)
+2.edit the release note and whatsnew if necessary.
+3.on dailymoeny-surface, use export android application
+    * set to the skystore, /data/android/svn/daily-money/trunk/resources/bottleworks.ks
+    * ks-password : qwer1234
+      alias : bottleworks-app
+      alias-password : qwer1234

@@ -194,8 +194,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.accmgnt_menu_new:
+        if (item.getItemId() == R.id.accmgnt_menu_new) {
             doNewAccount();
             return true;
         }
@@ -214,17 +213,16 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-        case R.id.accmgnt_menu_edit:
+        if (item.getItemId() == R.id.accmgnt_menu_edit) {
             doEditAccount(info.position);
             return true;
-        case R.id.accmgnt_menu_delete:
+        } else if (item.getItemId() == R.id.accmgnt_menu_delete) {
             doDeleteAccount(info.position);
             return true;
-        case R.id.accmgnt_menu_copy:
+        } else if (item.getItemId() == R.id.accmgnt_menu_copy) {
             doCopyAccount(info.position);
             return true;
-        default:
+        } else {
             return super.onContextItemSelected(item);
         }
     }

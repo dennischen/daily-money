@@ -42,22 +42,11 @@ class EventListener implements View.OnKeyListener,
     //@Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id) {
-        case R.id.cal2_del:
+        if (id == R.id.cal2_del) {
             mHandler.onDelete();
-            break;
-
-        case R.id.cal2_equal:
+        } else if (id == R.id.cal2_equal) {
             mHandler.onEnter();
-            break;
-
-            /*
-        case R.id.cal2_clear:
-            mHandler.onClear();
-            break;
-            */
-
-        default:
+        } else {
             if (view instanceof Button) {
                 String text = ((Button) view).getText().toString();
                 if (text.length() >= 2) {

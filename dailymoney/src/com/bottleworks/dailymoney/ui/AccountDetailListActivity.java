@@ -157,8 +157,7 @@ public class AccountDetailListActivity extends ContextsActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.accdetlist_menu_new:
+        if (item.getItemId() == R.id.accdetlist_menu_new) {
             detailListHelper.doNewDetail();
             return true;
         }
@@ -177,14 +176,13 @@ public class AccountDetailListActivity extends ContextsActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-        case R.id.accdetlist_menu_edit:
+        if (item.getItemId() == R.id.accdetlist_menu_edit) {
             detailListHelper.doEditDetail(info.position);
             return true;
-        case R.id.accdetlist_menu_delete:
+        } else if (item.getItemId() == R.id.accdetlist_menu_delete) {
             detailListHelper.doDeleteDetail(info.position);
             return true;
-        case R.id.accdetlist_menu_copy:
+        } else if (item.getItemId() == R.id.accdetlist_menu_copy) {
             detailListHelper.doCopyDetail(info.position);
             return true;
         }

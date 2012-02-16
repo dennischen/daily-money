@@ -132,13 +132,10 @@ public class BookEditorActivity extends ContextsActivity implements android.view
     
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-        case R.id.btn_ok:
+        if (v.getId() == R.id.btn_ok) {
             doOk();
-            break;
-        case R.id.btn_cancel:
+        } else if (v.getId() == R.id.btn_cancel) {
             doCancel();
-            break;
         }
     }
 

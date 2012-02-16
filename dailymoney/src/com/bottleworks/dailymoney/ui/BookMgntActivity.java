@@ -107,8 +107,7 @@ public class BookMgntActivity extends ContextsActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.bookmgnt_menu_new:
+        if (item.getItemId() == R.id.bookmgnt_menu_new) {
             bookListHelper.doNewBook();
             return true;
         }
@@ -128,14 +127,13 @@ public class BookMgntActivity extends ContextsActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-        case R.id.bookmgnt_menu_edit:
+        if (item.getItemId() == R.id.bookmgnt_menu_edit) {
             bookListHelper.doEditBook(info.position);
             return true;
-        case R.id.bookmgnt_menu_delete:
+        } else if (item.getItemId() == R.id.bookmgnt_menu_delete) {
             bookListHelper.doDeleteBook(info.position);
             return true;
-        case R.id.bookmgnt_menu_set_working:
+        } else if (item.getItemId() == R.id.bookmgnt_menu_set_working) {
             bookListHelper.doSetWorkingBook(info.position);
             finish();
             return true;

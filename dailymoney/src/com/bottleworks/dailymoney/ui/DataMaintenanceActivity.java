@@ -74,25 +74,18 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-        case R.id.datamain_import_csv:
+        if (v.getId() == R.id.datamain_import_csv) {
             doImportCSV();
-            break;
-        case R.id.datamain_export_csv:
+        } else if (v.getId() == R.id.datamain_export_csv) {
             doExportCSV();
-            break;
-        case R.id.datamain_share_csv:
+        } else if (v.getId() == R.id.datamain_share_csv) {
             doShareCSV();
-            break;
-        case R.id.datamain_reset:
+        } else if (v.getId() == R.id.datamain_reset) {
             doReset();
-            break;
-        case R.id.datamain_create_default:
+        } else if (v.getId() == R.id.datamain_create_default) {
             doCreateDefault();
-            break;
-        case R.id.datamain_clear_folder:
+        } else if (v.getId() == R.id.datamain_clear_folder) {
             doClearFolder();
-            break;
         }
     }
 

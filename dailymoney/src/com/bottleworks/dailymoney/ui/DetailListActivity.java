@@ -349,8 +349,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.detlist_menu_new:
+        if (item.getItemId() == R.id.detlist_menu_new) {
             detailListHelper.doNewDetail();
             return true;
         }
@@ -370,14 +369,13 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-        case R.id.detlist_menu_edit:
+        if (item.getItemId() == R.id.detlist_menu_edit) {
             detailListHelper.doEditDetail(info.position);
             return true;
-        case R.id.detlist_menu_delete:
+        } else if (item.getItemId() == R.id.detlist_menu_delete) {
             detailListHelper.doDeleteDetail(info.position);
             return true;
-        case R.id.detlist_menu_copy:
+        } else if (item.getItemId() == R.id.detlist_menu_copy) {
             detailListHelper.doCopyDetail(info.position);
             return true;
         }
@@ -386,19 +384,14 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-        case R.id.detlist_prev:
+        if (v.getId() == R.id.detlist_prev) {
             onPrev();
-            break;
-        case R.id.detlist_next:
+        } else if (v.getId() == R.id.detlist_next) {
             onNext();
-            break;
-        case R.id.detlist_today:
+        } else if (v.getId() == R.id.detlist_today) {
             onToday();
-            break;
-        case R.id.detlist_mode:
+        } else if (v.getId() == R.id.detlist_mode) {
             onMode();
-            break;
         }
     }
 

@@ -159,19 +159,14 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
     
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-        case R.id.acceditor_ok:
+        if (v.getId() == R.id.acceditor_ok) {
             doOk();
-            break;
-        case R.id.acceditor_cancel:
+        } else if (v.getId() == R.id.acceditor_cancel) {
             doCancel();
-            break;
-        case R.id.acceditor_close:
+        } else if (v.getId() == R.id.acceditor_close) {
             doClose();
-            break;
-        case R.id.acceditor_cal2:
+        } else if (v.getId() == R.id.acceditor_cal2) {
             doCalculator2();
-            break;
         }
     }
     

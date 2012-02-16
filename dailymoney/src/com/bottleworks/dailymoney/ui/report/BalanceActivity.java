@@ -376,19 +376,14 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-        case R.id.report_balance_prev:
+        if (v.getId() == R.id.report_balance_prev) {
             onPrev();
-            break;
-        case R.id.report_balance_next:
+        } else if (v.getId() == R.id.report_balance_next) {
             onNext();
-            break;
-        case R.id.report_balance_today:
+        } else if (v.getId() == R.id.report_balance_today) {
             onToday();
-            break;
-        case R.id.report_balance_mode:
+        } else if (v.getId() == R.id.report_balance_mode) {
             onMode();
-            break;
         }
     }
 
@@ -452,11 +447,10 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.balance_menu_yearly_runchart:
+        if (item.getItemId() == R.id.balance_menu_yearly_runchart) {
             doYearlyRunChart();
             return true;
-        case R.id.toggle_hierarchical_report:
+        } else if (item.getItemId() == R.id.toggle_hierarchical_report) {
             getContexts().setPrefHierarachicalReport(!getContexts().isPrefHierarachicalReport());
             GUIs.delayPost(new Runnable(){
                 @Override
@@ -523,20 +517,19 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-        case R.id.balance_menu_piechart:
+        if (item.getItemId() == R.id.balance_menu_piechart) {
             doPieChart(info.position);
             return true;
-        case R.id.balance_menu_yearly_timechart:
+        } else if (item.getItemId() == R.id.balance_menu_yearly_timechart) {
             doYearlyTimeChart(info.position);
             return true;
-        case R.id.balance_menu_yearly_cumulative_timechart:
+        } else if (item.getItemId() == R.id.balance_menu_yearly_cumulative_timechart) {
             doYearlyCumulativeTimeChart(info.position);
             return true;
-        case R.id.balance_menu_yearly_runchart:
+        } else if (item.getItemId() == R.id.balance_menu_yearly_runchart) {
             doYearlyRunChart();
-            return true;    
-        case R.id.balance_menu_detlist:
+            return true;
+        } else if (item.getItemId() == R.id.balance_menu_detlist) {
             doDetailList(info.position);
             return true;
         }

@@ -1,0 +1,4 @@
+
+release,brance, tag
+
+svn copy https://daily-money.googlecode.com/svn/trunk/  https://daily-money.googlecode.com/svn/tags/0.9.6/ -m "0.9.6 released"

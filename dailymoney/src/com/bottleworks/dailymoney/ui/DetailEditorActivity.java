@@ -329,36 +329,29 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
     @Override
     public void onClick(View v) {
         CalendarHelper cal = getContexts().getCalendarHelper();
-        switch (v.getId()) {
-        case R.id.deteditor_ok:
+        if (v.getId() == R.id.deteditor_ok) {
             doOk();
-            break;
-        case R.id.deteditor_cancel:
+        } else if (v.getId() == R.id.deteditor_cancel) {
             doCancel();
-            break;
-        case R.id.deteditor_close:
+        } else if (v.getId() == R.id.deteditor_close) {
             doClose();
-            break;
-        case R.id.deteditor_prev:
+        } else if (v.getId() == R.id.deteditor_prev) {
             try {
                 Date d = format.parse(dateEditor.getText().toString());
                 updateDateEditor(cal.yesterday(d));
             } catch (ParseException e) {
                 Logger.e(e.getMessage(), e);
             }
-            break;
-        case R.id.deteditor_next:
+        } else if (v.getId() == R.id.deteditor_next) {
             try {
                 Date d = format.parse(dateEditor.getText().toString());
                 updateDateEditor(cal.tomorrow(d));
             } catch (ParseException e) {
                 Logger.e(e.getMessage(), e);
             }
-            break;
-        case R.id.deteditor_today:
+        } else if (v.getId() == R.id.deteditor_today) {
             updateDateEditor(cal.today());
-            break;
-        case R.id.deteditor_datepicker:
+        } else if (v.getId() == R.id.deteditor_datepicker) {
             try {
                 Date d = format.parse(dateEditor.getText().toString());
                 GUIs.openDatePicker(this, d, new GUIs.OnFinishListener() {
@@ -371,10 +364,8 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             } catch (ParseException e) {
                 Logger.e(e.getMessage(), e);
             }
-            break;
-        case R.id.deteditor_cal2:
+        } else if (v.getId() == R.id.deteditor_cal2) {
             doCalculator2();
-            break;
         }
     }
     

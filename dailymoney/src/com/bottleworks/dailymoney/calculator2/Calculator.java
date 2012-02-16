@@ -212,18 +212,15 @@ public class Calculator extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-        case R.id.cal2_ok:
+        if (v.getId() == R.id.cal2_ok) {
             String result = mLogic.getNumbericResult();
             Intent intent = new Intent();
             intent.putExtra(INTENT_RESULT_VALUE,result);
             setResult(RESULT_OK, intent);
             finish();
-            break;
-        case R.id.cal2_close:
+        } else if (v.getId() == R.id.cal2_close) {
             setResult(RESULT_CANCELED);
             finish();
-            break;
         }
     }
 }
