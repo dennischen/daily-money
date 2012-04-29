@@ -17,8 +17,12 @@ public class ScheduleReceiver extends BroadcastReceiver {
         Calendar now = Calendar.getInstance();
         if (Constants.BACKUP_JOB.equals(intent.getAction())) {
             try {
-                Files.copyDatabases(getContexts().getDbFolder(), getContexts().getSdFolder(), now.getTime());
-                Files.copyPrefFile(getContexts().getPrefFolder(), getContexts().getSdFolder(), now.getTime());
+                int count = 0;
+                count += Files.copyDatabases(getContexts().getDbFolder(), getContexts().getSdFolder(), now.getTime());
+                count += Files.copyPrefFile(getContexts().getPrefFolder(), getContexts().getSdFolder(), now.getTime());
+                if (count > 0) {
+                    getContexts().setLastBackup(context, now.getTime());
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }

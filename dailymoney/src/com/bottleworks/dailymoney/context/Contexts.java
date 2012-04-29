@@ -669,9 +669,17 @@ public class Contexts {
      * @param date
      */
     public void setLastBackup(Date date) {
+        setLastBackup(appContext, date);
+    }
+
+    /**
+     * set last backup date
+     * @param date
+     */
+    public void setLastBackup(Context context, Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         pref_lastbackup = sdf.format(date);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(Constants.PREFS_LAST_BACKUP, pref_lastbackup);
         editor.commit();
