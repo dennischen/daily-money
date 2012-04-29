@@ -218,5 +218,11 @@
     <!-- from 20110702 -->
     <string name="act_toggle_hierarchical_report">Toggle Hierarchical</string>
     <string name="label_firstday_sat">Saturday</string>
+
+    <!-- from 20120427 by Lancelot Liu -->
+    <string name="label_backup_db_to_sd">Backup to SD card</string>
+    <string name="msg_db_backuped">%1$s files backup to %2$s</string>
+    <string name="msg_no_db">There is no file to backup</string>
+    <string name="label_prefs_lastbackup">Last Backup Time</string>
 </resources>
 

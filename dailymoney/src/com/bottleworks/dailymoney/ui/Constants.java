@@ -16,7 +16,7 @@ public class Constants {
     static final public String PREFS_MAX_RECORDS = "max_records";
     static final public String PREFS_OPEN_TESTS_DESKTOP = "open_testsdekstop";
     
-    static final public String PREFS_WORKING_FOLDER = "working_folder";
+    // static final public String PREFS_WORKING_FOLDER = "working_folder";
     static final public String PREFS_BACKUP_CSV = "backup_csv";
     
     static final public String PREFS_ALLOW_ANALYTICS = "allow_analytics";
@@ -37,6 +37,6 @@ public class Constants {
     public static final String DISPLAY = "display";
     
     public static final String LOCAL_URL_PREFIX = "file:///android_asset/";
-    
+    public static final String PREFS_LAST_BACKUP = "last_backup";
     
 }

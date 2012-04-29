@@ -1,7 +1,9 @@
 package com.bottleworks.dailymoney.context;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,11 +20,13 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.text.Html;
 
 import com.bottleworks.commons.util.CalendarHelper;
+import com.bottleworks.commons.util.Files;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
@@ -54,6 +58,9 @@ public class Contexts {
     private IDataProvider dataProvider;
     private IMasterDataProvider masterDataProvider;
     private I18N i18n;
+    private File sdFolder;
+    private File dbFolder;
+    private File prefFolder;
     
     int pref_workingBookId = 0;//the book user selected
     int pref_detailListLayout = 2;
@@ -67,6 +74,7 @@ public class Contexts {
     boolean pref_allowAnalytics = true;
     String pref_csvEncoding = "UTF8";
     boolean pref_hierarachicalReport = true;
+    String pref_lastbackup = "Unknown";
     
     private CalendarHelper calendarHelper = new CalendarHelper();
     
@@ -110,6 +118,23 @@ public class Contexts {
             if(prefsDirty){
                 reloadPreference();
                 prefsDirty = false;
+            }
+            // restore db & pref
+            File sd = Environment.getExternalStorageDirectory();
+            String dbPath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.bottleworks.dailymoney/databases";
+            String prefPath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.bottleworks.dailymoney/shared_prefs";
+            sdFolder = new File(sd, getPrefWorkingFolder());
+            dbFolder = new File(dbPath);
+            prefFolder = new File(prefPath);
+            if (isFirstTime()) {
+                try {
+                    Files.copyDatabases(sdFolder, dbFolder, null);
+                    Files.copyPrefFile(sdFolder, prefFolder, null);
+                    reloadPreference();
+                    prefsDirty = false;
+                } catch (IOException e) {
+                    Logger.e(e.getMessage(), e);
+                }
             }
             initMasterDataProvider(uiActivity);
             initDataProvider(uiActivity);
@@ -390,10 +415,11 @@ public class Contexts {
         try{
             pref_openTestsDesktop = prefs.getBoolean(Constants.PREFS_OPEN_TESTS_DESKTOP, false);
         }catch(Exception x){Logger.e(x.getMessage());}
-        
-        try{
-            pref_workingFolder = prefs.getString(Constants.PREFS_WORKING_FOLDER, pref_workingFolder);
-        }catch(Exception x){Logger.e(x.getMessage());}
+
+        // because restore function should restore data from fix path, working folder shouldn't be changed
+        // try{
+        //     pref_workingFolder = prefs.getString(Constants.PREFS_WORKING_FOLDER, pref_workingFolder);
+        // }catch(Exception x){Logger.e(x.getMessage());}
         try{
             pref_backupCSV = prefs.getBoolean(Constants.PREFS_BACKUP_CSV, pref_backupCSV);
         }catch(Exception x){Logger.e(x.getMessage());}
@@ -408,6 +434,11 @@ public class Contexts {
             pref_hierarachicalReport = prefs.getBoolean(Constants.PREFS_HIERARCHICAL_REPORT, pref_hierarachicalReport);
         }catch(Exception x){Logger.e(x.getMessage());}
         
+        try {
+            pref_lastbackup = prefs.getString(Constants.PREFS_LAST_BACKUP, pref_lastbackup);
+        } catch (Exception x) {
+            Logger.e(x.getMessage());
+        }
         if(DEBUG){
             Logger.d("preference : working book "+pref_workingBookId);
             Logger.d("preference : detail layout "+pref_detailListLayout);
@@ -418,6 +449,7 @@ public class Contexts {
             Logger.d("preference : open working_folder "+pref_workingFolder);
             Logger.d("preference : backup csv "+pref_backupCSV);
             Logger.d("preference : csv encoding "+pref_csvEncoding);
+            Logger.d("preference : last backup " + pref_lastbackup);
         }
         calendarHelper.setFirstDayOfWeek(getPrefFirstdayWeek());
         calendarHelper.setStartDayOfMonth(getPrefStartdayMonth());
@@ -606,5 +638,42 @@ public class Contexts {
         IMasterDataProvider imdp = getMasterDataProvider();
         Book book = imdp.findBook(getWorkingBookId());
         return Formats.money2String(money, book.getSymbol(), book.getSymbolPosition());
+    }
+
+    /**
+     * get sd card folder
+     * @return
+     */
+    public File getSdFolder() {
+        return sdFolder;
+    }
+
+    /**
+     * get database folder
+     * @return
+     */
+    public File getDbFolder() {
+        return dbFolder;
+    }
+
+    /**
+     * get preference folder
+     * @return
+     */
+    public File getPrefFolder() {
+        return prefFolder;
+    }
+
+    /**
+     * set last backup date
+     * @param date
+     */
+    public void setLastBackup(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        pref_lastbackup = sdf.format(date);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.PREFS_LAST_BACKUP, pref_lastbackup);
+        editor.commit();
     }
 }
