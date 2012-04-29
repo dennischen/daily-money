@@ -93,6 +93,12 @@ public class Contexts {
     public static final boolean DEBUG = true; 
     
     private Contexts(){
+        File sd = Environment.getExternalStorageDirectory();
+        String dbPath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.bottleworks.dailymoney/databases";
+        String prefPath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.bottleworks.dailymoney/shared_prefs";
+        sdFolder = new File(sd, getPrefWorkingFolder());
+        dbFolder = new File(dbPath);
+        prefFolder = new File(prefPath);
     }
     
     /** get a Contexts instance for activity use **/
@@ -120,12 +126,6 @@ public class Contexts {
                 prefsDirty = false;
             }
             // restore db & pref
-            File sd = Environment.getExternalStorageDirectory();
-            String dbPath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.bottleworks.dailymoney/databases";
-            String prefPath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.bottleworks.dailymoney/shared_prefs";
-            sdFolder = new File(sd, getPrefWorkingFolder());
-            dbFolder = new File(dbPath);
-            prefFolder = new File(prefPath);
             if (isFirstTime()) {
                 try {
                     Files.copyDatabases(sdFolder, dbFolder, null);
