@@ -218,5 +218,15 @@
     <!-- from 20110702 -->
     <string name="act_toggle_hierarchical_report">Toggle Hierarchical</string>
     <string name="label_firstday_sat">Saturday</string>
+
+    <!-- from 20111120 for installment by lancelot -->
+    <string name="defacc_installments_payable">Installments Payable</string>
+    <string name="puitem_year">Y</string>
+    <string name="puitem_month">M</string>
+    <string name="puitem_day">D</string>
+    <string name="label_installments">Installments</string>
+    <string name="label_repeat">Repeat</string>
+    <string name="label_period">Period</string>
+    <string name="label_periods">Number of periods</string>
 </resources>
 

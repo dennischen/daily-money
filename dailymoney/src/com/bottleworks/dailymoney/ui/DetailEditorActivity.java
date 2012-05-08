@@ -15,8 +15,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,6 +34,7 @@ import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
 import com.bottleworks.dailymoney.data.Detail;
+import com.bottleworks.dailymoney.data.DuplicateKeyException;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.ui.AccountUtil.IndentNode;
 
@@ -111,6 +115,12 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
     EditText dateEditor;
     EditText noteEditor;
     EditText moneyEditor;
+    RadioGroup rgType;
+    RadioButton rbInstallments;
+    RadioButton rbRepeat;
+    EditText periodEditor;
+    Spinner periodUnitSpinner;
+    EditText periodsEditor;
 
     Button okBtn;
     Button cancelBtn;
@@ -131,6 +141,18 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         moneyEditor = (EditText) findViewById(R.id.deteditor_money);
         moneyEditor.setText(workingDetail.getMoney()<=0?"":Formats.double2String(workingDetail.getMoney()));
         moneyEditor.setEnabled(!archived);
+
+        rgType = (RadioGroup) findViewById(R.id.rgType);
+        rbInstallments = (RadioButton) findViewById(R.id.rbInstallments);
+        rbRepeat = (RadioButton) findViewById(R.id.rbRepeat);
+
+        periodEditor = (EditText) findViewById(R.id.deteditor_period);
+        periodEditor.setText(workingDetail.getPeriod() <= 0 ? "" : Formats.int2String(workingDetail.getPeriod()));
+        periodEditor.setEnabled(!archived);
+
+        periodsEditor = (EditText) findViewById(R.id.deteditor_periods);
+        periodsEditor.setText(workingDetail.getPeriods() <= 0 ? "" : Formats.int2String(workingDetail.getPeriods()));
+        periodsEditor.setEnabled(!archived);
 
         noteEditor = (EditText) findViewById(R.id.deteditor_note);
         noteEditor.setText(workingDetail.getNote());
@@ -194,6 +216,11 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             }
         });
         toEditor.setAdapter(toAccountAdapter);
+
+        periodUnitSpinner = (Spinner) findViewById(R.id.deteditor_periodUnit);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[] { i18n.string(R.string.puitem_year), i18n.string(R.string.puitem_month), i18n.string(R.string.puitem_day) });
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        periodUnitSpinner.setAdapter(adapter);
 
         reloadSpinnerData();
 
@@ -438,6 +465,22 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         
         String note = noteEditor.getText().toString();
 
+        int paymentType = rgType.getCheckedRadioButtonId();
+
+        String periodStr = periodEditor.getText().toString();
+        int period = 1;
+        if (!"".equals(periodStr)) {
+            period = Formats.string2Int(periodStr);
+        }
+
+        int periodUnit = periodUnitSpinner.getSelectedItemPosition();
+
+        String periodsStr = periodsEditor.getText().toString();
+        int periods = 1;
+        if (!"".equals(periodsStr)) {
+            periods = Formats.string2Int(periodsStr);
+        }
+
         Account fromAcc = fromAccountList.get(fromPos).getAccount();
         Account toAcc =  toAccountList.get(toPos).getAccount();
 
@@ -454,18 +497,74 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         workingDetail.setDate(date);
         workingDetail.setMoney(money);
         workingDetail.setNote(note.trim());
+        workingDetail.setPaymentType(paymentType);
+        workingDetail.setPeriod(period);
+        workingDetail.setPeriods(periods);
+        workingDetail.setPeriodUnit(periodUnit);
         IDataProvider idp = getContexts().getDataProvider();
         if (modeCreate) {
-            
-            idp.newDetail(workingDetail);
+            if (periods > 0) {
+                CalendarHelper cal = getContexts().getCalendarHelper();
+                double tmpMoney = workingDetail.getMoney();
+                double leftMoneyEach = 0D;
+                double firstMoney = 0D;
+                // get installments payable account
+                Account accInstallments = idp.findAccount("D", i18n.string(R.string.defacc_installments_payable));
+                if (accInstallments == null) {
+                    accInstallments = new Account("D", i18n.string(R.string.defacc_installments_payable), 0D);
+                    accInstallments.setCashAccount(false);
+                    try {
+                        idp.newAccount(accInstallments);
+                    } catch (DuplicateKeyException e) {
+                        // do nothing
+                    }
+                }
+                if (paymentType == R.id.rbInstallments) {
+                    // create first detail: installments payable -> toAcct
+                    workingDetail.setFrom(accInstallments.getId());
+                    idp.newDetail(workingDetail);
+                    workingDetail = clone(workingDetail);
+                    // reset fromAcct & toAcct
+                    workingDetail.setFrom(fromAcc.getId());
+                    workingDetail.setTo(accInstallments.getId());
+                    // calculate installments amount
+                    leftMoneyEach = (int) tmpMoney / periods;
+                    firstMoney = (int) tmpMoney - leftMoneyEach * (periods - 1);
+                } else {
+                    leftMoneyEach = firstMoney = tmpMoney;
+                }
+                for (int i = 0; i < periods; i++) {
+                    switch (periodUnit) {
+                    case 0:
+                        workingDetail.setDate(cal.yearAfter(date, i * period));
+                        break;
+                    case 1:
+                        workingDetail.setDate(cal.monthAfter(date, i * period));
+                        break;
+                    case 2:
+                        workingDetail.setDate(cal.dateAfter(date, i * period));
+                        break;
+                    }
+                    workingDetail.setMoney(i == 0 ? (double) firstMoney : (double) leftMoneyEach);
+                    workingDetail.setNote(periods == 1 ? note.trim() : new StringBuffer(note.trim()).append(" ")
+                            .append(i + 1).append("/").append(periods).toString().trim());
+                    idp.newDetail(workingDetail);
+                    workingDetail = clone(workingDetail);
+                }
+            }
             setResult(RESULT_OK);
             
             workingDetail = clone(workingDetail);
             workingDetail.setMoney(0D);
             workingDetail.setNote("");
+            workingDetail.setPeriods(1);
+            workingDetail.setPeriod(1);
             moneyEditor.setText("");
             moneyEditor.requestFocus();
             noteEditor.setText("");
+            periodsEditor.setText("");
+            periodEditor.setText("");
+            rgType.clearCheck();
             counterCreate++;
             okBtn.setText(i18n.string(R.string.cact_create) + "(" + counterCreate + ")");
             cancelBtn.setVisibility(Button.GONE);
