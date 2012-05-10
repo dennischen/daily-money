@@ -217,11 +217,21 @@
     <!-- from 20110702 -->
     <string name="act_toggle_hierarchical_report">切換階層式報表</string>
     <string name="label_firstday_sat">星期六</string>
-    
+
     <!-- from 20120427 by Lancelot Liu -->
     <string name="label_backup_db_to_sd">備份資料到 SD 卡</string>
     <string name="msg_db_backuped">%1$s 個檔案備份至 %2$s</string>
     <string name="msg_no_db">沒有資料可供備份</string>
     <string name="label_prefs_lastbackup">最後備份時間</string>
+    
+    <!-- from 20111120 for installment by lancelot -->
+    <string name="defacc_installments_payable">應付分期款</string>
+    <string name="puitem_year">年</string>
+    <string name="puitem_month">月</string>
+    <string name="puitem_day">日</string>
+    <string name="label_installments">分期付款</string>
+    <string name="label_repeat">週期性支出</string>
+    <string name="label_period">週期</string>
+    <string name="label_periods">期數</string>
 </resources>
 

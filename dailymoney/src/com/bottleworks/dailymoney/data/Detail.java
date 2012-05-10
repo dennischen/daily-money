@@ -21,7 +21,11 @@ public class Detail implements Serializable{
     private Date date;
     private Double money;
     private String note;
-    
+    private int period;
+    private int periodUnit;
+    private int periods;
+    private int paymentType;
+
     private boolean archived;
 
     Detail(){}
@@ -129,5 +133,36 @@ public class Detail implements Serializable{
         return true;
     }
 
+    public void setPeriods(int periods) {
+        this.periods = periods;
+    }
+
+    public int getPeriods() {
+        return periods;
+    }
+
+    public void setPeriod(int period) {
+        this.period = period;
+    }
+
+    public int getPeriod() {
+        return period;
+    }
+
+    public void setPaymentType(int paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public int getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPeriodUnit(int periodUnit) {
+        this.periodUnit = periodUnit;
+    }
+
+    public int getPeriodUnit() {
+        return periodUnit;
+    }
 
 }

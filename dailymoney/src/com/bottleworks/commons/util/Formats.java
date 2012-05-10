@@ -95,4 +95,18 @@ public class Formats {
         }
         return sb.toString();
     }
+
+    public static String int2String(int d) {
+        return DecimalFormat.getIntegerInstance().format(d);
+    }
+
+    public static int string2Int(String d) {
+        try {
+            return DecimalFormat.getInstance().parse(d).intValue();
+        } catch (ParseException e) {
+            Logger.e(e.getMessage(), e);
+            return 0;
+        }
+    }
+
 }

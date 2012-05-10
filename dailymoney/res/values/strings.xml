@@ -224,5 +224,15 @@
     <string name="msg_db_backuped">%1$s files backup to %2$s</string>
     <string name="msg_no_db">There is no file to backup</string>
     <string name="label_prefs_lastbackup">Last Backup Time</string>
+    
+    <!-- from 20111120 for installment by lancelot -->
+    <string name="defacc_installments_payable">Installments Payable</string>
+    <string name="puitem_year">Y</string>
+    <string name="puitem_month">M</string>
+    <string name="puitem_day">D</string>
+    <string name="label_installments">Installments</string>
+    <string name="label_repeat">Repeat</string>
+    <string name="label_period">Period</string>
+    <string name="label_periods">Number of periods</string>
 </resources>
 
