@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
+import com.bottleworks.dailymoney.context.ScheduleReceiver;
 import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.AccountType;
@@ -37,6 +40,7 @@ import com.bottleworks.dailymoney.data.Book;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.data.IMasterDataProvider;
+import com.bottleworks.dailymoney.data.ScheduleJob;
 /**
  * 
  * @author dennis
@@ -83,6 +87,18 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         loadDesktop();
         loadInfo();
         loadWhatisNew();
+        initSchedule();
+    }
+    
+    private void initSchedule() {
+        ScheduleJob backupJob = new ScheduleJob();
+        backupJob.setRepeat(Long.valueOf(1000 * 60 * 60 * 24));
+        Intent intent = new Intent(this, ScheduleReceiver.class);
+        intent.setAction(Constants.BACKUP_JOB);
+        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, backupJob.getInitDate().getTimeInMillis(), pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, backupJob.getInitDate().getTimeInMillis(), backupJob.getRepeat(), pi);
     }
     
     @Override

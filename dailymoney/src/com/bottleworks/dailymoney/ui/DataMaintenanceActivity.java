@@ -8,6 +8,7 @@ import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,9 +23,9 @@ import com.bottleworks.commons.util.Files;
 import com.bottleworks.commons.util.Formats;
 import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.Logger;
-import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
+import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.data.Account;
 import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.Detail;
@@ -70,6 +71,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         findViewById(R.id.datamain_reset).setOnClickListener(this);
         findViewById(R.id.datamain_create_default).setOnClickListener(this);
         findViewById(R.id.datamain_clear_folder).setOnClickListener(this);
+        findViewById(R.id.datamain_backup_db_to_sd).setOnClickListener(this);
     }
 
     @Override
@@ -86,7 +88,42 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             doCreateDefault();
         } else if (v.getId() == R.id.datamain_clear_folder) {
             doClearFolder();
+        } else if (v.getId() == R.id.datamain_backup_db_to_sd) {
+            doBackupDbToSD();
         }
+    }
+
+    private void doBackupDbToSD() {
+        final GUIs.IBusyRunnable job = new GUIs.BusyAdapter() {
+            int count = -1;
+            Calendar now = Calendar.getInstance();
+
+            public void onBusyError(Throwable t) {
+                GUIs.error(DataMaintenanceActivity.this, t);
+            }
+
+            public void onBusyFinish() {
+                if (count > 0) {
+                    String msg = i18n.string(R.string.msg_db_backuped, Integer.toString(count), workingFolder);
+                    GUIs.alert(DataMaintenanceActivity.this, msg);
+                    getContexts().setLastBackup(now.getTime());
+                } else {
+                    GUIs.alert(DataMaintenanceActivity.this, R.string.msg_no_db);
+                }
+            }
+
+            @Override
+            public void run() {
+                try {
+                    count = Files.copyDatabases(getContexts().getDbFolder(), getContexts().getSdFolder(), now.getTime());
+                    Files.copyPrefFile(getContexts().getPrefFolder(), getContexts().getSdFolder(), now.getTime());
+                    count++;
+                } catch (Exception e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+            }
+        };
+        GUIs.doBusy(DataMaintenanceActivity.this, job);
     }
 
     private void doClearFolder() {

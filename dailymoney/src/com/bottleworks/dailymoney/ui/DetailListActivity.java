@@ -350,7 +350,7 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.detlist_menu_new) {
-            detailListHelper.doNewDetail();
+            detailListHelper.doNewDetail(currentDate);
             return true;
         }
         return super.onOptionsItemSelected(item);
