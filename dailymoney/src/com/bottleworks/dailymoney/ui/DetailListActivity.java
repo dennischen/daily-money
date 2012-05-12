@@ -1,5 +1,6 @@
 package com.bottleworks.dailymoney.ui;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -248,11 +249,11 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
         GUIs.doBusy(this,new GUIs.BusyAdapter() {
             List<Detail> data = null;
             
-            double expense;
-            double income;
-            double asset;
-            double liability;
-            double other;
+            BigDecimal expense;
+            BigDecimal income;
+            BigDecimal asset;
+            BigDecimal liability;
+            BigDecimal other;
             int count;
             
             @Override
@@ -261,10 +262,10 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
                 count = idp.countDetail(start, end);
                 income = idp.sumFrom(AccountType.INCOME,start,end);
                 expense = idp.sumTo(AccountType.EXPENSE,start,end);//nagivate
-                asset = idp.sumTo(AccountType.ASSET,start,end) - idp.sumFrom(AccountType.ASSET,start,end);
-                liability = idp.sumTo(AccountType.LIABILITY,start,end) - idp.sumFrom(AccountType.LIABILITY,start,end);
-                liability = -liability;
-                other = idp.sumTo(AccountType.OTHER,start,end) - idp.sumFrom(AccountType.OTHER,start,end);
+                asset = idp.sumTo(AccountType.ASSET, start, end).subtract(idp.sumFrom(AccountType.ASSET, start, end));
+                liability = idp.sumTo(AccountType.LIABILITY, start, end).subtract(idp.sumFrom(AccountType.LIABILITY, start, end));
+                liability = BigDecimal.ZERO.subtract(liability);
+                other = idp.sumTo(AccountType.OTHER, start, end).subtract(idp.sumFrom(AccountType.OTHER, start, end));
             }
             @Override
             public void onBusyFinish() {
@@ -273,27 +274,27 @@ public class DetailListActivity extends ContextsActivity implements OnClickListe
               //update data
                 detailListHelper.reloadData(data);
                 int showcount = 0;
-                if(income!=0){
+                if (income.compareTo(BigDecimal.ZERO) != 0) {
                     sumIncomeView.setText(i18n.string(R.string.label_detlist_sum_income,getContexts().toFormattedMoneyString((income))));
                     sumIncomeView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
-                if(expense!=0){
+                if (expense.compareTo(BigDecimal.ZERO) != 0) {
                     sumExpenseView.setText(i18n.string(R.string.label_detlist_sum_expense,getContexts().toFormattedMoneyString((expense))));
                     sumExpenseView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
-                if(asset!=0){
+                if (asset.compareTo(BigDecimal.ZERO) != 0) {
                     sumAssetView.setText(i18n.string(R.string.label_detlist_sum_asset,getContexts().toFormattedMoneyString((asset))));
                     sumAssetView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
-                if(liability!=0){
+                if (liability.compareTo(BigDecimal.ZERO) != 0) {
                     sumLiabilityView.setText(i18n.string(R.string.label_detlist_sum_liability,getContexts().toFormattedMoneyString((liability))));
                     sumLiabilityView.setVisibility(TextView.VISIBLE);
                     showcount++;
                 }
-                if(other!=0){
+                if (other.compareTo(BigDecimal.ZERO) != 0) {
                     sumOtherView.setText(i18n.string(R.string.label_detlist_sum_other,getContexts().toFormattedMoneyString((other))));
                     sumOtherView.setVisibility(TextView.VISIBLE);
                     showcount++;

@@ -16,14 +16,15 @@ import static com.bottleworks.dailymoney.data.DataMeta.*;
 public class SQLiteDataHelper extends SQLiteOpenHelper{
     /** maintain this field carefully*/
 //    private static final int VERSION = 4;//0.9.1-0.9.3
-    private static final int VERSION = 5;//0.9.4-0.9.5
+    // private static final int VERSION = 5;// 0.9.4-0.9.5
+    private static final int VERSION = 6;// change double to BigDecimal
     
     private static final String ACC_CREATE_SQL = "CREATE TABLE " + TB_ACC + " (" 
             + COL_ACC_ID + " TEXT PRIMARY KEY, "
             + COL_ACC_NAME +" TEXT NOT NULL, "
             + COL_ACC_TYPE+" TEXT NOT NULL, "
             + COL_ACC_CASHACCOUNT+" INTEGER NULL, "
-            + COL_ACC_INITVAL+" REAL NOT NULL)";
+            + COL_ACC_INITVAL+" REAL NOT NULL, " + COL_ACC_INITVAL_BD + " TEXT NOT NULL DEFAULT '' )";
     private static final String ACC_DROP_SQL = "DROP TABLE IF EXISTS "+TB_ACC;
     
     
@@ -36,7 +37,7 @@ public class SQLiteDataHelper extends SQLiteOpenHelper{
     + COL_DET_DATE+" INTEGER NOT NULL, "
     + COL_DET_MONEY+" REAL NOT NULL, "
     + COL_DET_ARCHIVED+" INTEGER NOT NULL, "
-    + COL_DET_NOTE+" TEXT)";
+    + COL_DET_NOTE+" TEXT, " + COL_DET_MONEY_BD + " TEXT NOT NULL DEFAULT '' )";
     
     private static final String DET_DROP_SQL = "DROP TABLE IF EXISTS "+TB_DET;
     
@@ -84,7 +85,12 @@ public class SQLiteDataHelper extends SQLiteOpenHelper{
         //keep going check next id
         if(oldVersion==5){//schema before ?
           //upgrade to ?
-//            Logger.i("upgrade schem from "+oldVersion+" to "+newVersion);
+            Logger.i("upgrade schem from " + oldVersion + " to " + newVersion);
+            db.execSQL("ALTER TABLE " + TB_ACC + " ADD " + COL_ACC_INITVAL_BD + " TEXT NOT NULL DEFAULT '' ");
+            db.execSQL("ALTER TABLE " + TB_DET + " ADD " + COL_DET_MONEY_BD + " TEXT NOT NULL DEFAULT '' ");
+            db.execSQL("UPDATE " + TB_ACC + " SET " + COL_ACC_INITVAL_BD + " = " + COL_ACC_INITVAL);
+            db.execSQL("UPDATE " + TB_DET + " SET " + COL_DET_MONEY_BD + " = " + COL_DET_MONEY);
+            oldVersion++;
         }
     }
 

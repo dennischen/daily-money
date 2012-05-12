@@ -1,5 +1,6 @@
 package com.bottleworks.dailymoney.ui;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         
         //issue 51, for direct call from outside action, 
         if(detail==null){
-            detail = new Detail("", "", new Date(), 0D, "");
+            detail = new Detail("", "", new Date(), BigDecimal.ZERO, "");
         }
         
         workingDetail = clone(detail);
@@ -139,7 +140,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         dateEditor.setEnabled(!archived);
 
         moneyEditor = (EditText) findViewById(R.id.deteditor_money);
-        moneyEditor.setText(workingDetail.getMoney()<=0?"":Formats.double2String(workingDetail.getMoney()));
+        moneyEditor.setText(workingDetail.getMoneyBD().compareTo(BigDecimal.ZERO) <= 0 ? "" : Formats.bigDecimalToString(workingDetail.getMoneyBD()));
         moneyEditor.setEnabled(!archived);
 
         rgType = (RadioGroup) findViewById(R.id.rgType);
@@ -410,9 +411,9 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         if(requestCode == Constants.REQUEST_CALCULATOR_CODE && resultCode==Activity.RESULT_OK){
             String result = data.getExtras().getString(Calculator.INTENT_RESULT_VALUE);
             try{
-                double d = Double.parseDouble(result);
-                if(d>0){
-                    moneyEditor.setText(Formats.double2String(d));
+                BigDecimal d = new BigDecimal(result);
+                if (d.compareTo(BigDecimal.ZERO) > 0) {
+                    moneyEditor.setText(Formats.bigDecimalToString(d));
                 }else{
                     moneyEditor.setText("0");
                 }
@@ -457,8 +458,8 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             GUIs.alert(this, i18n.string(R.string.cmsg_field_empty, i18n.string(R.string.label_money)));
             return;
         }
-        double money = Formats.string2Double(moneystr);
-        if (money==0) {
+        BigDecimal money = new BigDecimal(moneystr);
+        if (money.compareTo(BigDecimal.ZERO) == 0) {
             GUIs.alert(this, i18n.string(R.string.cmsg_field_zero, i18n.string(R.string.label_money)));
             return;
         }
@@ -495,7 +496,8 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         workingDetail.setTo(toAcc.getId());
 
         workingDetail.setDate(date);
-        workingDetail.setMoney(money);
+        workingDetail.setMoney(money.doubleValue());
+        workingDetail.setMoneyBD(money);
         workingDetail.setNote(note.trim());
         workingDetail.setPaymentType(paymentType);
         workingDetail.setPeriod(period);
@@ -505,13 +507,13 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
         if (modeCreate) {
             if (periods > 0) {
                 CalendarHelper cal = getContexts().getCalendarHelper();
-                double tmpMoney = workingDetail.getMoney();
-                double leftMoneyEach = 0D;
-                double firstMoney = 0D;
+                BigDecimal tmpMoney = workingDetail.getMoneyBD();
+                BigDecimal leftMoneyEach = BigDecimal.ZERO;
+                BigDecimal firstMoney = BigDecimal.ZERO;
                 // get installments payable account
                 Account accInstallments = idp.findAccount("D", i18n.string(R.string.defacc_installments_payable));
                 if (accInstallments == null) {
-                    accInstallments = new Account("D", i18n.string(R.string.defacc_installments_payable), 0D);
+                    accInstallments = new Account("D", i18n.string(R.string.defacc_installments_payable), BigDecimal.ZERO);
                     accInstallments.setCashAccount(false);
                     try {
                         idp.newAccount(accInstallments);
@@ -528,8 +530,8 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
                     workingDetail.setFrom(fromAcc.getId());
                     workingDetail.setTo(accInstallments.getId());
                     // calculate installments amount
-                    leftMoneyEach = (int) tmpMoney / periods;
-                    firstMoney = (int) tmpMoney - leftMoneyEach * (periods - 1);
+                    leftMoneyEach = tmpMoney.divide(BigDecimal.valueOf(periods));
+                    firstMoney = tmpMoney.subtract(leftMoneyEach.multiply(BigDecimal.valueOf((periods - 1))));
                 } else {
                     leftMoneyEach = firstMoney = tmpMoney;
                 }
@@ -545,7 +547,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
                         workingDetail.setDate(cal.dateAfter(date, i * period));
                         break;
                     }
-                    workingDetail.setMoney(i == 0 ? (double) firstMoney : (double) leftMoneyEach);
+                    workingDetail.setMoneyBD(i == 0 ? firstMoney : leftMoneyEach);
                     workingDetail.setNote(periods == 1 ? note.trim() : new StringBuffer(note.trim()).append(" ")
                             .append(i + 1).append("/").append(periods).toString().trim());
                     idp.newDetail(workingDetail);
@@ -556,6 +558,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
             
             workingDetail = clone(workingDetail);
             workingDetail.setMoney(0D);
+            workingDetail.setMoneyBD(BigDecimal.ZERO);
             workingDetail.setNote("");
             workingDetail.setPeriods(1);
             workingDetail.setPeriod(1);

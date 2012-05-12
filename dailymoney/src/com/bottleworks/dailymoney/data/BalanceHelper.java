@@ -1,10 +1,9 @@
 package com.bottleworks.dailymoney.data;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.ui.AccountUtil;
@@ -22,11 +21,11 @@ public class BalanceHelper {
             return items;
         }
         List<Balance> group = new ArrayList<Balance>(items);
-        double total = 0;
+        BigDecimal total = BigDecimal.ZERO;
         for (Balance b : items) {
             b.setIndent(1);
             b.setGroup(group);
-            total += b.getMoney();
+            total = total.add(b.getMoney());
         }
         Balance bt = new Balance(totalName,type.getType(), total,null);
         bt.setIndent(0);
@@ -49,29 +48,29 @@ public class BalanceHelper {
         
         List<Balance> nested = new ArrayList<Balance>();
         
-        double total = 0;
+        BigDecimal total = BigDecimal.ZERO;
         for (Balance ib : items) {
-            total += ib.getMoney();
+            total = total.add(ib.getMoney());
         }
         Date date = items.get(0).getDate();
         
         //the nested nodes
         for(IndentNode node:inodes){
             String fullpath = node.getFullPath();
-            Balance b = new Balance(node.getName(),type.getType(),0,null);
+            Balance b = new Balance(node.getName(), type.getType(), BigDecimal.ZERO, null);
             nested.add(b);
             b.setGroup(group);
             b.setIndent(node.getIndent()+1);
-            double sum =0;
+            BigDecimal sum = BigDecimal.ZERO;
             for (Balance ib : items) {
                 String in = ib.getName();
                 if(in.equals(fullpath)){
-                    sum += ib.getMoney();
+                    sum = sum.add(ib.getMoney());
                     b.setTarget(ib.getTarget());
                 }else if(in.startsWith(fullpath+".")){
-                    sum += ib.getMoney();
+                    sum = sum.add(ib.getMoney());
                     //for search detail
-                    b.setTarget(idp.toAccountId(new Account(type.getType(),fullpath,0D)));
+                    b.setTarget(idp.toAccountId(new Account(type.getType(), fullpath, BigDecimal.ZERO)));
                 }
                 
             }
@@ -104,10 +103,10 @@ public class BalanceHelper {
         List<Account> accs = idp.listAccount(type);
         List<Balance> blist = new ArrayList<Balance>();
         for (Account acc : accs) {
-            double from = idp.sumFrom(acc, start, end);
-            double to = idp.sumTo(acc, start, end);
-            double init = calInit?acc.getInitialValue():0;
-            double b = init + (nat?(from - to):(to - from));
+            BigDecimal from = idp.sumFrom(acc, start, end);
+            BigDecimal to = idp.sumTo(acc, start, end);
+            BigDecimal init = calInit ? acc.getInitialValueBD() : BigDecimal.ZERO;
+            BigDecimal b = init.add(nat ? from.subtract(to) : to.subtract(from));
             Balance balance = new Balance(acc.getName(),type.getType(), b,acc);
             balance.setDate(end);
             blist.add(balance);
@@ -129,12 +128,12 @@ public class BalanceHelper {
             }
         }
         
-        double from = idp.sumFrom(type, start, end);
-        double to = idp.sumTo(type, start, end);
+        BigDecimal from = idp.sumFrom(type, start, end);
+        BigDecimal to = idp.sumTo(type, start, end);
 
-        double init = calInit ? idp.sumInitialValue(type) : 0;
+        BigDecimal init = calInit ? idp.sumInitialValue(type) : BigDecimal.ZERO;
 
-        double b = init + (nat ? (from - to) : (to - from));
+        BigDecimal b = init.add(nat ? from.subtract(to) : to.subtract(from));
         Balance balance = new Balance(type.getDisplay(contexts().getI18n()), type.getType(), b, type);
         balance.setDate(end);
             
@@ -155,10 +154,10 @@ public class BalanceHelper {
                 calInit = false;
             }
         }
-        double from = idp.sumFrom(acc, start, end);
-        double to = idp.sumTo(acc, start, end);
-        double init = calInit ? acc.getInitialValue() : 0;
-        double b = init + (nat ? (from - to) : (to - from));
+        BigDecimal from = idp.sumFrom(acc, start, end);
+        BigDecimal to = idp.sumTo(acc, start, end);
+        BigDecimal init = calInit ? acc.getInitialValueBD() : BigDecimal.ZERO;
+        BigDecimal b = init.add(nat ? from.subtract(to) : to.subtract(from));
         Balance balance = new Balance(acc.getName(), type.getType(), b, acc);
         balance.setDate(end);
 
