@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney.ui;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -530,7 +531,7 @@ public class DetailEditorActivity extends ContextsActivity implements android.vi
                     workingDetail.setFrom(fromAcc.getId());
                     workingDetail.setTo(accInstallments.getId());
                     // calculate installments amount
-                    leftMoneyEach = tmpMoney.divide(BigDecimal.valueOf(periods));
+                    leftMoneyEach = tmpMoney.divide(BigDecimal.valueOf(periods), 0, RoundingMode.FLOOR);
                     firstMoney = tmpMoney.subtract(leftMoneyEach.multiply(BigDecimal.valueOf((periods - 1))));
                 } else {
                     leftMoneyEach = firstMoney = tmpMoney;
