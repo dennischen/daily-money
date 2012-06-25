@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney.ui;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -41,6 +42,7 @@ import com.bottleworks.dailymoney.data.DataCreator;
 import com.bottleworks.dailymoney.data.IDataProvider;
 import com.bottleworks.dailymoney.data.IMasterDataProvider;
 import com.bottleworks.dailymoney.data.ScheduleJob;
+import com.bottleworks.dailymoney.data.ScheduleJob.Frequency;
 /**
  * 
  * @author dennis
@@ -92,13 +94,15 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
     
     private void initSchedule() {
         ScheduleJob backupJob = new ScheduleJob();
-        backupJob.setRepeat(Long.valueOf(1000 * 60 * 60 * 24));
+        backupJob.setFrequency(Frequency.DAILY);
+        backupJob.setInitTime(null, null, 3, 0);
         Intent intent = new Intent(this, ScheduleReceiver.class);
         intent.setAction(Constants.BACKUP_JOB);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, backupJob.getInitDate().getTimeInMillis(), pi);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, backupJob.getInitDate().getTimeInMillis(), backupJob.getRepeat(), pi);
+        Calendar triggerTime = backupJob.getTriggerTime();
+        am.set(AlarmManager.RTC_WAKEUP, triggerTime.getTimeInMillis(), pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, triggerTime.getTimeInMillis(), backupJob.getRepeat(triggerTime), pi);
     }
     
     @Override
