@@ -34,7 +34,7 @@
 		<link>
 			<name>dailymoney_src</name>
 			<type>2</type>
-			<locationURI>_android_dailymoney_5bc92a47/src</locationURI>
+			<locationURI>WORKSPACE_LOC/dailymoney/src</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
