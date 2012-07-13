@@ -27,6 +27,10 @@ public class ScheduleJob {
      * job trigger time for AlarmManager, according to initTime & frequency
      */
     private Calendar triggerTime;
+    /**
+     * default value is 1. repeat = frequency * times
+     */
+    private Long times = 1L;
 
     public void setInitTime(Calendar initTime) {
         this.initTime = initTime;
@@ -84,6 +88,7 @@ public class ScheduleJob {
                 }
                 break;
             }
+            repeat *= times;
         }
         return repeat;
     }
@@ -169,6 +174,14 @@ public class ScheduleJob {
         initTime.set(Calendar.MINUTE, minute);
         initTime.set(Calendar.SECOND, 0);
         initTime.set(Calendar.MILLISECOND, 0);
+    }
+
+    public void setTimes(Long times) {
+        this.times = times;
+    }
+
+    public Long getTimes() {
+        return times;
     }
 
 }
