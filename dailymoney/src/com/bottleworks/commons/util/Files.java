@@ -24,6 +24,8 @@ import android.os.Environment;
  */
 public class Files {
 
+    static private SimpleDateFormat backupDateFmt = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
+    
     static public long copyFileTo(File src, File dest) throws IOException {
         if (!src.exists() || src.isDirectory()) {
             throw new IllegalArgumentException("not a file : " + src); //$NON-NLS-1$
@@ -216,47 +218,44 @@ public class Files {
             }
         }
     }
-
+    
     /**
-     * Copy database files which include dm_master.db & dm*.db.
+     * Copy database files which include dm_master.db, dm.db and dm_<i>bookid<i>.db
      * 
-     * @param sourceFolder
-     *            source folder
-     * @param targetFolder
-     *            target folder
+     * @param sourceFolder source folder
+     * @param targetFolder target folder
      * @param date
-     *            Copy date. If date is not null, it will make another copy
-     *            named with '.yyyyMMdd_HHmmss' as suffix.
-     * @return Number of files copied.
+     *            Copy date. If date is not null, it will make another copy named with '.yyyyMMdd_HHmmss' as suffix. 
+     *            It is also used to identify copy from SD to DB when date is null 
+     * @return Number of files copied. -1 means source or target folder are not reachable or error occurs
      * @throws IOException
      */
     public static int copyDatabases(File sourceFolder, File targetFolder, Date date) throws IOException {
-        int count = 0;
+        int count = -1;
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            if (sourceFolder.exists()) {
-                String[] filenames = sourceFolder.list(new FilenameFilter() {
-                    @Override
-                    public boolean accept(File dir, String filename) {
-                        if (filename.startsWith("dm") && filename.endsWith(".db")) {
-                            return true;
-                        }
-                        return false;
+        if (Environment.MEDIA_MOUNTED.equals(state) && sourceFolder.exists() && targetFolder.exists()) {
+            count = 0;
+            String[] filenames = sourceFolder.list(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String filename) {
+                    //dm db files only
+                    if (filename.startsWith("dm") && filename.endsWith(".db")) {
+                        return true;
                     }
-                });
-                if (filenames != null && filenames.length != 0) {
-                    List<String> dbs = Arrays.asList(filenames);
-                    if (dbs.contains("dm_master.db") && dbs.contains("dm.db")) {
-                        // at least book0 is fully backup
-                        if (targetFolder.exists()) {
-                            for (String db : dbs) {
-                                Files.copyFileTo(new File(sourceFolder, db), new File(targetFolder, db));
-                                count++;
-                                if (date != null) {
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
-                                    Files.copyFileTo(new File(sourceFolder, db), new File(targetFolder, db + "." + sdf.format(date)));
-                                }
-                            }
+                    return false;
+                }
+            });
+            String backDate = date == null? null:backupDateFmt.format(date)+".bak";
+            if (filenames != null && filenames.length != 0) {
+                List<String> dbs = Arrays.asList(filenames);
+                //only when there are master and default book db.
+                if (dbs.contains("dm_master.db") && dbs.contains("dm.db")) {
+                    for (String db : dbs) {
+                        Files.copyFileTo(new File(sourceFolder, db), new File(targetFolder, db));
+                        count++;
+                        if (backDate != null) {
+                            Files.copyFileTo(new File(sourceFolder, db),
+                                    new File(targetFolder, db + "." + backDate));
                         }
                     }
                 }
@@ -268,28 +267,27 @@ public class Files {
     /**
      * Copy preference file.
      * 
-     * @param sourceFolder
-     *            source folder
-     * @param targetFolder
-     *            target folder
+     * @param sourceFolder source folder
+     * @param targetFolder target folder
      * @param date
-     *            Copy date. If date is not null, it will make another copy
-     *            named with '.yyyyMMdd_HHmmss' as suffix.
+     *            Copy date. If date is not null, it will make another copy named with '.yyyyMMdd_HHmmss' as suffix.
+     *            It is also used to identify copy from SD to DB when date is null 
      * @return Number of files copied. Currently, only one file will be copied.
      * @throws IOException
      */
     public static int copyPrefFile(File sourceFolder, File targetFolder, Date date) throws IOException {
-        int count = 0;
+        int count = -1;
+        final String prefName = "com.bottleworks.dailymoney_preferences.xml";
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            if (sourceFolder.exists()) {
-                File pref = new File(sourceFolder, "com.bottleworks.dailymoney_preferences.xml");
-                if (pref.exists() && targetFolder.exists()) {
-                    Files.copyFileTo(pref, new File(targetFolder, "com.bottleworks.dailymoney_preferences.xml"));
-                    if (date != null) {
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
-                        Files.copyFileTo(pref, new File(targetFolder, "com.bottleworks.dailymoney_preferences.xml." + sdf.format(date)));
-                    }
+        if (Environment.MEDIA_MOUNTED.equals(state) && sourceFolder.exists() && targetFolder.exists()) {
+            File pref = new File(sourceFolder, prefName);
+            count = 0;
+            String backDate = date == null? null:backupDateFmt.format(date)+".bak";
+            if (pref.exists()) {
+                count++;
+                Files.copyFileTo(pref, new File(targetFolder, "com.bottleworks.dailymoney_preferences.xml"));
+                if (date != null) {
+                    Files.copyFileTo(pref, new File(targetFolder, prefName + "." + backDate));
                 }
             }
         }

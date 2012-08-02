@@ -1,5 +1,6 @@
 package com.bottleworks.dailymoney.ui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,7 +29,9 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
+import com.bottleworks.commons.util.Files;
 import com.bottleworks.commons.util.GUIs;
+import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.context.Contexts;
 import com.bottleworks.dailymoney.context.ContextsActivity;
 import com.bottleworks.dailymoney.context.ScheduleReceiver;
@@ -87,19 +90,24 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         loadDesktop();
         loadInfo();
         loadWhatisNew();
-        initSchedule();
+        
+        if(getContexts().isFirstTime()){
+            doTheFisrtTime();
+        }
+        //Dennis: need to confirm the use of AlarmManager in initSchedule for scheduled jobs
+//        initSchedule();
     }
     
-    private void initSchedule() {
-        ScheduleJob backupJob = new ScheduleJob();
-        backupJob.setRepeat(Long.valueOf(1000 * 60 * 60 * 24));
-        Intent intent = new Intent(this, ScheduleReceiver.class);
-        intent.setAction(Constants.BACKUP_JOB);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, backupJob.getInitDate().getTimeInMillis(), pi);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, backupJob.getInitDate().getTimeInMillis(), backupJob.getRepeat(), pi);
-    }
+//    private void initSchedule() {
+//        ScheduleJob backupJob = new ScheduleJob();
+//        backupJob.setRepeat(Long.valueOf(1000 * 60 * 60 * 24));
+//        Intent intent = new Intent(this, ScheduleReceiver.class);
+//        intent.setAction(Constants.BACKUP_JOB);
+//        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
+//        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+//        am.set(AlarmManager.RTC_WAKEUP, backupJob.getInitDate().getTimeInMillis(), pi);
+//        am.setRepeating(AlarmManager.RTC_WAKEUP, backupJob.getInitDate().getTimeInMillis(), backupJob.getRepeat(), pi);
+//    }
     
     @Override
     protected void onResume(){
@@ -142,8 +150,12 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         appinfo = i18n.string(R.string.app_name);
         String ver = getContexts().getApplicationVersionName();
         appinfo += " ver : "+ver;
-        
-        if(getContexts().isFirstTime()){
+    }
+    
+    private void doTheFisrtTime(){
+        if(Contexts.instance().hasSDBackup()){
+            restoreFromSD();
+        }else{
             IDataProvider idp = getContexts().getDataProvider();
             if(idp.listAccount(null).size()==0){
                 //cause of this function is not ready in previous version, so i check the size for old user
@@ -151,16 +163,57 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
             }
             GUIs.longToast(this,R.string.msg_firsttime_use_hint);
         }
-        
+    }
+    
+    private void restoreFromSD() {
+        // restore db & pref
+        final Contexts ctxs = Contexts.instance();
+        final GUIs.IBusyRunnable restorejob = new GUIs.BusyAdapter() {
+            @Override
+            public void onBusyFinish() {
+                GUIs.longToast(DesktopActivity.this, i18n.string(R.string.msg_db_retored));
+                
+                //push a dummy to trigger resume/reload
+                Intent intent = null;
+                intent = new Intent(DesktopActivity.this,DummyActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void run() {
+                try {
+                    Files.copyDatabases(ctxs.getSdFolder(), ctxs.getDbFolder(), null);
+                    Files.copyPrefFile(ctxs.getSdFolder(), ctxs.getPrefFolder(), null);
+                    Contexts.instance().setPreferenceDirty();//since we reload it.
+                } catch (IOException e) {
+                    Logger.e(e.getMessage(), e);
+                }
+            }
+        };
+        GUIs.confirm(this, i18n.string(R.string.qmsg_retore_db), new GUIs.OnFinishListener() {
+            @Override
+            public boolean onFinish(Object data) {
+                if (((Integer) data).intValue() == GUIs.OK_BUTTON) {
+                    GUIs.doBusy(DesktopActivity.this, restorejob);
+                }else{
+                    IDataProvider idp = getContexts().getDataProvider();
+                    if(idp.listAccount(null).size()==0){
+                        //cause of this function is not ready in previous version, so i check the size for old user
+                        new DataCreator(idp,i18n).createDefaultAccount();
+                    }
+                    GUIs.longToast(DesktopActivity.this,R.string.msg_firsttime_use_hint);
+                }
+                return true;
+            }
+        });
     }
 
-
     private void initialDesktopItem() {
-        
-        Desktop[] dts = new Desktop[]{new MainDesktop(this),new ReportsDesktop(this),new TestsDesktop(this)};
-        
-        for(Desktop dt:dts){
-            if(dt.isAvailable()){
+
+        Desktop[] dts = new Desktop[] { new MainDesktop(this), new ReportsDesktop(this), new TestsDesktop(this) };
+
+        for (Desktop dt : dts) {
+            if (dt.isAvailable()) {
                 desktops.add(dt);
             }
         }

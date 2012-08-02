@@ -16,21 +16,17 @@ public class ScheduleReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Calendar now = Calendar.getInstance();
         if (Constants.BACKUP_JOB.equals(intent.getAction())) {
+            Contexts ctxs = Contexts.instance();
             try {
                 int count = 0;
-                count += Files.copyDatabases(getContexts().getDbFolder(), getContexts().getSdFolder(), now.getTime());
-                count += Files.copyPrefFile(getContexts().getPrefFolder(), getContexts().getSdFolder(), now.getTime());
+                count += Files.copyDatabases(ctxs.getDbFolder(), ctxs.getSdFolder(), now.getTime());
+                count += Files.copyPrefFile(ctxs.getPrefFolder(), ctxs.getSdFolder(), now.getTime());
                 if (count > 0) {
-                    getContexts().setLastBackup(context, now.getTime());
+                    ctxs.setLastBackup(context, now.getTime());
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }
         }
     }
-
-    protected Contexts getContexts() {
-        return Contexts.instance();
-    }
-
 }

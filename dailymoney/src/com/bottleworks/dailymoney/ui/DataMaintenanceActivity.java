@@ -55,7 +55,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datamain);
-        workingFolder = getContexts().getPrefWorkingFolder();
+        workingFolder = getContexts().getWorkingFolder();
         backupcsv = getContexts().isPrefBackupCSV();
         
         vercode = getContexts().getApplicationVersionCode();
@@ -71,7 +71,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
         findViewById(R.id.datamain_reset).setOnClickListener(this);
         findViewById(R.id.datamain_create_default).setOnClickListener(this);
         findViewById(R.id.datamain_clear_folder).setOnClickListener(this);
-        findViewById(R.id.datamain_backup_db_to_sd).setOnClickListener(this);
+        findViewById(R.id.datamain_backup_db2sd).setOnClickListener(this);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             doCreateDefault();
         } else if (v.getId() == R.id.datamain_clear_folder) {
             doClearFolder();
-        } else if (v.getId() == R.id.datamain_backup_db_to_sd) {
+        } else if (v.getId() == R.id.datamain_backup_db2sd) {
             doBackupDbToSD();
         }
     }
@@ -115,9 +115,9 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
             @Override
             public void run() {
                 try {
-                    count = Files.copyDatabases(getContexts().getDbFolder(), getContexts().getSdFolder(), now.getTime());
-                    Files.copyPrefFile(getContexts().getPrefFolder(), getContexts().getSdFolder(), now.getTime());
-                    count++;
+                    Contexts ctxs = getContexts();
+                    count = Files.copyDatabases(ctxs.getDbFolder(), ctxs.getSdFolder(), now.getTime());
+                    count += Files.copyPrefFile(ctxs.getPrefFolder(), ctxs.getSdFolder(), now.getTime());
                 } catch (Exception e) {
                     throw new RuntimeException(e.getMessage(), e);
                 }
@@ -141,7 +141,8 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                     return;
                 }
                 for(File f: folder.listFiles()){
-                   if(f.isFile() && f.getName().toLowerCase().endsWith(".csv")){
+                   String fnm = f.getName().toLowerCase();
+                   if(f.isFile() && (fnm.endsWith(".csv")||fnm.endsWith(".bak"))){
                        f.delete();
                    }
                 }

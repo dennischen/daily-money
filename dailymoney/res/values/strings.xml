@@ -220,9 +220,13 @@
     <string name="label_firstday_sat">Saturday</string>
 
     <!-- from 20120427 by Lancelot Liu -->
-    <string name="label_backup_db_to_sd">Backup to SD card</string>
+    <string name="label_backup_db2sd">Backup data to SD card</string>
     <string name="msg_db_backuped">%1$s files backup to %2$s</string>
-    <string name="msg_no_db">There is no file to backup</string>
-    <string name="label_prefs_lastbackup">Last Backup Time</string>
+    <string name="msg_no_db">There is no data to backup</string>
+    <string name="label_prefs_lastbackup">Last Data Backup Time</string>
+    
+    <!-- from 2012802 by dennis-->
+    <string name="msg_db_retored">Data was restored, welcome back!</string>
+    <string name="qmsg_retore_db">It looks like you have Daily Money data backup in SD card, do you want to restore it (all current data will be replaced) ?</string>
 </resources>
 

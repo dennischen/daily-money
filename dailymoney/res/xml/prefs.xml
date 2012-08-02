@@ -4,6 +4,9 @@
 	<CheckBoxPreference android:key="use_improvider" android:title="@string/label_prefs_improvider"
 		android:summary="@string/label_prefs_improvider_sum" android:defaultValue="false" />
 	 -->
+	<Preference android:defaultValue="Unknown" android:key="last_backup"
+        android:summary="Unknown"
+        android:title="@string/label_prefs_lastbackup" />
 	<EditTextPreference android:key="password" android:title="@string/label_prefs_password" 
 	    android:inputType="textPassword"
         android:summary="@string/label_prefs_password_sum"/>
@@ -25,16 +28,13 @@
 	<EditTextPreference android:key="max_records" android:title="@string/label_prefs_maxrecords" 
 	    android:numeric="signed"
         android:summary="@string/label_prefs_maxrecords_sum" android:defaultValue="-1"  />
-
-    <Preference android:defaultValue="Unknown" android:key="last_backup"
-        android:summary="Unknown"
-        android:title="@string/label_prefs_lastbackup" />
 	
     <PreferenceCategory android:title="@string/label_prefcat_csv">
+        <!-- working_folder : readonly since 0.9.8 -->
         <!-- 
 	    <EditTextPreference android:key="working_folder" android:title="@string/label_prefs_workingfolder" 
 	        android:summary="@string/label_prefs_workingfolder_sum" android:defaultValue="bwDailyMoney"  />
-         -->
+	     -->
 	    <ListPreference android:key="csv_encoding" android:title="@string/label_prefs_csv_encoding"
 	        android:summary="@string/label_prefs_csv_encoding_sum" android:defaultValue="UTF8" android:entries="@array/prefs_csv_encoding_val"
 	        android:entryValues="@array/prefs_csv_encoding_val" />

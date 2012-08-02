@@ -219,9 +219,13 @@
     <string name="label_firstday_sat">星期六</string>
     
     <!-- from 20120427 by Lancelot Liu -->
-    <string name="label_backup_db_to_sd">備份資料到 SD 卡</string>
+    <string name="label_backup_db2sd">備份資料到 SD 卡</string>
     <string name="msg_db_backuped">%1$s 個檔案備份至 %2$s</string>
     <string name="msg_no_db">沒有資料可供備份</string>
-    <string name="label_prefs_lastbackup">最後備份時間</string>
+    <string name="label_prefs_lastbackup">最後資料備份時間</string>
+    
+    <!-- from 2012802 by dennis-->
+    <string name="msg_db_retored">資料已經回復成功, 請繼續使用</string>
+    <string name="qmsg_retore_db">你的SD卡裏有舊的每日記帳本備份, 你想回用這些備份資料嗎(目前的資料將被取代)?</string>
 </resources>
 

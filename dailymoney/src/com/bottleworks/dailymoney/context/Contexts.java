@@ -1,10 +1,12 @@
 package com.bottleworks.dailymoney.context;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -28,6 +30,7 @@ import android.text.Html;
 import com.bottleworks.commons.util.CalendarHelper;
 import com.bottleworks.commons.util.Files;
 import com.bottleworks.commons.util.Formats;
+import com.bottleworks.commons.util.GUIs;
 import com.bottleworks.commons.util.I18N;
 import com.bottleworks.commons.util.Logger;
 import com.bottleworks.dailymoney.core.R;
@@ -40,6 +43,8 @@ import com.bottleworks.dailymoney.data.SQLiteMasterDataHelper;
 import com.bottleworks.dailymoney.data.SQLiteMasterDataProvider;
 import com.bottleworks.dailymoney.data.SymbolPosition;
 import com.bottleworks.dailymoney.ui.Constants;
+import com.bottleworks.dailymoney.ui.DataMaintenanceActivity;
+import com.bottleworks.dailymoney.ui.DesktopActivity;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
 /**
@@ -68,13 +73,15 @@ public class Contexts {
     int pref_firstdayWeek = 1;//sunday
     int pref_startdayMonth = 1;//
     boolean pref_openTestsDesktop = false;
-    String pref_workingFolder = "bwDailyMoney";
+    final String workingFolder = "bwDailyMoney";//readonly since 0.9.8
     boolean pref_backupCSV = true;
     String pref_password = "";
     boolean pref_allowAnalytics = true;
     String pref_csvEncoding = "UTF8";
     boolean pref_hierarachicalReport = true;
     String pref_lastbackup = "Unknown";
+    
+    SimpleDateFormat lastBakFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
     private CalendarHelper calendarHelper = new CalendarHelper();
     
@@ -96,7 +103,7 @@ public class Contexts {
         File sd = Environment.getExternalStorageDirectory();
         String dbPath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.bottleworks.dailymoney/databases";
         String prefPath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.bottleworks.dailymoney/shared_prefs";
-        sdFolder = new File(sd, getPrefWorkingFolder());
+        sdFolder = new File(sd, workingFolder);
         dbFolder = new File(dbPath);
         prefFolder = new File(prefPath);
     }
@@ -115,6 +122,9 @@ public class Contexts {
 
     
     boolean initActivity(Activity activity){
+        if(!sdFolder.exists()){
+            sdFolder.mkdirs();
+        }
         if(appContext==null){
             initApplication(activity,activity);
         }
@@ -125,19 +135,9 @@ public class Contexts {
                 reloadPreference();
                 prefsDirty = false;
             }
-            // restore db & pref
-            if (isFirstTime()) {
-                try {
-                    Files.copyDatabases(sdFolder, dbFolder, null);
-                    Files.copyPrefFile(sdFolder, prefFolder, null);
-                    reloadPreference();
-                    prefsDirty = false;
-                } catch (IOException e) {
-                    Logger.e(e.getMessage(), e);
-                }
-            }
             initMasterDataProvider(uiActivity);
             initDataProvider(uiActivity);
+            
             return true;
         }
         return false;
@@ -308,9 +308,17 @@ public class Contexts {
     }
     
     
-    
+    public boolean hasSDBackup(){
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) && sdFolder.exists()) {
+            List<String> dbs = Arrays.asList(sdFolder.list());
+            return dbs.contains("dm_master.db") && dbs.contains("dm.db");
+        }
+        return false;
+    }
     /**
-     * return true is this is first time you call this api in this application
+     * return true is this is first time you call this api in this application.
+     * note that, when calling this twice, it returns false. see {@link DesktopActivity#initialApplicationInfo}
      */
     public boolean isFirstTime(){
         try{
@@ -416,10 +424,6 @@ public class Contexts {
             pref_openTestsDesktop = prefs.getBoolean(Constants.PREFS_OPEN_TESTS_DESKTOP, false);
         }catch(Exception x){Logger.e(x.getMessage());}
 
-        // because restore function should restore data from fix path, working folder shouldn't be changed
-        // try{
-        //     pref_workingFolder = prefs.getString(Constants.PREFS_WORKING_FOLDER, pref_workingFolder);
-        // }catch(Exception x){Logger.e(x.getMessage());}
         try{
             pref_backupCSV = prefs.getBoolean(Constants.PREFS_BACKUP_CSV, pref_backupCSV);
         }catch(Exception x){Logger.e(x.getMessage());}
@@ -446,10 +450,11 @@ public class Contexts {
             Logger.d("preference : startday of month "+pref_startdayMonth);
             Logger.d("preference : max records "+pref_maxRecords);
             Logger.d("preference : open tests desktop "+pref_openTestsDesktop);
-            Logger.d("preference : open working_folder "+pref_workingFolder);
             Logger.d("preference : backup csv "+pref_backupCSV);
             Logger.d("preference : csv encoding "+pref_csvEncoding);
             Logger.d("preference : last backup " + pref_lastbackup);
+            
+            Logger.d("working_folder "+workingFolder);
         }
         calendarHelper.setFirstDayOfWeek(getPrefFirstdayWeek());
         calendarHelper.setStartDayOfMonth(getPrefStartdayMonth());
@@ -482,8 +487,8 @@ public class Contexts {
         return pref_csvEncoding;
     }
     
-    public String getPrefWorkingFolder(){
-        return pref_workingFolder;
+    public String getWorkingFolder(){
+        return workingFolder;
     }
     
     public boolean isPrefBackupCSV(){
@@ -677,8 +682,7 @@ public class Contexts {
      * @param date
      */
     public void setLastBackup(Context context, Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        pref_lastbackup = sdf.format(date);
+        pref_lastbackup = lastBakFmt.format(date);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(Constants.PREFS_LAST_BACKUP, pref_lastbackup);
