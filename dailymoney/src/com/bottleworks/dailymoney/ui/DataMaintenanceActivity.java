@@ -94,10 +94,11 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
     }
 
     private void doBackupDbToSD() {
+        final Calendar now = Calendar.getInstance();
+        getContexts().setLastBackup(now.getTime());
         final GUIs.IBusyRunnable job = new GUIs.BusyAdapter() {
             int count = -1;
-            Calendar now = Calendar.getInstance();
-
+            
             public void onBusyError(Throwable t) {
                 GUIs.error(DataMaintenanceActivity.this, t);
             }
@@ -106,7 +107,6 @@ public class DataMaintenanceActivity extends ContextsActivity implements OnClick
                 if (count > 0) {
                     String msg = i18n.string(R.string.msg_db_backuped, Integer.toString(count), workingFolder);
                     GUIs.alert(DataMaintenanceActivity.this, msg);
-                    getContexts().setLastBackup(now.getTime());
                 } else {
                     GUIs.alert(DataMaintenanceActivity.this, R.string.msg_no_db);
                 }

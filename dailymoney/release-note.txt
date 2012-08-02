@@ -1,15 +1,20 @@
 = Last =
+== 0.9.8 ==
+=== Features ===
+ # 1: Add functions about 'manually backup db & pref to sd' & 'restore db & pref from sd at first time'. 
+
+=== Bugs ===
+ * 88: Adding new record from the list view should use the day from the list view, not today.
+  
+===============================================================================
+= History =
 == 0.9.7 ==
 === Features ===
  * 67: Please consider to change the report display format
  *   : German translation. 
  * 59: Add Saturday as beginning of the week
-=== Bugs ===
- 
+=== Bugs === 
 
-
-===============================================================================
-= History = 
 == 0.9.6 ==
 === Features ===
  * 35: Daily List

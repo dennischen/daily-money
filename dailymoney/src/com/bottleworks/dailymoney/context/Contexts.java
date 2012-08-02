@@ -100,12 +100,6 @@ public class Contexts {
     public static final boolean DEBUG = true; 
     
     private Contexts(){
-        File sd = Environment.getExternalStorageDirectory();
-        String dbPath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.bottleworks.dailymoney/databases";
-        String prefPath = Environment.getDataDirectory().getAbsolutePath() + "/data/com.bottleworks.dailymoney/shared_prefs";
-        sdFolder = new File(sd, workingFolder);
-        dbFolder = new File(dbPath);
-        prefFolder = new File(prefPath);
     }
     
     /** get a Contexts instance for activity use **/
@@ -122,9 +116,6 @@ public class Contexts {
 
     
     boolean initActivity(Activity activity){
-        if(!sdFolder.exists()){
-            sdFolder.mkdirs();
-        }
         if(appContext==null){
             initApplication(activity,activity);
         }
@@ -157,6 +148,21 @@ public class Contexts {
     synchronized boolean initApplication(Object appInitialObject,Context context){
         if(appContext==null){
             Logger.d(">>initialial application context with:"+appInitialObject);
+            
+            File sd = Environment.getExternalStorageDirectory();
+            sdFolder = new File(sd, workingFolder);
+            if(!sdFolder.exists()){
+                sdFolder.mkdirs();
+            }
+            
+            dbFolder = new File(Environment.getDataDirectory(),"/data/com.bottleworks.dailymoney/databases");
+            prefFolder = new File(Environment.getDataDirectory(),"/data/com.bottleworks.dailymoney/shared_prefs");
+            if(!prefFolder.exists()){//this folder is not existed in my current i9000 (it is was last year)
+                //try another one
+//                File fdir = context.getFilesDir();
+//                prefFolder = new File(fdir,"../shared_prefs");
+            }
+            
             this.appInitialObject = appInitialObject;
             appContext = context.getApplicationContext();
             this.i18n = new I18N(appContext);

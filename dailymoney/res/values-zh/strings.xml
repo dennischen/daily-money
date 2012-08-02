@@ -110,7 +110,7 @@
     <string name="label_prefs_workingfolder_sum">設定sdcard中的工作目錄的名稱，CSV將匯出到這個目錄</string>
     <string name="label_prefs_backupcsv">備份CSV</string>
     <string name="label_prefs_backupcsv_sum">當匯出時備份舊的CSV</string>
-    <string name="qmsg_clear_folder">您想要清除工作目錄%1$s嗎?所有的CSV檔將被移除</string>
+    <string name="qmsg_clear_folder">您想要清除工作目錄%1$s嗎?所有的CSV跟BAK將被移除</string>
     <string name="defacc_creditcard">信用卡</string>
     
     <string name="label_account">帳戶</string>

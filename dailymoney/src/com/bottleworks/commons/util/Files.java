@@ -227,14 +227,13 @@ public class Files {
      * @param date
      *            Copy date. If date is not null, it will make another copy named with '.yyyyMMdd_HHmmss' as suffix. 
      *            It is also used to identify copy from SD to DB when date is null 
-     * @return Number of files copied. -1 means source or target folder are not reachable or error occurs
+     * @return Number of files copied.
      * @throws IOException
      */
     public static int copyDatabases(File sourceFolder, File targetFolder, Date date) throws IOException {
-        int count = -1;
+        int count = 0;
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state) && sourceFolder.exists() && targetFolder.exists()) {
-            count = 0;
             String[] filenames = sourceFolder.list(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String filename) {
@@ -245,7 +244,7 @@ public class Files {
                     return false;
                 }
             });
-            String backDate = date == null? null:backupDateFmt.format(date)+".bak";
+            String bakDate = date == null? null:backupDateFmt.format(date)+".bak";
             if (filenames != null && filenames.length != 0) {
                 List<String> dbs = Arrays.asList(filenames);
                 //only when there are master and default book db.
@@ -253,9 +252,9 @@ public class Files {
                     for (String db : dbs) {
                         Files.copyFileTo(new File(sourceFolder, db), new File(targetFolder, db));
                         count++;
-                        if (backDate != null) {
+                        if (bakDate != null) {
                             Files.copyFileTo(new File(sourceFolder, db),
-                                    new File(targetFolder, db + "." + backDate));
+                                    new File(targetFolder, db + "." + bakDate));
                         }
                     }
                 }
@@ -272,22 +271,21 @@ public class Files {
      * @param date
      *            Copy date. If date is not null, it will make another copy named with '.yyyyMMdd_HHmmss' as suffix.
      *            It is also used to identify copy from SD to DB when date is null 
-     * @return Number of files copied. Currently, only one file will be copied.
+     * @return Number of files copied.
      * @throws IOException
      */
     public static int copyPrefFile(File sourceFolder, File targetFolder, Date date) throws IOException {
-        int count = -1;
+        int count = 0;
         final String prefName = "com.bottleworks.dailymoney_preferences.xml";
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state) && sourceFolder.exists() && targetFolder.exists()) {
             File pref = new File(sourceFolder, prefName);
-            count = 0;
-            String backDate = date == null? null:backupDateFmt.format(date)+".bak";
+            String bakDate = date == null? null:backupDateFmt.format(date)+".bak";
             if (pref.exists()) {
                 count++;
                 Files.copyFileTo(pref, new File(targetFolder, "com.bottleworks.dailymoney_preferences.xml"));
                 if (date != null) {
-                    Files.copyFileTo(pref, new File(targetFolder, prefName + "." + backDate));
+                    Files.copyFileTo(pref, new File(targetFolder, prefName + "." + bakDate));
                 }
             }
         }

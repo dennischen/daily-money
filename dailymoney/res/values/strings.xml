@@ -113,7 +113,7 @@
     <string name="label_prefs_backupcsv">Backup CSV</string>
     <string name="label_prefs_backupcsv_sum">Backup old CSV when doing export</string>
     
-    <string name="qmsg_clear_folder">Do you want to clear working folder %1$s? all CSV will be removed</string>
+    <string name="qmsg_clear_folder">Do you want to clear working folder %1$s? all CSV and BAK will be removed</string>
     <string name="defacc_creditcard">Credit card</string>
     
     <string name="label_account">Account</string>
