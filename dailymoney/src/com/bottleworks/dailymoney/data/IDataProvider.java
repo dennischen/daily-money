@@ -3,6 +3,7 @@
  */
 package com.bottleworks.dailymoney.data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -79,16 +80,16 @@ public interface IDataProvider {
     List<Detail> listDetail(Account account,int mode,Date start, Date end, int max);
     List<Detail> listDetail(String accountId,int mode,Date start, Date end, int max);
 
-    double sumFrom(AccountType type,Date start, Date end);
-    double sumFrom(Account account,Date start, Date end);
+    BigDecimal sumFrom(AccountType type, Date start, Date end);
+    BigDecimal sumFrom(Account account, Date start, Date end);
 
     
-    double sumTo(AccountType type,Date start, Date end);
-    double sumTo(Account account,Date start, Date end);
+    BigDecimal sumTo(AccountType type, Date start, Date end);
+    BigDecimal sumTo(Account account, Date start, Date end);
     
     
     Detail getFirstDetail();
 
-    double sumInitialValue(AccountType type);
+    BigDecimal sumInitialValue(AccountType type);
     
 }

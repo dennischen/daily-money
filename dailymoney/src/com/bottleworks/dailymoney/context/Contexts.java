@@ -2,6 +2,7 @@ package com.bottleworks.dailymoney.context;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -634,7 +635,7 @@ public class Contexts {
         return appContext.getResources().getDrawable(id);
     }
     
-    public String toFormattedMoneyString(double money){
+    public String toFormattedMoneyString(BigDecimal money){
         IMasterDataProvider imdp = getMasterDataProvider();
         Book book = imdp.findBook(getWorkingBookId());
         return Formats.money2String(money, book.getSymbol(), book.getSymbolPosition());

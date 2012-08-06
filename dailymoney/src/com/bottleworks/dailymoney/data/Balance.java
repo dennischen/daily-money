@@ -1,6 +1,7 @@
 package com.bottleworks.dailymoney.data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -13,14 +14,14 @@ public class Balance {
 
     String name;
     String type;
-    double money;
+    BigDecimal money;
     int indent;
     Serializable target;
     Date date;
 
     List<Balance> group;
 
-    public Balance(String name, String type, double money, Serializable target) {
+    public Balance(String name, String type, BigDecimal money, Serializable target) {
         this.name = name;
         this.type = type;
         this.money = money;
@@ -35,11 +36,11 @@ public class Balance {
         this.name = name;
     }
 
-    public double getMoney() {
-        return money;
+    public BigDecimal getMoney() {
+        return money == null ? BigDecimal.ZERO : money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(BigDecimal money) {
         this.money = money;
     }
 

@@ -4,6 +4,7 @@
 package com.bottleworks.dailymoney.data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author dennis
@@ -21,6 +22,8 @@ public class Account implements Serializable{
     
     private double initialValue;
     
+    private BigDecimal initialValueBD;
+    
     //is cash account;
     private boolean cashAccount;
     
@@ -30,9 +33,17 @@ public class Account implements Serializable{
         this.type = type;
         this.name = name==null?"":name.trim();
         this.initialValue = initialValue;
+        this.initialValueBD = BigDecimal.valueOf(initialValue);
         id = this.name;
     }
     
+    public Account(String type, String name, BigDecimal initialValueBD) {
+        this.type = type;
+        this.name = name == null ? "" : name.trim();
+        this.initialValue = initialValueBD.doubleValue();
+        this.initialValueBD = initialValueBD;
+        id = this.name;
+    }
 
     public String getId() {
         return id;
@@ -76,6 +87,14 @@ public class Account implements Serializable{
 
     public void setInitialValue(double initialValue) {
         this.initialValue = initialValue;
+    }
+
+    public void setInitialValueBD(BigDecimal initialValueBD) {
+        this.initialValueBD = initialValueBD;
+    }
+
+    public BigDecimal getInitialValueBD() {
+        return initialValueBD;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.bottleworks.dailymoney.ui;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -130,7 +131,7 @@ public class DetailListHelper implements OnItemClickListener{
         
         String from = fromAcc==null?det.getFrom():(i18n.string(R.string.label_detlist_from,fromAcc.getName(),AccountType.getDisplay(i18n, fromAcc.getType())));
         String to = toAcc==null?det.getTo():(i18n.string(R.string.label_detlist_to,toAcc.getName(),AccountType.getDisplay(i18n, toAcc.getType())));
-        String money = Contexts.instance().toFormattedMoneyString(det.getMoney());
+        String money = Contexts.instance().toFormattedMoneyString(det.getMoneyBD());
         row.put(bindingFrom[0], new NamedItem(bindingFrom[0],det,bindingFrom[0]));
         row.put(bindingFrom[1], new NamedItem(bindingFrom[1],det,bindingFrom[1]));
         row.put(bindingFrom[2], new NamedItem(bindingFrom[2],det,from));
@@ -147,7 +148,7 @@ public class DetailListHelper implements OnItemClickListener{
     }
 
     public void doNewDetail(Date date) {
-        Detail d = new Detail("", "", date == null ? new Date() : date, 0D, "");
+        Detail d = new Detail("", "", date == null ? new Date() : date, BigDecimal.ZERO, "");
         Intent intent = null;
         intent = new Intent(activity,DetailEditorActivity.class);
         intent.putExtra(DetailEditorActivity.INTENT_MODE_CREATE,true);
