@@ -41,9 +41,9 @@ public class BalanceTimeChart extends AbstractChart {
             seriesLength = blist.size();            
             for (int k = 0; k < seriesLength; k++) {
                 Balance b = blist.get(k);
-                series.add(b.getDate().getTime(), b.getMoney());
-                max = Math.max(max,b.getMoney());
-                min = Math.min(min,b.getMoney());
+                series.add(b.getDate().getTime(), b.getMoney().doubleValue());
+                max = Math.max(max, b.getMoney().doubleValue());
+                min = Math.min(min, b.getMoney().doubleValue());
             }
             dataset.addSeries(series);
         }

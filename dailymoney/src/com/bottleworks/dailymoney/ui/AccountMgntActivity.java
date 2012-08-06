@@ -1,5 +1,6 @@
 package com.bottleworks.dailymoney.ui;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -172,7 +173,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
             Map<String, Object> row = new HashMap<String, Object>();
             listViewMapList.add(row);
             row.put(bindingFrom[0], new NamedItem(bindingFrom[0],acc,acc.getName()));
-            row.put(bindingFrom[1], new NamedItem(bindingFrom[1],acc,Formats.double2String(acc.getInitialValue())));
+            row.put(bindingFrom[1], new NamedItem(bindingFrom[1], acc, Formats.bigDecimalToString(acc.getInitialValueBD())));
             row.put(bindingFrom[2], new NamedItem(bindingFrom[2],acc,acc.getId()));
         }
 
@@ -256,7 +257,7 @@ public class AccountMgntActivity extends ContextsActivity implements OnTabChange
     }
 
     private void doNewAccount() {
-        Account acc = new Account(currTab, "", 0D);
+        Account acc = new Account(currTab, "", BigDecimal.ZERO);
         Intent intent = null;
         intent = new Intent(this,AccountEditorActivity.class);
         intent.putExtra(AccountEditorActivity.INTENT_MODE_CREATE,true);

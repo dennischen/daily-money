@@ -79,7 +79,7 @@
     <string name="title_prefs">Einstellungen</string> 
     
         
-    <string name="dt_main">Hautpseite</string>
+    <string name="dt_main">Hauptseite</string>
     <string name="dt_reports">Reports</string>
     <string name="dt_tests">Tests</string>
     <string name="label_prefs_testsdekstop">Testdektop öffnen</string>
