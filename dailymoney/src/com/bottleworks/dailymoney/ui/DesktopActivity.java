@@ -1,5 +1,6 @@
 package com.bottleworks.dailymoney.ui;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -246,7 +247,7 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         Date start = calHelper.weekStartDate(now);
         Date end = calHelper.weekEndDate(now);
         AccountType type = AccountType.EXPENSE;
-        double b = BalanceHelper.calculateBalance(type, start, end).getMoney();
+        BigDecimal b = BalanceHelper.calculateBalance(type, start, end).getMoney();
         infoWeeklyExpense.setText(i18n.string(R.string.label_weekly_expense,getContexts().toFormattedMoneyString(b)));
         
         start = calHelper.monthStartDate(now);
@@ -258,10 +259,10 @@ public class DesktopActivity extends ContextsActivity implements OnTabChangeList
         
         IDataProvider idp = Contexts.instance().getDataProvider();
         List<Account> acl =idp.listAccount(AccountType.ASSET);
-        b = 0;
+        b = BigDecimal.ZERO;
         for(Account ac:acl){
             if(ac.isCashAccount()){
-                b += BalanceHelper.calculateBalance(ac,null, calHelper.toDayEnd(now)).getMoney();
+                b = b.add(BalanceHelper.calculateBalance(ac, null, calHelper.toDayEnd(now)).getMoney());
             }
         }
         infoCumulativeCash.setText(i18n.string(R.string.label_cumulative_cash,getContexts().toFormattedMoneyString(b)));

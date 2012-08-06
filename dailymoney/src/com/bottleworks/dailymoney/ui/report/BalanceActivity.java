@@ -1,5 +1,6 @@
 package com.bottleworks.dailymoney.ui.report;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -638,10 +639,10 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                     List<Balance> blist = new ArrayList<Balance>();
                     balances.add(blist);
                     Date d = calHelper.yearStartDate(g.getDate());
-                    double total = 0;
+                    BigDecimal total = BigDecimal.ZERO;
                     for(int i=0;i<12;i++){
                         Balance balance = BalanceHelper.calculateBalance(acc, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
-                        total += balance.getMoney();
+                        total = total.add(balance.getMoney());
                         balance.setMoney(total);
                         blist.add(balance);
                         d = calHelper.monthAfter(d,1);
@@ -676,10 +677,10 @@ public class BalanceActivity extends ContextsActivity implements OnClickListener
                             d = calHelper.monthAfter(d,1);
                         }
                     }else{
-                        double total = 0;
+                        BigDecimal total = BigDecimal.ZERO;
                         for(int i=0;i<12;i++){
                             Balance balance = BalanceHelper.calculateBalance(at, i==0?null:calHelper.monthStartDate(d),calHelper.monthEndDate(d));
-                            total += balance.getMoney();
+                            total = total.add(balance.getMoney());
                             balance.setMoney(total);
                             blist.add(balance);
                             d = calHelper.monthAfter(d,1);

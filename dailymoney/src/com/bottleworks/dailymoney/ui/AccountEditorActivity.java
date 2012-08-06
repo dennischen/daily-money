@@ -1,5 +1,6 @@
 package com.bottleworks.dailymoney.ui;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,7 +95,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         nameEditor.setText(workingAccount.getName());
         
         initvalEditor = (EditText)findViewById(R.id.acceditor_initval);
-        initvalEditor.setText(Formats.double2String(workingAccount.getInitialValue()));
+        initvalEditor.setText(Formats.bigDecimalToString(workingAccount.getInitialValueBD()));
         
         //initial spinner
         typeEditor = (Spinner) findViewById(R.id.acceditor_type);
@@ -185,8 +186,8 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         if(requestCode == Constants.REQUEST_CALCULATOR_CODE && resultCode==Activity.RESULT_OK){
             String result = data.getExtras().getString(Calculator.INTENT_RESULT_VALUE);
             try{
-                double d = Double.parseDouble(result);
-                initvalEditor.setText(Formats.double2String(d));
+                BigDecimal d = new BigDecimal(result);
+                initvalEditor.setText(Formats.bigDecimalToString(d));
             }catch(Exception x){
             }
         }
@@ -214,6 +215,7 @@ public class AccountEditorActivity extends ContextsActivity implements android.v
         workingAccount.setType(type);
         workingAccount.setName(name);
         workingAccount.setInitialValue(Formats.string2Double(initval));
+        workingAccount.setInitialValueBD(new BigDecimal(initval));
         workingAccount.setCashAccount(cashAccountEditor.isChecked());
         
         IDataProvider idp = getContexts().getDataProvider();
