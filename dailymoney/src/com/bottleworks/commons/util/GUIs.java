@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.bottleworks.dailymoney.core.R;
+import com.bottleworks.dailymoney.ui.CustomizeDatePickerDialog;
 
 /**
  * 
@@ -292,17 +293,16 @@ public class GUIs {
     public static void openDatePicker(Context context, Date d,final OnFinishListener listener) {
         final Calendar c = Calendar.getInstance();
         c.setTime(d);
-        //for event
-        final DatePickerDialog[] s = new DatePickerDialog[1];
-        DatePickerDialog picker = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener(){
+        // for event
+        DatePickerDialog picker = new CustomizeDatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 c.set(Calendar.YEAR,year);
                 c.set(Calendar.MONTH,monthOfYear);
                 c.set(Calendar.DAY_OF_MONTH,dayOfMonth);
                 listener.onFinish(c.getTime());
-            }}, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-        s[0] = picker;
+            }
+        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
         picker.show();
     }
     
@@ -329,4 +329,5 @@ public class GUIs {
     public static boolean isLandscape(Activity activity){
         return activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
+
 }
