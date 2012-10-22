@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Daily Money</string>
+	<string name="app_surface">daily-money-core</string>
+    <string name="defacc_bank1">Banco.A</string>
+    <string name="defacc_bank2">Banco.B</string>
+    <string name="defacc_cash">Efectivo</string>
+    <string name="defacc_entertainment">Recreación</string>
+    <string name="defacc_food1">Comida.Personal</string>
+    <string name="defacc_food2">Comida.Reunión</string>
+    <string name="defacc_interest">Interés</string>
+    <string name="defacc_otherexpense">Otro gasto</string>
+    <string name="defacc_otherincome">Otro ingreso</string>
+    <string name="defacc_salary">Salario</string>
+    <string name="dtitem_accmgnt">Cuentas</string>
+    <string name="dtitem_adddetail">Agregar Detalle</string>
+    <string name="dtitem_detlist">Detalles</string>
+    <string name="dtitem_detlist_month">Lista Mensual</string>
+    <string name="dtitem_detlist_day">Lista Diaria</string>
+    <string name="dtitem_detlist_week">Lista Semanal</string>
+    <string name="dtitem_detlist_year">Lista Anual</string>
+    <string name="dtitem_prefs">Preferencias</string>
+    <string name="label_all_details">Todos los detalles (%1$s registros)</string>
+    <string name="label_asset">Activo</string>
+    <string name="label_date">Fecha</string>
+    <string name="label_liability">Pasivo</string>
+    <string name="label_detlayout_type1">A - Dinero</string>
+    <string name="label_detlayout_type2">Nota - Dinero</string>
+    <string name="label_detlist_from">&lt; %1$s</string>
+    <string name="label_detlist_sum_income">Ingresos %1$s</string>
+    <string name="label_detlist_sum_expense">Gastos %1$s</string>
+    <string name="label_detlist_sum_asset">Activos %1$s </string>
+    <string name="label_detlist_sum_liability">Pasivos %1$s</string>
+    <string name="label_detlist_sum_other">Otros %1$s</string>
+    <string name="label_detlist_to">%1$s</string>
+    <string name="label_expense">Gasto</string>
+    <string name="label_firstday_mon">Lunes</string>
+    <string name="label_firstday_sun">Domingo</string>
+    <string name="label_from_account">Desde</string>
+    <string name="label_income">Ingreso</string>
+    <string name="label_initial_value">Valor inicial</string>
+    <string name="label_money">Dinero</string>
+    <string name="label_month_details">%1$s (%2$s registros)</string>
+    <string name="label_day_details">%1$s (%2$s registros)</string>
+    <string name="label_note">Nota</string>
+    <string name="label_other">Otro</string>
+    <string name="label_prefs_detlayout">Vista de detalles</string>
+    <string name="label_prefs_detlayout_sum">Escoge un tipo diferente para la vista de la Lista de detalles</string>
+    <string name="label_prefs_firstday_week">Primer día de la semana</string>
+    <string name="label_prefs_firstday_week_sum">Establece el primer día de la semana</string>
+    <string name="label_prefs_improvider">In-memory-provider</string>
+    <string name="label_prefs_improvider_sum">Para probar esta aplicación, los datos en este modo no se conservarán</string>
+    <string name="label_prefs_maxrecords">Máximo de registros</string>
+    <string name="label_prefs_maxrecords_sum">Establece el número máximo de registros en la lista de detalles, -1 significa no límites</string>
+    <string name="label_reports">Reportes</string>
+    <string name="label_to_account">A</string>
+    <string name="label_week_details">%5$s %1$s al %2$s - Semana %3$s/%4$s (%6$s)</string>
+    <string name="label_year_details">%1$s (%2$s records)</string>
+    <string name="msg_account_created">La cuenta %1$s fue creada en tipo %2$s</string>
+    <string name="msg_account_deleted">La cuenta %1$s fue eliminada</string>
+    <string name="msg_account_existed">%1$s existe en tipo %2$s</string>
+    <string name="msg_account_updated">La cuenta %1$s fue actualizada en tipo %2$s</string>
+    <string name="msg_created_account">%1$s cuentas creadas</string>
+    <string name="msg_created_detail">%1$s detalles creados</string>
+    <string name="msg_detail_created">Detalle fue creado</string>
+    <string name="msg_detail_deleted">Detalle fue eliminado</string>
+    <string name="msg_detail_updated">Detalle fue actualizado</string>
+    <string name="msg_same_from_to">Desde y A son la misma cuenta</string>
+    <string name="title_acceditor">Editor de cuenta</string>
+    <string name="title_acceditor_create">Crear cuenta</string>
+    <string name="title_acceditor_update">Actualizar cuenta</string>
+    <string name="title_accmgnt">Gestor de cuenta</string>
+    <string name="title_desktop">Escritorio</string>
+    <string name="title_deteditor_create">Crear Detalle</string>
+    <string name="title_deteditor">Editor de detalle</string>
+    <string name="title_deteditor_update">Actualizar Detalle</string>
+    <string name="title_detlist">Lista de detalles</string>
+    <string name="title_detmgnt">Gestor de detalle</string>
+    <string name="title_prefs">Preferencias</string> 
+    
+        
+    <string name="dt_main">Principal</string>
+    <string name="dt_reports">Reportes</string>
+    <string name="dt_tests">Pruebas</string>
+    <string name="label_prefs_testsdekstop">Abrir escritorio de pruebas</string>
+    <string name="label_prefs_testsdekstop_sum">Abre el escritorio de pruebas, sólo para desarrolladores</string>
+    
+    <string name="label_export_csv">Exportar CSV</string>
+    <string name="label_import_csv">Importar CSV</string>
+    <string name="label_reset">Borrar datos</string>
+    <string name="label_create_default">Crear datos predefinidos (cuentas)</string>
+    
+    
+    <string name="msg_csv_exported">Los datos (%1$s) fueron exportados a %2$s, </string>
+    <string name="msg_csv_imported">Los datos fueron importados desde %2$s (%1$s)</string>
+    <string name="msg_rested">Los datos fueron reiniciados</string>
+    <string name="msg_default_created">La fecha predefinida fue creada</string>
+    <string name="title_datamain">Mantenimiento de datos</string>
+    
+    <string name="qmsg_export_csv">¿Desea exportar como CSV y reemplazarlo?</string>
+    <string name="qmsg_import_csv">¿Desea importar como CSV y reemplazar los datos?</string>
+    <string name="qmsg_reset">¿Desea reiniciar los datos?</string>
+    <string name="qmsg_create_default">¿Desea crear los datos predeterminados (cuentas)?</string>
+    <string name="dtitem_datamain">Datos</string>
+    
+    
+    <string name="msg_no_csv">No hay archivos CSV</string>
+    <string name="label_clear_folder">Limpiar la carpeta de trabajo</string>
+    <string name="msg_folder_cleared">La carpeta de trabajo %1$s fue limpiada</string>
+    
+    <string name="label_prefs_workingfolder">Carpeta de trabajo</string>
+    <string name="label_prefs_workingfolder_sum">Establece el nombre de la carpeta en la tarjeta SD para los datos exportados</string>
+    <string name="label_prefs_backupcsv">Respaldo CSV</string>
+    <string name="label_prefs_backupcsv_sum">Respalda CSV viejo cuando se esté exportando</string>
+    
+    <string name="qmsg_clear_folder">¿Desea limpiar la carpeta de trabajo %1$s? todos los CSV y BAK serán eliminados</string>
+    <string name="defacc_creditcard">Tarjeta de Crédito</string>
+    
+    <string name="label_account">Cuenta</string>
+    <string name="label_detail">Detalle</string>
+    <string name="label_account_only">Solo cuentas</striwillng>
+    <string name="label_detail_only">Solo detalles</string>
+    
+    <string name="label_share_csv">Compartir CSV</string>
+    <string name="msg_share_csv_title">Daily Money %1$s</string>
+    <string name="msg_share_csv_content">Archivos CSV de Daily Money</string>
+    <string name="qmsg_share_csv">¿Cuáles archivos CSV quiere compartir?</string>
+    
+    <string name="msg_firsttime_use_hint">Bienvenido a Daily Money, clic a Agregar Detalle para comenzar</string>
+    
+    <string name="label_balance_tincome">Balance de ingresos</string>
+    <string name="label_balance_texpense">Balance de gastos</string>
+    <string name="label_balance_tasset">Balance de activos</string>
+    <string name="label_balance_tliability">Balance de pasivos</string>
+    <string name="label_balance_tother">Balance de otros</string>
+    
+    <string name="label_balance_mode_month">En %1$s (%2$s-%3$s)</string>
+    <string name="label_balance_mode_year">Balance el el año %1$s</string>
+    
+    <string name="label_balance_mode_month_total">Hasta %1$s (-%2$s)</string>
+    <string name="label_balance_mode_year_total">Balance hasta el año %1$s</string>
+    
+    <string name="dtitem_report_monthly_balance">Balance mensual</string>
+    <string name="dtitem_report_yearly_balance">Balance anual</string>
+    <string name="dtitem_report_cumulative_balance">Balance acumulado</string>
+    
+    <string name="label_count">(%1$s)</string>
+    <string name="label_accdetlist_dateinfo">%1$s to %2$s</string> 
+    
+    <string name="label_prefs_password">Protección por contraseña-1</string>
+    <string name="label_prefs_password_sum">Establece la contraseña de la aplicación, vacío significa no protección</string>
+    <string name="label_prefs_passwordvd">Protección por contraseña-2</string>
+    <string name="label_prefs_passwordvd_sum">Establece la misma contraseña otra vez para activar la protección</string>
+    <string name="title_pdprotection">Protección por contraseña</string>
+    <string name="msg_wrong_password">¡Error en la contraseña!</string>
+    
+    
+    <string name="act_balance_detlist">Lista de detalles</string>
+    <string name="act_balance_piechart">Gráfico circular</string>
+    <string name="act_balance_yearly_timechart">Gráfico anual</string>
+    <string name="act_balance_yearly_cumulative_timechart">Gráfico anual (acumulado)</string>
+    <string name="label_balance_yearly_timechart">%1$s in %2$s</string>
+    <string name="label_balance_yearly_cumulative_timechart">%1$s in %2$s (acumulado)</string>
+    
+    <string name="label_detlayout_type3">Dinero - A</string>
+    <string name="label_detlayout_type4">Dinero - Nota</string>
+    <string name="act_balance_yearly_runchart">Gráfico de comportamientos (run chart) de Activos y Pasivos Anual</string>
+    <string name="label_balance_yearly_runchart">Activos y pasivos (acumulados) in %1$s</string>    
+    
+    <string name="label_prefs_allow_analytics">Enviar google analytics</string>
+    <string name="label_prefs_allow_analytics_sum">[No se enviará cualquier otro dato]Enviando uso para ayudar a mejorar la aplicación</string>
+    
+    <string name="dtitem_about">Acerca</string>
+    
+    <string name="path_about_app">about.html</string>
+    <string name="path_what_is_new">whatsnew.html</string>
+    <string name="label_weekly_expense">Semanal : %1$s</string>
+    <string name="label_monthly_expense">Mensual : %1$s</string>
+    <string name="label_cumulative_cash">Efectivo : %1$s</string>
+    <string name="label_cash_account">Cuenta de efectivo</string> 
+    <string name="label_prefs_csv_encoding">Codificación de CSV</string>
+    <string name="label_prefs_csv_encoding_sum">No cambie esto si no tiene idea de qué es</string>
+    <string name="label_prefcat_csv">CSV</string>
+    <string name="label_prefcat_others">Otros</string>   
+<!-- above are verified -->    
+   
+    <!-- start from 20110508 -->
+    <string name="path_how2use">how2use_es.html</string>
+    <string name="dtitem_how2use">Cómo usar</string>
+    <string name="label_what_is_new">Lo nuevo</string>
+    <string name="label_prefs_startday_month">Día de inicio del mes</string>
+    <string name="label_prefs_startday_month_sum">Establece el día de inicio del mes (entre 1 - 28)</string>
+    
+    <!-- start from 20110530 -->
+    <string name="label_default_book_symbol">$</string>
+    <string name="label_symbol">Símbolo</string>
+    <string name="title_book">Libro</string>
+    <string name="title_bookeditor_create">Crear Libro</string>
+    <string name="title_bookeditor_update">Actualizar Libro</string>
+    <string name="msg_book_created">Libro %1$s fue creado</string>
+    <string name="msg_book_updated">Libro %1$s fue actualizado</string>
+    <string name="msg_book_deleted">Libro %1$s fue eliminado</string>
+    <string name="msg_cannot_delete_default_book">No puede eliminar el libro predeterminado</string>
+    <string name="msg_cannot_delete_working_book">No puede eliminar el libro de trabajo</string>
+    <string name="cat_set_working_book">Establecer como libro de trabajo</string>
+    <string name="title_bookmgnt">Gestión de libro</string>
+    
+    <string name="label_position_none">No mostrar</string>
+    <string name="label_position_front">Antes</string>
+    <string name="label_position_after">Después</string>
+    <string name="label_symbol_position">Posición del símbolo</string>
+    <string name="dtitem_books">Libros</string>
+    <string name="qmsg_delete_book">¿Quieres eliminar el libro %1$s y todos sus datos?</string>
+    <string name="label_shared_all">Todo compartido</string>
+    <string name="label_shared_account_only">Sólo cuenta compartida</string>
+    <string name="label_shared_detail_only">Sólo detalle compartido</string>
+    
+    <!-- from 20110702 -->
+    <string name="act_toggle_hierarchical_report">Cambiar vista de jerarquía de cuentas</string>
+    <string name="label_firstday_sat">Sábado</string>
+</resources>
