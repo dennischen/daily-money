@@ -232,10 +232,14 @@ public class GUIs {
             try{
                 run.run();
                 synchronized(this){
-                    //dlg is safe to be dismissed in other thread.
-                    if(dlg.isShowing()){
-                        dlg.dismiss();
-                    }
+                    post(new Runnable(){
+                        @Override
+                        public void run() {
+                            if(dlg.isShowing()){
+                                dlg.dismiss();
+                            }
+                        }
+                    });
                     finish = true;
                 }
                 if(run instanceof IBusyRunnable){
@@ -248,9 +252,14 @@ public class GUIs {
             }catch(final Throwable x){
                 Logger.e(x.getMessage(),x);
                 synchronized(this){
-                    if(dlg.isShowing()){
-                        dlg.dismiss();
-                    }
+                    post(new Runnable(){
+                        @Override
+                        public void run() {
+                            if(dlg.isShowing()){
+                                dlg.dismiss();
+                            }
+                        }
+                    });
                     finish = true;
                 }
                 if(run instanceof IBusyRunnable){
