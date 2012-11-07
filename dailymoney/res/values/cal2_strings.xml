@@ -41,7 +41,7 @@
     </style>
 
     <style name="cal2_display_style">
-       <item name="android:textSize">40dp</item>
+       <item name="android:textSize">30dp</item>
        <item name="android:gravity">right|center_vertical</item>
        <item name="android:textColor">#ffffff</item>
        <item name="android:maxLines">1</item>
@@ -49,7 +49,7 @@
        <item name="android:scrollHorizontally">true</item>
        <item name="android:layout_width">fill_parent</item>
        <item name="android:layout_height">fill_parent</item>
-       <item name="android:padding">8dp</item>
+       <item name="android:padding">6dp</item>
     </style>
 
 

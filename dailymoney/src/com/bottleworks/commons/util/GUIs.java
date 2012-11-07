@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -129,7 +131,7 @@ public class GUIs {
         return inflater.inflate(resourceid, parent);
     }
     
-    private static ExecutorService delayPostExecutor = Executors.newSingleThreadExecutor();
+    private static ScheduledExecutorService delayPostExecutor = Executors.newSingleThreadScheduledExecutor();
     private static ExecutorService singleExecutor = Executors.newSingleThreadExecutor();
     private static Handler guiHandler = new Handler();
     
@@ -137,14 +139,14 @@ public class GUIs {
         delayPost(r,50);
     }
     static public void delayPost(final Runnable r,final long delay){
-        delayPostExecutor.submit(new Runnable(){
+        delayPostExecutor.schedule(new Runnable(){
             @Override
             public void run() {
                 try {
                     Thread.sleep(delay);
                 } catch (InterruptedException e) {}
                 post(r);
-            }});
+            }},delay,TimeUnit.MILLISECONDS);
     }
     
     static public void post(Runnable r){
@@ -176,9 +178,16 @@ public class GUIs {
     static public void releaseOrientation(Activity activity){
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
-    
     static public void doBusy(Context context,String msg,Runnable r){
-        final ProgressDialog dlg = ProgressDialog.show(context,null,msg,true,false);
+        doBusy(context,msg,r,500);
+    }
+    static public void doBusy(Context context,String msg,Runnable r,final long dealy){
+        final ProgressDialog dlg = new ProgressDialog(context);//ProgressDialog.show(context,null,msg,true,false);
+        dlg.setMessage(msg);
+        dlg.setTitle(null);
+        dlg.setIndeterminate(true);
+        dlg.setCancelable(false);
+        
         if (context instanceof Activity) {
             lockOrientation((Activity)context);  
         }
@@ -186,22 +195,20 @@ public class GUIs {
         final BusyRunnable br = new BusyRunnable(context,dlg,r);
         singleExecutor.submit(br);
         
-        guiHandler.post(new Runnable(){
+        delayPost(new Runnable(){
             @Override
             public void run() {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {}
                 synchronized(br){
                     if(!br.finish){
                         dlg.show();
+                        br.showing = true;
                     }
                 }
             }
-        }); 
+        },dealy); 
     }
     
-    static class NothrowRunnable implements Runnable{
+    static private class NothrowRunnable implements Runnable{
         Runnable r;
         public NothrowRunnable(Runnable r){
             this.r = r;
@@ -216,11 +223,13 @@ public class GUIs {
         }
     }
     
-    static class BusyRunnable implements Runnable{
+    static private class BusyRunnable implements Runnable{
         ProgressDialog dlg;
         Context context;
         Runnable run;
-        boolean finish = false;
+        volatile boolean showing = false;
+        volatile boolean finish = false;
+        
         public BusyRunnable(Context context,ProgressDialog dlg,Runnable run){
             this.context = context;
             this.dlg = dlg;
@@ -229,59 +238,64 @@ public class GUIs {
         
         @Override
         public void run() {
+            final FinalVar<Throwable> x = new FinalVar<Throwable>();
             try{
                 run.run();
-                synchronized(this){
-                    post(new Runnable(){
+            }catch(final Throwable x0){
+                x.value = x0;
+                Logger.e(x0.getMessage(),x0);
+            }
+            
+            //close dlg if it is showing
+            synchronized (this) {
+                finish = true;
+                if (showing) {
+                    post(new Runnable() {
                         @Override
                         public void run() {
-                            if(dlg.isShowing()){
+                            showing = false;
+                            if (dlg.isShowing()) {
                                 dlg.dismiss();
                             }
                         }
                     });
-                    finish = true;
-                }
-                if(run instanceof IBusyRunnable){
-                   post(new Runnable(){
-                        @Override
-                        public void run() {
-                            ((IBusyRunnable)run).onBusyFinish();                        
-                        }});
-                }
-            }catch(final Throwable x){
-                Logger.e(x.getMessage(),x);
-                synchronized(this){
-                    post(new Runnable(){
-                        @Override
-                        public void run() {
-                            if(dlg.isShowing()){
-                                dlg.dismiss();
-                            }
-                        }
-                    });
-                    finish = true;
-                }
-                if(run instanceof IBusyRunnable){
-                    post(new Runnable(){
-                        @Override
-                        public void run() {
-                            ((IBusyRunnable)run).onBusyError(x);                        
-                        }});
                 }
             }
-            post(new Runnable(){
+            
+            //notify success of error
+            if (run instanceof IBusyRunnable) {
+                if (x.value == null) {
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((IBusyRunnable) run).onBusyFinish();
+                        }
+                    });
+                } else {
+                    if (run instanceof IBusyRunnable) {
+                        post(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((IBusyRunnable) run).onBusyError(x.value);
+                            }
+                        });
+                    }
+                }
+            }
+            //release orientation lock
+            post(new Runnable() {
                 @Override
                 public void run() {
                     if (context instanceof Activity) {
                         releaseOrientation((Activity) context);
                     }
-                }});
+                }
+            });
         }
     }
 
     /**
-     * on busy event will be invoke in gui thread.
+     * on busy event will be invoked in gui thread.
      */
     public static interface IBusyRunnable extends Runnable{
         void onBusyFinish();

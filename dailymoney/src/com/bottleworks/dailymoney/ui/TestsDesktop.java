@@ -98,13 +98,28 @@ public class TestsDesktop extends AbstractDesktop {
                 testFirstDayOfWeek();
             }}, "first day of week",R.drawable.dtitem_test){
         });
-        
-        
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
-                testCreateTestdata(1);
-            }}, "test data1",R.drawable.dtitem_test));
+                testBusy(200,null);
+            }}, "Busy 200ms",R.drawable.dtitem_test));
+        addItem(new DesktopItem(new Runnable(){
+            @Override
+            public void run() {
+                testBusy(200, "error short");
+            }}, "Busy 200ms Error",R.drawable.dtitem_test));
+        addItem(new DesktopItem(new Runnable(){
+            @Override
+            public void run() {
+                testBusy(5000,null);
+            }}, "Busy 5s",R.drawable.dtitem_test));
+        addItem(new DesktopItem(new Runnable(){
+            @Override
+            public void run() {
+                testBusy(5000, "error long");
+            }}, "Busy 5s Error",R.drawable.dtitem_test));
+        
+        
         addItem(new DesktopItem(new Runnable(){
             @Override
             public void run() {
@@ -148,6 +163,28 @@ public class TestsDesktop extends AbstractDesktop {
         addItem(padding);
     }
     
+    protected void testBusy(final long i, final String error) {
+        GUIs.doBusy(activity,new GUIs.BusyAdapter(){
+            @Override
+            public void onBusyFinish() {
+                GUIs.shortToast(activity,"task finished");
+            }
+            public void onBusyError(Throwable x) {
+                GUIs.shortToast(activity,"Error "+x.getMessage());
+            }
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(i);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(error!=null){
+                    throw new RuntimeException(error);
+                }
+            }});
+    }
+
     protected void testFirstDayOfWeek() {
         CalendarHelper calHelper = Contexts.instance().getCalendarHelper();
         for(int i=0;i<100;i++){
