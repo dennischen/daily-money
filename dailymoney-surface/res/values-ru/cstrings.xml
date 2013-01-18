@@ -17,13 +17,17 @@
     <string name="clabel_info">Информация</string>
     <string name="clabel_name">Имя</string>
     <string name="clabel_type">Тип</string>
-    <string name="clabel_unknow">Неизвестный</string>
+    <string name="clabel_unknow">Не указано</string>
     <string name="clabel_warn">Предупреждение</string>
     <string name="cmsg_busy">Приложение работает, пожалуйста подождите...</string>
     <string name="cmsg_error">Ошибка : %1$s</string>
     <string name="cmsg_field_empty">%1$s пуста</string>  
-    <string name="cmsg_field_zero">%1$s нулевой длинны</string> 
+    <string name="cmsg_field_zero">%1$s нулевой длины</string> 
      <string name="clabel_all">Все</string>
     <!-- above are verified --> 
 
+    <!-- start from 20110530 -->
+    <string name="clabel_default">По умолчанию</string>
+    
+	
 </resources>
