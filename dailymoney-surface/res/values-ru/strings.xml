@@ -21,17 +21,17 @@
     <string name="dtitem_detlist_year">Ежегодный список</string>
     <string name="dtitem_prefs">Настройки</string>
     <string name="label_all_details">Все подробности (%1$s записей)</string>
-    <string name="label_Активы">Активы</string>
+    <string name="label_asset">Активы</string>
     <string name="label_date">Дата</string>
     <string name="label_liability">Пассивы</string>
     <string name="label_detlayout_type1">На - деньги</string>
     <string name="label_detlayout_type2">Заметка - Деньги</string>
     <string name="label_detlist_from">&lt; %1$s</string>
-    <string name="label_detlist_sum_income">Доход %1$s</string>
-    <string name="label_detlist_sum_expense">Счет %1$s</string>
-    <string name="label_detlist_sum_Активы">Активы %1$s </string>
+    <string name="label_detlist_sum_income">Доходы %1$s</string>
+    <string name="label_detlist_sum_expense">Расходы %1$s</string>
+    <string name="label_detlist_sum_asset">Активы %1$s </string>
     <string name="label_detlist_sum_liability">Пассивы %1$s</string>
-    <string name="label_detlist_sum_other">Прочее %1$s</string>
+    <string name="label_detlist_sum_other">Прочие %1$s</string>
     <string name="label_detlist_to">%1$s</string>
     <string name="label_expense">Расход</string>
     <string name="label_firstday_mon">Понедельник</string>
@@ -118,8 +118,8 @@
     
     <string name="label_account">Счет</string>
     <string name="label_detail">Операции</string>
-    <string name="label_account_only">Только счета</string>
-    <string name="label_detail_only">Только операции</string>
+    <string name="label_account_only">Только Счета</string>
+    <string name="label_detail_only">Только Операции</string>
     
     <string name="label_share_csv">Доступ к CSV</string>
     <string name="msg_share_csv_title">Daily Money %1$s</string>
@@ -128,11 +128,11 @@
     
     <string name="msg_firsttime_use_hint">Добро пожаловать в программу Daily Money, нажмите Добавить Описание чтобы продолжить</string>
     
-    <string name="label_balance_tincome">Баланс доходов</string>
-    <string name="label_balance_texpense">Баланс расходов</string>
-    <string name="label_balance_tАктивы">Баланс активов</string>
-    <string name="label_balance_tliability">Баланс пассивов</string>
-    <string name="label_balance_tother">Баланс без категории</string>
+    <string name="label_balance_tincome">Баланс Доходов</string>
+    <string name="label_balance_texpense">Баланс Расходов</string>
+    <string name="label_balance_tАктивы">Баланс Активов</string>
+    <string name="label_balance_tliability">Баланс Пассивов</string>
+    <string name="label_balance_tother">Баланс Прочего</string>
     
     <string name="label_balance_mode_month">за %1$s (%2$s-%3$s)</string>
     <string name="label_balance_mode_year">Баланс за год %1$s</string>
