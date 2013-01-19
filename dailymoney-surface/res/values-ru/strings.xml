@@ -130,7 +130,7 @@
     
     <string name="label_balance_tincome">Баланс Доходов</string>
     <string name="label_balance_texpense">Баланс Расходов</string>
-    <string name="label_balance_tАктивы">Баланс Активов</string>
+    <string name="label_balance_tasset">Баланс Активов</string>
     <string name="label_balance_tliability">Баланс Пассивов</string>
     <string name="label_balance_tother">Баланс Прочего</string>
     
