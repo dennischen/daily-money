@@ -38,11 +38,11 @@
 	<color name="income_fgd">#FF1A9F42</color>
 	<color name="income_fg">#FF000000</color>
 	
-	<color name="asset_bg_s">#FFF6D174</color>
-	<color name="asset_bg_e">#CCF6D174</color>
-	<color name="asset_fgl">#CCF6D174</color>
-	<color name="asset_fgd">#FF967114</color>
-    <color name="asset_fg">#FF000000</color>
+        <color name="asset_bg_s">#ffc7733b</color>
+        <color name="asset_bg_e">#ccc7733b</color>
+        <color name="asset_fgl">#ccc7733b</color>
+        <color name="asset_fgd">#ff9e5728</color>
+        <color name="asset_fg">#FF000000</color>
     
     <color name="liability_bg_s">#FF7A95FF</color>
     <color name="liability_bg_e">#CC7A95FF</color>
