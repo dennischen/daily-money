@@ -126,7 +126,7 @@
     <string name="msg_share_csv_content">CSV-файлы Daily Money</string>
     <string name="qmsg_share_csv">Каким CSV-файлам дать доступ?</string>
     
-    <string name="msg_firsttime_use_hint">Добро пожаловать в программу Daily Money, нажмите Добавить Описание чтобы продолжить</string>
+    <string name="msg_firsttime_use_hint">Добро пожаловать в программу Daily Money, нажмите Добавить Операцию чтобы продолжить</string>
     
     <string name="label_balance_tincome">Баланс Доходов</string>
     <string name="label_balance_texpense">Баланс Расходов</string>
