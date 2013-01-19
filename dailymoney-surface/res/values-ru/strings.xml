@@ -214,5 +214,19 @@
     <string name="label_shared_all">Все общедоступно</string>
     <string name="label_shared_account_only">Общедоступны лишь Счета</string>
     <string name="label_shared_detail_only">Общедоступны лишь Операции</string>
+    
+    <!-- from 20110702 -->
+    <string name="act_toggle_hierarchical_report">Иерархично</string>
+    <string name="label_firstday_sat">Суббота</string>
+
+    <!-- from 20120427 by Lancelot Liu -->
+    <string name="label_backup_db2sd">Резервная копия на SDcard</string>
+    <string name="msg_db_backuped">%1$s файлов сохранено на %2$s</string>
+    <string name="msg_no_db">Нечего резервировать</string>
+    <string name="label_prefs_lastbackup">Время последней резервной копии</string>
+    
+    <!-- from 2012802 by dennis-->
+    <string name="msg_db_retored">Данные восстановлены!</string>
+    <string name="qmsg_retore_db">Daily Money покажет резервные копии на SDcard, хотите восстановить? (Текущие ДАННЫЕ будут ЗАМЕНЕНЫ)</string>
 </resources>
 
