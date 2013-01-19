@@ -15,10 +15,10 @@
     <string name="dtitem_accmgnt">Счета</string>
     <string name="dtitem_adddetail">Создать операцию</string>
     <string name="dtitem_detlist">Операции</string>
-    <string name="dtitem_detlist_month">Ежемесячный список</string>
-    <string name="dtitem_detlist_day">Ежедневный список</string>
-    <string name="dtitem_detlist_week">Еженедельный список</string>
-    <string name="dtitem_detlist_year">Ежегодный список</string>
+    <string name="dtitem_detlist_month">Месяц (список)</string>
+    <string name="dtitem_detlist_day">День (список)</string>
+    <string name="dtitem_detlist_week">Неделю (список)</string>
+    <string name="dtitem_detlist_year">Год (список)</string>
     <string name="dtitem_prefs">Настройки</string>
     <string name="label_all_details">Все подробности (%1$s записей)</string>
     <string name="label_asset">Активы</string>
@@ -33,17 +33,17 @@
     <string name="label_detlist_sum_liability">Пассивы %1$s</string>
     <string name="label_detlist_sum_other">Прочие %1$s</string>
     <string name="label_detlist_to">%1$s</string>
-    <string name="label_expense">Расход</string>
+    <string name="label_expense">Расходы</string>
     <string name="label_firstday_mon">Понедельник</string>
     <string name="label_firstday_sun">Воскресенье</string>
     <string name="label_from_account">Со счета</string>
-    <string name="label_income">Доход</string>
+    <string name="label_income">Доходы</string>
     <string name="label_initial_value">Стартовый капиталл</string>
     <string name="label_money">Деньги</string>
     <string name="label_month_details">%1$s (%2$s записей)</string>
     <string name="label_day_details">%1$s (%2$s записей)</string>
     <string name="label_note">Заметка</string>
-    <string name="label_other">Другие</string>
+    <string name="label_other">Прочее</string>
     <string name="label_prefs_detlayout">Подробный план</string>
     <string name="label_prefs_detlayout_sum">Выберите другой тип для операций макета списка</string>
     <string name="label_prefs_firstday_week">Первый день недели</string>
@@ -140,12 +140,12 @@
     <string name="label_balance_mode_month_total">до %1$s (%2$s)</string>
     <string name="label_balance_mode_year_total">Баланс до %1$s года</string>
     
-    <string name="dtitem_report_monthly_balance">Ежемесячный баланс</string>
-    <string name="dtitem_report_yearly_balance">Ежегодный баланс</string>
+    <string name="dtitem_report_monthly_balance">Баланс за месяц</string>
+    <string name="dtitem_report_yearly_balance">Баланс за год</string>
     <string name="dtitem_report_cumulative_balance">Итого</string>
     
     <string name="label_count">(%1$s)</string>
-    <string name="label_accdetlist_dateinfo">%1$s к %2$s</string> 
+    <string name="label_accdetlist_dateinfo">%1$s на %2$s</string> 
     
     <string name="label_prefs_password">Защита паролем-1</string>
     <string name="label_prefs_password_sum">Установите пароль на приложение, пусто - защита выключена</string>
@@ -167,7 +167,7 @@
     <string name="act_balance_yearly_runchart">Баланс Активов-Пассивов за год</string>
     <string name="label_balance_yearly_runchart">Активы-Пассивы (итого) в %1$s</string>    
     
-    <string name="label_prefs_allow_analytics">Отправлять аналитику в google</string>
+    <string name="label_prefs_allow_analytics">Отправлять аналитику</string>
     <string name="label_prefs_allow_analytics_sum">Отправка отчетов о работе приложения, для улучшения работы программы</string>
     
     <string name="dtitem_about">О программе</string>
@@ -227,6 +227,6 @@
     
     <!-- from 2012802 by dennis-->
     <string name="msg_db_retored">Данные восстановлены!</string>
-    <string name="qmsg_retore_db">Daily Money покажет резервные копии на SDcard, хотите восстановить? (Текущие ДАННЫЕ будут ЗАМЕНЕНЫ)</string>
+    <string name="qmsg_retore_db">Найдена резервная копия! Восстановить? Текущие ДАННЫЕ будут ЗАМЕНЕНЫ.</string>
 </resources>
 
