@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.bottleworks.dailymoney.core.R;
 import com.bottleworks.dailymoney.ui.report.BalanceActivity;
+import com.bottleworks.dailymoney.ui.report.SearchActivity;
 /**
  * 
  * @author dennis
@@ -43,6 +44,11 @@ public class ReportsDesktop extends AbstractDesktop {
         DesktopItem totalBalance = new DesktopItem(new IntentRun(activity, intent),
                 i18n.string(R.string.dtitem_report_cumulative_balance), R.drawable.dtitem_balance_cumulative_month,99);
         addItem(totalBalance);
+
+        intent = new Intent(activity, SearchActivity.class);
+        DesktopItem search = new DesktopItem(new IntentRun(activity, intent),
+                i18n.string(R.string.dtitem_report_search), R.drawable.effect_unknow,99);
+        addItem(search);
     }
 
 }

@@ -360,6 +360,38 @@ public class SQLiteDataProvider implements IDataProvider {
         c.close();
         return result;
     }
+
+    @Override
+    public List<Detail> listDetail(Date start, Date end, String note, int max) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = null;
+        StringBuilder where = new StringBuilder();
+        where.append(" 1=1 ");
+        if(start!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + ">=" + start.getTime());
+        }
+        if(end!=null){
+            where.append(" AND ");
+            where.append(COL_DET_DATE + "<=" +end.getTime());
+        }
+        if (note != null && !"".equals(note.trim())) {
+            where.append(" AND ");
+            where.append(COL_DET_NOTE + " like '%" + note + "%'");
+        }
+        
+        c = db.query(TB_DET,COL_DET_ALL,where.length()==0?null:where.toString(),null, null, null, DET_ORDERBY,max>0?Integer.toString(max):null);
+        List<Detail> result = new ArrayList<Detail>();
+        Detail det;
+        while(c.moveToNext()){
+            det = new Detail();
+            applyCursor(det,c);
+            result.add(det);
+        }
+        c.close();
+        return result;
+    }
+
     @Override
     public List<Detail> listDetail(Account account, int mode, Date start, Date end,int max) {
         return listDetail(account.getId(),mode,start,end,max);

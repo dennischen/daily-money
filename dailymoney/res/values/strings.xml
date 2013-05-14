@@ -228,5 +228,11 @@
     <!-- from 2012802 by dennis-->
     <string name="msg_db_retored">Data was restored, welcome back!</string>
     <string name="qmsg_retore_db">It looks like you have Daily Money data backup in SD card, do you want to restore it (all current data will be replaced) ?</string>
+
+    <!-- from 20130513 by Lancelot -->
+    <string name="dtitem_report_search">Search</string>
+    <string name="label_from_date">from Date</string>
+    <string name="label_to_date">to Date</string>
+    <string name="search_reset">Reset</string>
 </resources>
 
