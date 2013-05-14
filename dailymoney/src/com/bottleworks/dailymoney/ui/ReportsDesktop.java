@@ -47,7 +47,7 @@ public class ReportsDesktop extends AbstractDesktop {
 
         intent = new Intent(activity, SearchActivity.class);
         DesktopItem search = new DesktopItem(new IntentRun(activity, intent),
-                i18n.string(R.string.dtitem_report_search), R.drawable.effect_unknow,99);
+                i18n.string(R.string.dtitem_report_search), R.drawable.dtitem,99);
         addItem(search);
     }
 
