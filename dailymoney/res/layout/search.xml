@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/label_from_date" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/search_from_date"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:editable="false" />
+
+            <ImageButton
+                android:id="@+id/search_from_prev"
+                android:layout_width="58dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/btn_back" />
+
+            <ImageButton
+                android:id="@+id/search_from_today"
+                android:layout_width="58dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/btn_today" />
+
+            <ImageButton
+                android:id="@+id/search_from_next"
+                android:layout_width="58dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/btn_forward" />
+
+            <ImageButton
+                android:id="@+id/search_from_datepicker"
+                android:layout_width="58dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/btn_datepicker" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/label_to_date" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/search_to_date"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:editable="false" />
+
+            <ImageButton
+                android:id="@+id/search_to_prev"
+                android:layout_width="58dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/btn_back" />
+
+            <ImageButton
+                android:id="@+id/search_to_today"
+                android:layout_width="58dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/btn_today" />
+
+            <ImageButton
+                android:id="@+id/search_to_next"
+                android:layout_width="58dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/btn_forward" />
+
+            <ImageButton
+                android:id="@+id/search_to_datepicker"
+                android:layout_width="58dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/btn_datepicker" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/label_note" />
+
+        <EditText
+            android:id="@+id/deteditor_note"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:maxLines="2" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/search_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cact_ok" />
+
+            <Button
+                android:id="@+id/search_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/search_reset" />
+
+            <Button
+                android:id="@+id/search_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cact_close" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/searchResult_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>

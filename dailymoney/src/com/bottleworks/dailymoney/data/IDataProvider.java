@@ -72,6 +72,7 @@ public interface IDataProvider {
     int countDetail(String accountId,int mode,Date start, Date end);
     
     List<Detail> listDetail(Date start, Date end, int max);
+    List<Detail> listDetail(Date start, Date end, String note, int max);
     /**
      * mode : 0 both, 1 from, 2 to;
      */
