@@ -46,6 +46,7 @@
         <activity android:name="org.achartengine.GraphicalActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
                   
         <!-- receiver android:name=".context.ScheduleReceiver" android:process=":dmbackup"/--> <!-- dennis, need to confirm the use -->
+        <activity android:name=".ui.report.SearchActivity" />
     </application>
 
 </manifest> 
