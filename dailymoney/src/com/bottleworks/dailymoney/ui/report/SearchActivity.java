@@ -70,9 +70,21 @@ public class SearchActivity extends ContextsActivity implements android.view.Vie
     Button okBtn;
     Button resetBtn;
     Button closeBtn;
+    
+    Button thisYearBtn;
+    Button thisMonthBtn;
+	Button allTimeBtn;
 
     private void initialCriteria() {
 
+    	thisMonthBtn = (Button) findViewById(R.id.search_this_month);
+    	thisYearBtn = (Button) findViewById(R.id.search_this_year);
+    	allTimeBtn = (Button) findViewById(R.id.search_all_time);
+    	
+    	thisMonthBtn.setOnClickListener(this);
+        thisYearBtn.setOnClickListener(this);
+        allTimeBtn.setOnClickListener(this);
+    	
         today = new Date();
         dateFromEditor = (EditText) findViewById(R.id.search_from_date);
         dateFromEditor.setText(format.format(today));
@@ -169,6 +181,15 @@ public class SearchActivity extends ContextsActivity implements android.view.Vie
             } catch (ParseException e) {
                 Logger.e(e.getMessage(), e);
             }
+        } else if (v.getId() == R.id.search_this_month) {
+        	dateFromEditor.setText(format.format(cal.getFirstDateOfThisMonth()));
+        	dateToEditor.setText(format.format(cal.getLastDateOfThisMonth()));
+        } else if (v.getId() == R.id.search_this_year) {
+        	dateFromEditor.setText(format.format(cal.getFirstDateOfThisYear()));
+        	dateToEditor.setText(format.format(cal.getLastDateOfThisYear()));
+        } else if (v.getId() == R.id.search_all_time) {
+        	dateFromEditor.setText("01/01/1970");
+        	dateToEditor.setText("31/12/2099");
         }
     }
 
