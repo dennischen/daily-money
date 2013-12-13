@@ -229,6 +229,9 @@ public class SearchActivity extends ContextsActivity implements android.view.Vie
 
         String note = noteEditor.getText().toString();
 
+        while(note.startsWith(" ")) note = note.substring(1, note.length());
+        while(note.endsWith(" ")) note = note.substring(0, note.length() - 1);
+
         reloadData(dateFrom, dateTo, note);
     }
 

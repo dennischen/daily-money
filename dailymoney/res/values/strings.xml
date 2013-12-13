@@ -237,5 +237,6 @@
     <string name="search_this_month">This Month</string>
     <string name="search_this_year">This Year</string>
     <string name="search_all_time">All Time</string>
+    <string name="search_button">Search</string>
 </resources>
 
