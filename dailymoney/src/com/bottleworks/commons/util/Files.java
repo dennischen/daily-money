@@ -10,8 +10,10 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -294,6 +296,37 @@ public class Files {
             }
         }
         return count;
+    }
+    
+    public static void removeOldBackups(File backupFolder, final Calendar baseTime) {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            baseTime.add(Calendar.DATE, -7);
+            File[] filesToRemove = backupFolder.listFiles(new FilenameFilter() {
+
+                @Override
+                public boolean accept(File dir, String filename) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
+                    String backupTimeString = filename.substring(filename.lastIndexOf(".") + 1);
+                    try {
+                        Date backupDate = sdf.parse(backupTimeString);
+                        Calendar backup = Calendar.getInstance();
+                        backup.setTime(backupDate);
+                        if (backup.before(baseTime)) {
+                            return true;
+                        }
+                    } catch (ParseException e) {
+                        // do nothing
+                    }
+                    return false;
+                }
+
+            });
+
+            for (File file : filesToRemove) {
+                file.delete();
+            }
+        }
     }
 
 }

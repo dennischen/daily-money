@@ -23,6 +23,7 @@ public class ScheduleReceiver extends BroadcastReceiver {
                 if (count > 0) {
                     getContexts().setLastBackup(context, now.getTime());
                 }
+                Files.removeOldBackups(getContexts().getSdFolder(), now);
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage(), e);
             }
