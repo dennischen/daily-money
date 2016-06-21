@@ -23,7 +23,7 @@ dependencies {
 
 apt {
     arguments {
-        androidManifestFile 'AndroidManifest.xml'
+        androidManifestFile variant.outputs[0].processResources.manifestFile
         resourcePackageName 'com.bottleworks.dailymoney.core'
     }
 }
@@ -51,7 +51,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 10
+        minSdkVersion 7
         targetSdkVersion 19
     }
 
