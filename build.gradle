@@ -1,0 +1,9 @@
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14'
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
