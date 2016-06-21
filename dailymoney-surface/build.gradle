@@ -16,8 +16,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.0.0'
-    compile 'com.android.support:support-v4:19.0.0'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:support-v4:24.0.0'
 	compile project(':dailymoney')
 }
 
@@ -52,7 +52,7 @@ apt {
 
         defaultConfig {
             minSdkVersion 7
-            targetSdkVersion 19
+            targetSdkVersion 24
         }
 
         signingConfigs {
