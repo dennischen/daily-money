@@ -1,50 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.bottleworks.dailymoney"
-      android:versionCode="2012110700" android:versionName="0.9.8-121107-freshly"
-      android:installLocation="auto"
-      >
-    <uses-sdk android:minSdkVersion="7" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    package="com.bottleworks.dailymoney"
+    android:installLocation="auto"
+    android:versionCode="2012110700"
+    android:versionName="0.9.8-121107-freshly">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- uses-permission android:name="android.permission.WAKE_LOCK" /--> <!-- dennis, need to confirm the use -->
-    <application android:icon="@drawable/app_icon" android:label="@string/app_name">
-        <activity android:name=".ui.DesktopActivity"
-                  android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
+    <application
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:theme="@style/DailyMoneyTheme">
+        <activity
+            android:name=".ui.DesktopActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name=".ui.BookMgntActivity" android:label="@string/title_bookmgnt" android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".ui.BookEditorActivity"/>
-        
-        <activity android:name=".ui.DetailListActivity" android:label="@string/title_detlist" android:theme="@android:style/Theme.NoTitleBar"/>
+
+        <activity
+            android:name=".ui.BookMgntActivity"
+            android:label="@string/title_bookmgnt" />
+        <activity android:name=".ui.BookEditorActivity" />
+
+        <activity
+            android:name=".ui.DetailListActivity"
+            android:label="@string/title_detlist" />
         <activity android:name=".ui.DetailEditorActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
+                <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.AccountMgntActivity" android:label="@string/title_accmgnt" android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".ui.AccountEditorActivity"/>
-        <activity android:name=".ui.AccountDetailListActivity" android:theme="@android:style/Theme.NoTitleBar"/>        
-        <activity android:name=".ui.PrefsActivity" android:label="@string/title_prefs" android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".ui.DataMaintenanceActivity" android:label="@string/title_datamain" android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".ui.PasswordProtectionActivity" android:theme="@style/Theme.Password" android:label="@string/title_pdprotection"/>
-        <activity android:name=".ui.report.BalanceActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <activity android:name=".ui.AboutActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <activity android:name=".ui.LocalWebViewActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <activity android:name=".ui.LocalWebViewDlg" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".ui.DummyActivity" android:theme="@android:style/Theme.NoTitleBar"/>
-        
-        <activity android:name=".calculator2.Calculator" android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity
+            android:name=".ui.AccountMgntActivity"
+            android:label="@string/title_accmgnt" />
+        <activity android:name=".ui.AccountEditorActivity" />
+        <activity android:name=".ui.AccountDetailListActivity" />
+        <activity
+            android:name=".ui.PrefsActivity"
+            android:label="@string/title_prefs" />
+        <activity
+            android:name=".ui.DataMaintenanceActivity"
+            android:label="@string/title_datamain" />
+        <activity
+            android:name=".ui.PasswordProtectionActivity"
+            android:label="@string/title_pdprotection" />
+        <activity android:name=".ui.report.BalanceActivity" />
+        <activity android:name=".ui.AboutActivity" />
+        <activity android:name=".ui.LocalWebViewActivity" />
+        <activity android:name=".ui.LocalWebViewDlg" />
+        <activity android:name=".ui.DummyActivity" />
+        <activity android:name=".calculator2.Calculator" />
+        <activity android:name="org.achartengine.GraphicalActivity" />
 
-        
-        
-        <activity android:name="org.achartengine.GraphicalActivity" android:theme="@android:style/Theme.Black.NoTitleBar"/>
-                  
         <!-- receiver android:name=".context.ScheduleReceiver" android:process=":dmbackup"/--> <!-- dennis, need to confirm the use -->
         <activity android:name=".ui.report.SearchActivity" />
     </application>

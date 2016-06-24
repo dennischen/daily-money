@@ -6,4 +6,13 @@
      -->
 	<style name="Theme.Password" parent="@android:style/Theme.Dialog">
 	</style>
+
+	<style name="DailyMoneyTheme" parent="DailyMoneyTheme.Base">
+	</style>
+
+	<style name="DailyMoneyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="windowNoTitle">true</item>
+		<item name="windowActionBar">false</item>
+	</style>
+
 </resources>

@@ -18,6 +18,7 @@ repositories {
 dependencies {
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.android.support:design:24.0.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
