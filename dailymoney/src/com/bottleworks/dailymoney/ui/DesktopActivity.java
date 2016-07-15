@@ -207,15 +207,16 @@ public class DesktopActivity extends ContextsActivity {
         this.tabLayout = (TabLayout) findViewById(R.id.tabs);
         this.tabLayout.setupWithViewPager(viewPager);
 
-        int count = this.tabLayout.getTabCount();
-        if (count <= this.desktops.size()) {
-            for (int i = 0; i < count; i++) {
-                TabLayout.Tab tab = this.tabLayout.getTabAt(i);
-                if (tab != null) {
-                    tab.setIcon(this.desktops.get(i).getIcon());
-                }
-            }
-        }
+// Tab icons, disable for the moment so that it saves some space
+//        int count = this.tabLayout.getTabCount();
+//        if (count <= this.desktops.size()) {
+//            for (int i = 0; i < count; i++) {
+//                TabLayout.Tab tab = this.tabLayout.getTabAt(i);
+//                if (tab != null) {
+//                    tab.setIcon(this.desktops.get(i).getIcon());
+//                }
+//            }
+//        }
     }
 
     private void initialContent() {
