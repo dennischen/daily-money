@@ -74,7 +74,7 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
     }
 
     public CharSequence getLabel(I18N i18n) {
-        AccountType accountType = (AccountType) this.getArguments().getSerializable("type");
+        AccountType accountType = this.getAccountType();
         return accountType.getDisplay(i18n);
     }
 
@@ -82,7 +82,7 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
         IDataProvider idp = Contexts.instance().getDataProvider();
         listViewData = null;
 
-        AccountType type = (AccountType) this.getArguments().getSerializable("type");
+        AccountType type = this.getAccountType();
         listViewData = idp.listAccount(type);
         listViewMapList.clear();
 
@@ -96,6 +96,10 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
         }
 
         listViewAdapter.notifyDataSetChanged();
+    }
+
+    public AccountType getAccountType() {
+        return (AccountType) this.getArguments().getSerializable("type");
     }
 
     @Override
@@ -114,10 +118,10 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
             doEditAccount(info.position);
             return true;
         } else if (item.getItemId() == R.id.accmgnt_menu_delete) {
-//            doDeleteAccount(info.position);
+            doDeleteAccount(info.position);
             return true;
         } else if (item.getItemId() == R.id.accmgnt_menu_copy) {
-//            doCopyAccount(info.position);
+            doCopyAccount(info.position);
             return true;
         } else {
             return super.onContextItemSelected(item);
@@ -132,6 +136,23 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
         this.startActivityForResult(intent, Constants.REQUEST_ACCOUNT_EDITOR_CODE);
     }
 
+    private void doDeleteAccount(int pos) {
+        Account acc = this.listViewData.get(pos);
+        String name = acc.getName();
+
+        Contexts.instance().getDataProvider().deleteAccount(acc.getId());
+        this.reloadData();
+        GUIs.shortToast(this.getContext(), Contexts.instance().getI18n().string(R.string.msg_account_deleted, name));
+    }
+
+
+    private void doCopyAccount(int pos) {
+        Account acc = listViewData.get(pos);
+        Intent intent = new Intent(this.getContext(), AccountEditorActivity.class);
+        intent.putExtra(AccountEditorActivity.INTENT_MODE_CREATE, true);
+        intent.putExtra(AccountEditorActivity.INTENT_ACCOUNT, acc);
+        this.startActivityForResult(intent, Constants.REQUEST_ACCOUNT_EDITOR_CODE);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -140,7 +161,7 @@ public class AccountList extends Fragment implements AdapterView.OnItemClickList
             GUIs.delayPost(new Runnable() {
                 @Override
                 public void run() {
-                    reloadData();
+                    AccountList.this.reloadData();
                 }
             });
         }
