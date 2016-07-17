@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bottleworks.dailymoney"
     android:installLocation="auto"
-    android:versionCode="2012110700"
-    android:versionName="0.9.8-121107-freshly">
+    android:versionCode="2016071700"
+    android:versionName="0.9.9-160717-snapshot">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
