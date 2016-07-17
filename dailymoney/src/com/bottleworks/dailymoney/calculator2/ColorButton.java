@@ -48,9 +48,11 @@ class ColorButton extends Button implements OnClickListener {
     
     public ColorButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Calculator calc = (Calculator) context;
-        init(calc);
-        mListener = calc.mListener;
+        if (context instanceof Calculator) {
+            Calculator calc = (Calculator) context;
+            init(calc);
+            mListener = calc.mListener;
+        }
         setOnClickListener(this);
     }
 
