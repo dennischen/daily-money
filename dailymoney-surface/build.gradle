@@ -16,20 +16,21 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.0.0'
-    compile 'com.android.support:support-v4:19.0.0'
-	compile project(':dailymoney')
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.android.support:design:24.0.0'
+    compile project(':dailymoney')
 }
 
 apt {
     arguments {
         androidManifestFile variant.outputs[0].processResources.manifestFile
         resourcePackageName 'com.bottleworks.dailymoney'
-        }
     }
+}
 
-    android {
-	sourceSets {
+android {
+    sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs = ['src']
@@ -40,44 +41,44 @@ apt {
             assets.srcDirs = ['assets']
         }
     }
-	
-        compileSdkVersion 24
-        buildToolsVersion "23.0.3"
 
-        compileOptions {
-            encoding "UTF-8"
-            sourceCompatibility JavaVersion.VERSION_1_7
-            targetCompatibility JavaVersion.VERSION_1_7
-        }
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
 
-        defaultConfig {
-            minSdkVersion 7
-            targetSdkVersion 19
-        }
+    compileOptions {
+        encoding "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 
-        signingConfigs {
-            dailymoney {
-                storeFile file("../resources/bottleworks.ks")
-                storePassword "qwer1234"
-                keyAlias "bottleworks-app"
-                keyPassword "qwer1234"
-            }
-        }
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 24
+    }
 
-        buildTypes {
-            release {
-                signingConfig signingConfigs.dailymoney
-            }
-        }
-
-        lintOptions {
-            abortOnError false
-        }
-
-        packagingOptions {
-            exclude 'META-INF/LICENSE'
-            exclude 'META-INF/NOTICE'
-            exclude 'META-INF/notice.txt'
-            exclude 'META-INF/license.txt'
+    signingConfigs {
+        dailymoney {
+            storeFile file("../resources/bottleworks.ks")
+            storePassword "qwer1234"
+            keyAlias "bottleworks-app"
+            keyPassword "qwer1234"
         }
     }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.dailymoney
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+    }
+}

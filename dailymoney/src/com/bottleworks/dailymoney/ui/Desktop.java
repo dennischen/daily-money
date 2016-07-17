@@ -1,48 +1,27 @@
 package com.bottleworks.dailymoney.ui;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-
 /**
- * 
  * @author dennis
- * 
  */
-public class Desktop {
+public class Desktop extends Fragment {
 
     protected String label;
     protected int icon;
-    protected Activity activity;
 
-    List<DesktopItem> items = new ArrayList<DesktopItem>();
-
-    public Desktop(Activity activity){
-        this(activity,"",0);
-    }
-    
-    public Desktop(Activity activity,String label, int icon) {
-        this(activity,label, icon, null);
-    }
-
-    public Desktop(Activity activity,String label, int icon, List<DesktopItem> items) {
-        this.activity = activity;
-        this.label = label;
-        this.icon = icon;
-        if (items != null) {
-            this.items.addAll(items);
-        }
-    }
+    List<DesktopItem> items = new ArrayList<>();
 
     public void addItem(DesktopItem item) {
         items.add(item);
     }
-    
-    
 
     public String getLabel() {
         return label;
@@ -55,15 +34,19 @@ public class Desktop {
     public List<DesktopItem> getItems() {
         return Collections.unmodifiableList(items);
     }
-    
-    public List<DesktopItem> getVisibleItems(){
-        ArrayList<DesktopItem> list = new ArrayList<DesktopItem>();
-        for(DesktopItem di:items){
-            if(!di.isHidden()){
+
+    public List<DesktopItem> getVisibleItems() {
+        ArrayList<DesktopItem> list = new ArrayList<>();
+        for (DesktopItem di : items) {
+            if (!di.isHidden()) {
                 list.add(di);
             }
         }
         return list;
+    }
+
+    public boolean isAvailable() {
+        return true;
     }
 
     public static class IntentRun implements Runnable {
@@ -92,13 +75,6 @@ public class Desktop {
         public void run() {
             context.startActivity(new Intent(context, activity));
         }
-    }
-
-    public void refresh() {
-    }
-    
-    public boolean isAvailable(){
-        return true;
     }
 
 }

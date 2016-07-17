@@ -16,8 +16,9 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.0.0'
-    compile 'com.android.support:support-v4:19.0.0'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.android.support:design:24.0.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
@@ -42,7 +43,7 @@ android {
     }
 
     compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "24.0.0"
 
     compileOptions {
         encoding "UTF-8"
@@ -52,7 +53,7 @@ android {
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 19
+        targetSdkVersion 24
     }
 
     lintOptions {
