@@ -10,7 +10,7 @@
 	<style name="DailyMoneyTheme" parent="DailyMoneyTheme.Base">
 	</style>
 
-	<style name="DailyMoneyTheme.Base" parent="Theme.AppCompat">
+	<style name="DailyMoneyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
 		<item name="windowNoTitle">true</item>
 		<item name="windowActionBar">false</item>
 	</style>
