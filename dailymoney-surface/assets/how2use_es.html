@@ -1,0 +1,113 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="dm.css" type="text/css" rel="stylesheet">
+</head>
+<body class="doc">
+<h2>Concepto</h2>
+<blockquote>
+    <img src="how2use1.png"  style="float: right; margin: 10px;margin-right:20px" />
+    El concepto de daily money es muy simple
+    <ol>
+    <li>Diferentes cuentas (puedes crear cuentas dependiende de tu caso)</li>
+    <li>Transacción de dinero entre cuentas. (registras detalles para cada transacción)</li>
+    </ol> 
+</blockquote>
+<h2>Cuentas</h2>
+
+<blockquote>
+    <p style="min-height: 82px"> 
+    <img src="how2use2.png"  style="float: left; margin: 10px;margin-right:20px" />    
+    Hay 5 tipos de cuentas, puedes crear/editar/eliminar cuentas en la página de Gestión de Cuentas.
+    </p>
+    <ol>
+    <li class="income"><i>Ingreso</i> : salario etc..</li>
+    <li class="expense"><i>Gasto</i> : comida, recreación etc.</li>
+    <li class="asset"><i>Activo</i> : efectivo, banco</li>
+    <li class="liability"><i>Pasivo</i> : tarjeta de crédito, préstamo.</li>
+    <li class="other"><i>Otro</i> : ...como un activo pero no es un activo.</li>
+    </ol>  
+    * Para ordenar tu cuenta solo agrega 1,2,.. or A.B,.. como prefijo de nombre de la cuenta.<br/>
+    * El nombre de la cuenta podría tener una estructura jerárquica nombrando con .(Punto), Ej: Comida.Almuerzo, Comida.cena . Durante la edición de detalle de la transacción, ésto proporciona una mejor selección de la cuenta.<br/>
+</blockquote>
+<h2>El detalle de la transacción</h2>
+<blockquote>
+    <p style="min-height: 82px"> 
+    <img src="how2use3.png"  style="float: left; margin: 10px" />
+    Cuando se gasta dinero se puede hacer clic en Añadir Detalle en la página Principal para crear un nuevo registro. Por ejemplo, si se gastó $10 comprando una comida, en la página Editor de detalles, puedes:    </p>
+    <ol>
+    <li class="asset">Seleccionar desde cuenta : Efectivo</li>
+    <li class="expense">Seleccionar a cuenta : Comida</li>
+    <li>Seleccionar fecha : hoy</li>
+    <li>Introducir dinero por calculadora : 10</li>
+    <li>Introducir descripción : hot dog, coke.</li>
+    <li>clic <i>Crear</i> luego clic <i>Cerrar</i> Si no necesitas crear otras transacciones.</li>
+    </ol> 
+
+    esto es solo un caso de uso muy común de daily-money, pero, ¿qué sucede si su salario es depositado directamente al banco, o se utiliza la tarjeta de crédito comprar libros en Internet? 
+    daily-money ofrecen diferentes tipos de cuenta s, y se puede crear varias cuentas contra los 5 tipos de cuentas.
+</blockquote>
+
+<h2>Casos de uso</h2>
+<blockquote>
+<h3>Salario a Banco</h3>
+<blockquote>
+    <span class="income"><b>Desde</b> : Salario</span><br/>
+    <span class="asset"><b>A</b> : Banco</span><br/>
+</blockquote>
+<h3>Banco a Efectivo</h3>
+<blockquote>
+    <span class="asset"><b>Desde</b> : Banco</span><br/>
+    <span class="asset"><b>A</b> : Efectivo</span><br/>
+</blockquote>
+<h3>Comprar cosas con tarjeta de crédito</h3>
+<blockquote>
+    <span class="liability"><b>Desde</b> : Tarjeta de crédito</span><br/>
+    <span class="expense"><b>A</b> : PDA costoso</span><br/>
+</blockquote>
+<h3>Pay credit card bill by Cash</h3>
+<blockquote>
+    <span class="asset"><b>Desde</b> : Efectivo</span><br/>
+    <span class="liability"><b>A</b> : Tarjeta de crédito</span><br/>
+</blockquote>
+</blockquote>
+<h2>Reportes de balance</h2>
+<img src="how2use4.png"  style="float: right; margin: 10px" />
+<blockquote>
+<h3>Balance en rangos</h3>
+<blockquote>
+    En reportes de balances en rangos, Se cuenta con el balance de todos los detallees que se han creado. El balance es calculado en un rango de tiempo (semana actual, mes actual y año actual, o se puede cambiar a otro rango haciendo clic en el botón de la flecha) 
+</blockquote>
+<h3>Balance acumulado</h3>
+<blockquote>
+    Para calcular el balance acumulado (ejemplo, cuanto dinero tengo en este momento, cuantos pasivos tengo ahora, cuánto me he gastado esta semana) se tiene que establecer un valor inicial para una cuenta (generalmente <i class="asset">Asset</i> or <i  class="liability">Liability</i> son tipos de cuentas que tienen valores iniciales diferentes de cero.  
+    <i  class="income">Ingreso</i> y <i  class="expense">Gasto</i> son tipos de cuenta que no deberían tener valores iniciales.<br/>
+    Si se olvida establecer el valor inicial de una cuenta, hay una simple manera de ajustarlo. por ejemplo, 
+    "Tengo 333 en efectivo, pero el reporte del balance acumulado muestra que tengo -100"
+    <ol>
+    <li>Editar cuenta de Efectivo</li>
+    <li>Establecer valor inicial de efectivo a 433, resultado de (333 - (-100))</li>
+    </ol>  
+</blockquote>
+</blockquote>
+<h2>Múltiples libros</h2>
+
+<blockquote>
+<p > 
+    Se puede crear multiples libros y activar un libro como "libro de trabajo".
+    Se puede definir un símbolo de moneda (ej. '$','¥'..etc) y la posición del símbolo de un libro.
+    Después de creado un libro, la aplicación asignará otra base de datos para almacenar las cuentas y detalles,
+    los datos entre libro no pueden ser transferidos, ya que están aislados.
+</p>
+<p>    
+    Al exportar los datos actuales a CSV, exportará dos archivos, details.csv y accounts.csv, los cuales son compartidos 
+    entre todos los libros y otros dos archivos, details-'id'.cvs y accounts-'id'.csv, ('id' es el id del libro). Solo
+    para el libro de trabajo, al importar datos desde CSV, se puede escoger importar desde archivos compartidos o no compartidos.
+</p>
+<p>     
+    Si eliminas un libro, la base de datos de ese libro tambien será eliminada (incluyendo cuentas y detalles), 
+    el libro predeterminado (id = 0) y el actual libro de trabajo no puede ser eliminados.
+</p>
+</blockquote>
+</body>
+</html>
