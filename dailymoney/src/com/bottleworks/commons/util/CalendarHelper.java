@@ -58,6 +58,34 @@ public class CalendarHelper {
         return cal;
     }
 
+    public Date getFirstDateOfThisMonth() {
+    	Calendar cal = Calendar.getInstance();
+        int thisDate = cal.get(Calendar.DAY_OF_MONTH);
+        cal.add(Calendar.DATE, 1-thisDate);
+    	return cal.getTime();
+    }
+
+    public Date getFirstDateOfThisYear() {
+    	Calendar cal = Calendar.getInstance();
+        int thisDate = cal.get(Calendar.DAY_OF_YEAR);
+        cal.add(Calendar.DATE, 1-thisDate);
+    	return cal.getTime();
+    }
+
+    public Date getLastDateOfThisMonth() {
+    	Calendar cal = Calendar.getInstance();
+        int thisDate = cal.get(Calendar.DAY_OF_MONTH);
+        cal.add(Calendar.DATE, cal.getActualMaximum(Calendar.DAY_OF_MONTH)-thisDate);
+    	return cal.getTime();
+    }
+
+    public Date getLastDateOfThisYear() {
+    	Calendar cal = Calendar.getInstance();
+        int thisDate = cal.get(Calendar.DAY_OF_YEAR);
+        cal.add(Calendar.DATE, cal.getActualMaximum(Calendar.DAY_OF_YEAR)-thisDate);
+    	return cal.getTime();
+    }
+    
     public Date tomorrow(Date d) {
         Calendar cal = calendar(d);
         cal.add(Calendar.DATE, 1);

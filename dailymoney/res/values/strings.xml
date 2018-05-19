@@ -234,5 +234,9 @@
     <string name="label_from_date">from Date</string>
     <string name="label_to_date">to Date</string>
     <string name="search_reset">Reset</string>
+    <string name="search_this_month">This Month</string>
+    <string name="search_this_year">This Year</string>
+    <string name="search_all_time">All Time</string>
+    <string name="search_button">Search</string>
 </resources>
 
